@@ -35,9 +35,8 @@ void Robot::initRobot()
     }
 }
 #else
-
-Robot::Robot()
-{}
+RobotBase::RobotBase(){}
+Robot::Robot(){}
 
 #endif
 

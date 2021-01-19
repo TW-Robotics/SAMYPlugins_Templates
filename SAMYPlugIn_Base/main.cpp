@@ -1,6 +1,7 @@
 #include <open62541/plugin/log_stdout.h>
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
+#include "namespace_crcl_opcua_generated.h"
 /* Files namespace_foo_flt_generated.h and namespace_foo_flt_generated.c are created from FooFlt.NodeSet2.xml in the
  * /src_generated directory by CMake */
 
@@ -107,7 +108,7 @@ int main(int argc, char** argv) {
     // create a robot object to communicate with the SAMYCore
     SAMYRobot samyRobot;
     // Start the OPCUA server in a seperate thread
-    //std::thread uaServer(startServer, &robot);
+    std::thread uaServer(startServer, &samyRobot);
 
     // Extruder startup
     // Create a robot object to communicate with the hardware
@@ -138,18 +139,24 @@ int main(int argc, char** argv) {
     // (for testing the created array, later the arrays in SamyRobot object)
 
     samyRobot.online = true; // Extruder is ready to recive CRCL commands
-    //Loop with unions
-    while(running){ // find better solution then infnite loop!! OPCUA events
+
+    // Fill requested Skill with test Data
+    samyRobot.requested_skill.cRCLCommandsSize = 0;
+
+    //Loop with unions (only run Loop when there are Commands put there by SAMYCore
+//    while(running){ // find better solution then infnite loop!! OPCUA events
         for(int i = 0; i < samyRobot.requested_skill.cRCLCommandsSize; i++){
             switch(samyRobot.requested_skill.cRCLCommands[i].switchField){
                 case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
                      samyRobot.requested_Skill_success = executeMoveToCommand(
                                  &samyRobot.requested_skill.cRCLCommands[i].fields.moveToCommand,
                                  &robot);
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:{
+                break;
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
                     std::cout << "recived initCanon command" << std::endl;
                     samyRobot.requested_Skill_success = true;
-                }
+
+                break;
 //                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
 //                    samyRobot.requested_Skill_success = executeSetTransSpeedCommand(
 //                                &samyRobot.requested_skill.cRCLCommands[i].fields.setTransSpeedCommand,
@@ -161,8 +168,7 @@ int main(int argc, char** argv) {
             }
             // empty robot.requested_skill
         }
-    }
-
-    //uaServer.join();
+ //   }
+    uaServer.join();
 }
 

@@ -29,16 +29,28 @@ private:
 };
 #else
 
-class Robot
+class RobotBase
 {
 public:
-    Robot();
-    ~Robot() = default;
+    RobotBase();
+    ~RobotBase() = default;
     UA_Boolean online;
     UA_Boolean* running;
 private:
     UA_String ipAddress;
 };
+
+// Put here your robot specific Code
+class Robot : public RobotBase{
+public:
+    Robot();
+    ~Robot()=default;
+private:
+
+};
+
+// end of robot specific Code
+
 #endif
 
 #endif // ROBOT_H

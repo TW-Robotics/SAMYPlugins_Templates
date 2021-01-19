@@ -4,7 +4,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
 endif()
 
 # Set the Programming lanugae used for the robot specific code:
-set(ROBOT_CODE_PYTHON ON)
+#set(ROBOT_CODE_PYTHON ON)
 
 set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -32,7 +32,7 @@ endif()
 
 # open62541 v1.2 must be installed!
 # If in custom path, then use -DCMAKE_PREFIX_PATH=/home/user/installcmake_minimum_required(VERSION 3.2)
-find_package(open62541 1.2 REQUIRED COMPONENTS FullNamespace)
+find_package(open62541 REQUIRED COMPONENTS FullNamespace)
 
 set(GENERATE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/src_generated/")
 include_directories("${GENERATE_OUTPUT_DIR}")
@@ -83,3 +83,5 @@ add_dependencies(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} open62541::open62541)
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${Python_LIBRARIES})
+
+#print_all_variables()
