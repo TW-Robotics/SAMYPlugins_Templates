@@ -5,9 +5,9 @@
 /* Files namespace_foo_flt_generated.h and namespace_foo_flt_generated.c are created from FooFlt.NodeSet2.xml in the
  * /src_generated directory by CMake */
 
-#include "SAMYRobot.hpp"
-#include "Robot.hpp"
-#include "SAMYPlugin_Template.hpp"
+#include "SAMYRobot.h"
+#include "Robot.h"
+#include "SAMYPlugin_Template.h"
 
 #include <signal.h>
 #include <thread>

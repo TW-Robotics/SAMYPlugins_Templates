@@ -26,10 +26,7 @@
 #define PUBLISHER_METADATAUPDATETIME 0
 
 typedef struct {
-    UA_UInt16 numericID; /* This number is used in several parts for automatic
-        configuration of the publisher, including publisherId, writerGroupId, dataSetWriterId.
-        The matching subscriber must have the same number in order to configure correctly a matching
-        subscriber.*/
+    UA_UInt16 numericID;
     UA_String name;
     UA_UInt16 publishingInterval;
     UA_UInt32 keyFrameCount;

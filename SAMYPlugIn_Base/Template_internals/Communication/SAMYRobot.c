@@ -1,5 +1,5 @@
-#include "SAMYRobot.hpp"
-#include "SAMYPlugin_Template.hpp"
+#include "SAMYRobot.h"
+#include "SAMYPlugin_Template.h"
 
 void configureSAMYRobotPublisherUADP(SAMYRobot* robot, UA_UInt16 publishingInterval, UA_UInt32 keyFrameCount){
     robot->publisher.switchField = PublisherTypeSwitch_PUBLISHER_UADP;
@@ -114,6 +114,3 @@ UA_StatusCode addSAMYRobotSubscriberToServer(UA_Server* server, SAMYRobot* robot
 //        executeCRCLCommand(&(commands->cRCLCommands[i]));
 //    }
 //}
-
-
-

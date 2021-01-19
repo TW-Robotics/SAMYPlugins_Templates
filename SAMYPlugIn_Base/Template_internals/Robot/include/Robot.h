@@ -5,9 +5,9 @@
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 
-#include <iostream>
-
 #ifdef PYTHON_CODE
+
+#include <iostream>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/implicit.hpp>
@@ -29,27 +29,12 @@ private:
 };
 #else
 
-class RobotBase
+typedef struct
 {
-public:
-    RobotBase();
-    ~RobotBase() = default;
     UA_Boolean online;
     UA_Boolean* running;
-private:
     UA_String ipAddress;
-};
-
-// Put here your robot specific Code
-class Robot : public RobotBase{
-public:
-    Robot();
-    ~Robot()=default;
-private:
-
-};
-
-// end of robot specific Code
+} Robot;
 
 #endif
 

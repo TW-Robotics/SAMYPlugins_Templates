@@ -22,12 +22,8 @@
 #include <signal.h>
 #include <stdlib.h>
 
-//UA_DataSetReaderConfig readerConfig;
 typedef struct {
-    UA_UInt32 numericID;/* This number is used in several parts for automatic
-        configuration of the subscriber, including publisherId, writerGroupId, dataSetWriterId.
-        The corresponding publisher must have the same number in order to configure correctly the
-        subscriber.*/
+    UA_UInt16 numericID;
     UA_String name;
     UA_NetworkAddressUrlDataType networkAddressUrl;
     UA_PubSubConnectionConfig connectionConfig;
@@ -41,7 +37,7 @@ void setDataSetMetaData(UA_DataSetMetaDataType *pMetaData, UA_String name);
 void setSubscriberUADP_PubSubConnection(Subscriber_UADP* subscriber);
 UA_StatusCode addSubscriberUADP_PubSubConnectionToServer(UA_Server* server, Subscriber_UADP* subscriber);
 void setSubscriberUADP_ReaderGroup(Subscriber_UADP* subscriber);
-UA_StatusCode addSubscriberUADP_ReaderGroupToServer(UA_Server* server, Subscriber_UADP* subscriber);
+UA_StatusCode addSubscriberUADP_ReaderGroupToServer(UA_Server* server, Subscriber_UADP *subscriber);
 void setSubscriberUADP_DataSetReader(Subscriber_UADP* subscriber);
 UA_StatusCode addSubscriberUADP_DataSetReaderToServer(UA_Server* server, Subscriber_UADP* subscriber);
 UA_StatusCode addSubscriberUADP_SubscribedVariablesToServer(UA_Server* server, Subscriber_UADP* subscriber);
@@ -52,7 +48,7 @@ UA_StatusCode addSubscriberUADP_ToServer(UA_Server* server, Subscriber_UADP* sub
 
 /*Implementation not done yet. For simmetry with Publisher!*/
 typedef struct {
-    UA_UInt32 numericID;
+    UA_UInt16 numericID;
     UA_String name;
     UA_NetworkAddressUrlDataType networkAddressUrl;
     UA_PubSubConnectionConfig connectionConfig;
@@ -62,15 +58,7 @@ typedef struct {
 //Custom Callback Function For Subscription So Robot Information Can Be Updated Automatically
 } Subscriber_MQTT;
 
-
-//Implementation not done yet. For simmetry with Publisher!
-/*typedef struct {
-    UA_String USERNAME_OPTION_NAME;
-    UA_String PASSWORD_OPTION_NAME;
-    UA_String MQTT_USERNAME;
-    UA_String MQTT_PASSWORD;
-} MQTT_LoginData;
-*/
+#if 0 /*the part regarding MQTT subscriber is commented out because is not yet implemented in open62541*/
 //Implementation not done yet. For simmetry with Publisher!
 void setSubscriberMQTT_PubSubConnection(Subscriber_MQTT* subscriber);
 UA_StatusCode addSubscriberMQTT_PubSubConnectionToServer(UA_Server* server, Subscriber_MQTT* subscriber);
@@ -79,9 +67,8 @@ UA_StatusCode addSubscriberMQTT_ReaderGroupToServer(UA_Server* server, Subscribe
 void setSubscriberMQTT_DataSetReader(Subscriber_MQTT* subscriber);
 UA_StatusCode addSubscriberMQTT_DataSetReaderToServer(UA_Server* server, Subscriber_MQTT* subscriber);
 UA_StatusCode addSubscriberMQTT_SubscribedVariablesToServer(UA_Server* server, Subscriber_MQTT* subscriber);
-void configureSubscriberMQTT(Subscriber_MQTT* subscriber, UA_UInt32 numericID_, UA_String name_,
-                                UA_NetworkAddressUrlDataType networkAddressUrl_ );
-UA_StatusCode addSubscriberMQTT_ToServer(UA_Server* server, Subscriber_MQTT* subscriber);
+#endif
+
 
 typedef enum {
     SubscriberTypeSwitch_NONE = 0,

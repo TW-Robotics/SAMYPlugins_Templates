@@ -1,4 +1,4 @@
-#include "Subscriber.hpp"
+#include "Subscriber.h"
 
 /* Publisher_UADP functions begin*/
 /*Setting PublisherUADP PubSubConnection and adding it to the server*/
@@ -131,11 +131,8 @@ void setDataSetMetaData(UA_DataSetMetaDataType *pMetaData, UA_String name) {
 
     /* CRCL Vector DataType for test purposes */
     UA_FieldMetaData_init (&pMetaData->fields[0]);
-//    UA_NodeId_copy(&UA_TYPES_CRCL_OPCUA[UA_TYPES_CRCL_OPCUA_SAMYROBOTDATATYPE].typeId,
-//                    &pMetaData->fields[0].dataType);
-    UA_NodeId_copy(&UA_TYPES[UA_TYPES_EXTENSIONOBJECT].typeId,
-                            &pMetaData->fields[0].dataType);
-
+    UA_NodeId_copy(&UA_TYPES_CRCL_OPCUA[UA_TYPES_CRCL_OPCUA_SAMYROBOTDATATYPE].typeId,
+                    &pMetaData->fields[0].dataType);
     pMetaData->fields[0].builtInType = UA_NS0ID_STRUCTURE;
     pMetaData->fields[0].name =  name;
     pMetaData->fields[0].valueRank = UA_VALUERANK_SCALAR;

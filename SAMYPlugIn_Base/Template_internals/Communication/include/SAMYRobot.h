@@ -4,9 +4,8 @@
 #include "crcl_opcua_nodeids.h"
 #include "namespace_crcl_opcua_generated.h"
 
-#include <Publisher.hpp>
-#include <Subscriber.hpp>
-//#include <Temporal_DataTypes.h>
+#include <Publisher.h>
+#include <Subscriber.h>
 
 typedef struct {
     /*The same fields than the SAMYRobot modelled in OPC UA (UA_SAMYRobot)*/
@@ -40,11 +39,6 @@ void configureSAMYRobotPublisherMQTT_WithLogin(SAMYRobot* robot, UA_UInt16 publi
 UA_StatusCode addSAMYRobotPublisherToServer(UA_Server *server, SAMYRobot* robot);
 
 void configureSAMYRobotSubscriberUADP(SAMYRobot* robot);
-void configureSAMYRobotSubscriberMQTT(SAMYRobot* robot);
 UA_StatusCode addSAMYRobotSubscriberToServer(UA_Server *server, SAMYRobot* robot);
-
-void translateCRCLCommand( const UA_CRCLCommandsUnionDataType* const command);
-
-void executeSkill(const UA_CRCLSkillDataType* const commands );
 
 #endif /* SAMYROBOT_H */

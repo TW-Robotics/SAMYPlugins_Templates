@@ -1,4 +1,4 @@
-#include <Robot.hpp>
+#include <Robot.h>
 
 #ifdef PYTHON_CODE
 Robot::Robot(std::string pathToPythonRobot_, std::string ipAddress_):
@@ -35,8 +35,7 @@ void Robot::initRobot()
     }
 }
 #else
-RobotBase::RobotBase(){}
-Robot::Robot(){}
+int RobotBase(){}
 
 #endif
 
