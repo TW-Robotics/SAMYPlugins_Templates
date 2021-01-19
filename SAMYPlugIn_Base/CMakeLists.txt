@@ -4,7 +4,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
 endif()
 
 # Set the Programming lanugae used for the robot specific code:
-#set(ROBOT_CODE_PYTHON ON)
+set(ROBOT_CODE_PYTHON ON)
 
 set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)

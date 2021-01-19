@@ -12,7 +12,6 @@
 #include <thread>
 #include<unistd.h>
 
-
 UA_Boolean running = true;
 static void stopHandler(int sign) {
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "received ctrl-c");
@@ -132,10 +131,10 @@ int main(int argc, char** argv) {
 #else
     //C++
     Robot robot;
-    robot.running = &running;
+    //robot.running = &running;
 #endif
 
-    // Go through arrays and run the commands
+    // Go through arrays and run the commandssd
     // (for testing the created array, later the arrays in SamyRobot object)
 
     samyRobot.online = true; // Extruder is ready to recive CRCL commands
@@ -151,14 +150,14 @@ int main(int argc, char** argv) {
                     std::cout << "recived initCanon command" << std::endl;
                     samyRobot.requested_Skill_success = true;
                 }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
-                    samyRobot.requested_Skill_success = executeSetTransSpeedCommand(
-                                &samyRobot.requested_skill.cRCLCommands[i].fields.setTransSpeedCommand,
-                                &robot);
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROBOTPARAMTERSCOMMAND:
-                    samyRobot.requested_Skill_success = executeSetRobotParametersCommand(
-                                &samyRobot.requested_skill.cRCLCommands[i].fields.setRobotParametersCommand,
-                                &robot);
+//                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
+//                    samyRobot.requested_Skill_success = executeSetTransSpeedCommand(
+//                                &samyRobot.requested_skill.cRCLCommands[i].fields.setTransSpeedCommand,
+//                                &robot);
+//                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROBOTPARAMTERSCOMMAND:
+//                    samyRobot.requested_Skill_success = executeSetRobotParametersCommand(
+//                                &samyRobot.requested_skill.cRCLCommands[i].fields.setRobotParametersCommand,
+//                                &robot);
             }
             // empty robot.requested_skill
         }

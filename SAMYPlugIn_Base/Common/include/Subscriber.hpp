@@ -22,7 +22,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
-UA_DataSetReaderConfig readerConfig;
+//UA_DataSetReaderConfig readerConfig;
 typedef struct {
     UA_UInt32 numericID;/* This number is used in several parts for automatic
         configuration of the subscriber, including publisherId, writerGroupId, dataSetWriterId.
