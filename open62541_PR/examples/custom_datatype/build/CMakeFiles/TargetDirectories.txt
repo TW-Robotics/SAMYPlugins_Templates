@@ -1,0 +1,3 @@
+/home/jbg/Desktop/SAMY/open62541_PR/examples/custom_datatype/build/CMakeFiles/rebuild_cache.dir
+/home/jbg/Desktop/SAMY/open62541_PR/examples/custom_datatype/build/CMakeFiles/edit_cache.dir
+/home/jbg/Desktop/SAMY/open62541_PR/examples/custom_datatype/build/CMakeFiles/customDataType_server.dir

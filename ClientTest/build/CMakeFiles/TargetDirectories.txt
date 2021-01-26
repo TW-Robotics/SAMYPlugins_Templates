@@ -1,0 +1,6 @@
+/home/jbg/Desktop/SAMYCore/ClientTest/build/CMakeFiles/edit_cache.dir
+/home/jbg/Desktop/SAMYCore/ClientTest/build/CMakeFiles/client.dir
+/home/jbg/Desktop/SAMYCore/ClientTest/build/CMakeFiles/pref-ns-crcl_opcua.dir
+/home/jbg/Desktop/SAMYCore/ClientTest/build/CMakeFiles/rebuild_cache.dir
+/home/jbg/Desktop/SAMYCore/ClientTest/build/CMakeFiles/pref-ids-crcl_opcua.dir
+/home/jbg/Desktop/SAMYCore/ClientTest/build/CMakeFiles/pref-types-crcl_opcua.dir

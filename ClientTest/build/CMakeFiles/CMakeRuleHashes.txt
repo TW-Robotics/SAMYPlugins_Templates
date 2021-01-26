@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+f48b7a313cb6d3d17b4c3b0471a6e3b3 CMakeFiles/pref-ids-crcl_opcua
+f48b7a313cb6d3d17b4c3b0471a6e3b3 CMakeFiles/pref-ns-crcl_opcua
+f48b7a313cb6d3d17b4c3b0471a6e3b3 CMakeFiles/pref-types-crcl_opcua
+748c831fb244b810996e4eb20728b076 src_generated/crcl_opcua_nodeids.h
+338b66c7498d5c0d0cc225a5879f1cc7 src_generated/namespace_crcl_opcua_generated.c
+d7860c5c2728bd1554a85789b1bf2e02 src_generated/types_crcl_opcua_generated.c
