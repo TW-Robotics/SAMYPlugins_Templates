@@ -212,11 +212,8 @@ updateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
 }
 
 static void
-monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot, Robot* robot) {
+monitorLastSkill_Succeeded_Variable(UA_Server *server, TwinsRobotsStrucuture* twinsRobots) {
 
-    TwinsRobotsStrucuture twinsRobots;
-    twinsRobots.digitalRobot;
-    twinsRobots.physicalRobot;
 
     UA_NodeId currentTimeNodeId =
         UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
@@ -227,7 +224,7 @@ monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot, Rob
     monRequest.requestedParameters.samplingInterval = 10.0; /* 10 ms interval */
 
     UA_Server_createDataChangeMonitoredItem(server, UA_TIMESTAMPSTORETURN_SOURCE,
-                                            monRequest, (void*)(&twinsRobots), updateAndExecuteRequestedSkill);
+                                            monRequest, (void*)(twinsRobots), updateAndExecuteRequestedSkill);
 }
 
 
@@ -256,7 +253,7 @@ int main(int argc, char** argv) {
 
     std::cout << "Conecting to Robot" << std::endl;
     Robot robot(path, ipAddress);
-    if (!robot.initRobot()){
+/*    if (!robot.initRobot()){
         printf("No connection to robot.\nExit programm...\n");
         return -1;
     }
@@ -264,7 +261,7 @@ int main(int argc, char** argv) {
     std::thread stop_thread(stopRobot, std::ref(robot));
     //pthread_create(&id, NULL, stopRobot, &robot);
 
-
+*/
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
 
     /* create nodes from nodeset */
@@ -276,12 +273,16 @@ int main(int argc, char** argv) {
 
         addRobotToServer(server, &samyRobot);
         addLastSkill_succeeded_VariableNode(server);
-        monitorLastSkill_Succeeded_Variable(server, &samyRobot, &robot);
+    	
+	TwinsRobotsStrucuture twinsRobots;
+	twinsRobots.digitalRobot = &samyRobot;
+	twinsRobots.physicalRobot = &robot;
+        monitorLastSkill_Succeeded_Variable(server, &twinsRobots);
 
         retval = UA_Server_run(server, &running);
     }
 
-    stop_thread.join();
+//    stop_thread.join();
     UA_Server_delete(server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }
