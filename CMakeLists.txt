@@ -65,7 +65,7 @@ include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/include
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/include/open62541/plugin")
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/plugins/")
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/Communication/include")
-include_directories("${PROJECT_SOURCE_DIR}/Template_internals/Robot/include")
+include_directories("${PROJECT_SOURCE_DIR}/Robot/include")
 
 # The generated files are: "namespace_${NAMESPACE_NAME}_... .c/.h"
 set(NAMESPACE_NAME "crcl_opcua")
@@ -93,7 +93,7 @@ add_executable(${PROJECT_NAME}
 		"./Template_internals/Communication/Publisher.c" 
 		"./Template_internals/Communication/Subscriber.c" 
 		"./Template_internals/Communication/SAMYRobot.c"
-		"./Template_internals/Robot/Robot.c"
+		"./Robot/Robot.c"
 		"./SAMYPlugin_Template.c"
 		"main.c"
 		)

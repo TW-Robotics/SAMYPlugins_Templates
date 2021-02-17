@@ -49,9 +49,6 @@
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="Requested_Skill" TypeName="tns:CRCLSkillDataType" />
-    <opc:Field Name="Requested_Skill_Success" TypeName="opc:Boolean" />
-    <opc:Field Name="Active" TypeName="opc:Boolean" />
-    <opc:Field Name="Online" TypeName="opc:Boolean" />
     <opc:Field Name="IPAddresses" TypeName="tns:PubSubIPAddresses" />
   </opc:StructuredType>
 
@@ -185,24 +182,25 @@
     <opc:Field Name="fraction" TypeName="tns:CRCL_FractionDataType" />
   </opc:StructuredType>
 
-  <opc:StructuredType Name="CRCL_TransSpeedDataType" BaseType="tns:CRCL_DataThingDataType">
-    <opc:Documentation>CRCL TransAccelAbsolute DataType</opc:Documentation>
-    <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
-    <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
-  </opc:StructuredType>
-
-  <opc:StructuredType Name="CRCL_TransSpeedAbsoluteDataType" BaseType="tns:CRCL_TransSpeedDataType">
+  <opc:StructuredType Name="CRCL_TransSpeedAbsoluteDataType" BaseType="tns:CRCL_DataThingDataType">
     <opc:Documentation>CRCL TransSpeedAbsolute DataType</opc:Documentation>
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="setting" TypeName="opc:Double" />
   </opc:StructuredType>
 
-  <opc:StructuredType Name="CRCL_TransSpeedRelativeDataType" BaseType="tns:CRCL_TransSpeedDataType">
+  <opc:StructuredType Name="CRCL_TransSpeedRelativeDataType" BaseType="tns:CRCL_DataThingDataType">
     <opc:Documentation>CRCL TransSpeedRelative DataType</opc:Documentation>
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="fraction" TypeName="tns:CRCL_FractionDataType" />
+  </opc:StructuredType>
+
+  <opc:StructuredType Name="CRCL_TransSpeedDataType" BaseType="ua:Union">
+    <opc:Documentation>CRCL TransSpeed DataType (relative or absolute)</opc:Documentation>
+    <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="TransSpeedAbsoluteDataType" TypeName="tns:CRCL_TransSpeedAbsoluteDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="TransSpeedRelativeDataType" TypeName="tns:CRCL_TransSpeedRelativeDataType" />
   </opc:StructuredType>
 
   <opc:EnumeratedType Name="CRCL_GuardLimitEnumDataType" LengthInBits="32">
@@ -676,7 +674,7 @@
     <opc:Field Name="commandID" TypeName="opc:UInt32" SourceType="tns:CRCLCommandDataType" />
     <opc:Field Name="NoOfGuard" TypeName="opc:Int32" />
     <opc:Field Name="Guard" TypeName="tns:CRCL_GuardDataType" LengthField="NoOfGuard" />
-    <opc:Field Name="TransSpeed" TypeName="ua:ExtensionObject" />
+    <opc:Field Name="TransSpeed" TypeName="tns:CRCL_TransSpeedDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="UnionTestDataType" BaseType="ua:Union">
@@ -920,11 +918,13 @@
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
     <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="InitCanonCommand" TypeName="tns:InitCanonDataType" />
     <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="MoveToCommand" TypeName="tns:MoveToDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="3" Name="CloseToolChangerCommand" TypeName="tns:CloseToolChangerDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="4" Name="DwellCommand" TypeName="tns:DwellDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="5" Name="GetStatusCommand" TypeName="tns:GetStatusDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="6" Name="MessageCommand" TypeName="tns:MessageDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="7" Name="EndCanonCommand" TypeName="tns:EndCanonDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="3" Name="SetTransSpeedCommand" TypeName="tns:SetTransSpeedDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="4" Name="SetRobotParametersCommand" TypeName="tns:SetRobotParametersDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="5" Name="CloseToolChangerCommand" TypeName="tns:CloseToolChangerDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="6" Name="DwellCommand" TypeName="tns:DwellDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="7" Name="GetStatusCommand" TypeName="tns:GetStatusDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="8" Name="MessageCommand" TypeName="tns:MessageDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="9" Name="EndCanonCommand" TypeName="tns:EndCanonDataType" />
   </opc:StructuredType>
 
   <opc:EnumeratedType Name="CRCL_StopConditionEnumDataType" LengthInBits="32">

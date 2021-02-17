@@ -25,6 +25,7 @@ void setPublisherUADP_PublishedDataSet(Publisher_UADP* publisher) {
 }
 UA_StatusCode addPublisherUADP_PublishedDataSetToServer(UA_Server *server, Publisher_UADP* publisher) {
     UA_AddPublishedDataSetResult retval;
+
     retval = UA_Server_addPublishedDataSet(server, &(publisher->publishedDataSetConfig), &(publisher->publishedDataSetIdent));
     return retval.addResult;
 }
@@ -40,6 +41,7 @@ void setPublisherUADP_DataSetField(Publisher_UADP* publisher) {
 }
 UA_StatusCode addPublisherUADP_DataSetFieldToServer(UA_Server *server, Publisher_UADP* publisher) {
     UA_DataSetFieldResult retval;
+
     retval = UA_Server_addDataSetField(server, publisher->publishedDataSetIdent,
                               &(publisher->dataSetFieldConfig), &(publisher->dataSetFieldIdent));
     return retval.result;
@@ -51,7 +53,6 @@ void setPublisherUADP_WriterGroup(Publisher_UADP* publisher) {
     publisher->writerGroupConfig.name = publisher->name;
     publisher->writerGroupConfig.publishingInterval = publisher->publishingInterval;
     publisher->writerGroupConfig.enabled = UA_FALSE;
-    printf("publisher->writerGroupConfig.writerGroupId =  %i", publisher->numericID);
     publisher->writerGroupConfig.writerGroupId = publisher->numericID;
     publisher->writerGroupConfig.encodingMimeType = UA_PUBSUB_ENCODING_UADP;
     publisher->writerGroupConfig.messageSettings.encoding             = UA_EXTENSIONOBJECT_DECODED;
@@ -66,7 +67,6 @@ UA_StatusCode addPublisherUADP_WriterGroupToServer(UA_Server* server, Publisher_
                                                               (UA_UadpNetworkMessageContentMask)UA_UADPNETWORKMESSAGECONTENTMASK_WRITERGROUPID |
                                                               (UA_UadpNetworkMessageContentMask)UA_UADPNETWORKMESSAGECONTENTMASK_PAYLOADHEADER);
     publisher->writerGroupConfig.messageSettings.content.decoded.data = writerGroupMessage;
-
     retval |= UA_Server_addWriterGroup(server, publisher->connectionIdent, &(publisher->writerGroupConfig), &(publisher->writerGroupIdent));
     retval |= UA_Server_setWriterGroupOperational(server, publisher->writerGroupIdent);
     UA_UadpWriterGroupMessageDataType_delete(writerGroupMessage);
@@ -82,14 +82,13 @@ void setPublisherUADP_DataSetWriter(Publisher_UADP* publisher) {
 }
 UA_StatusCode addPublisherUADP_DataSetWriterToServer(UA_Server *server, Publisher_UADP* publisher) {
     UA_StatusCode retval;
-
     retval = UA_Server_addDataSetWriter(server, publisher->writerGroupIdent, publisher->publishedDataSetIdent,
                                     &(publisher->dataSetWriterConfig), &(publisher->dataSetWriterIdent));
     return retval;
 }
 
 /*Setting PublisherUADP*/
-void configurePublisherUADP(Publisher_UADP* publisher, UA_UInt16 numericID_, UA_String name_,
+void configurePublisherUADP(Publisher_UADP* publisher, UA_UInt32 numericID_, UA_String name_,
                             UA_UInt16 publishingInterval_, UA_UInt32 keyFrameCount_,
                                 UA_NetworkAddressUrlDataType networkAddressUrl_, UA_NodeId SAMYRobotVariableNodeID_){
     publisher->numericID = numericID_;
@@ -182,7 +181,6 @@ void setPublisherMQTT_PubSubConnectionWithLogin(Publisher_MQTT* publisher, MQTT_
 }
 UA_StatusCode addPublisherMQTT_PubSubConnectionToServer(UA_Server *server, Publisher_MQTT* publisher) {
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
-
     retval |= UA_Server_addPubSubConnection(server, &(publisher->connectionConfig), &(publisher->connectionIdent));
     return retval;
 }
@@ -195,7 +193,6 @@ void setPublisherMQTT_PublishedDataSet(Publisher_MQTT* publisher) {
 }
 UA_StatusCode addPublisherMQTT_PublishedDataSetToServer(UA_Server* server, Publisher_MQTT* publisher) {
     UA_AddPublishedDataSetResult retval;
-
     retval = UA_Server_addPublishedDataSet(server, &(publisher->publishedDataSetConfig), &(publisher->publishedDataSetIdent));
     return retval.addResult;
 }
@@ -285,7 +282,6 @@ UA_StatusCode addPublisherMQTT_WriterGroupToServer(UA_Server* server, Publisher_
     transportSettings.content.decoded.data = &brokerTransportSettings;
 
     publisher->writerGroupConfig.transportSettings = transportSettings;
-
     retval = UA_Server_addWriterGroup(server, publisher->connectionIdent, &(publisher->writerGroupConfig),
                                                     &(publisher->writerGroupIdent));
 
@@ -358,7 +354,6 @@ void setPublisherMQTT_DataSetWriter(Publisher_MQTT* publisher) {
 }
 UA_StatusCode addPublisherMQTT_DataSetWriterToServer(UA_Server* server, Publisher_MQTT* publisher){
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
-
     retval |= UA_Server_addDataSetWriter(server, publisher->writerGroupIdent, publisher->publishedDataSetIdent,
                                &(publisher->dataSetWriterConfig), &(publisher->dataSetWriterIdent));
     return retval;

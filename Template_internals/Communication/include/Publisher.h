@@ -26,7 +26,7 @@
 #define PUBLISHER_METADATAUPDATETIME 0
 
 typedef struct {
-    UA_UInt16 numericID;
+    UA_UInt32 numericID;
     UA_String name;
     UA_UInt16 publishingInterval;
     UA_UInt32 keyFrameCount;
@@ -52,13 +52,13 @@ UA_StatusCode addPublisherUADP_WriterGroupToServer(UA_Server* server, Publisher_
 void setPublisherUADP_DataSetWriter(Publisher_UADP* publisher);
 UA_StatusCode addPublisherUADP_DataSetWriterToServer(UA_Server *server, Publisher_UADP* publisher);
 
-void configurePublisherUADP(Publisher_UADP* publisher, UA_UInt16 numericID_, UA_String name_,
+void configurePublisherUADP(Publisher_UADP* publisher, UA_UInt32 numericID_, UA_String name_,
                             UA_UInt16 publishingInterval_, UA_UInt32 keyFrameCount_,
                                 UA_NetworkAddressUrlDataType networkAddressUrl_, UA_NodeId SAMYRobotVariableNodeID_);
 UA_StatusCode addPublisherUADP_ToServer(UA_Server* server, Publisher_UADP* publisher);
 
 typedef struct {
-    UA_UInt16 numericID;
+    UA_UInt32 numericID;
     UA_String name;
     UA_UInt16 publishingInterval;
     UA_UInt32 keyFrameCount;

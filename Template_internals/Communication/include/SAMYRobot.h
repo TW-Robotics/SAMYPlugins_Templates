@@ -4,12 +4,31 @@
 #include "crcl_opcua_nodeids.h"
 #include "namespace_crcl_opcua_generated.h"
 
+#if pubsub
 #include <Publisher.h>
 #include <Subscriber.h>
+#else
+#include <open62541/client_config_default.h>
+#include <open62541/client_highlevel.h>
+#endif
+
 
 typedef struct {
     /*The same fields than the SAMYRobot modelled in OPC UA (UA_SAMYRobot)*/
     UA_UInt16 id;
+    UA_String name;
+    UA_CRCLSkillDataType requested_skill;
+    UA_CRCLStatusDataType robot_status;
+    /*The same fields than the SAMYRobot modelled in OPC UA (UA_SAMYRobot)*/
+    UA_NodeId SAMYRobotVariableNodeId;
+    UA_Server* server;
+} SAMYRobot;
+
+
+#if pubsub
+typedef struct {
+    /*The same fields than the SAMYRobot modelled in OPC UA (UA_SAMYRobot)*/
+    UA_UInt32 id;
     UA_String name;
     UA_CRCLSkillDataType requested_skill;
     UA_Boolean requested_Skill_success;
@@ -40,5 +59,14 @@ UA_StatusCode addSAMYRobotPublisherToServer(UA_Server *server, SAMYRobot* robot)
 
 void configureSAMYRobotSubscriberUADP(SAMYRobot* robot);
 UA_StatusCode addSAMYRobotSubscriberToServer(UA_Server *server, SAMYRobot* robot);
+
+#endif
+
+
+
+
+void translateCRCLCommand( const UA_CRCLCommandsUnionDataType* const command);
+
+void executeSkill(const UA_CRCLSkillDataType* const commands );
 
 #endif /* SAMYROBOT_H */

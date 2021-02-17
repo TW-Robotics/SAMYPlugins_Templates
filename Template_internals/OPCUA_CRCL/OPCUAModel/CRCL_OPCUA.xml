@@ -347,13 +347,16 @@
         </Fields>
     </DataType>
 
-    <!-- CRCL_TransSpeedDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransSpeedDataType" BaseType="CRCL:CRCL_DataThingDataType">
-        <Description>CRCL TransAccelAbsolute DataType</Description>
-    </DataType>
+
+
+
+
+
+    <!-- REFERENCE MODELLING FOR TRANS/ROT SPEEDS/ACCELERATION -->
+
 
     <!-- CRCL_TransSpeedAbsoluteDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransSpeedAbsoluteDataType" BaseType="CRCL:CRCL_TransSpeedDataType">
+    <DataType SymbolicName="CRCL:CRCL_TransSpeedAbsoluteDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL TransSpeedAbsolute DataType</Description>
         <Fields>
             <Field Name="setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -363,7 +366,7 @@
     </DataType>
 
     <!-- CRCL_TransSpeedRelativeDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransSpeedRelativeDataType" BaseType="CRCL:CRCL_TransSpeedDataType">
+    <DataType SymbolicName="CRCL:CRCL_TransSpeedRelativeDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL TransSpeedRelative DataType</Description>
         <Fields>
             <Field Name="fraction" DataType="CRCL:CRCL_FractionDataType" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -371,6 +374,41 @@
             </Field>
         </Fields>
     </DataType>
+
+    <!-- Union of TransSpeeds types (absolute and relative)-->
+ <DataType SymbolicName="CRCL:CRCL_TransSpeedDataType" BaseType="ua:Union" IsAbstract="false" SupportsEvents="true">
+        <Description>CRCL TransSpeed DataType (relative or absolute)</Description>
+        <Fields>
+            <Field Name="SwitchField" DataType="ua:UInt32" ValueRank="Scalar">
+                <Description>SwitchField</Description>
+            </Field>
+            <Field Name="TransSpeedAbsoluteDataType" DataType="CRCL:CRCL_TransSpeedAbsoluteDataType" ValueRank="Scalar">
+                <Description>TransSpeedAbsoluteDataType</Description>
+            </Field>
+            <Field Name="TransSpeedRelativeDataType" DataType="CRCL:CRCL_TransSpeedRelativeDataType" ValueRank="Scalar">
+                <Description>RelativeSpeedAbsoluteDataType</Description>
+            </Field>
+        </Fields>
+    </DataType>  
+
+    <!-- CRCL_TransSpeedDataType -->
+  <!--    <DataType SymbolicName="CRCL:CRCL_TransSpeedDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true">
+        <Description>CRCL TransSpeed DataType</Description>
+        <Fields>
+            <Field Name="TransSpeed" DataType="CRCL:CRCL_TransSpeedTypesDataType" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>TransSpeed</Description>
+            </Field>
+        </Fields>
+    </DataType>  -->
+
+
+    <!-- REFERENCE MODELLING FOR TRANS/ROT SPEEDS/ACCELERATION -->
+
+
+
+
+
+
 
     <!-- CRCL_GuardLimitEnumDataType -->
   <DataType SymbolicName="CRCL:CRCL_GuardLimitEnumDataType" BaseType="ua:Enumeration">
@@ -913,14 +951,14 @@
     <DataType SymbolicName="CRCL:SetTransSpeedDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true" ValueRank="Scalar">
         <Description>CRCL SetTransSpeed</Description>
         <Fields>
-            <Field Name="TransSpeed" DataType="ua:Structure" TypeDefinition="CRCL:CRCL_TransSpeedFieldType" ModellingRule="Mandatory" ValueRank="Scalar">
-                <Description>RotAccel of SetTransSpeed</Description>
+            <Field Name="TransSpeed" DataType="CRCL:CRCL_TransSpeedDataType" ModellingRule="Mandatory" ValueRank="Scalar">
+                <Description>TransSpeed of SetTransSpeed</Description>
             </Field>
         </Fields>
     </DataType>
 
 
-    <!-- ### SetTransSpeedDataType ###-->
+    <!-- ### UnionTestDataType ###-->
     <DataType SymbolicName="CRCL:UnionTestDataType" BaseType="ua:Union" IsAbstract="false" SupportsEvents="true" ValueRank="Scalar">
         <Description>CRCL SetTransSpeed</Description>
         <Fields>
@@ -1328,6 +1366,12 @@
             <Field Name="MoveToCommand" DataType="CRCL:MoveToDataType" ValueRank="Scalar">
                 <Description>MoveToCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
+            <Field Name="SetTransSpeedCommand" DataType="CRCL:SetTransSpeedDataType" ValueRank="Scalar">
+                <Description>SetTransSpeedCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetRobotParametersCommand" DataType="CRCL:SetRobotParametersDataType" ValueRank="Scalar">
+                <Description>SetRobotParametersCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
             <Field Name="CloseToolChangerCommand" DataType="CRCL:CloseToolChangerDataType" ValueRank="Scalar">
                 <Description>CloseToolChangerCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
@@ -1345,7 +1389,6 @@
             </Field>
         </Fields>
     </DataType>  
-
 
 
 
