@@ -1,6 +1,6 @@
 #include <Robot.h>
 
-#ifdef PYTHON_CODE
+#ifdef USE_PYTHON
 Robot::Robot(std::string pathToPythonRobot_, std::string ipAddress_):
     pathToPythonRobot(pathToPythonRobot_),
     ipAddress(ipAddress_)
@@ -11,7 +11,7 @@ Robot::Robot(std::string pathToPythonRobot_, std::string ipAddress_):
     Py_Initialize();
 }
 
-void Robot::initRobot()
+UA_Boolean Robot::initRobot()
 {
     namespace python = boost::python;
     try

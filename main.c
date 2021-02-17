@@ -26,6 +26,23 @@ static void stopHandler(int sign) {
     running = false;
 }
 
+void stopRobot(Robot& robot){
+    bool run = true;
+    while (run == true){
+        if (running == false){
+            run = false;
+            printf("Sending stop signal!\n");
+            //printf("%d", robot.online);
+            robot_access.lock();
+            executeStopRobot(&robot);
+            robot_access.unlock();
+        }
+    usleep(10);
+    }
+
+    //pthread_exit(&running);
+}
+
 UA_StatusCode configureSamyRobot(SAMYRobot* samyRobot, UA_UInt16 id, char* robotName){
     samyRobot->id = id; /* IT MUST BE A UINT16 number, otherwise it changes the number when compiling due to overflow!!! Compile with pedantic?*/
     samyRobot->name = UA_STRING(robotName);
@@ -100,6 +117,7 @@ UA_StatusCode addLastSkill_succeeded_VariableNode(UA_Server* server){
     }else{
         printf("ERRORR ADDING lastSkill_succeeded VARIABLE TO PLUGIN SERVER\n");
     }
+    return retVal;
 }
 
 void configureSAMYPluginServer(UA_Server* server, UA_UInt32 port){
@@ -118,10 +136,10 @@ void executeSkill(SAMYRobot* samyRobot, Robot* robot){
                 UA_InitCanonDataType* canon = (UA_InitCanonDataType*)&(val->fields);
                 break;
             }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
-            {
-                break;
-            }
+        //case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
+        //    {
+        //        break;
+        //    }
         case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROBOTPARAMETERSCOMMAND:
             {
                 break;
@@ -263,6 +281,7 @@ int main(int argc, char** argv) {
         retval = UA_Server_run(server, &running);
     }
 
+    stop_thread.join();
     UA_Server_delete(server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -5,7 +5,7 @@
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 
-#ifdef PYTHON_CODE
+#ifdef USE_PYTHON
 
 #include <iostream>
 #include <boost/python.hpp>
@@ -18,10 +18,11 @@ class Robot
 {
 public:
     Robot(std::string pathToPythonRobot_, std::string ipAddress_);
-    void initRobot();
+    UA_Boolean initRobot();
     boost::python::object pythonRobot;
     boost::python::object pythonPlugin;
     UA_Boolean online;
+    UA_Boolean* running;
 
 private:
     std::string ipAddress;
