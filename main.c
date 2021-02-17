@@ -46,7 +46,7 @@ void stopRobot(Robot& robot){
 UA_StatusCode configureSamyRobot(SAMYRobot* samyRobot, UA_UInt16 id, char* robotName){
     samyRobot->id = id; /* IT MUST BE A UINT16 number, otherwise it changes the number when compiling due to overflow!!! Compile with pedantic?*/
     samyRobot->name = UA_STRING(robotName);
-    samyRobot->SAMYRobotVariableNodeId = UA_NODEID_STRING(1, (char*)samyRobot->name.data);
+    samyRobot->SAMYRobotVariableNodeId = UA_NODEID_STRING(1, "Robot");
 }
 
 UA_StatusCode addRobotToServer(UA_Server* server, SAMYRobot* samyRobot){
@@ -214,17 +214,17 @@ updateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
 static void
 monitorLastSkill_Succeeded_Variable(UA_Server *server, TwinsRobotsStrucuture* twinsRobots) {
 
-
-    UA_NodeId currentTimeNodeId =
-        UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
-
-    UA_MonitoredItemCreateRequest monRequest =
-        UA_MonitoredItemCreateRequest_default(currentTimeNodeId);
-
-    monRequest.requestedParameters.samplingInterval = 10.0; /* 10 ms interval */
+    UA_MonitoredItemCreateRequest requestMon;
+    UA_MonitoredItemCreateRequest_init(&requestMon);
+    requestMon.itemToMonitor.nodeId = UA_NODEID_STRING(1, "lastSkill_succeeded");
+    requestMon.itemToMonitor.attributeId = UA_ATTRIBUTEID_VALUE;
+    requestMon.monitoringMode = UA_MONITORINGMODE_REPORTING;
+    requestMon.requestedParameters.samplingInterval = 10.0;
+    requestMon.requestedParameters.discardOldest = true;
+    requestMon.requestedParameters.queueSize = 1;
 
     UA_Server_createDataChangeMonitoredItem(server, UA_TIMESTAMPSTORETURN_SOURCE,
-                                            monRequest, (void*)(twinsRobots), updateAndExecuteRequestedSkill);
+                                            requestMon, (void*)(twinsRobots), updateAndExecuteRequestedSkill);
 }
 
 
@@ -253,7 +253,7 @@ int main(int argc, char** argv) {
 
     std::cout << "Conecting to Robot" << std::endl;
     Robot robot(path, ipAddress);
-/*    if (!robot.initRobot()){
+    if (!robot.initRobot()){
         printf("No connection to robot.\nExit programm...\n");
         return -1;
     }
@@ -261,7 +261,7 @@ int main(int argc, char** argv) {
     std::thread stop_thread(stopRobot, std::ref(robot));
     //pthread_create(&id, NULL, stopRobot, &robot);
 
-*/
+
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
 
     /* create nodes from nodeset */
@@ -274,15 +274,15 @@ int main(int argc, char** argv) {
         addRobotToServer(server, &samyRobot);
         addLastSkill_succeeded_VariableNode(server);
     	
-	TwinsRobotsStrucuture twinsRobots;
-	twinsRobots.digitalRobot = &samyRobot;
-	twinsRobots.physicalRobot = &robot;
+        TwinsRobotsStrucuture twinsRobots;
+        twinsRobots.digitalRobot = &samyRobot;
+        twinsRobots.physicalRobot = &robot;
         monitorLastSkill_Succeeded_Variable(server, &twinsRobots);
 
         retval = UA_Server_run(server, &running);
     }
 
-//    stop_thread.join();
+    stop_thread.join();
     UA_Server_delete(server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }
