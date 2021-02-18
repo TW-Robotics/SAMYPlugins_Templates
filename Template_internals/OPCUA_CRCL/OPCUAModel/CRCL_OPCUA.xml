@@ -1384,6 +1384,9 @@
             <Field Name="MessageCommand" DataType="CRCL:MessageDataType" ValueRank="Scalar">
                 <Description>MessageCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
+            <Field Name="SetEndEffectorCommand" DataType="CRCL:SetEndEffectorDataType" ValueRank="Scalar">
+                <Description>SetEndEffectorCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
             <Field Name="EndCanonCommand" DataType="CRCL:EndCanonDataType" ValueRank="Scalar">
                 <Description>EndCanonDataType in the CRCLCommandsUnionDataType</Description>
             </Field>

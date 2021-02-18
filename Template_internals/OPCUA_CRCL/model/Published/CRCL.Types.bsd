@@ -49,6 +49,9 @@
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="Requested_Skill" TypeName="tns:CRCLSkillDataType" />
+    <opc:Field Name="Requested_Skill_Success" TypeName="opc:Boolean" />
+    <opc:Field Name="Active" TypeName="opc:Boolean" />
+    <opc:Field Name="Online" TypeName="opc:Boolean" />
     <opc:Field Name="IPAddresses" TypeName="tns:PubSubIPAddresses" />
   </opc:StructuredType>
 
@@ -199,8 +202,8 @@
   <opc:StructuredType Name="CRCL_TransSpeedDataType" BaseType="ua:Union">
     <opc:Documentation>CRCL TransSpeed DataType (relative or absolute)</opc:Documentation>
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="TransSpeedAbsoluteDataType" TypeName="tns:CRCL_TransSpeedAbsoluteDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="TransSpeedRelativeDataType" TypeName="tns:CRCL_TransSpeedRelativeDataType" />
+    <opc:Field Name="TransSpeedAbsoluteDataType" TypeName="tns:CRCL_TransSpeedAbsoluteDataType" />
+    <opc:Field Name="TransSpeedRelativeDataType" TypeName="tns:CRCL_TransSpeedRelativeDataType" />
   </opc:StructuredType>
 
   <opc:EnumeratedType Name="CRCL_GuardLimitEnumDataType" LengthInBits="32">
@@ -924,7 +927,8 @@
     <opc:Field SwitchField="SwitchField" SwitchValue="6" Name="DwellCommand" TypeName="tns:DwellDataType" />
     <opc:Field SwitchField="SwitchField" SwitchValue="7" Name="GetStatusCommand" TypeName="tns:GetStatusDataType" />
     <opc:Field SwitchField="SwitchField" SwitchValue="8" Name="MessageCommand" TypeName="tns:MessageDataType" />
-    <opc:Field SwitchField="SwitchField" SwitchValue="9" Name="EndCanonCommand" TypeName="tns:EndCanonDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="9" Name="SetEndEffectorCommand" TypeName="tns:SetEndEffectorDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="10" Name="EndCanonCommand" TypeName="tns:EndCanonDataType" />
   </opc:StructuredType>
 
   <opc:EnumeratedType Name="CRCL_StopConditionEnumDataType" LengthInBits="32">
