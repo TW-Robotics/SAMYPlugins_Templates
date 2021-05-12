@@ -131,8 +131,8 @@
   <opc:StructuredType Name="CRCL_RotAccelDataType" BaseType="ua:Union">
     <opc:Documentation>CRCL RotAccel DataType</opc:Documentation>
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
-    <opc:Field Name="RotAccelAbsoluteDataType" TypeName="tns:CRCL_RotAccelAbsoluteDataType" />
-    <opc:Field Name="RotAccelRelativeDataType" TypeName="tns:CRCL_RotAccelRelativeDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="RotAccelAbsoluteDataType" TypeName="tns:CRCL_RotAccelAbsoluteDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="RotAccelRelativeDataType" TypeName="tns:CRCL_RotAccelRelativeDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="CRCL_RotSpeedAbsoluteDataType" BaseType="tns:CRCL_DataThingDataType">
@@ -152,8 +152,8 @@
   <opc:StructuredType Name="CRCL_RotSpeedDataType" BaseType="ua:Union">
     <opc:Documentation>CRCL RotSpeedDataType DataType</opc:Documentation>
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
-    <opc:Field Name="RotSpeedAbsoluteDataType" TypeName="tns:CRCL_RotSpeedAbsoluteDataType" />
-    <opc:Field Name="RotSpeedRelativeDataType" TypeName="tns:CRCL_RotSpeedRelativeDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="RotSpeedAbsoluteDataType" TypeName="tns:CRCL_RotSpeedAbsoluteDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="RotSpeedRelativeDataType" TypeName="tns:CRCL_RotSpeedRelativeDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="CRCL_TransAccelAbsoluteDataType" BaseType="tns:CRCL_DataThingDataType">
@@ -173,8 +173,8 @@
   <opc:StructuredType Name="CRCL_TransAccelDataType" BaseType="ua:Union">
     <opc:Documentation>CRCL TransAccel DataType  (relative or absolute)</opc:Documentation>
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
-    <opc:Field Name="TransAccelAbsoluteDataType" TypeName="tns:CRCL_TransAccelAbsoluteDataType" />
-    <opc:Field Name="TransAccelRelativeDataType" TypeName="tns:CRCL_TransAccelRelativeDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="TransAccelAbsoluteDataType" TypeName="tns:CRCL_TransAccelAbsoluteDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="TransAccelRelativeDataType" TypeName="tns:CRCL_TransAccelRelativeDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="CRCL_TransSpeedAbsoluteDataType" BaseType="tns:CRCL_DataThingDataType">
@@ -194,8 +194,8 @@
   <opc:StructuredType Name="CRCL_TransSpeedDataType" BaseType="ua:Union">
     <opc:Documentation>CRCL TransSpeed DataType (relative or absolute)</opc:Documentation>
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
-    <opc:Field Name="TransSpeedAbsoluteDataType" TypeName="tns:CRCL_TransSpeedAbsoluteDataType" />
-    <opc:Field Name="TransSpeedRelativeDataType" TypeName="tns:CRCL_TransSpeedRelativeDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="TransSpeedAbsoluteDataType" TypeName="tns:CRCL_TransSpeedAbsoluteDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="TransSpeedRelativeDataType" TypeName="tns:CRCL_TransSpeedRelativeDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="CRCL_ConfigureJointReportDataType" BaseType="tns:CRCL_DataThingDataType">
@@ -1005,41 +1005,41 @@
   <opc:StructuredType Name="CRCLCommandsUnionDataType" BaseType="ua:Union">
     <opc:Documentation>CRCLCommandsUnionDataType</opc:Documentation>
     <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
-    <opc:Field Name="InitCanonCommand" TypeName="tns:InitCanonDataType" />
-    <opc:Field Name="EndCanonCommand" TypeName="tns:EndCanonDataType" />
-    <opc:Field Name="MessageCommand" TypeName="tns:MessageDataType" />
-    <opc:Field Name="MoveToCommand" TypeName="tns:MoveToDataType" />
-    <opc:Field Name="MoveScrewCommand" TypeName="tns:MoveScrewDataType" />
-    <opc:Field Name="MoveThroughToCommand" TypeName="tns:MoveThroughToDataType" />
-    <opc:Field Name="DwellCommand" TypeName="tns:DwellDataType" />
-    <opc:Field Name="ActuateJointsCommand" TypeName="tns:ActuateJointsDataType" />
-    <opc:Field Name="ConfigureJointReportsCommand" TypeName="tns:ConfigureJointReportsDataType" />
-    <opc:Field Name="SetDefaultJointPositionsTolerancesCommand" TypeName="tns:SetDefaultJointPositionsTolerancesDataType" />
-    <opc:Field Name="GetStatusCommand" TypeName="tns:GetStatusDataType" />
-    <opc:Field Name="CloseToolChangerCommand" TypeName="tns:CloseToolChangerDataType" />
-    <opc:Field Name="OpenToolChangerCommand" TypeName="tns:OpenToolChangerDataType" />
-    <opc:Field Name="SetRobotParametersCommand" TypeName="tns:SetRobotParametersDataType" />
-    <opc:Field Name="SetEndeffectorParametersCommand" TypeName="tns:SetEndeffectorParametersDataType" />
-    <opc:Field Name="SetEndeffectorCommand" TypeName="tns:SetEndeffectorDataType" />
-    <opc:Field Name="SetTransAccelCommand" TypeName="tns:SetTransAccelDataType" />
-    <opc:Field Name="SetTransSpeedCommand" TypeName="tns:SetTransSpeedDataType" />
-    <opc:Field Name="SetRotAccelCommand" TypeName="tns:SetRotAccelDataType" />
-    <opc:Field Name="SetRotSpeedCommand" TypeName="tns:SetRotSpeedDataType" />
-    <opc:Field Name="SetAngleUnitsCommand" TypeName="tns:SetAngleUnitsDataType" />
-    <opc:Field Name="SetEndPoseToleranceCommand" TypeName="tns:SetEndPoseToleranceDataType" />
-    <opc:Field Name="SetForceUnitsCommand" TypeName="tns:SetForceUnitsDataType" />
-    <opc:Field Name="SetIntermediatePoseToleranceCommand" TypeName="tns:SetIntermediatePoseToleranceDataType" />
-    <opc:Field Name="SetLengthUnitsCommand" TypeName="tns:SetLengthUnitsDataType" />
-    <opc:Field Name="SetMotionCoordinationCommand" TypeName="tns:SetMotionCoordinationDataType" />
-    <opc:Field Name="SetTorqueUnitsCommand" TypeName="tns:SetTorqueUnitsDataType" />
-    <opc:Field Name="StopMotionCommand" TypeName="tns:StopMotionDataType" />
-    <opc:Field Name="ConfigureStatusReportCommand" TypeName="tns:ConfigureStatusReportDataType" />
-    <opc:Field Name="EnableSensorCommand" TypeName="tns:EnableSensorDataType" />
-    <opc:Field Name="DisableSensorCommand" TypeName="tns:DisableSensorDataType" />
-    <opc:Field Name="EnableGripperCommand" TypeName="tns:EnableGripperDataType" />
-    <opc:Field Name="DisableGripperCommand" TypeName="tns:DisableGripperDataType" />
-    <opc:Field Name="EnableRobotParameterStatusCommand" TypeName="tns:EnableRobotParameterStatusDataType" />
-    <opc:Field Name="DisableRobotParameterStatusCommand" TypeName="tns:DisableRobotParameterStatusDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="InitCanonCommand" TypeName="tns:InitCanonDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2" Name="EndCanonCommand" TypeName="tns:EndCanonDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="3" Name="MessageCommand" TypeName="tns:MessageDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="4" Name="MoveToCommand" TypeName="tns:MoveToDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="5" Name="MoveScrewCommand" TypeName="tns:MoveScrewDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="6" Name="MoveThroughToCommand" TypeName="tns:MoveThroughToDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="7" Name="DwellCommand" TypeName="tns:DwellDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="8" Name="ActuateJointsCommand" TypeName="tns:ActuateJointsDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="9" Name="ConfigureJointReportsCommand" TypeName="tns:ConfigureJointReportsDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="10" Name="SetDefaultJointPositionsTolerancesCommand" TypeName="tns:SetDefaultJointPositionsTolerancesDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="11" Name="GetStatusCommand" TypeName="tns:GetStatusDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="12" Name="CloseToolChangerCommand" TypeName="tns:CloseToolChangerDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="13" Name="OpenToolChangerCommand" TypeName="tns:OpenToolChangerDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="14" Name="SetRobotParametersCommand" TypeName="tns:SetRobotParametersDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="15" Name="SetEndeffectorParametersCommand" TypeName="tns:SetEndeffectorParametersDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="16" Name="SetEndeffectorCommand" TypeName="tns:SetEndeffectorDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="17" Name="SetTransAccelCommand" TypeName="tns:SetTransAccelDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="18" Name="SetTransSpeedCommand" TypeName="tns:SetTransSpeedDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="19" Name="SetRotAccelCommand" TypeName="tns:SetRotAccelDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="20" Name="SetRotSpeedCommand" TypeName="tns:SetRotSpeedDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="21" Name="SetAngleUnitsCommand" TypeName="tns:SetAngleUnitsDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="22" Name="SetEndPoseToleranceCommand" TypeName="tns:SetEndPoseToleranceDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="23" Name="SetForceUnitsCommand" TypeName="tns:SetForceUnitsDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="24" Name="SetIntermediatePoseToleranceCommand" TypeName="tns:SetIntermediatePoseToleranceDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="25" Name="SetLengthUnitsCommand" TypeName="tns:SetLengthUnitsDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="26" Name="SetMotionCoordinationCommand" TypeName="tns:SetMotionCoordinationDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="27" Name="SetTorqueUnitsCommand" TypeName="tns:SetTorqueUnitsDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="28" Name="StopMotionCommand" TypeName="tns:StopMotionDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="29" Name="ConfigureStatusReportCommand" TypeName="tns:ConfigureStatusReportDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="30" Name="EnableSensorCommand" TypeName="tns:EnableSensorDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="31" Name="DisableSensorCommand" TypeName="tns:DisableSensorDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="32" Name="EnableGripperCommand" TypeName="tns:EnableGripperDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="33" Name="DisableGripperCommand" TypeName="tns:DisableGripperDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="34" Name="EnableRobotParameterStatusCommand" TypeName="tns:EnableRobotParameterStatusDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="35" Name="DisableRobotParameterStatusCommand" TypeName="tns:DisableRobotParameterStatusDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="CRCLSkillDataType" BaseType="tns:CRCL_DataThingDataType">
