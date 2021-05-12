@@ -1,4 +1,4 @@
-#include <open62541/plugin/log_stdout.h>
+﻿#include <open62541/plugin/log_stdout.h>
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 /* Files namespace_foo_flt_generated.h and namespace_foo_flt_generated.c are created from FooFlt.NodeSet2.xml in the
@@ -10,26 +10,45 @@
 
 #include <signal.h>
 #include <thread>
-#include <pthread.h>
+//#include <pthread.h>
 
 #include <open62541/client_subscriptions.h>
 
-#include <mutex>
+#include "namespace_crcl_generated.h"
+#include "types_crcl_generated_handling.h"
+
+//#include <mutex>
 
 const size_t array_size = 9;
 std::mutex robot_access;
-
-
+std::mutex skill;
+bool updated_skill = false;
 UA_Boolean running = true;
+
 static void stopHandler(int sign) {
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "received ctrl-c");
     running = false;
 }
 
+void stopRobot(Robot& robot){
+    bool run = true;
+    while (run == true){
+        if (running == false){
+            run = false;
+            printf("Sending stop signal!\n");
+            //printf("%d", robot.online);
+            robot_access.lock();
+            executeStopRobot(&robot);
+            robot_access.unlock();
+        }
+    usleep(10);
+    }
+}
+
 UA_StatusCode configureSamyRobot(SAMYRobot* samyRobot, UA_UInt16 id, char* robotName){
     samyRobot->id = id; /* IT MUST BE A UINT16 number, otherwise it changes the number when compiling due to overflow!!! Compile with pedantic?*/
     samyRobot->name = UA_STRING(robotName);
-    samyRobot->SAMYRobotVariableNodeId = UA_NODEID_STRING(1, (char*)samyRobot->name.data);
+    samyRobot->SAMYRobotVariableNodeId = UA_NODEID_STRING(1, "Robot");
 }
 
 UA_StatusCode addRobotToServer(UA_Server* server, SAMYRobot* samyRobot){
@@ -53,13 +72,13 @@ UA_StatusCode addRobotToServer(UA_Server* server, SAMYRobot* samyRobot){
     vattr.description = UA_LOCALIZEDTEXT("locale", (char*)samyRobot->name.data);
     vattr.valueRank = UA_VALUERANK_ANY;
     vattr.displayName = UA_LOCALIZEDTEXT("locale", (char*)samyRobot->name.data);
-    vattr.dataType = UA_TYPES_CRCL_OPCUA[UA_TYPES_CRCL_OPCUA_SAMYROBOTDATATYPE].typeId;
+    vattr.dataType = UA_TYPES_CRCL[UA_TYPES_CRCL_SAMYROBOTDATATYPE].typeId;
     UA_UInt32 myArrayDimensions[1] = {1};
     vattr.value.arrayDimensions = myArrayDimensions;
     vattr.value.arrayDimensionsSize = 1;
     vattr.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
 
-    UA_Variant_setScalar(&vattr.value, &robotOPCUA, &UA_TYPES_CRCL_OPCUA[UA_TYPES_CRCL_OPCUA_SAMYROBOTDATATYPE]);
+    UA_Variant_setScalar(&vattr.value, &robotOPCUA, &UA_TYPES_CRCL[UA_TYPES_CRCL_SAMYROBOTDATATYPE]);
 
     UA_StatusCode retVal = UA_Server_addVariableNode(server, samyRobot->SAMYRobotVariableNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT), UA_QUALIFIEDNAME(1, (char*)samyRobot->name.data),
@@ -75,7 +94,7 @@ UA_StatusCode addRobotToServer(UA_Server* server, SAMYRobot* samyRobot){
 }
 
 UA_StatusCode addLastSkill_succeeded_VariableNode(UA_Server* server){
-    UA_Boolean skillFinished = false;
+    UA_Boolean skillFinished = true;
 
     UA_VariableAttributes vattr = UA_VariableAttributes_default;
 
@@ -100,6 +119,7 @@ UA_StatusCode addLastSkill_succeeded_VariableNode(UA_Server* server){
     }else{
         printf("ERRORR ADDING lastSkill_succeeded VARIABLE TO PLUGIN SERVER\n");
     }
+    return retVal;
 }
 
 void configureSAMYPluginServer(UA_Server* server, UA_UInt32 port){
@@ -107,67 +127,95 @@ void configureSAMYPluginServer(UA_Server* server, UA_UInt32 port){
     UA_ServerConfig_setMinimal(config, port, NULL);
 }
 
-void executeSkill(SAMYRobot* samyRobot, Robot* robot){
-    for (int i=0; i < samyRobot->requested_skill.cRCLCommandsSize; i++){
-        if (running == false) break;
-        UA_CRCLCommandsUnionDataType* val = samyRobot->requested_skill.cRCLCommands;
+void runSkill(SAMYRobot* samyRobot, Robot* robot){
+    while (running == true){
+        if (updated_skill == true){
+            for (int i=0; i < samyRobot->requested_skill.cRCLCommandsSize; i++){
+                if (running == false) break;
 
-        switch (val[i].switchField){
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_NONE:
-            {
-                UA_InitCanonDataType* canon = (UA_InitCanonDataType*)&(val->fields);
-                break;
+        UA_CRCLCommandsUnionDataType* val = &(samyRobot->requested_skill.cRCLCommands[i]);
+        //printf("\n readSAMYRobot, COMMAND NUMBER %i \n", i);
+        //printf("\n readSAMYRobot, switchValue %i \n", val->switchField);
+
+                switch (val->switchField){
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_NONE:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROBOTPARAMETERSCOMMAND:
+                    {
+                        UA_SetRobotParametersDataType* robotParameters = (UA_SetRobotParametersDataType*)&(val->fields);
+                        printf("C++ found setRobotParameters\n");
+                        executeSetRobotParametersCommand(robotParameters, robot);
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
+                    {
+                        UA_SetTransSpeedDataType* transSpeed = (UA_SetTransSpeedDataType*)&(val->fields);
+                        printf("C++: found setTransSpeed\n");
+                        executeSetTransSpeedCommand(transSpeed, robot);
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
+                    {
+                        UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(val->fields);
+                        printf("C++ found moveto command\n");
+                        executeMoveToCommand(moveTo, robot, &robot_access);
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DWELLCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_GETSTATUSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MESSAGECOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CLOSETOOLCHANGERCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETENDEFFECTORCOMMAND:
+                    {
+                        UA_SetEndeffectorDataType* setEndEffector = (UA_SetEndeffectorDataType*)&(val->fields);
+                        executeSetEndeffectorCommand(setEndEffector, robot);
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENDCANONCOMMAND:
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+                }
             }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROBOTPARAMETERSCOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
-            {
-                UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(val->fields);
-                executeMoveToCommand(moveTo, robot, &robot_access);
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DWELLCOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_GETSTATUSCOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MESSAGECOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CLOSETOOLCHANGERCOMMAND:
-            {
-                break;
-            }
-        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENDCANONCOMMAND:
-            {
-                break;
-            }
-        default:
-            {
-                break;
-            }
+        updated_skill = false;
+            UA_Boolean reset = true;
+            UA_Variant var;
+            UA_Variant_init(&var);
+            UA_Variant_setScalar(&var, &reset, &UA_TYPES[UA_TYPES_BOOLEAN]);
+
+            UA_Server_writeValue(samyRobot->server, UA_NODEID_STRING(1, "lastSkill_succeeded"), var);
+            printf("reset last Skill_succeded\n");
         }
     }
 }
 
-struct TwinsRobotsStrucuture{
-    Robot* physicalRobot;
-    SAMYRobot* digitalRobot;
-};
+void executeSkill(){
+    //printf("C++ execute Skill start\n");
+
+    updated_skill = true;
+}
 
 static void
 updateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
@@ -175,41 +223,39 @@ updateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
                                void *nodeContext, UA_UInt32 attributeId,
                                const UA_DataValue *value) {
     UA_Boolean lastSkill_succeded = *(UA_Boolean*)value->value.data;
-    if(lastSkill_succeded == false){
 
-        TwinsRobotsStrucuture* twinsRobots = (TwinsRobotsStrucuture*)monitoredItemContext;
-        SAMYRobot* samyRobot = twinsRobots->digitalRobot;
-        Robot* robot = twinsRobots->physicalRobot;
+    if(lastSkill_succeded == false){
+        printf("C++ updateAndExecuteRequestedSkill\n");
+        SAMYRobot* samyRobot = (SAMYRobot*)monitoredItemContext;
 
         UA_Variant myVar;
         UA_Variant_init(&myVar);
 
         UA_Server_readValue(server, samyRobot->SAMYRobotVariableNodeId, &myVar);
+    UA_SAMYRobotDataType* opcuaRobot = (UA_SAMYRobotDataType*)myVar.data;
+    UA_CRCLSkillDataType_copy(&(opcuaRobot->requested_Skill),
+        &(samyRobot->requested_skill));
 
-        UA_SAMYRobotDataType* robotOPCUA = (UA_SAMYRobotDataType*)myVar.data;
-        samyRobot->requested_skill = robotOPCUA->requested_Skill;
-
-        executeSkill(samyRobot, robot);
+        printf("\n\n START EXECUTION if  SKILL\n\n");
+        executeSkill();
     }
 }
 
 static void
-monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot, Robot* robot) {
+monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot) {
 
-    TwinsRobotsStrucuture twinsRobots;
-    twinsRobots.digitalRobot;
-    twinsRobots.physicalRobot;
-
-    UA_NodeId currentTimeNodeId =
-        UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
-
-    UA_MonitoredItemCreateRequest monRequest =
-        UA_MonitoredItemCreateRequest_default(currentTimeNodeId);
-
-    monRequest.requestedParameters.samplingInterval = 10.0; /* 10 ms interval */
+    UA_MonitoredItemCreateRequest requestMon;
+    UA_MonitoredItemCreateRequest_init(&requestMon);
+    requestMon.itemToMonitor.nodeId = UA_NODEID_STRING(1, "lastSkill_succeeded");
+    requestMon.itemToMonitor.attributeId = UA_ATTRIBUTEID_VALUE;
+    requestMon.monitoringMode = UA_MONITORINGMODE_REPORTING;
+    requestMon.requestedParameters.samplingInterval = 10.0;
+    requestMon.requestedParameters.discardOldest = true;
+    requestMon.requestedParameters.queueSize = 1;
 
     UA_Server_createDataChangeMonitoredItem(server, UA_TIMESTAMPSTORETURN_SOURCE,
-                                            monRequest, (void*)(&twinsRobots), updateAndExecuteRequestedSkill);
+                                            requestMon, (void*)(samyRobot), updateAndExecuteRequestedSkill);
+    printf("Monitor lastSkillSucceededVariable added\n");
 }
 
 
@@ -217,12 +263,13 @@ int main(int argc, char** argv) {
 
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
+    printf("C++: Starting Plugin\n");
 
     SAMYRobot samyRobot;
     configureSamyRobot(&samyRobot, 1, "Robot");
 
-    UA_Server* server = UA_Server_new();
-    configureSAMYPluginServer(server, 4840);
+    samyRobot.server = UA_Server_new();
+    configureSAMYPluginServer(samyRobot.server, 4840);
 
     // create Python/C++/C robot TODO
     std::string path; // Path to Python Code
@@ -236,35 +283,45 @@ int main(int argc, char** argv) {
         ipAddress = "172.16.36.128"; // IP Address for testing
     }
 
+#ifdef USE_PYTHON
     std::cout << "Conecting to Robot" << std::endl;
     Robot robot(path, ipAddress);
     if (!robot.initRobot()){
         printf("No connection to robot.\nExit programm...\n");
         return -1;
     }
+#else
+#ifdef USE_CPP
+    std::cout << "Conecting to Robot" << std::endl;
+    Robot robot;
+#endif // USE_CPP
+#endif // USE PYTHON
+    robot.running = &running;
+    std::thread run(runSkill, &samyRobot, &robot);
 
+    //Thread to be able to stop the robot during move commands.
     std::thread stop_thread(stopRobot, std::ref(robot));
-    //pthread_create(&id, NULL, stopRobot, &robot);
-
 
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
 
     /* create nodes from nodeset */
-    if(namespace_crcl_opcua_generated(server) != UA_STATUSCODE_GOOD) {
+    if(namespace_crcl_generated(samyRobot.server) != UA_STATUSCODE_GOOD) {
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Could not add the crcl opcua nodeset. "
         "Check previous output for any error.");
         retval = UA_STATUSCODE_BADUNEXPECTEDERROR;
     } else {/*If custom namespace succesfully added*/
 
-        addRobotToServer(server, &samyRobot);
-        addLastSkill_succeeded_VariableNode(server);
-        monitorLastSkill_Succeeded_Variable(server, &samyRobot, &robot);
+        addRobotToServer(samyRobot.server, &samyRobot);
+        addLastSkill_succeeded_VariableNode(samyRobot.server);
 
-        retval = UA_Server_run(server, &running);
+        monitorLastSkill_Succeeded_Variable(samyRobot.server, &samyRobot);
+
+        retval = UA_Server_run(samyRobot.server, &running);
     }
 
-    UA_Server_delete(server);
+    stop_thread.join();
+    run.join();
+    UA_Server_delete(samyRobot.server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }
-
 

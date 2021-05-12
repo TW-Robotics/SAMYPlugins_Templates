@@ -1,8 +1,7 @@
 #ifndef SAMYROBOT_H
 #define SAMYROBOT_H
 
-#include "crcl_opcua_nodeids.h"
-#include "namespace_crcl_opcua_generated.h"
+#include "namespace_crcl_generated.h"
 
 #if pubsub
 #include <Publisher.h>

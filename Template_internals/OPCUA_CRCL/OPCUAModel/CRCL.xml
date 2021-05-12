@@ -18,36 +18,32 @@
     </Namespaces>  
 
     <!-- ### Reference Types ###-->
+    <!-- ### Reference Types ###-->
 
     <!-- ### Object Types ###-->
-    <!-- ### By the moment I implement CRCLCommand without GuardType ###-->
+    <!-- ### Object Types ###-->
 
     <!-- ### Variable Types ###-->
-
-    <!-- ### DATA PRIMITIVES ###-->
-
-    
+    <!-- ### Variable Types ###-->
   
-    <!-- ### CRCL Status ### Variable Types -->
-
-
     <!-- ### Data Types ###-->
 
+    <!-- ### DATA PRIMITIVES CRCL INFORMATION MODEL ###-->
 
-    <!-- ### CRCLStatusDataType ###-->
-      <DataType SymbolicName="CRCL:PubSubIPAddresses" BaseType="ua:Structure" IsAbstract="false" SupportsEvents="true">
-        <Description>PubSub IP addresses: IPAddress_Skill is the address where the SAMYCore is Publishing and the SAMYPlugIn is Subscribed; IPAddress_Status is the address where the SAMYCore is Subscribed and the SAMYCore is Publishing</Description>
-        <Fields>
-            <Field Name="IPAddress_Skill" DataType="ua:String" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>IPAddress_1: SAMYCore Publish here, SAMYPlugIn is Subscribed here</Description>
-            </Field>
-            <Field Name="IPAddress_Status" DataType="ua:String" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>IPAddress_1: SAMYCore is Subscribed here, SAMYPlugIn is Publishing here</Description>
-            </Field>
-        </Fields>
-    </DataType>
-
-    <!-- ### DATA PRIMITIVES ###-->
+    <!-- CRCL_StopConditionEnumDataType -->
+  <DataType SymbolicName="CRCL:CRCL_StopConditionEnumDataType" BaseType="ua:Enumeration">
+    <Fields>
+      <Field Name="IMMEDIATE" Identifier="0">
+        <Description>Stop Condition is Immediate</Description>
+      </Field>
+      <Field Name="FAST" Identifier="1">
+        <Description>Stop Condition is Fast</Description>
+      </Field>
+      <Field Name="NORMAL" Identifier="2">
+        <Description>Stop Condition is Normal</Description>
+      </Field>
+    </Fields>
+  </DataType>
 
     <!-- CRCL_AngleUnitEnumDataType -->
   <DataType SymbolicName="CRCL:CRCL_AngleUnitEnumDataType" BaseType="ua:Enumeration">
@@ -118,31 +114,6 @@
             <Field Name="name" DataType="ua:String" ValueRank="Scalar" ModellingRule="Optional">
                 <Description>Name of the DataThing DataType</Description>
             </Field>
-        </Fields>
-    </DataType>
-
-    <!-- ### SAMYRobotDataType ###-->
-      <DataType SymbolicName="CRCL:SAMYRobotDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true">
-        <Description>CRCLProgramm</Description>
-        <Fields>
-            <Field Name="Requested_Skill" DataType="CRCL:CRCLSkillDataType" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>Indicates the current requested skill by the SAMYCore to be executed by the robot</Description>
-            </Field> 
-            <Field Name="Requested_Skill_Success" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>Indicates whether the Requested_Skill" was succesfully executed by the robot</Description>
-            </Field>
-            <Field Name="Active" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>Indicates whether the robot is executing the Requested_Skill or it is in idle</Description>
-            </Field>
-            <Field Name="Online" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>Indicates whether communication with the robot PlugIn could be stablished</Description>
-            </Field>
-     <!-- ###        <Field Name="Robot_Status" DataType="CRCL:CRCLStatusDataType" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>Indicates the status of the robot</Description>
-            </Field>  ###-->
-           <Field Name="IPAddresses" DataType="CRCL:PubSubIPAddresses" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>IPAddresses where the Requested_Skills (IPAddress_Skill) and Status (IPAddress_Status) are published</Description>
-            </Field> 
         </Fields>
     </DataType>
 
@@ -271,14 +242,8 @@
         </Fields>
     </DataType>
 
-    <!-- CRCL_RotAccelDataType -->
-    <DataType SymbolicName="CRCL:CRCL_RotAccelDataType" BaseType="CRCL:CRCL_DataThingDataType">
-        <Description>CRCL RotAccel DataType</Description>
-    </DataType>
-
-
     <!-- CRCL_RotAccelAbsoluteDataType -->
-    <DataType SymbolicName="CRCL:CRCL_RotAccelAbsoluteDataType" BaseType="CRCL:CRCL_RotAccelDataType">
+    <DataType SymbolicName="CRCL:CRCL_RotAccelAbsoluteDataType" BaseType="CRCL:CRCL_DataThingDataType"  ModellingRule="Mandatory">
         <Description>CRCL RotAccelAbsolute DataType</Description>
         <Fields>
             <Field Name="setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -288,7 +253,7 @@
     </DataType>
 
     <!-- CRCL_RotAccelRelativeDataType -->
-    <DataType SymbolicName="CRCL:CRCL_RotAccelRelativeDataType" BaseType="CRCL:CRCL_RotAccelDataType">
+    <DataType SymbolicName="CRCL:CRCL_RotAccelRelativeDataType" BaseType="CRCL:CRCL_DataThingDataType" ModellingRule="Mandatory">
         <Description>CRCL RotAccelRelative DataType</Description>
         <Fields>
             <Field Name="fraction" DataType="CRCL:CRCL_FractionDataType" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -297,13 +262,24 @@
         </Fields>
     </DataType>
 
-    <!-- CRCL_RotSpeedDataType -->
-    <DataType SymbolicName="CRCL:CRCL_RotSpeedDataType" BaseType="CRCL:CRCL_DataThingDataType">
-        <Description>CRCL RotSpeedDataType DataType</Description>
+    <!-- CRCL_RotAccelDataType -->
+    <DataType SymbolicName="CRCL:CRCL_RotAccelDataType" BaseType="ua:Union">
+        <Description>CRCL RotAccel DataType</Description>
+        <Fields>
+            <Field Name="SwitchField" DataType="ua:UInt32" ValueRank="Scalar">
+                <Description>SwitchField</Description>
+            </Field>
+            <Field Name="RotAccelAbsoluteDataType" DataType="CRCL:CRCL_RotAccelAbsoluteDataType" ValueRank="Scalar">
+                <Description>CRCL RotAccelAbsolute DataType</Description>
+            </Field>
+            <Field Name="RotAccelRelativeDataType" DataType="CRCL:CRCL_RotAccelRelativeDataType" ValueRank="Scalar">
+                <Description>CRCL RotAccelRelative DataType</Description>
+            </Field>
+        </Fields>
     </DataType>
 
     <!-- CRCL_RotSpeedAbsoluteDataType -->
-    <DataType SymbolicName="CRCL:CRCL_RotSpeedAbsoluteDataType" BaseType="CRCL:CRCL_RotSpeedDataType">
+    <DataType SymbolicName="CRCL:CRCL_RotSpeedAbsoluteDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL RotSpeedAbsolute DataType</Description>
         <Fields>
             <Field Name="setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -313,7 +289,7 @@
     </DataType>
 
     <!-- CRCL_RotSpeedRelativeDataType -->
-    <DataType SymbolicName="CRCL:CRCL_RotSpeedRelativeDataType" BaseType="CRCL:CRCL_RotSpeedDataType">
+    <DataType SymbolicName="CRCL:CRCL_RotSpeedRelativeDataType" BaseType="CRCL:CRCL_DataThingDataType" ModellingRule="Mandatory">
         <Description>CRCL RotSpeedRelative DataType</Description>
         <Fields>
             <Field Name="fraction" DataType="CRCL:CRCL_FractionDataType" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -322,13 +298,25 @@
         </Fields>
     </DataType>
 
-    <!-- CRCL_TransAccelDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransAccelDataType" BaseType="CRCL:CRCL_DataThingDataType">
-        <Description>CRCL TransAccelAbsolute DataType</Description>
+    <!-- CRCL_RotSpeedDataType -->
+    <DataType SymbolicName="CRCL:CRCL_RotSpeedDataType" BaseType="ua:Union">
+        <Description>CRCL RotSpeedDataType DataType</Description>
+        <Fields>
+            <Field Name="SwitchField" DataType="ua:UInt32" ValueRank="Scalar">
+                <Description>SwitchField</Description>
+            </Field>
+            <Field Name="RotSpeedAbsoluteDataType" DataType="CRCL:CRCL_RotSpeedAbsoluteDataType" ValueRank="Scalar">
+                <Description>CRCL RotSpeedAbsolute DataType</Description>
+            </Field>
+            <Field Name="RotSpeedRelativeDataType" DataType="CRCL:CRCL_RotSpeedRelativeDataType" ValueRank="Scalar">
+                <Description>CRCL RotSpeedRelative DataType</Description>
+            </Field>
+        </Fields>
     </DataType>
 
+
     <!-- CRCL_TransAccelAbsoluteDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransAccelAbsoluteDataType" BaseType="CRCL:CRCL_TransAccelDataType">
+    <DataType SymbolicName="CRCL:CRCL_TransAccelAbsoluteDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL TransAccelAbsolute DataType</Description>
         <Fields>
             <Field Name="setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -338,7 +326,7 @@
     </DataType>
 
     <!-- CRCL_TransAccelRelativeDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransAccelRelativeDataType" BaseType="CRCL:CRCL_TransAccelDataType">
+    <DataType SymbolicName="CRCL:CRCL_TransAccelRelativeDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL TransAccelRelative DataType</Description>
         <Fields>
             <Field Name="fraction" DataType="CRCL:CRCL_FractionDataType" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -347,13 +335,24 @@
         </Fields>
     </DataType>
 
-    <!-- CRCL_TransSpeedDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransSpeedDataType" BaseType="CRCL:CRCL_DataThingDataType">
-        <Description>CRCL TransAccelAbsolute DataType</Description>
+    <!-- CRCL_TransAccelDataType -->
+    <DataType SymbolicName="CRCL:CRCL_TransAccelDataType" BaseType="ua:Union">
+        <Description>CRCL TransAccel DataType  (relative or absolute)</Description>
+        <Fields>
+            <Field Name="SwitchField" DataType="ua:UInt32" ValueRank="Scalar">
+                <Description>SwitchField</Description>
+            </Field>
+            <Field Name="TransAccelAbsoluteDataType" DataType="CRCL:CRCL_TransAccelAbsoluteDataType" ValueRank="Scalar">
+                <Description>CRCL TransAccelAbsolute DataType</Description>
+            </Field>
+            <Field Name="TransAccelRelativeDataType" DataType="CRCL:CRCL_TransAccelRelativeDataType" ValueRank="Scalar">
+                <Description>CRCL TransAccelRelative DataType</Description>
+            </Field>
+        </Fields>
     </DataType>
 
     <!-- CRCL_TransSpeedAbsoluteDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransSpeedAbsoluteDataType" BaseType="CRCL:CRCL_TransSpeedDataType">
+    <DataType SymbolicName="CRCL:CRCL_TransSpeedAbsoluteDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL TransSpeedAbsolute DataType</Description>
         <Fields>
             <Field Name="setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -363,11 +362,46 @@
     </DataType>
 
     <!-- CRCL_TransSpeedRelativeDataType -->
-    <DataType SymbolicName="CRCL:CRCL_TransSpeedRelativeDataType" BaseType="CRCL:CRCL_TransSpeedDataType">
+    <DataType SymbolicName="CRCL:CRCL_TransSpeedRelativeDataType" BaseType="CRCL:CRCL_DataThingDataType">
         <Description>CRCL TransSpeedRelative DataType</Description>
         <Fields>
             <Field Name="fraction" DataType="CRCL:CRCL_FractionDataType" ValueRank="Scalar" ModellingRule="Mandatory">
                 <Description>fraction CRCL TransSpeedRelative DataType</Description>
+            </Field>
+        </Fields>
+    </DataType>
+
+    <!-- Union of TransSpeeds types (absolute and relative)-->
+ <DataType SymbolicName="CRCL:CRCL_TransSpeedDataType" BaseType="ua:Union" IsAbstract="false" SupportsEvents="true">
+        <Description>CRCL TransSpeed DataType (relative or absolute)</Description>
+        <Fields>
+            <Field Name="SwitchField" DataType="ua:UInt32" ValueRank="Scalar">
+                <Description>SwitchField</Description>
+            </Field>
+            <Field Name="TransSpeedAbsoluteDataType" DataType="CRCL:CRCL_TransSpeedAbsoluteDataType" ValueRank="Scalar">
+                <Description>TransSpeedAbsoluteDataType</Description>
+            </Field>
+            <Field Name="TransSpeedRelativeDataType" DataType="CRCL:CRCL_TransSpeedRelativeDataType" ValueRank="Scalar">
+                <Description>RelativeSpeedAbsoluteDataType</Description>
+            </Field>
+        </Fields>
+    </DataType>  
+
+    <!-- ### CRCL_ConfigureJointReportDataType ###-->
+    <DataType SymbolicName="CRCL:CRCL_ConfigureJointReportDataType" BaseType="CRCL:CRCL_DataThingDataType">
+        <Description>CRCL ConfigureJointReportDataType</Description>
+        <Fields>
+            <Field Name="JointNumber" DataType="ua:Int32" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>JointNumber of ConfigureJointReportDataType</Description>
+            </Field>
+            <Field Name="ReportPosition" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>ReportPosition of ConfigureJointReportDataType</Description>
+            </Field>
+            <Field Name="ReportTorqueOrForce" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>ReportTorqueOrForce of ConfigureJointReportDataType</Description>
+            </Field>
+            <Field Name="ReportVelocity" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>ReportVelocity of ConfigureJointReportDataType</Description>
             </Field>
         </Fields>
     </DataType>
@@ -475,13 +509,25 @@
             <Field Name="commandID" DataType="ua:UInt32" ValueRank="Scalar" ModellingRule="Mandatory">
                 <Description>CommandID of the CRCLCommand</Description>
             </Field>
+          <Field Name="CRCL:RealTimeCommand" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" AccessLevel="ReadWrite" ValueRank="Scalar">
+            <Description>Boolean indicating whether this command of the skill should be used the corresponding Real Time Node
+            </Description>
+          </Field>
+          <Field Name="CRCL:RealTimeParameterNode" DataType="ua:NodeId"
+                    ModellingRule="Mandatory" AccessLevel="ReadWrite" ValueRank="Scalar">
+            <Description>Real time parameter node associated with the command
+            </Description>
+          </Field>
             <Field Name="Guard" DataType="CRCL:CRCL_GuardDataType" ValueRank="Array" ModellingRule="Optional">
                 <Description>Guard of the CRCLCommand</Description>
             </Field>
         </Fields>
     </DataType>
 
+    <!-- ### DATA PRIMITIVES CRCL INFORMATION MODEL ###-->
 
+    <!-- ### CRCL COMMANDS INFORMATION MODEL ###-->
     <!-- ### MiddleCommandDataType ###-->
     <DataType SymbolicName="CRCL:MiddleCommandDataType" BaseType="CRCL:CRCLCommandDataType" IsAbstract="true" SupportsEvents="true">
         <Description>CRCL MiddleCommand</Description>
@@ -518,9 +564,9 @@
         </Fields>
     </DataType>
 
-    <!-- ### CRCL_JointDetailsDataType ###--> 
-    <DataType SymbolicName="CRCL:JointForceTorqueDataType" BaseType="CRCL:CRCL_JointDetailsDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
-        <Description>CRCL ActuateJointsType</Description>
+    <!-- ### CRCL_JointForceTorqueDataType ###--> 
+    <DataType SymbolicName="CRCL:CRCL_JointForceTorqueDataType" BaseType="CRCL:CRCL_JointDetailsDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
+        <Description>CRCL JointForceTorqueDataType</Description>
         <Fields>
             <Field Name="CRCL:Setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
                 <Description>Setting of CRCL JointForceTorqueType</Description>
@@ -531,9 +577,9 @@
         </Fields>
     </DataType>
 
-    <!-- ### CRCL_JointDetailsDataType ###--> 
-    <DataType SymbolicName="CRCL:JointSpeedAccelDataType" BaseType="CRCL:CRCL_JointDetailsDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
-        <Description>CRCL ActuateJointsType</Description>
+    <!-- ### CRCL_JointSpeedAccelDataType ###--> 
+    <DataType SymbolicName="CRCL:CRCL_JointSpeedAccelDataType" BaseType="CRCL:CRCL_JointDetailsDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
+        <Description>CRCL JointSpeedAccelDataType</Description>
         <Fields>
             <Field Name="CRCL:JointSpeed" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
                 <Description>JointSpeed of CRCL JointSpeedAccelType</Description>
@@ -556,7 +602,6 @@
             </Field>
         </Fields>
     </DataType>
-
 
     <!-- ### MoveToDataType ###-->
     <DataType SymbolicName="CRCL:MoveToDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
@@ -664,22 +709,22 @@
         </Fields>
     </DataType>
 
-    <!-- ### SetEndEffectorParametersDataType ###-->
-    <DataType SymbolicName="CRCL:SetEndEffectorParametersDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
+    <!-- ### SetEndeffectorParametersDataType ###-->
+    <DataType SymbolicName="CRCL:SetEndeffectorParametersDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL SetEndEffectorParameters</Description>
         <Fields>
             <Field Name="ParameterSetting" DataType="CRCL:CRCL_ParameterSettingDataType" ValueRank="Array" ModellingRule="Mandatory">
-                <Description>ParameterSetting of SetEndEffectorParameters</Description>
+                <Description>ParameterSetting of SetEndeffectorParametersDataType</Description>
             </Field>
         </Fields>
     </DataType>
 
-    <!-- ### SetEndEffectorDataType ###-->
-    <DataType SymbolicName="CRCL:SetEndEffectorDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
+    <!-- ### SetEndeffectorDataType ###-->
+    <DataType SymbolicName="CRCL:SetEndeffectorDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL SetEndEffector</Description>
         <Fields>
             <Field Name="Setting" DataType="CRCL:CRCL_FractionDataType" TypeDefinition="CRCL:CRCL_FractionFieldType" ModellingRule="Mandatory">
-                <Description>Setting of SetEndEffector</Description>
+                <Description>Setting of SetEndeffectorDataType</Description>
             </Field>
         </Fields>
     </DataType>
@@ -835,19 +880,6 @@
         </Fields>
     </DataType>
 
-
-
-    <!-- ### CRCLSkillDataType ###-->
-      <DataType SymbolicName="CRCL:CRCLSkillDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true">
-        <Description>CRCLProgramm</Description>
-        <Fields>
-            <Field Name="CRCLCommands" DataType="CRCL:CRCLCommandsUnionDataType" ValueRank="Array" ModellingRule="Mandatory">
-                <Description>CRCLCommands of the CRCLProgramm</Description>
-            </Field>
-        </Fields>
-    </DataType>
-
-
     <!-- ### EnableRobotParameterStatusDataType ###-->
     <DataType SymbolicName="CRCL:EnableRobotParameterStatusDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL EnableRobotParameterStatus</Description>
@@ -868,8 +900,8 @@
         </Fields>
     </DataType>
 
-    <!-- ### SetDefaultJointPositonsTolerancesDataType ###-->
-    <DataType SymbolicName="CRCL:SetDefaultJointPositonsTolerancesDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
+    <!-- ### SetDefaultJointPositionsTolerancesDataType ###-->
+    <DataType SymbolicName="CRCL:SetDefaultJointPositionsTolerancesDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL SetEndPoseTolerance</Description>
         <Fields>
             <Field Name="JointTolerances" DataType="CRCL:CRCL_JointPositionsTolerancesDataType" TypeDefinition="CRCL:CRCL_JointPositionsTolerancesFieldType" ModellingRule="Mandatory">
@@ -878,12 +910,11 @@
         </Fields>
     </DataType>
 
-
     <!-- ### SetRotAccelDataType ###-->
     <DataType SymbolicName="CRCL:SetRotAccelDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL SetRotAccel</Description>
         <Fields>
-            <Field Name="RotAccel" DataType="ua:Structure" TypeDefinition="CRCL:CRCL_RotAccelFieldType" ModellingRule="Mandatory">
+            <Field Name="RotAccel" DataType="CRCL:CRCL_RotAccelDataType" ModellingRule="Mandatory" ValueRank="Scalar">
                 <Description>RotAccel of SetRotAccel</Description>
             </Field>
         </Fields>
@@ -893,7 +924,7 @@
     <DataType SymbolicName="CRCL:SetTransAccelDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL SetTransAccel</Description>
         <Fields>
-            <Field Name="TransAccel" DataType="ua:Structure" TypeDefinition="CRCL:CRCL_TransAccelFieldType" ModellingRule="Mandatory">
+            <Field Name="TransAccel" DataType="CRCL:CRCL_TransAccelDataType" ModellingRule="Mandatory" ValueRank="Scalar">
                 <Description>RotAccel of SetTransAccel</Description>
             </Field>
         </Fields>
@@ -903,7 +934,7 @@
     <DataType SymbolicName="CRCL:SetRotSpeedDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true">
         <Description>CRCL SetRotSpeed</Description>
         <Fields>
-            <Field Name="RotSpeed" DataType="ua:Structure" TypeDefinition="CRCL:CRCL_RotSpeedFieldType" ModellingRule="Mandatory">
+            <Field Name="RotSpeed" DataType="CRCL:CRCL_RotSpeedDataType" ModellingRule="Mandatory" ValueRank="Scalar">
                 <Description>RotAccel of SetRotSpeed</Description>
             </Field>
         </Fields>
@@ -913,34 +944,28 @@
     <DataType SymbolicName="CRCL:SetTransSpeedDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true" ValueRank="Scalar">
         <Description>CRCL SetTransSpeed</Description>
         <Fields>
-            <Field Name="TransSpeed" DataType="ua:Structure" TypeDefinition="CRCL:CRCL_TransSpeedFieldType" ModellingRule="Mandatory" ValueRank="Scalar">
-                <Description>RotAccel of SetTransSpeed</Description>
+            <Field Name="TransSpeed" DataType="CRCL:CRCL_TransSpeedDataType" ModellingRule="Mandatory" ValueRank="Scalar">
+                <Description>TransSpeed of SetTransSpeed</Description>
             </Field>
         </Fields>
     </DataType>
 
-
-    <!-- ### SetTransSpeedDataType ###-->
-    <DataType SymbolicName="CRCL:UnionTestDataType" BaseType="ua:Union" IsAbstract="false" SupportsEvents="true" ValueRank="Scalar">
-        <Description>CRCL SetTransSpeed</Description>
+    <!-- ### ConfigureJointReportsDataType ###-->
+    <DataType SymbolicName="CRCL:ConfigureJointReportsDataType" BaseType="CRCL:CRCL_DataThingDataType">
+        <Description>CRCL ConfigureJointReportsDataType</Description>
         <Fields>
-            <Field Name="switchField" DataType="ua:UInt32" ModellingRule="Mandatory" ValueRank="Scalar">
-                <Description>switchField</Description>
+            <Field Name="Reset" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Reset of ConfigureJointReportsDataType</Description>
             </Field>
-            <Field Name="stringValue" DataType="ua:String" ModellingRule="Mandatory" ValueRank="Scalar">
-                <Description>RotAccel of SetTransSpeed</Description>
-            </Field>
-            <Field Name="booleanValue" DataType="ua:Boolean" ModellingRule="Mandatory" ValueRank="Scalar">
-                <Description>bool</Description>
-            </Field>
-            <Field Name="uint32Value" DataType="ua:UInt32" ModellingRule="Mandatory" ValueRank="Scalar">
-                <Description>uint32</Description>
+            <Field Name="ConfigureJointReport" DataType="CRCL:CRCL_ConfigureJointReportDataType" ValueRank="Array" ModellingRule="Mandatory">
+                <Description>Array of ConfigureJointReport of ConfigureJointReportsDataType</Description>
             </Field>
         </Fields>
     </DataType>
 
+    <!-- ### CRCL COMMANDS INFORMATION MODEL ###-->
 
-   <!-- ### CRCL Status ### DataTypes -->
+   <!-- ### CRCL STATUSES INFORMATION MODEL ### -->
    
    <!-- CRCL_CommandStateEnumDataType -->
   <DataType SymbolicName="CRCL:CRCL_CommandStateEnumDataType" BaseType="ua:Enumeration">
@@ -1311,9 +1336,47 @@
         </Fields>
     </DataType>
 
+   <!-- ### CRCL STATUSES INFORMATION MODEL ### -->
 
-   <!-- ### CRCL Status ### DataTypes -->
+   <!-- ### SAMY DEFINITIONS ### -->
 
+    <!-- ### PubSubIPAddresses ###-->
+      <DataType SymbolicName="CRCL:PubSubIPAddresses" BaseType="ua:Structure" IsAbstract="false" SupportsEvents="true">
+        <Description>PubSub IP addresses: IPAddress_Skill is the address where the SAMYCore is Publishing and the SAMYPlugIn is Subscribed; IPAddress_Status is the address where the SAMYCore is Subscribed and the SAMYCore is Publishing</Description>
+        <Fields>
+            <Field Name="IPAddress_Skill" DataType="ua:String" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>IPAddress_1: SAMYCore Publish here, SAMYPlugIn is Subscribed here</Description>
+            </Field>
+            <Field Name="IPAddress_Status" DataType="ua:String" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>IPAddress_1: SAMYCore is Subscribed here, SAMYPlugIn is Publishing here</Description>
+            </Field>
+        </Fields>
+    </DataType>
+
+    <!-- ### SAMYRobotDataType ###-->
+      <DataType SymbolicName="CRCL:SAMYRobotDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true">
+        <Description>CRCLProgramm</Description>
+        <Fields>
+            <Field Name="Requested_Skill" DataType="CRCL:CRCLSkillDataType" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Indicates the current requested skill by the SAMYCore to be executed by the robot</Description>
+            </Field> 
+            <Field Name="Requested_Skill_Success" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Indicates whether the Requested_Skill" was succesfully executed by the robot</Description>
+            </Field>
+            <Field Name="Active" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Indicates whether the robot is executing the Requested_Skill or it is in idle</Description>
+            </Field>
+            <Field Name="Online" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Indicates whether communication with the robot PlugIn could be stablished</Description>
+            </Field>
+     <!-- ###        <Field Name="Robot_Status" DataType="CRCL:CRCLStatusDataType" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Indicates the status of the robot</Description>
+            </Field>  ###-->
+           <Field Name="IPAddresses" DataType="CRCL:PubSubIPAddresses" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>IPAddresses where the Requested_Skills (IPAddress_Skill) and Status (IPAddress_Status) are published</Description>
+            </Field> 
+        </Fields>
+    </DataType>
 
    <!-- ### CRCLCommandsUnionDataType ###-->
  <DataType SymbolicName="CRCL:CRCLCommandsUnionDataType" BaseType="ua:Union" IsAbstract="false" SupportsEvents="true">
@@ -1325,72 +1388,652 @@
             <Field Name="InitCanonCommand" DataType="CRCL:InitCanonDataType" ValueRank="Scalar">
                 <Description>InitCanonCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
-            <Field Name="MoveToCommand" DataType="CRCL:MoveToDataType" ValueRank="Scalar">
-                <Description>MoveToCommand in the CRCLCommandsUnionDataType</Description>
-            </Field>
-            <Field Name="CloseToolChangerCommand" DataType="CRCL:CloseToolChangerDataType" ValueRank="Scalar">
-                <Description>CloseToolChangerCommand in the CRCLCommandsUnionDataType</Description>
-            </Field>
-            <Field Name="DwellCommand" DataType="CRCL:DwellDataType" ValueRank="Scalar">
-                <Description>DwellCommand in the CRCLCommandsUnionDataType</Description>
-            </Field>
-            <Field Name="GetStatusCommand" DataType="CRCL:GetStatusDataType" ValueRank="Scalar">
-                <Description>GetStatusCommand in the CRCLCommandsUnionDataType</Description>
+            <Field Name="EndCanonCommand" DataType="CRCL:EndCanonDataType" ValueRank="Scalar">
+                <Description>EndCanonCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
             <Field Name="MessageCommand" DataType="CRCL:MessageDataType" ValueRank="Scalar">
                 <Description>MessageCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
-            <Field Name="EndCanonCommand" DataType="CRCL:EndCanonDataType" ValueRank="Scalar">
-                <Description>EndCanonDataType in the CRCLCommandsUnionDataType</Description>
+            <Field Name="MoveToCommand" DataType="CRCL:MoveToDataType" ValueRank="Scalar">
+                <Description>MoveToCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="MoveScrewCommand" DataType="CRCL:MoveScrewDataType" ValueRank="Scalar">
+                <Description>MoveScrewCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="MoveThroughToCommand" DataType="CRCL:MoveThroughToDataType" ValueRank="Scalar">
+                <Description>MoveThroughToCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="DwellCommand" DataType="CRCL:DwellDataType" ValueRank="Scalar">
+                <Description>DwellCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="ActuateJointsCommand" DataType="CRCL:ActuateJointsDataType" ValueRank="Scalar">
+                <Description>ActuateJointsCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="ConfigureJointReportsCommand" DataType="CRCL:ConfigureJointReportsDataType" ValueRank="Scalar">
+                <Description>ConfigureJointReportsCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetDefaultJointPositionsTolerancesCommand" DataType="CRCL:SetDefaultJointPositionsTolerancesDataType" ValueRank="Scalar">
+                <Description>SetDefaultJointPositionsTolerancesCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="GetStatusCommand" DataType="CRCL:GetStatusDataType" ValueRank="Scalar">
+                <Description>GetStatusCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="CloseToolChangerCommand" DataType="CRCL:CloseToolChangerDataType" ValueRank="Scalar">
+                <Description>CloseToolChangerCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="OpenToolChangerCommand" DataType="CRCL:OpenToolChangerDataType" ValueRank="Scalar">
+                <Description>OpenToolChangerCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetRobotParametersCommand" DataType="CRCL:SetRobotParametersDataType" ValueRank="Scalar">
+                <Description>SetRobotParametersCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetEndeffectorParametersCommand" DataType="CRCL:SetEndeffectorParametersDataType" ValueRank="Scalar">
+                <Description>SetEndeffectorParametersCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetEndeffectorCommand" DataType="CRCL:SetEndeffectorDataType" ValueRank="Scalar">
+                <Description>SetEndeffectorCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetTransAccelCommand" DataType="CRCL:SetTransAccelDataType" ValueRank="Scalar">
+                <Description>SetTransAccelCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetTransSpeedCommand" DataType="CRCL:SetTransSpeedDataType" ValueRank="Scalar">
+                <Description>SetTransSpeedCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetRotAccelCommand" DataType="CRCL:SetRotAccelDataType" ValueRank="Scalar">
+                <Description>SetRotAccelCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetRotSpeedCommand" DataType="CRCL:SetRotSpeedDataType" ValueRank="Scalar">
+                <Description>SetRotSpeedCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetAngleUnitsCommand" DataType="CRCL:SetAngleUnitsDataType" ValueRank="Scalar">
+                <Description>SetAngleUnitsCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetEndPoseToleranceCommand" DataType="CRCL:SetEndPoseToleranceDataType" ValueRank="Scalar">
+                <Description>SetEndPoseToleranceCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetForceUnitsCommand" DataType="CRCL:SetForceUnitsDataType" ValueRank="Scalar">
+                <Description>SetForceUnitsCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetIntermediatePoseToleranceCommand" DataType="CRCL:SetIntermediatePoseToleranceDataType" ValueRank="Scalar">
+                <Description>SetIntermediatePoseToleranceCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetLengthUnitsCommand" DataType="CRCL:SetLengthUnitsDataType" ValueRank="Scalar">
+                <Description>SetLengthUnitsCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetMotionCoordinationCommand" DataType="CRCL:SetMotionCoordinationDataType" ValueRank="Scalar">
+                <Description>SetMotionCoordinationCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="SetTorqueUnitsCommand" DataType="CRCL:SetTorqueUnitsDataType" ValueRank="Scalar">
+                <Description>SetTorqueUnitsCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="StopMotionCommand" DataType="CRCL:StopMotionDataType" ValueRank="Scalar">
+                <Description>StopMotionCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="ConfigureStatusReportCommand" DataType="CRCL:ConfigureStatusReportDataType" ValueRank="Scalar">
+                <Description>ConfigureStatusReportCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="EnableSensorCommand" DataType="CRCL:EnableSensorDataType" ValueRank="Scalar">
+                <Description>EnableSensorCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="DisableSensorCommand" DataType="CRCL:DisableSensorDataType" ValueRank="Scalar">
+                <Description>DisableSensorCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="EnableGripperCommand" DataType="CRCL:EnableGripperDataType" ValueRank="Scalar">
+                <Description>EnableGripperCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="DisableGripperCommand" DataType="CRCL:DisableGripperDataType" ValueRank="Scalar">
+                <Description>DisableGripperCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="EnableRobotParameterStatusCommand" DataType="CRCL:EnableRobotParameterStatusDataType" ValueRank="Scalar">
+                <Description>EnableRobotParameterStatusCommand in the CRCLCommandsUnionDataType</Description>
+            </Field>
+            <Field Name="DisableRobotParameterStatusCommand" DataType="CRCL:DisableRobotParameterStatusDataType" ValueRank="Scalar">
+                <Description>DisableRobotParameterStatusCommand in the CRCLCommandsUnionDataType</Description>
             </Field>
         </Fields>
-    </DataType>  
+</DataType>  
 
-
-
-
-
-
-    <!-- ### DATA PRIMITIVES ###-->
-
-    <!-- ### CRCL COMMANDS ###-->
-
-    <!-- CRCL_StopConditionEnumDataType -->
-  <DataType SymbolicName="CRCL:CRCL_StopConditionEnumDataType" BaseType="ua:Enumeration">
-    <Fields>
-      <Field Name="IMMEDIATE" Identifier="0">
-        <Description>Stop Condition is Immediate</Description>
-      </Field>
-      <Field Name="FAST" Identifier="1">
-        <Description>Stop Condition is Fast</Description>
-      </Field>
-      <Field Name="NORMAL" Identifier="2">
-        <Description>Stop Condition is Normal</Description>
-      </Field>
-    </Fields>
-  </DataType>
-
-    <!-- ### CRCL_ConfigureJointReportDataType ###-->
-    <DataType SymbolicName="CRCL:CRCL_ConfigureJointReportDataType" BaseType="CRCL:CRCL_DataThingDataType">
-        <Description>CRCL ConfigureJointReportDataType</Description>
+    <!-- ### CRCLSkillDataType ###-->
+      <DataType SymbolicName="CRCL:CRCLSkillDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true">
+        <Description>CRCLProgramm</Description>
         <Fields>
-            <Field Name="JointNumber" DataType="ua:Int32" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>JointNumber of ConfigureJointReportDataType</Description>
-            </Field>
-            <Field Name="ReportPosition" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>ReportPosition of ConfigureJointReportDataType</Description>
-            </Field>
-            <Field Name="ReportTorqueOrForce" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>ReportTorqueOrForce of ConfigureJointReportDataType</Description>
-            </Field>
-            <Field Name="ReportVelocity" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>ReportVelocity of ConfigureJointReportDataType</Description>
+            <Field Name="CRCLCommands" DataType="CRCL:CRCLCommandsUnionDataType" ValueRank="Array" ModellingRule="Mandatory">
+                <Description>CRCLCommands of the Skill</Description>
             </Field>
         </Fields>
     </DataType>
 
-    <!-- ### CRCL COMMANDS ###-->
+   <!-- ### SAMY DEFINITIONS: CRCL COMMANDS PARAMETERS ### -->
 
+  <ObjectType SymbolicName="CRCL:ISkillParameter" BaseType="ua:BaseInterfaceType"
+              IsAbstract="true"
+              SupportsEvents="true">
+    <Description>The interface of a Skill Parameter appearing in the ParameterSet of a skill.
+    </Description>
+    <Children>
+          <Property SymbolicName="CRCL:ReadParameterAtExecutionTime" TypeDefinition="ua:PropertyType"
+                    DataType="ua:Boolean" ModellingRule="Mandatory" ValueRank="Scalar"
+                    >
+            <Description>When instantiating a skill (calling the Start method), with this variable one can indicate whether a command uses a fixed parameter, set at skill instantation time, or a "real time" value read at execution time of the command.</Description>
+          </Property>
+    </Children>
+  </ObjectType>
+
+  <DataType SymbolicName="CRCL:CRCLCommandParametersSetDataType" BaseType="ua:Structure" IsAbstract="true"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a CRCL Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:RealTimeParameter" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Boolean indicating whether this command of the skill should be used the corresponding Real Time Node
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+
+  <DataType SymbolicName="CRCL:InitCanonParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of an Init Command (does not require parameters).
+    </Description>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:EndCanonParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of an EndCanon Command (does not require parameters).
+    </Description>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:GetStatusParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a GetStatus Command (does not require parameters).
+    </Description>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:CloseToolChangerParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a CloseToolChanger Command (does not require parameters).
+    </Description>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:OpenToolChangerParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a OpenToolChanger Command (does not require parameters).
+    </Description>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:MessageParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a Message Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:Message" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Message of a Message command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:MoveToParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a MoveToCommand.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:MoveStraight" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>MoveStraight of a moveTo command
+            </Description>
+          </Field>
+          <Field Name="CRCL:EndPosition" DataType="CRCL:CRCL_PoseDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>EndPosition of a moveTo command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:MoveScrewParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a MoveScrew Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:StartPosition" DataType="CRCL:CRCL_PoseDataType"
+                    ModellingRule="Optional" ValueRank="Scalar">
+            <Description>StartPosition of a MoveScrew Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:AxisPoint" DataType="CRCL:CRCL_PointDataType"
+                    ModellingRule="Optional" ValueRank="Scalar">
+            <Description>AxisPoint of a MoveScrew Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:AxialDistanceFree" DataType="ua:Double"
+                    ModellingRule="Optional" ValueRank="Scalar">
+            <Description>AxialDistanceFree of a MoveScrew Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:AxialDistanceScrew" DataType="ua:Double"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>AxialDistanceScrew of a MoveScrew Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:Turn" DataType="ua:Double"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Turn of a MoveScrew Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:MoveThroughToParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a MoveThroughTo Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:MoveStraight" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" >
+            <Description>MoveStraight of a MoveThroughTo Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:Waypoint" DataType="CRCL:CRCL_PoseDataType"
+                    ModellingRule="Mandatory" ValueRank="Array" > 
+            <Description>Waypoint of a MoveThroughTo Command (requires minimum two poses)
+            </Description>
+          </Field>
+          <Field Name="CRCL:NumPositions" DataType="ua:Int32"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>NumPositions of a MoveThroughTo Command  (requires minimum two poses)
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:DwellParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a Dwell Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:DwellTime" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>DwellTime of a Dwell Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:ActuateJointsParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a ActuateJoints Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:ActuateJoint" DataType="CRCL:CRCL_ActuateJointDataType"
+                    ModellingRule="Mandatory" ValueRank="Array">
+            <Description>Array of ActuateJoint of a ActuateJoints Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:JointTolerances" DataType="CRCL:CRCL_JointPositionsTolerancesDataType"
+                    ModellingRule="Optional" ValueRank="Scalar">
+            <Description>JointTolerances of a ActuateJoints Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:ConfigureJointReportsParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a ConfigureJointreports Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:ResetAll" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Array">
+            <Description>ResetAll of a ConfigureJointreports Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:ConfigureJointReport" DataType="CRCL:CRCL_ConfigureJointReportDataType"
+                    ModellingRule="Optional" ValueRank="Array">
+            <Description>Array of ConfigureJointReport of a ConfigureJointreports Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetDefaultJointPositionsTolerancesParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetDefaultJointPositionsTolerances Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:JointTolerances" DataType="CRCL:CRCL_JointPositionsTolerancesDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>JointTolerances of a SetDefaultJointPositionsTolerances Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetRobotParametersParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetRobotParameters Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:ParameterSetting" DataType="CRCL:CRCL_ParameterSettingDataType"
+                    ModellingRule="Mandatory" ValueRank="Array">
+            <Description>Array of ParameterSetting of a SetRobotParameters Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetEndeffectorParametersParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetEndeffectorParameters Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:ParameterSetting" DataType="CRCL:CRCL_ParameterSettingDataType"
+                    ModellingRule="Mandatory" ValueRank="Array">
+            <Description>Array of ParameterSetting of a SetEndeffectorParameters Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetEndeffectorParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetEndeffector Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:Setting" DataType="CRCL:CRCL_FractionDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Setting of a SetEndeffector Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetTransSpeedParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetTransSpeed Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:TransSpeed" DataType="CRCL:CRCL_TransSpeedDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>SetTransSpeed of a SetTransSpeed Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetTransAccelParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetTransAccel Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:TransAccel" DataType="CRCL:CRCL_TransAccelDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>TransAccel of a SetTransSpeed Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetRotSpeedParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetTransSpeed Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:RotSpeed" DataType="CRCL:CRCL_RotSpeedDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>RotSpeed of a RotSpeed Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetRotAccelParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetRotAccel Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:RotAccel" DataType="CRCL:CRCL_RotAccelDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>RotAccel of a SetRotAccel Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetAngleUnitsParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetAngleUnits Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:UnitName" DataType="CRCL:CRCL_AngleUnitEnumDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>UnitName of a SetAngleUnits Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetEndPoseToleranceParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetEndPoseTolerance Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:Tolerance" DataType="CRCL:CRCL_PoseToleranceDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Tolerance of a SetEndPoseTolerance Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetForceUnitsParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetForceUnits Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:UnitName" DataType="CRCL:CRCL_ForceUnitEnumDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>UnitName of a SetForceUnits Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetIntermediatePoseToleranceParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetIntermediatePoseTolerance Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:Tolerance" DataType="CRCL:CRCL_PoseToleranceDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Tolerance of a SetIntermediatePoseTolerance Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetLengthUnitsParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetLengthUnits Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:UnitName" DataType="CRCL:CRCL_LengthUnitEnumDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>UnitName of a SetLengthUnits Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetMotionCoordinationParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetMotionCoordination Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:Coordinated" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Coordinated of a SetMotionCoordination Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:SetTorqueUnitsParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a SetTorqueUnits Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:UnitName" DataType="CRCL:CRCL_TorqueUnitEnumDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>UnitName of a SetTorqueUnits Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:StopMotionParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a StopMotion Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:StopCondition" DataType="CRCL:CRCL_StopConditionEnumDataType"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>StopCondition of a StopMotion Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:ConfigureStatusReportParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a ConfigureStatusReport Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:ReportJointStatuses" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>ReportJointStatuses of a ConfigureStatusReport Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:ReportPoseStatus" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>ReportPoseStatus of a ConfigureStatusReport Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:ReportGripperStatus" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>ReportGripperStatus of a ConfigureStatusReport Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:ReportSettingsStatus" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>ReportSettingsStatus of a ConfigureStatusReport Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:ReportSensorsStatus" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>ReportSensorsStatus of a ConfigureStatusReport Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:ReportGuardsStatus" DataType="ua:Boolean"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>ReportGuardsStatus of a ConfigureStatusReport Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:EnableSensorParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a EnableSensor Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:SensorID" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>SensorID of a EnableSensor Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:SensorOption" DataType="CRCL:CRCL_ParameterSettingDataType"
+                    ModellingRule="Optional" ValueRank="Array">
+            <Description>Array of ParameterSetting of a EnableSensor Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:DisableSensorParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a DisableSensor Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:SensorID" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>SensorID of a DisableSensor Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:EnableGripperParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a EnableGripper Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:GripperName" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>GripperName of a EnableGripper Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:GripperOption" DataType="CRCL:CRCL_ParameterSettingDataType"
+                    ModellingRule="Optional" ValueRank="Array">
+            <Description>Array of ParameterSetting of a EnableGripper Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:DisableGripperParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a DisableGripper Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:GripperName" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>GripperName of a DisableGripper Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:EnableRobotParameterStatusParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a EnableRobotParameterStatus Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:RobotParameterName" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>RobotParameterName of a EnableRobotParameterStatus Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+  <DataType SymbolicName="CRCL:DisableRobotParameterStatusParametersSetDataType" BaseType="CRCL:CRCLCommandParametersSetDataType" IsAbstract="false"
+              SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
+    <Description>Parameters of a DisableRobotParameterStatus Command.
+    </Description>
+    <Fields>
+          <Field Name="CRCL:RobotParameterName" DataType="ua:String"
+                    ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>RobotParameterName of a DisableRobotParameterStatus Command
+            </Description>
+          </Field>
+    </Fields>
+  </DataType>
+
+   <!-- ### SAMY DEFINITIONS ### -->
 
 </ModelDesign>
 

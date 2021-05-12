@@ -4,8 +4,7 @@
 #include <open62541/plugin/log_stdout.h>
 /* Files namespace_foo_flt_generated.h and namespace_foo_flt_generated.c are created from FooFlt.NodeSet2.xml in the
  * /src_generated directory by CMake */
-#include "crcl_opcua_nodeids.h"
-#include "namespace_crcl_opcua_generated.h"
+#include "namespace_crcl_generated.h"
 #include <signal.h>
 #include <stdlib.h>
 
@@ -25,6 +24,7 @@
 
 #define PUBLISHER_METADATAUPDATETIME 0
 
+#ifdef AAA
 typedef struct {
     UA_UInt32 numericID;
     UA_String name;
@@ -133,3 +133,5 @@ typedef struct {
 } Publisher;
 
 #endif /*PUBLISHER_H*/
+
+#endif

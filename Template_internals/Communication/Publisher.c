@@ -2,6 +2,8 @@
 
 /* Publisher_UADP functions begin*/
 /*Setting PublisherUADP PubSubConnection and adding it to the server*/
+
+#ifdef AAA
 void setPublisherUADP_PubSubConnection(Publisher_UADP* publisher){
     memset(&(publisher->connectionConfig), 0, sizeof(publisher->connectionConfig));
     publisher->connectionConfig.name = publisher->name;
@@ -453,5 +455,7 @@ UA_StatusCode addPublisherMQTT_ToServer(UA_Server* server, Publisher_MQTT* publi
 }
 
 /* Publisher_MQTT functions end*/
+
+#endif
 
 

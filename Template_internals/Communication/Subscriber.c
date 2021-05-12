@@ -1,5 +1,6 @@
 #include "Subscriber.h"
 
+#ifdef AAA
 /* Publisher_UADP functions begin*/
 /*Setting PublisherUADP PubSubConnection and adding it to the server*/
 void setSubscriberUADP_PubSubConnection(Subscriber_UADP* subscriber){
@@ -126,7 +127,7 @@ void setDataSetMetaData(UA_DataSetMetaDataType *pMetaData, UA_String name) {
 
     /* CRCL Vector DataType for test purposes */
     UA_FieldMetaData_init (&pMetaData->fields[0]);
-    UA_NodeId_copy(&UA_TYPES_CRCL_OPCUA[UA_TYPES_CRCL_OPCUA_CRCL_VECTORDATATYPE].typeId,
+    UA_NodeId_copy(&UA_TYPES_CRCL[UA_TYPES_CRCL_CRCL_VECTORDATATYPE].typeId,
                     &pMetaData->fields[0].dataType);
     pMetaData->fields[0].builtInType = UA_NS0ID_STRUCTURE;
     pMetaData->fields[0].name =  name;
@@ -134,7 +135,7 @@ void setDataSetMetaData(UA_DataSetMetaDataType *pMetaData, UA_String name) {
 
     /* SAMYROBOTDataType will be something like...
     UA_FieldMetaData_init (&pMetaData->fields[0]);
-    UA_NodeId_copy (&UA_CRCL_OPCUA_TYPES[UA_TYPES_CRCL_OPCUA_SAMYROBOT].typeId,
+    UA_NodeId_copy (&UA_CRCL_OPCUA_TYPES[UA_TYPES_CRCL_SAMYROBOT].typeId,
                     &pMetaData->fields[0].dataType);
     pMetaData->fields[0].builtInType = UA_NS0ID_STRUCTURE;
     pMetaData->fields[0].name =  UA_STRING ("Robot_1");
@@ -175,3 +176,5 @@ UA_StatusCode (*addCustomCallback)(UA_Server *server, UA_NodeId identifier,
                                    UA_ServerCallback callback,
                                    void *data, UA_Double interval_ms, UA_UInt64 *callbackId);
 */
+
+#endif
