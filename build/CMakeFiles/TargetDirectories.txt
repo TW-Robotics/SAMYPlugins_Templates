@@ -1,0 +1,6 @@
+/home/jbg/Desktop/SAMYPlugins_Templates/build/CMakeFiles/rebuild_cache.dir
+/home/jbg/Desktop/SAMYPlugins_Templates/build/CMakeFiles/SAMYPlugIn_Base.dir
+/home/jbg/Desktop/SAMYPlugins_Templates/build/CMakeFiles/pref-ns-crcl.dir
+/home/jbg/Desktop/SAMYPlugins_Templates/build/CMakeFiles/edit_cache.dir
+/home/jbg/Desktop/SAMYPlugins_Templates/build/CMakeFiles/pref-ids-crcl.dir
+/home/jbg/Desktop/SAMYPlugins_Templates/build/CMakeFiles/pref-types-crcl.dir
