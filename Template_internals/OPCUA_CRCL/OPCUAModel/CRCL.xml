@@ -544,8 +544,20 @@
     </DataType>
 
     <!-- ### CRCL_JointDetailsDataType ###--> 
-    <DataType SymbolicName="CRCL:CRCL_JointDetailsDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="true" SupportsEvents="true" ExposesItsFields="true">
+    <!--### Union of JointDetailsDataType types (JointSpeedAccelDataType and JointForceTorque) ###-->
+    <DataType SymbolicName="CRCL:CRCL_JointDetailsDataType" BaseType="ua:Union">
         <Description>CRCL JointDetailsType</Description>
+        <Fields>
+            <Field Name="SwitchField" DataType="ua:UInt32" ValueRank="Scalar">
+                <Description>SwitchField</Description>
+            </Field>
+            <Field Name="JointSpeedAccel" DataType="CRCL:CRCL_JointSpeedAccelDataType" ValueRank="Scalar">
+                <Description>JointSpeedAccel in the JointDetailsDataType</Description>
+            </Field>
+            <Field Name="JointForceTorque" DataType="CRCL:CRCL_JointForceTorqueDataType" ValueRank="Scalar">
+                <Description>JointForceTorque in the JointDetailsDataType</Description>
+            </Field>
+        </Fields>
     </DataType>
 
     <!-- ### CRCL_ActuateJointDataType ###-->
@@ -558,14 +570,14 @@
             <Field Name="CRCL:JointPosition" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
                 <Description>JointPosition of CRCL ActuateJointType</Description>
             </Field>
-            <Field Name="CRCL:JointDetails" TypeDefinition="CRCL:CRCL_JointDetailsDataType" ModellingRule="Mandatory">
+            <Field Name="CRCL:JointDetails" DataType="CRCL:CRCL_JointDetailsDataType" ModellingRule="Mandatory">
                 <Description>JointDetails of CRCL ActuateJointType</Description>
             </Field>
         </Fields>
     </DataType>
 
     <!-- ### CRCL_JointForceTorqueDataType ###--> 
-    <DataType SymbolicName="CRCL:CRCL_JointForceTorqueDataType" BaseType="CRCL:CRCL_JointDetailsDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
+    <DataType SymbolicName="CRCL:CRCL_JointForceTorqueDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
         <Description>CRCL JointForceTorqueDataType</Description>
         <Fields>
             <Field Name="CRCL:Setting" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -578,7 +590,7 @@
     </DataType>
 
     <!-- ### CRCL_JointSpeedAccelDataType ###--> 
-    <DataType SymbolicName="CRCL:CRCL_JointSpeedAccelDataType" BaseType="CRCL:CRCL_JointDetailsDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
+    <DataType SymbolicName="CRCL:CRCL_JointSpeedAccelDataType" BaseType="CRCL:CRCL_DataThingDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
         <Description>CRCL JointSpeedAccelDataType</Description>
         <Fields>
             <Field Name="CRCL:JointSpeed" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
@@ -594,12 +606,16 @@
     <DataType SymbolicName="CRCL:ActuateJointsDataType" BaseType="CRCL:MiddleCommandDataType" IsAbstract="false" SupportsEvents="true" ExposesItsFields="true">
         <Description>CRCL ActuateJointsType</Description>
         <Fields>
-            <Field Name="CRCL:JointSpeed" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>JointSpeed of CRCL JointSpeedAccelType</Description>
-            </Field>
-            <Field Name="CRCL:JointAccel" DataType="ua:Double" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>JointAccel of CRCL JointSpeedAccelType</Description>
-            </Field>
+          <Field Name="CRCL:ActuateJoint" DataType="CRCL:CRCL_ActuateJointDataType"
+                    ModellingRule="Mandatory" ValueRank="Array">
+            <Description>Array of ActuateJoint of a ActuateJoints Command
+            </Description>
+          </Field>
+          <Field Name="CRCL:JointTolerances" DataType="CRCL:CRCL_JointPositionsTolerancesDataType"
+                    ModellingRule="Optional" ValueRank="Scalar">
+            <Description>JointTolerances of a ActuateJoints Command
+            </Description>
+          </Field>
         </Fields>
     </DataType>
 
@@ -951,11 +967,11 @@
     </DataType>
 
     <!-- ### ConfigureJointReportsDataType ###-->
-    <DataType SymbolicName="CRCL:ConfigureJointReportsDataType" BaseType="CRCL:CRCL_DataThingDataType">
+    <DataType SymbolicName="CRCL:ConfigureJointReportsDataType" BaseType="CRCL:MiddleCommandDataType">
         <Description>CRCL ConfigureJointReportsDataType</Description>
         <Fields>
-            <Field Name="Reset" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
-                <Description>Reset of ConfigureJointReportsDataType</Description>
+            <Field Name="ResetAll" DataType="ua:Boolean" ValueRank="Scalar" ModellingRule="Mandatory">
+                <Description>Reset all ConfigureJointReportsDataType</Description>
             </Field>
             <Field Name="ConfigureJointReport" DataType="CRCL:CRCL_ConfigureJointReportDataType" ValueRank="Array" ModellingRule="Mandatory">
                 <Description>Array of ConfigureJointReport of ConfigureJointReportsDataType</Description>
@@ -1687,7 +1703,7 @@
     </Description>
     <Fields>
           <Field Name="CRCL:ResetAll" DataType="ua:Boolean"
-                    ModellingRule="Mandatory" ValueRank="Array">
+                    ModellingRule="Mandatory" ValueRank="Scalar">
             <Description>ResetAll of a ConfigureJointreports Command
             </Description>
           </Field>

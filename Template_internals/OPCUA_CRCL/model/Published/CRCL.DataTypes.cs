@@ -8274,7 +8274,7 @@ namespace CRCL
     /// <exclude />
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Opc.Ua.ModelCompiler", "1.0.0.0")]
     [DataContract(Namespace = CRCL.Namespaces.CRCL)]
-    public partial class CRCL_JointDetailsDataType : CRCL_DataThingDataType
+    public partial class CRCL_JointDetailsDataType : Union
     {
         #region Constructors
         /// <summary>
@@ -8299,10 +8299,64 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
+            m_switchField = (uint)0;
+            m_jointSpeedAccel = new CRCL_JointSpeedAccelDataType();
+            m_jointForceTorque = new CRCL_JointForceTorqueDataType();
         }
         #endregion
 
         #region Public Properties
+        /// <remarks />
+        [DataMember(Name = "SwitchField", IsRequired = false, Order = 1)]
+        public uint SwitchField
+        {
+            get { return m_switchField;  }
+            set { m_switchField = value; }
+        }
+
+        /// <summary>
+        /// JointSpeedAccel in the JointDetailsDataType
+        /// </summary>
+        [DataMember(Name = "JointSpeedAccel", IsRequired = false, Order = 2)]
+        public CRCL_JointSpeedAccelDataType JointSpeedAccel
+        {
+            get
+            {
+                return m_jointSpeedAccel;
+            }
+
+            set
+            {
+                m_jointSpeedAccel = value;
+
+                if (value == null)
+                {
+                    m_jointSpeedAccel = new CRCL_JointSpeedAccelDataType();
+                }
+            }
+        }
+
+        /// <summary>
+        /// JointForceTorque in the JointDetailsDataType
+        /// </summary>
+        [DataMember(Name = "JointForceTorque", IsRequired = false, Order = 3)]
+        public CRCL_JointForceTorqueDataType JointForceTorque
+        {
+            get
+            {
+                return m_jointForceTorque;
+            }
+
+            set
+            {
+                m_jointForceTorque = value;
+
+                if (value == null)
+                {
+                    m_jointForceTorque = new CRCL_JointForceTorqueDataType();
+                }
+            }
+        }
         #endregion
 
         #region IEncodeable Members
@@ -8331,6 +8385,9 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
+            encoder.WriteUInt32("SwitchField", SwitchField);
+            encoder.WriteEncodeable("JointSpeedAccel", JointSpeedAccel, typeof(CRCL_JointSpeedAccelDataType));
+            encoder.WriteEncodeable("JointForceTorque", JointForceTorque, typeof(CRCL_JointForceTorqueDataType));
 
             encoder.PopNamespace();
         }
@@ -8342,6 +8399,9 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
+            SwitchField = decoder.ReadUInt32("SwitchField");
+            JointSpeedAccel = (CRCL_JointSpeedAccelDataType)decoder.ReadEncodeable("JointSpeedAccel", typeof(CRCL_JointSpeedAccelDataType));
+            JointForceTorque = (CRCL_JointForceTorqueDataType)decoder.ReadEncodeable("JointForceTorque", typeof(CRCL_JointForceTorqueDataType));
 
             decoder.PopNamespace();
         }
@@ -8361,6 +8421,10 @@ namespace CRCL
                 return false;
             }
 
+            if (!base.IsEqual(encodeable)) return false;
+            if (!Utils.IsEqual(m_switchField, value.m_switchField)) return false;
+            if (!Utils.IsEqual(m_jointSpeedAccel, value.m_jointSpeedAccel)) return false;
+            if (!Utils.IsEqual(m_jointForceTorque, value.m_jointForceTorque)) return false;
 
             return true;
         }    
@@ -8378,12 +8442,18 @@ namespace CRCL
         {
             CRCL_JointDetailsDataType clone = (CRCL_JointDetailsDataType)base.MemberwiseClone();
 
+            clone.m_switchField = (uint)Utils.Clone(this.m_switchField);
+            clone.m_jointSpeedAccel = (CRCL_JointSpeedAccelDataType)Utils.Clone(this.m_jointSpeedAccel);
+            clone.m_jointForceTorque = (CRCL_JointForceTorqueDataType)Utils.Clone(this.m_jointForceTorque);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
+        private uint m_switchField;
+        private CRCL_JointSpeedAccelDataType m_jointSpeedAccel;
+        private CRCL_JointForceTorqueDataType m_jointForceTorque;
         #endregion
     }
 
@@ -8509,7 +8579,7 @@ namespace CRCL
         {
             m_jointNumber = (int)0;
             m_cRCL:JointPosition = (double)0;
-            m_cRCL:JointDetails = Variant.Null;
+            m_cRCL:JointDetails = new CRCL_JointDetailsDataType();
         }
         #endregion
 
@@ -8530,12 +8600,26 @@ namespace CRCL
             set { m_cRCL:JointPosition = value; }
         }
 
-        /// <remarks />
+        /// <summary>
+        /// JointDetails of CRCL ActuateJointType
+        /// </summary>
         [DataMember(Name = "CRCL:JointDetails", IsRequired = false, Order = 3)]
-        public Variant CRCL:JointDetails
+        public CRCL_JointDetailsDataType CRCL:JointDetails
         {
-            get { return m_cRCL:JointDetails;  }
-            set { m_cRCL:JointDetails = value; }
+            get
+            {
+                return m_cRCL:JointDetails;
+            }
+
+            set
+            {
+                m_cRCL:JointDetails = value;
+
+                if (value == null)
+                {
+                    m_cRCL:JointDetails = new CRCL_JointDetailsDataType();
+                }
+            }
         }
         #endregion
 
@@ -8567,7 +8651,7 @@ namespace CRCL
 
             encoder.WriteInt32("JointNumber", JointNumber);
             encoder.WriteDouble("CRCL:JointPosition", CRCL:JointPosition);
-            encoder.WriteVariant("CRCL:JointDetails", CRCL:JointDetails);
+            encoder.WriteEncodeable("CRCL:JointDetails", CRCL:JointDetails, typeof(CRCL_JointDetailsDataType));
 
             encoder.PopNamespace();
         }
@@ -8581,7 +8665,7 @@ namespace CRCL
 
             JointNumber = decoder.ReadInt32("JointNumber");
             CRCL:JointPosition = decoder.ReadDouble("CRCL:JointPosition");
-            CRCL:JointDetails = decoder.ReadVariant("CRCL:JointDetails");
+            CRCL:JointDetails = (CRCL_JointDetailsDataType)decoder.ReadEncodeable("CRCL:JointDetails", typeof(CRCL_JointDetailsDataType));
 
             decoder.PopNamespace();
         }
@@ -8624,7 +8708,7 @@ namespace CRCL
 
             clone.m_jointNumber = (int)Utils.Clone(this.m_jointNumber);
             clone.m_cRCL:JointPosition = (double)Utils.Clone(this.m_cRCL:JointPosition);
-            clone.m_cRCL:JointDetails = (Variant)Utils.Clone(this.m_cRCL:JointDetails);
+            clone.m_cRCL:JointDetails = (CRCL_JointDetailsDataType)Utils.Clone(this.m_cRCL:JointDetails);
 
             return clone;
         }
@@ -8633,7 +8717,7 @@ namespace CRCL
         #region Private Fields
         private int m_jointNumber;
         private double m_cRCL:JointPosition;
-        private Variant m_cRCL:JointDetails;
+        private CRCL_JointDetailsDataType m_cRCL:JointDetails;
         #endregion
     }
 
@@ -8732,7 +8816,7 @@ namespace CRCL
     /// <exclude />
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Opc.Ua.ModelCompiler", "1.0.0.0")]
     [DataContract(Namespace = CRCL.Namespaces.CRCL)]
-    public partial class CRCL_JointForceTorqueDataType : CRCL_JointDetailsDataType
+    public partial class CRCL_JointForceTorqueDataType : CRCL_DataThingDataType
     {
         #region Constructors
         /// <summary>
@@ -8968,7 +9052,7 @@ namespace CRCL
     /// <exclude />
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Opc.Ua.ModelCompiler", "1.0.0.0")]
     [DataContract(Namespace = CRCL.Namespaces.CRCL)]
-    public partial class CRCL_JointSpeedAccelDataType : CRCL_JointDetailsDataType
+    public partial class CRCL_JointSpeedAccelDataType : CRCL_DataThingDataType
     {
         #region Constructors
         /// <summary>
@@ -9229,26 +9313,56 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:JointSpeed = (double)0;
-            m_cRCL:JointAccel = (double)0;
+            m_cRCL:ActuateJoint = new CRCL_ActuateJointDataTypeCollection();
+            m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
         }
         #endregion
 
         #region Public Properties
-        /// <remarks />
-        [DataMember(Name = "CRCL:JointSpeed", IsRequired = false, Order = 1)]
-        public double CRCL:JointSpeed
+        /// <summary>
+        /// Array of ActuateJoint of a ActuateJoints Command
+            
+        /// </summary>
+        [DataMember(Name = "CRCL:ActuateJoint", IsRequired = false, Order = 1)]
+        public CRCL_ActuateJointDataTypeCollection CRCL:ActuateJoint
         {
-            get { return m_cRCL:JointSpeed;  }
-            set { m_cRCL:JointSpeed = value; }
+            get
+            {
+                return m_cRCL:ActuateJoint;
+            }
+
+            set
+            {
+                m_cRCL:ActuateJoint = value;
+
+                if (value == null)
+                {
+                    m_cRCL:ActuateJoint = new CRCL_ActuateJointDataTypeCollection();
+                }
+            }
         }
 
-        /// <remarks />
-        [DataMember(Name = "CRCL:JointAccel", IsRequired = false, Order = 2)]
-        public double CRCL:JointAccel
+        /// <summary>
+        /// JointTolerances of a ActuateJoints Command
+            
+        /// </summary>
+        [DataMember(Name = "CRCL:JointTolerances", IsRequired = false, Order = 2)]
+        public CRCL_JointPositionsTolerancesDataType CRCL:JointTolerances
         {
-            get { return m_cRCL:JointAccel;  }
-            set { m_cRCL:JointAccel = value; }
+            get
+            {
+                return m_cRCL:JointTolerances;
+            }
+
+            set
+            {
+                m_cRCL:JointTolerances = value;
+
+                if (value == null)
+                {
+                    m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+                }
+            }
         }
         #endregion
 
@@ -9278,8 +9392,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteDouble("CRCL:JointSpeed", CRCL:JointSpeed);
-            encoder.WriteDouble("CRCL:JointAccel", CRCL:JointAccel);
+            encoder.WriteEncodeableArray("CRCL:ActuateJoint", CRCL:ActuateJoint.ToArray(), typeof(CRCL_ActuateJointDataType));
+            encoder.WriteEncodeable("CRCL:JointTolerances", CRCL:JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
 
             encoder.PopNamespace();
         }
@@ -9291,8 +9405,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:JointSpeed = decoder.ReadDouble("CRCL:JointSpeed");
-            CRCL:JointAccel = decoder.ReadDouble("CRCL:JointAccel");
+            CRCL:ActuateJoint = (CRCL_ActuateJointDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ActuateJoint", typeof(CRCL_ActuateJointDataType));
+            CRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("CRCL:JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
 
             decoder.PopNamespace();
         }
@@ -9313,8 +9427,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointSpeed, value.m_cRCL:JointSpeed)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointAccel, value.m_cRCL:JointAccel)) return false;
+            if (!Utils.IsEqual(m_cRCL:ActuateJoint, value.m_cRCL:ActuateJoint)) return false;
+            if (!Utils.IsEqual(m_cRCL:JointTolerances, value.m_cRCL:JointTolerances)) return false;
 
             return true;
         }    
@@ -9332,16 +9446,16 @@ namespace CRCL
         {
             ActuateJointsDataType clone = (ActuateJointsDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:JointSpeed = (double)Utils.Clone(this.m_cRCL:JointSpeed);
-            clone.m_cRCL:JointAccel = (double)Utils.Clone(this.m_cRCL:JointAccel);
+            clone.m_cRCL:ActuateJoint = (CRCL_ActuateJointDataTypeCollection)Utils.Clone(this.m_cRCL:ActuateJoint);
+            clone.m_cRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_cRCL:JointTolerances);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private double m_cRCL:JointSpeed;
-        private double m_cRCL:JointAccel;
+        private CRCL_ActuateJointDataTypeCollection m_cRCL:ActuateJoint;
+        private CRCL_JointPositionsTolerancesDataType m_cRCL:JointTolerances;
         #endregion
     }
 
@@ -16922,7 +17036,7 @@ namespace CRCL
     /// <exclude />
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Opc.Ua.ModelCompiler", "1.0.0.0")]
     [DataContract(Namespace = CRCL.Namespaces.CRCL)]
-    public partial class ConfigureJointReportsDataType : CRCL_DataThingDataType
+    public partial class ConfigureJointReportsDataType : MiddleCommandDataType
     {
         #region Constructors
         /// <summary>
@@ -16947,18 +17061,18 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_reset = true;
+            m_resetAll = true;
             m_configureJointReport = new CRCL_ConfigureJointReportDataTypeCollection();
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "Reset", IsRequired = false, Order = 1)]
-        public bool Reset
+        [DataMember(Name = "ResetAll", IsRequired = false, Order = 1)]
+        public bool ResetAll
         {
-            get { return m_reset;  }
-            set { m_reset = value; }
+            get { return m_resetAll;  }
+            set { m_resetAll = value; }
         }
 
         /// <summary>
@@ -17010,7 +17124,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("Reset", Reset);
+            encoder.WriteBoolean("ResetAll", ResetAll);
             encoder.WriteEncodeableArray("ConfigureJointReport", ConfigureJointReport.ToArray(), typeof(CRCL_ConfigureJointReportDataType));
 
             encoder.PopNamespace();
@@ -17023,7 +17137,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            Reset = decoder.ReadBoolean("Reset");
+            ResetAll = decoder.ReadBoolean("ResetAll");
             ConfigureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)decoder.ReadEncodeableArray("ConfigureJointReport", typeof(CRCL_ConfigureJointReportDataType));
 
             decoder.PopNamespace();
@@ -17045,7 +17159,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_reset, value.m_reset)) return false;
+            if (!Utils.IsEqual(m_resetAll, value.m_resetAll)) return false;
             if (!Utils.IsEqual(m_configureJointReport, value.m_configureJointReport)) return false;
 
             return true;
@@ -17064,7 +17178,7 @@ namespace CRCL
         {
             ConfigureJointReportsDataType clone = (ConfigureJointReportsDataType)base.MemberwiseClone();
 
-            clone.m_reset = (bool)Utils.Clone(this.m_reset);
+            clone.m_resetAll = (bool)Utils.Clone(this.m_resetAll);
             clone.m_configureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)Utils.Clone(this.m_configureJointReport);
 
             return clone;
@@ -17072,7 +17186,7 @@ namespace CRCL
         #endregion
 
         #region Private Fields
-        private bool m_reset;
+        private bool m_resetAll;
         private CRCL_ConfigureJointReportDataTypeCollection m_configureJointReport;
         #endregion
     }
@@ -27181,33 +27295,18 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ResetAll = new BooleanCollection();
+            m_cRCL:ResetAll = true;
             m_cRCL:ConfigureJointReport = new CRCL_ConfigureJointReportDataTypeCollection();
         }
         #endregion
 
         #region Public Properties
-        /// <summary>
-        /// ResetAll of a ConfigureJointreports Command
-            
-        /// </summary>
+        /// <remarks />
         [DataMember(Name = "CRCL:ResetAll", IsRequired = false, Order = 1)]
-        public BooleanCollection CRCL:ResetAll
+        public bool CRCL:ResetAll
         {
-            get
-            {
-                return m_cRCL:ResetAll;
-            }
-
-            set
-            {
-                m_cRCL:ResetAll = value;
-
-                if (value == null)
-                {
-                    m_cRCL:ResetAll = new BooleanCollection();
-                }
-            }
+            get { return m_cRCL:ResetAll;  }
+            set { m_cRCL:ResetAll = value; }
         }
 
         /// <summary>
@@ -27260,7 +27359,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBooleanArray("CRCL:ResetAll", CRCL:ResetAll);
+            encoder.WriteBoolean("CRCL:ResetAll", CRCL:ResetAll);
             encoder.WriteEncodeableArray("CRCL:ConfigureJointReport", CRCL:ConfigureJointReport.ToArray(), typeof(CRCL_ConfigureJointReportDataType));
 
             encoder.PopNamespace();
@@ -27273,7 +27372,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ResetAll = decoder.ReadBooleanArray("CRCL:ResetAll");
+            CRCL:ResetAll = decoder.ReadBoolean("CRCL:ResetAll");
             CRCL:ConfigureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ConfigureJointReport", typeof(CRCL_ConfigureJointReportDataType));
 
             decoder.PopNamespace();
@@ -27314,7 +27413,7 @@ namespace CRCL
         {
             ConfigureJointReportsParametersSetDataType clone = (ConfigureJointReportsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ResetAll = (BooleanCollection)Utils.Clone(this.m_cRCL:ResetAll);
+            clone.m_cRCL:ResetAll = (bool)Utils.Clone(this.m_cRCL:ResetAll);
             clone.m_cRCL:ConfigureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)Utils.Clone(this.m_cRCL:ConfigureJointReport);
 
             return clone;
@@ -27322,7 +27421,7 @@ namespace CRCL
         #endregion
 
         #region Private Fields
-        private BooleanCollection m_cRCL:ResetAll;
+        private bool m_cRCL:ResetAll;
         private CRCL_ConfigureJointReportDataTypeCollection m_cRCL:ConfigureJointReport;
         #endregion
     }

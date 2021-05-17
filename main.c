@@ -285,22 +285,22 @@ int main(int argc, char** argv) {
 
 #ifdef USE_PYTHON
     std::cout << "Conecting to Robot" << std::endl;
-    Robot robot(path, ipAddress);
-    if (!robot.initRobot()){
-        printf("No connection to robot.\nExit programm...\n");
-        return -1;
-    }
+ //   Robot robot(path, ipAddress);
+ //   if (!robot.initRobot()){
+ //       printf("No connection to robot.\nExit programm...\n");
+ //       return -1;
+ //   }
 #else
 #ifdef USE_CPP
     std::cout << "Conecting to Robot" << std::endl;
     Robot robot;
 #endif // USE_CPP
 #endif // USE PYTHON
-    robot.running = &running;
-    std::thread run(runSkill, &samyRobot, &robot);
+//    robot.running = &running;
+ //   std::thread run(runSkill, &samyRobot, &robot);
 
     //Thread to be able to stop the robot during move commands.
-    std::thread stop_thread(stopRobot, std::ref(robot));
+ //   std::thread stop_thread(stopRobot, std::ref(robot));
 
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
 
@@ -319,8 +319,8 @@ int main(int argc, char** argv) {
         retval = UA_Server_run(samyRobot.server, &running);
     }
 
-    stop_thread.join();
-    run.join();
+ //   stop_thread.join();
+ //   run.join();
     UA_Server_delete(samyRobot.server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }

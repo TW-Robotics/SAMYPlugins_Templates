@@ -304,10 +304,11 @@
     <opc:Field Name="Guard" TypeName="tns:CRCL_GuardDataType" LengthField="NoOfGuard" />
   </opc:StructuredType>
 
-  <opc:StructuredType Name="CRCL_JointDetailsDataType" BaseType="tns:CRCL_DataThingDataType">
+  <opc:StructuredType Name="CRCL_JointDetailsDataType" BaseType="ua:Union">
     <opc:Documentation>CRCL JointDetailsType</opc:Documentation>
-    <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
-    <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
+    <opc:Field Name="SwitchField" TypeName="opc:UInt32" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="1" Name="JointSpeedAccel" TypeName="tns:CRCL_JointSpeedAccelDataType" />
+    <opc:Field SwitchField="SwitchField" SwitchValue="2"  Name="JointForceTorque" TypeName="tns:CRCL_JointForceTorqueDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="CRCL_ActuateJointDataType" BaseType="tns:CRCL_DataThingDataType">
@@ -316,10 +317,10 @@
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="JointNumber" TypeName="opc:Int32" />
     <opc:Field Name="CRCL:JointPosition" TypeName="opc:Double" />
-    <opc:Field Name="CRCL:JointDetails" TypeName="ua:Variant" />
+    <opc:Field Name="CRCL:JointDetails" TypeName="tns:CRCL_JointDetailsDataType" />
   </opc:StructuredType>
 
-  <opc:StructuredType Name="CRCL_JointForceTorqueDataType" BaseType="tns:CRCL_JointDetailsDataType">
+  <opc:StructuredType Name="CRCL_JointForceTorqueDataType" BaseType="tns:CRCL_DataThingDataType">
     <opc:Documentation>CRCL JointForceTorqueDataType</opc:Documentation>
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
@@ -327,7 +328,7 @@
     <opc:Field Name="CRCL:ChangeRate" TypeName="opc:Double" />
   </opc:StructuredType>
 
-  <opc:StructuredType Name="CRCL_JointSpeedAccelDataType" BaseType="tns:CRCL_JointDetailsDataType">
+  <opc:StructuredType Name="CRCL_JointSpeedAccelDataType" BaseType="tns:CRCL_DataThingDataType">
     <opc:Documentation>CRCL JointSpeedAccelDataType</opc:Documentation>
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
@@ -344,8 +345,9 @@
     <opc:Field Name="CRCL:RealTimeParameterNode" TypeName="ua:NodeId" SourceType="tns:CRCLCommandDataType" />
     <opc:Field Name="NoOfGuard" TypeName="opc:Int32" />
     <opc:Field Name="Guard" TypeName="tns:CRCL_GuardDataType" LengthField="NoOfGuard" />
-    <opc:Field Name="CRCL:JointSpeed" TypeName="opc:Double" />
-    <opc:Field Name="CRCL:JointAccel" TypeName="opc:Double" />
+    <opc:Field Name="NoOfCRCL:ActuateJoint" TypeName="opc:Int32" />
+    <opc:Field Name="CRCL:ActuateJoint" TypeName="tns:CRCL_ActuateJointDataType" LengthField="NoOfCRCL:ActuateJoint" />
+    <opc:Field Name="CRCL:JointTolerances" TypeName="tns:CRCL_JointPositionsTolerancesDataType" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="MoveToDataType" BaseType="tns:MiddleCommandDataType">
@@ -748,11 +750,16 @@
     <opc:Field Name="TransSpeed" TypeName="tns:CRCL_TransSpeedDataType" />
   </opc:StructuredType>
 
-  <opc:StructuredType Name="ConfigureJointReportsDataType" BaseType="tns:CRCL_DataThingDataType">
+  <opc:StructuredType Name="ConfigureJointReportsDataType" BaseType="tns:MiddleCommandDataType">
     <opc:Documentation>CRCL ConfigureJointReportsDataType</opc:Documentation>
     <opc:Field Name="id" TypeName="opc:UInt32" SourceType="tns:CRCL_DataThingDataType" />
     <opc:Field Name="name" TypeName="opc:String" SourceType="tns:CRCL_DataThingDataType" />
-    <opc:Field Name="Reset" TypeName="opc:Boolean" />
+    <opc:Field Name="commandID" TypeName="opc:UInt32" SourceType="tns:CRCLCommandDataType" />
+    <opc:Field Name="CRCL:RealTimeCommand" TypeName="opc:Boolean" SourceType="tns:CRCLCommandDataType" />
+    <opc:Field Name="CRCL:RealTimeParameterNode" TypeName="ua:NodeId" SourceType="tns:CRCLCommandDataType" />
+    <opc:Field Name="NoOfGuard" TypeName="opc:Int32" />
+    <opc:Field Name="Guard" TypeName="tns:CRCL_GuardDataType" LengthField="NoOfGuard" />
+    <opc:Field Name="ResetAll" TypeName="opc:Boolean" />
     <opc:Field Name="NoOfConfigureJointReport" TypeName="opc:Int32" />
     <opc:Field Name="ConfigureJointReport" TypeName="tns:CRCL_ConfigureJointReportDataType" LengthField="NoOfConfigureJointReport" />
   </opc:StructuredType>
@@ -1129,8 +1136,7 @@
   <opc:StructuredType Name="ConfigureJointReportsParametersSetDataType" BaseType="tns:CRCLCommandParametersSetDataType">
     <opc:Documentation>Parameters of a ConfigureJointreports Command.</opc:Documentation>
     <opc:Field Name="CRCL:RealTimeParameter" TypeName="opc:Boolean" SourceType="tns:CRCLCommandParametersSetDataType" />
-    <opc:Field Name="NoOfCRCL:ResetAll" TypeName="opc:Int32" />
-    <opc:Field Name="CRCL:ResetAll" TypeName="opc:Boolean" LengthField="NoOfCRCL:ResetAll" />
+    <opc:Field Name="CRCL:ResetAll" TypeName="opc:Boolean" />
     <opc:Field Name="NoOfCRCL:ConfigureJointReport" TypeName="opc:Int32" />
     <opc:Field Name="CRCL:ConfigureJointReport" TypeName="tns:CRCL_ConfigureJointReportDataType" LengthField="NoOfCRCL:ConfigureJointReport" />
   </opc:StructuredType>

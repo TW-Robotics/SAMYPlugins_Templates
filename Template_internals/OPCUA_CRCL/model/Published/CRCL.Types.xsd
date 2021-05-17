@@ -771,8 +771,11 @@
       <xs:documentation>CRCL JointDetailsType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_DataThingDataType">
+      <xs:extension base="ua:Union">
         <xs:sequence>
+          <xs:element name="SwitchField" type="xs:unsignedInt" minOccurs="0" />
+          <xs:element name="JointSpeedAccel" type="tns:CRCL_JointSpeedAccelDataType" minOccurs="0" nillable="true" />
+          <xs:element name="JointForceTorque" type="tns:CRCL_JointForceTorqueDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -795,7 +798,7 @@
         <xs:sequence>
           <xs:element name="JointNumber" type="xs:int" minOccurs="0" />
           <xs:element name="CRCL:JointPosition" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:JointDetails" type="ua:Variant" minOccurs="0" />
+          <xs:element name="CRCL:JointDetails" type="tns:CRCL_JointDetailsDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -814,7 +817,7 @@
       <xs:documentation>CRCL JointForceTorqueDataType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_JointDetailsDataType">
+      <xs:extension base="tns:CRCL_DataThingDataType">
         <xs:sequence>
           <xs:element name="CRCL:Setting" type="xs:double" minOccurs="0" />
           <xs:element name="CRCL:ChangeRate" type="xs:double" minOccurs="0" />
@@ -836,7 +839,7 @@
       <xs:documentation>CRCL JointSpeedAccelDataType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_JointDetailsDataType">
+      <xs:extension base="tns:CRCL_DataThingDataType">
         <xs:sequence>
           <xs:element name="CRCL:JointSpeed" type="xs:double" minOccurs="0" />
           <xs:element name="CRCL:JointAccel" type="xs:double" minOccurs="0" />
@@ -860,8 +863,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:MiddleCommandDataType">
         <xs:sequence>
-          <xs:element name="CRCL:JointSpeed" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:JointAccel" type="xs:double" minOccurs="0" />
+          <xs:element name="CRCL:ActuateJoint" type="tns:ListOfCRCL_ActuateJointDataType" minOccurs="0" nillable="true" />
+          <xs:element name="CRCL:JointTolerances" type="tns:CRCL_JointPositionsTolerancesDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1563,9 +1566,9 @@
       <xs:documentation>CRCL ConfigureJointReportsDataType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_DataThingDataType">
+      <xs:extension base="tns:MiddleCommandDataType">
         <xs:sequence>
-          <xs:element name="Reset" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ResetAll" type="xs:boolean" minOccurs="0" />
           <xs:element name="ConfigureJointReport" type="tns:ListOfCRCL_ConfigureJointReportDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
@@ -2392,7 +2395,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:ResetAll" type="ua:ListOfBoolean" minOccurs="0" nillable="true" />
+          <xs:element name="CRCL:ResetAll" type="xs:boolean" minOccurs="0" />
           <xs:element name="CRCL:ConfigureJointReport" type="tns:ListOfCRCL_ConfigureJointReportDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
