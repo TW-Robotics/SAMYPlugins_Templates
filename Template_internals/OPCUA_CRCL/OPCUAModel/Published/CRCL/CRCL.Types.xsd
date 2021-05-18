@@ -690,8 +690,8 @@
       <xs:extension base="tns:CRCL_DataThingDataType">
         <xs:sequence>
           <xs:element name="commandID" type="xs:unsignedInt" minOccurs="0" />
-          <xs:element name="CRCL:RealTimeCommand" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:RealTimeParameterNode" type="ua:NodeId" minOccurs="0" nillable="true" />
+          <xs:element name="RealTimeCommand" type="xs:boolean" minOccurs="0" />
+          <xs:element name="RealTimeParameterNode" type="ua:NodeId" minOccurs="0" nillable="true" />
           <xs:element name="Guard" type="tns:ListOfCRCL_GuardDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
@@ -771,8 +771,11 @@
       <xs:documentation>CRCL JointDetailsType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_DataThingDataType">
+      <xs:extension base="ua:Union">
         <xs:sequence>
+          <xs:element name="SwitchField" type="xs:unsignedInt" minOccurs="0" />
+          <xs:element name="JointSpeedAccel" type="tns:CRCL_JointSpeedAccelDataType" minOccurs="0" nillable="true" />
+          <xs:element name="JointForceTorque" type="tns:CRCL_JointForceTorqueDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -794,8 +797,8 @@
       <xs:extension base="tns:CRCL_DataThingDataType">
         <xs:sequence>
           <xs:element name="JointNumber" type="xs:int" minOccurs="0" />
-          <xs:element name="CRCL:JointPosition" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:JointDetails" type="ua:Variant" minOccurs="0" />
+          <xs:element name="JointPosition" type="xs:double" minOccurs="0" />
+          <xs:element name="JointDetails" type="tns:CRCL_JointDetailsDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -814,10 +817,10 @@
       <xs:documentation>CRCL JointForceTorqueDataType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_JointDetailsDataType">
+      <xs:extension base="tns:CRCL_DataThingDataType">
         <xs:sequence>
-          <xs:element name="CRCL:Setting" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:ChangeRate" type="xs:double" minOccurs="0" />
+          <xs:element name="Setting" type="xs:double" minOccurs="0" />
+          <xs:element name="ChangeRate" type="xs:double" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -836,10 +839,10 @@
       <xs:documentation>CRCL JointSpeedAccelDataType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_JointDetailsDataType">
+      <xs:extension base="tns:CRCL_DataThingDataType">
         <xs:sequence>
-          <xs:element name="CRCL:JointSpeed" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:JointAccel" type="xs:double" minOccurs="0" />
+          <xs:element name="JointSpeed" type="xs:double" minOccurs="0" />
+          <xs:element name="JointAccel" type="xs:double" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -860,8 +863,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:MiddleCommandDataType">
         <xs:sequence>
-          <xs:element name="CRCL:JointSpeed" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:JointAccel" type="xs:double" minOccurs="0" />
+          <xs:element name="ActuateJoint" type="tns:ListOfCRCL_ActuateJointDataType" minOccurs="0" nillable="true" />
+          <xs:element name="JointTolerances" type="tns:CRCL_JointPositionsTolerancesDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1563,9 +1566,9 @@
       <xs:documentation>CRCL ConfigureJointReportsDataType</xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:CRCL_DataThingDataType">
+      <xs:extension base="tns:MiddleCommandDataType">
         <xs:sequence>
-          <xs:element name="Reset" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ResetAll" type="xs:boolean" minOccurs="0" />
           <xs:element name="ConfigureJointReport" type="tns:ListOfCRCL_ConfigureJointReportDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
@@ -2139,7 +2142,7 @@
       <xs:documentation>Parameters of a CRCL Command.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="CRCL:RealTimeParameter" type="xs:boolean" minOccurs="0" />
+      <xs:element name="RealTimeParameter" type="xs:boolean" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CRCLCommandParametersSetDataType" type="tns:CRCLCommandParametersSetDataType" />
@@ -2258,7 +2261,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:Message" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="Message" type="xs:string" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2279,8 +2282,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:MoveStraight" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:EndPosition" type="tns:CRCL_PoseDataType" minOccurs="0" nillable="true" />
+          <xs:element name="MoveStraight" type="xs:boolean" minOccurs="0" />
+          <xs:element name="EndPosition" type="tns:CRCL_PoseDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2301,11 +2304,11 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:StartPosition" type="tns:CRCL_PoseDataType" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:AxisPoint" type="tns:CRCL_PointDataType" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:AxialDistanceFree" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:AxialDistanceScrew" type="xs:double" minOccurs="0" />
-          <xs:element name="CRCL:Turn" type="xs:double" minOccurs="0" />
+          <xs:element name="StartPosition" type="tns:CRCL_PoseDataType" minOccurs="0" nillable="true" />
+          <xs:element name="AxisPoint" type="tns:CRCL_PointDataType" minOccurs="0" nillable="true" />
+          <xs:element name="AxialDistanceFree" type="xs:double" minOccurs="0" />
+          <xs:element name="AxialDistanceScrew" type="xs:double" minOccurs="0" />
+          <xs:element name="Turn" type="xs:double" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2326,9 +2329,9 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:MoveStraight" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:Waypoint" type="tns:ListOfCRCL_PoseDataType" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:NumPositions" type="xs:int" minOccurs="0" />
+          <xs:element name="MoveStraight" type="xs:boolean" minOccurs="0" />
+          <xs:element name="Waypoint" type="tns:ListOfCRCL_PoseDataType" minOccurs="0" nillable="true" />
+          <xs:element name="NumPositions" type="xs:int" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2349,7 +2352,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:DwellTime" type="xs:boolean" minOccurs="0" />
+          <xs:element name="DwellTime" type="xs:boolean" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2370,8 +2373,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:ActuateJoint" type="tns:ListOfCRCL_ActuateJointDataType" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:JointTolerances" type="tns:CRCL_JointPositionsTolerancesDataType" minOccurs="0" nillable="true" />
+          <xs:element name="ActuateJoint" type="tns:ListOfCRCL_ActuateJointDataType" minOccurs="0" nillable="true" />
+          <xs:element name="JointTolerances" type="tns:CRCL_JointPositionsTolerancesDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2392,8 +2395,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:ResetAll" type="ua:ListOfBoolean" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:ConfigureJointReport" type="tns:ListOfCRCL_ConfigureJointReportDataType" minOccurs="0" nillable="true" />
+          <xs:element name="ResetAll" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ConfigureJointReport" type="tns:ListOfCRCL_ConfigureJointReportDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2414,7 +2417,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:JointTolerances" type="tns:CRCL_JointPositionsTolerancesDataType" minOccurs="0" nillable="true" />
+          <xs:element name="JointTolerances" type="tns:CRCL_JointPositionsTolerancesDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2435,7 +2438,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:ParameterSetting" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
+          <xs:element name="ParameterSetting" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2456,7 +2459,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:ParameterSetting" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
+          <xs:element name="ParameterSetting" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2477,7 +2480,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:Setting" type="tns:CRCL_FractionDataType" minOccurs="0" nillable="true" />
+          <xs:element name="Setting" type="tns:CRCL_FractionDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2498,7 +2501,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:TransSpeed" type="tns:CRCL_TransSpeedDataType" minOccurs="0" nillable="true" />
+          <xs:element name="TransSpeed" type="tns:CRCL_TransSpeedDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2519,7 +2522,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:TransAccel" type="tns:CRCL_TransAccelDataType" minOccurs="0" nillable="true" />
+          <xs:element name="TransAccel" type="tns:CRCL_TransAccelDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2540,7 +2543,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:RotSpeed" type="tns:CRCL_RotSpeedDataType" minOccurs="0" nillable="true" />
+          <xs:element name="RotSpeed" type="tns:CRCL_RotSpeedDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2561,7 +2564,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:RotAccel" type="tns:CRCL_RotAccelDataType" minOccurs="0" nillable="true" />
+          <xs:element name="RotAccel" type="tns:CRCL_RotAccelDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2582,7 +2585,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:UnitName" type="tns:CRCL_AngleUnitEnumDataType" minOccurs="0" />
+          <xs:element name="UnitName" type="tns:CRCL_AngleUnitEnumDataType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2603,7 +2606,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:Tolerance" type="tns:CRCL_PoseToleranceDataType" minOccurs="0" nillable="true" />
+          <xs:element name="Tolerance" type="tns:CRCL_PoseToleranceDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2624,7 +2627,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:UnitName" type="tns:CRCL_ForceUnitEnumDataType" minOccurs="0" />
+          <xs:element name="UnitName" type="tns:CRCL_ForceUnitEnumDataType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2645,7 +2648,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:Tolerance" type="tns:CRCL_PoseToleranceDataType" minOccurs="0" nillable="true" />
+          <xs:element name="Tolerance" type="tns:CRCL_PoseToleranceDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2666,7 +2669,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:UnitName" type="tns:CRCL_LengthUnitEnumDataType" minOccurs="0" />
+          <xs:element name="UnitName" type="tns:CRCL_LengthUnitEnumDataType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2687,7 +2690,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:Coordinated" type="xs:boolean" minOccurs="0" />
+          <xs:element name="Coordinated" type="xs:boolean" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2708,7 +2711,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:UnitName" type="tns:CRCL_TorqueUnitEnumDataType" minOccurs="0" />
+          <xs:element name="UnitName" type="tns:CRCL_TorqueUnitEnumDataType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2729,7 +2732,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:StopCondition" type="tns:CRCL_StopConditionEnumDataType" minOccurs="0" />
+          <xs:element name="StopCondition" type="tns:CRCL_StopConditionEnumDataType" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2750,12 +2753,12 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:ReportJointStatuses" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:ReportPoseStatus" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:ReportGripperStatus" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:ReportSettingsStatus" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:ReportSensorsStatus" type="xs:boolean" minOccurs="0" />
-          <xs:element name="CRCL:ReportGuardsStatus" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ReportJointStatuses" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ReportPoseStatus" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ReportGripperStatus" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ReportSettingsStatus" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ReportSensorsStatus" type="xs:boolean" minOccurs="0" />
+          <xs:element name="ReportGuardsStatus" type="xs:boolean" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2776,8 +2779,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:SensorID" type="xs:string" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:SensorOption" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
+          <xs:element name="SensorID" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="SensorOption" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2798,7 +2801,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:SensorID" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="SensorID" type="xs:string" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2819,8 +2822,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:GripperName" type="xs:string" minOccurs="0" nillable="true" />
-          <xs:element name="CRCL:GripperOption" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
+          <xs:element name="GripperName" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="GripperOption" type="tns:ListOfCRCL_ParameterSettingDataType" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2841,7 +2844,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:GripperName" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="GripperName" type="xs:string" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2862,7 +2865,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:RobotParameterName" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="RobotParameterName" type="xs:string" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2883,7 +2886,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="CRCL:RobotParameterName" type="xs:string" minOccurs="0" nillable="true" />
+          <xs:element name="RobotParameterName" type="xs:string" minOccurs="0" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

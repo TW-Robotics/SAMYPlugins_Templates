@@ -1,5 +1,5 @@
 /* Generated from CRCL.Types.bsd with script /usr/local/share/open62541/tools/generate_datatypes.py
- * on host jbg by user jbg at 2021-05-17 10:02:07 */
+ * on host jbg by user jbg at 2021-05-18 10:39:31 */
 
 #ifndef TYPES_CRCL_GENERATED_ENCODING_BINARY_H_
 #define TYPES_CRCL_GENERATED_ENCODING_BINARY_H_

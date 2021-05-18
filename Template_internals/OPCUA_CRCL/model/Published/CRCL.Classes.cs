@@ -91,12 +91,12 @@ namespace CRCL
         #region Initialization String
         private const string InitializationString =
            "AQAAABAAAABodHRwczovL2NyY2wub3Jn/////4RggAIBAAAAAQAXAAAASVNraWxsUGFyYW1ldGVySW5z" +
-           "dGFuY2UBAcU6AQHFOsU6AAAB/////wEAAAA1YIkKAgAAAAEAHAAAAFJlYWRQYXJhbWV0ZXJBdEV4ZWN1" +
-           "dGlvblRpbWUBASA7AwAAAADiAAAAV2hlbiBpbnN0YW50aWF0aW5nIGEgc2tpbGwgKGNhbGxpbmcgdGhl" +
+           "dGFuY2UBAQE7AQEBOwE7AAAB/////wEAAAA1YIkKAgAAAAEAHAAAAFJlYWRQYXJhbWV0ZXJBdEV4ZWN1" +
+           "dGlvblRpbWUBAQI7AwAAAADiAAAAV2hlbiBpbnN0YW50aWF0aW5nIGEgc2tpbGwgKGNhbGxpbmcgdGhl" +
            "IFN0YXJ0IG1ldGhvZCksIHdpdGggdGhpcyB2YXJpYWJsZSBvbmUgY2FuIGluZGljYXRlIHdoZXRoZXIg" +
            "YSBjb21tYW5kIHVzZXMgYSBmaXhlZCBwYXJhbWV0ZXIsIHNldCBhdCBza2lsbCBpbnN0YW50YXRpb24g" +
            "dGltZSwgb3IgYSAicmVhbCB0aW1lIiB2YWx1ZSByZWFkIGF0IGV4ZWN1dGlvbiB0aW1lIG9mIHRoZSBj" +
-           "b21tYW5kLgAuAEQgOwAAAAH/////AQH/////AAAAAA==";
+           "b21tYW5kLgAuAEQCOwAAAAH/////AQH/////AAAAAA==";
         #endregion
         #endif
         #endregion

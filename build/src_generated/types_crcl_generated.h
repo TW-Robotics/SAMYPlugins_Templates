@@ -1,4 +1,4 @@
-/* Generated from CRCL.Types.bsd with script /usr/local/share/open62541/tools/generate_datatypes.py * on host jbg by user jbg at 2021-05-17 10:02:07 */
+/* Generated from CRCL.Types.bsd with script /usr/local/share/open62541/tools/generate_datatypes.py * on host jbg by user jbg at 2021-05-18 10:39:31 */
 
 #ifndef TYPES_CRCL_GENERATED_H_
 #define TYPES_CRCL_GENERATED_H_
@@ -26,8 +26,8 @@ extern UA_EXPORT const UA_DataType UA_TYPES_CRCL[UA_TYPES_CRCL_COUNT];
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a Message Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLMessage;
+    UA_Boolean realTimeParameter;
+    UA_String message;
 } UA_MessageParametersSetDataType;
 
 #define UA_TYPES_CRCL_MESSAGEPARAMETERSSETDATATYPE 0
@@ -75,8 +75,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetMotionCoordination Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_Boolean cRCLCoordinated;
+    UA_Boolean realTimeParameter;
+    UA_Boolean coordinated;
 } UA_SetMotionCoordinationParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETMOTIONCOORDINATIONPARAMETERSSETDATATYPE 4
@@ -86,8 +86,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a DisableGripper Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLGripperName;
+    UA_Boolean realTimeParameter;
+    UA_String gripperName;
 } UA_DisableGripperParametersSetDataType;
 
 #define UA_TYPES_CRCL_DISABLEGRIPPERPARAMETERSSETDATATYPE 5
@@ -97,7 +97,7 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a CRCL Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
+    UA_Boolean realTimeParameter;
 } UA_CRCLCommandParametersSetDataType;
 
 #define UA_TYPES_CRCL_CRCLCOMMANDPARAMETERSSETDATATYPE 6
@@ -107,8 +107,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a DisableRobotParameterStatus Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLRobotParameterName;
+    UA_Boolean realTimeParameter;
+    UA_String robotParameterName;
 } UA_DisableRobotParameterStatusParametersSetDataType;
 
 #define UA_TYPES_CRCL_DISABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE 7
@@ -130,7 +130,7 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a OpenToolChanger Command (does not require parameters). */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
+    UA_Boolean realTimeParameter;
 } UA_OpenToolChangerParametersSetDataType;
 
 #define UA_TYPES_CRCL_OPENTOOLCHANGERPARAMETERSSETDATATYPE 9
@@ -154,8 +154,8 @@ typedef struct {
 typedef struct {
     UA_UInt32 id;
     UA_String name;
-    UA_Double cRCLJointSpeed;
-    UA_Double cRCLJointAccel;
+    UA_Double jointSpeed;
+    UA_Double jointAccel;
 } UA_CRCL_JointSpeedAccelDataType;
 
 #define UA_TYPES_CRCL_CRCL_JOINTSPEEDACCELDATATYPE 11
@@ -181,8 +181,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a EnableRobotParameterStatus Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLRobotParameterName;
+    UA_Boolean realTimeParameter;
+    UA_String robotParameterName;
 } UA_EnableRobotParameterStatusParametersSetDataType;
 
 #define UA_TYPES_CRCL_ENABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE 13
@@ -192,13 +192,13 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a ConfigureStatusReport Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_Boolean cRCLReportJointStatuses;
-    UA_Boolean cRCLReportPoseStatus;
-    UA_Boolean cRCLReportGripperStatus;
-    UA_Boolean cRCLReportSettingsStatus;
-    UA_Boolean cRCLReportSensorsStatus;
-    UA_Boolean cRCLReportGuardsStatus;
+    UA_Boolean realTimeParameter;
+    UA_Boolean reportJointStatuses;
+    UA_Boolean reportPoseStatus;
+    UA_Boolean reportGripperStatus;
+    UA_Boolean reportSettingsStatus;
+    UA_Boolean reportSensorsStatus;
+    UA_Boolean reportGuardsStatus;
 } UA_ConfigureStatusReportParametersSetDataType;
 
 #define UA_TYPES_CRCL_CONFIGURESTATUSREPORTPARAMETERSSETDATATYPE 14
@@ -272,7 +272,7 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a CloseToolChanger Command (does not require parameters). */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
+    UA_Boolean realTimeParameter;
 } UA_CloseToolChangerParametersSetDataType;
 
 #define UA_TYPES_CRCL_CLOSETOOLCHANGERPARAMETERSSETDATATYPE 20
@@ -310,9 +310,9 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetEndeffectorParameters Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    size_t cRCLParameterSettingSize;
-    UA_CRCL_ParameterSettingDataType *cRCLParameterSetting;
+    UA_Boolean realTimeParameter;
+    size_t parameterSettingSize;
+    UA_CRCL_ParameterSettingDataType *parameterSetting;
 } UA_SetEndeffectorParametersParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSPARAMETERSSETDATATYPE 23
@@ -347,9 +347,9 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetRobotParameters Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    size_t cRCLParameterSettingSize;
-    UA_CRCL_ParameterSettingDataType *cRCLParameterSetting;
+    UA_Boolean realTimeParameter;
+    size_t parameterSettingSize;
+    UA_CRCL_ParameterSettingDataType *parameterSetting;
 } UA_SetRobotParametersParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETROBOTPARAMETERSPARAMETERSSETDATATYPE 26
@@ -388,8 +388,8 @@ UA_STATIC_ASSERT(sizeof(UA_CRCL_LengthUnitEnumDataType) == sizeof(UA_Int32), enu
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetAngleUnits Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_AngleUnitEnumDataType cRCLUnitName;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_AngleUnitEnumDataType unitName;
 } UA_SetAngleUnitsParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETANGLEUNITSPARAMETERSSETDATATYPE 29
@@ -428,8 +428,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetLengthUnits Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_LengthUnitEnumDataType cRCLUnitName;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_LengthUnitEnumDataType unitName;
 } UA_SetLengthUnitsParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETLENGTHUNITSPARAMETERSSETDATATYPE 32
@@ -441,8 +441,8 @@ typedef struct {
 typedef struct {
     UA_UInt32 id;
     UA_String name;
-    UA_Double cRCLSetting;
-    UA_Double cRCLChangeRate;
+    UA_Double setting;
+    UA_Double changeRate;
 } UA_CRCL_JointForceTorqueDataType;
 
 #define UA_TYPES_CRCL_CRCL_JOINTFORCETORQUEDATATYPE 33
@@ -452,8 +452,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetTorqueUnits Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_TorqueUnitEnumDataType cRCLUnitName;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_TorqueUnitEnumDataType unitName;
 } UA_SetTorqueUnitsParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETTORQUEUNITSPARAMETERSSETDATATYPE 34
@@ -545,8 +545,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a DisableSensor Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLSensorID;
+    UA_Boolean realTimeParameter;
+    UA_String sensorID;
 } UA_DisableSensorParametersSetDataType;
 
 #define UA_TYPES_CRCL_DISABLESENSORPARAMETERSSETDATATYPE 40
@@ -573,8 +573,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a Dwell Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_Boolean cRCLDwellTime;
+    UA_Boolean realTimeParameter;
+    UA_Boolean dwellTime;
 } UA_DwellParametersSetDataType;
 
 #define UA_TYPES_CRCL_DWELLPARAMETERSSETDATATYPE 42
@@ -598,7 +598,7 @@ UA_STATIC_ASSERT(sizeof(UA_CRCL_ForceUnitEnumDataType) == sizeof(UA_Int32), enum
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a GetStatus Command (does not require parameters). */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
+    UA_Boolean realTimeParameter;
 } UA_GetStatusParametersSetDataType;
 
 #define UA_TYPES_CRCL_GETSTATUSPARAMETERSSETDATATYPE 44
@@ -608,8 +608,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetIntermediatePoseTolerance Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_PoseToleranceDataType cRCLTolerance;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_PoseToleranceDataType tolerance;
 } UA_SetIntermediatePoseToleranceParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETINTERMEDIATEPOSETOLERANCEPARAMETERSSETDATATYPE 45
@@ -619,8 +619,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetEndPoseTolerance Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_PoseToleranceDataType cRCLTolerance;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_PoseToleranceDataType tolerance;
 } UA_SetEndPoseToleranceParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETENDPOSETOLERANCEPARAMETERSSETDATATYPE 46
@@ -668,7 +668,7 @@ UA_STATIC_ASSERT(sizeof(UA_CRCL_StopConditionEnumDataType) == sizeof(UA_Int32), 
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of an EndCanon Command (does not require parameters). */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
+    UA_Boolean realTimeParameter;
 } UA_EndCanonParametersSetDataType;
 
 #define UA_TYPES_CRCL_ENDCANONPARAMETERSSETDATATYPE 50
@@ -690,7 +690,7 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of an Init Command (does not require parameters). */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
+    UA_Boolean realTimeParameter;
 } UA_InitCanonParametersSetDataType;
 
 #define UA_TYPES_CRCL_INITCANONPARAMETERSSETDATATYPE 52
@@ -722,8 +722,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_Boolean reportJointStatuses;
@@ -744,8 +744,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String programText;
@@ -774,8 +774,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetRotAccel Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_RotAccelDataType cRCLRotAccel;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_RotAccelDataType rotAccel;
 } UA_SetRotAccelParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETROTACCELPARAMETERSSETDATATYPE 57
@@ -788,8 +788,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_CRCLCommandDataType;
@@ -801,8 +801,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetEndeffector Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_FractionDataType cRCLSetting;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_FractionDataType setting;
 } UA_SetEndeffectorParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE 59
@@ -815,8 +815,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_PoseToleranceDataType tolerance;
@@ -832,8 +832,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     size_t parameterSettingSize;
@@ -886,10 +886,10 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a EnableSensor Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLSensorID;
-    size_t cRCLSensorOptionSize;
-    UA_CRCL_ParameterSettingDataType *cRCLSensorOption;
+    UA_Boolean realTimeParameter;
+    UA_String sensorID;
+    size_t sensorOptionSize;
+    UA_CRCL_ParameterSettingDataType *sensorOption;
 } UA_EnableSensorParametersSetDataType;
 
 #define UA_TYPES_CRCL_ENABLESENSORPARAMETERSSETDATATYPE 64
@@ -1012,8 +1012,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_StopConditionEnumDataType stopCondition;
@@ -1029,8 +1029,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_OpenToolChangerDataType;
@@ -1045,8 +1045,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_ForceUnitEnumDataType unitName;
@@ -1062,8 +1062,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_FractionDataType setting;
@@ -1076,10 +1076,10 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a EnableGripper Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_String cRCLGripperName;
-    size_t cRCLGripperOptionSize;
-    UA_CRCL_ParameterSettingDataType *cRCLGripperOption;
+    UA_Boolean realTimeParameter;
+    UA_String gripperName;
+    size_t gripperOptionSize;
+    UA_CRCL_ParameterSettingDataType *gripperOption;
 } UA_EnableGripperParametersSetDataType;
 
 #define UA_TYPES_CRCL_ENABLEGRIPPERPARAMETERSSETDATATYPE 75
@@ -1092,8 +1092,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_Boolean resetAll;
@@ -1111,8 +1111,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_CloseToolChangerDataType;
@@ -1127,8 +1127,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_GetStatusDataType;
@@ -1175,8 +1175,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_InitCanonDataType;
@@ -1191,8 +1191,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String robotParameterName;
@@ -1205,10 +1205,10 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a ConfigureJointreports Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_Boolean cRCLResetAll;
-    size_t cRCLConfigureJointReportSize;
-    UA_CRCL_ConfigureJointReportDataType *cRCLConfigureJointReport;
+    UA_Boolean realTimeParameter;
+    UA_Boolean resetAll;
+    size_t configureJointReportSize;
+    UA_CRCL_ConfigureJointReportDataType *configureJointReport;
 } UA_ConfigureJointReportsParametersSetDataType;
 
 #define UA_TYPES_CRCL_CONFIGUREJOINTREPORTSPARAMETERSSETDATATYPE 83
@@ -1257,8 +1257,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_Boolean moveStraight;
@@ -1272,9 +1272,9 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a MoveToCommand. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_Boolean cRCLMoveStraight;
-    UA_CRCL_PoseDataType cRCLEndPosition;
+    UA_Boolean realTimeParameter;
+    UA_Boolean moveStraight;
+    UA_CRCL_PoseDataType endPosition;
 } UA_MoveToParametersSetDataType;
 
 #define UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE 87
@@ -1325,8 +1325,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_Boolean coordinated;
@@ -1342,8 +1342,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_Double dwellTime;
@@ -1376,8 +1376,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_RotAccelDataType rotAccel;
@@ -1393,8 +1393,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String gripperName;
@@ -1412,8 +1412,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_MiddleCommandDataType;
@@ -1428,8 +1428,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_RotSpeedDataType rotSpeed;
@@ -1461,8 +1461,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetForceUnits Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_ForceUnitEnumDataType cRCLUnitName;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_ForceUnitEnumDataType unitName;
 } UA_SetForceUnitsParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETFORCEUNITSPARAMETERSSETDATATYPE 98
@@ -1475,8 +1475,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String sensorID;
@@ -1505,8 +1505,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String sensorID;
@@ -1521,8 +1521,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetTransSpeed Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_RotSpeedDataType cRCLRotSpeed;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_RotSpeedDataType rotSpeed;
 } UA_SetRotSpeedParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETROTSPEEDPARAMETERSSETDATATYPE 102
@@ -1535,8 +1535,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     size_t parameterSettingSize;
@@ -1553,8 +1553,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String robotParameterName;
@@ -1570,8 +1570,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
 } UA_EndCanonDataType;
@@ -1586,8 +1586,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_AngleUnitEnumDataType unitName;
@@ -1600,12 +1600,12 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a MoveScrew Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_PoseDataType cRCLStartPosition;
-    UA_CRCL_PointDataType cRCLAxisPoint;
-    UA_Double cRCLAxialDistanceFree;
-    UA_Double cRCLAxialDistanceScrew;
-    UA_Double cRCLTurn;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_PoseDataType startPosition;
+    UA_CRCL_PointDataType axisPoint;
+    UA_Double axialDistanceFree;
+    UA_Double axialDistanceScrew;
+    UA_Double turn;
 } UA_MoveScrewParametersSetDataType;
 
 #define UA_TYPES_CRCL_MOVESCREWPARAMETERSSETDATATYPE 107
@@ -1618,8 +1618,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_TorqueUnitEnumDataType unitName;
@@ -1632,8 +1632,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a StopMotion Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_StopConditionEnumDataType cRCLStopCondition;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_StopConditionEnumDataType stopCondition;
 } UA_StopMotionParametersSetDataType;
 
 #define UA_TYPES_CRCL_STOPMOTIONPARAMETERSSETDATATYPE 109
@@ -1646,8 +1646,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_PoseToleranceDataType tolerance;
@@ -1663,8 +1663,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String message;
@@ -1695,8 +1695,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_Boolean moveStraight;
@@ -1715,8 +1715,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_String gripperName;
@@ -1732,8 +1732,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_LengthUnitEnumDataType unitName;
@@ -1749,8 +1749,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_Int32 jointNumber;
-    UA_Double cRCLJointPosition;
-    UA_CRCL_JointDetailsDataType cRCLJointDetails;
+    UA_Double jointPosition;
+    UA_CRCL_JointDetailsDataType jointDetails;
 } UA_CRCL_ActuateJointDataType;
 
 #define UA_TYPES_CRCL_CRCL_ACTUATEJOINTDATATYPE 116
@@ -1760,11 +1760,11 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a MoveThroughTo Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_Boolean cRCLMoveStraight;
-    size_t cRCLWaypointSize;
-    UA_CRCL_PoseDataType *cRCLWaypoint;
-    UA_Int32 cRCLNumPositions;
+    UA_Boolean realTimeParameter;
+    UA_Boolean moveStraight;
+    size_t waypointSize;
+    UA_CRCL_PoseDataType *waypoint;
+    UA_Int32 numPositions;
 } UA_MoveThroughToParametersSetDataType;
 
 #define UA_TYPES_CRCL_MOVETHROUGHTOPARAMETERSSETDATATYPE 117
@@ -1799,8 +1799,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_PoseDataType startPosition;
@@ -1820,8 +1820,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_JointPositionsTolerancesDataType jointTolerances;
@@ -1834,8 +1834,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetTransSpeed Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_TransSpeedDataType cRCLTransSpeed;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_TransSpeedDataType transSpeed;
 } UA_SetTransSpeedParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETTRANSSPEEDPARAMETERSSETDATATYPE 121
@@ -1845,8 +1845,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetDefaultJointPositionsTolerances Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_JointPositionsTolerancesDataType cRCLJointTolerances;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_JointPositionsTolerancesDataType jointTolerances;
 } UA_SetDefaultJointPositionsTolerancesParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETDEFAULTJOINTPOSITIONSTOLERANCESPARAMETERSSETDATATYPE 122
@@ -1876,8 +1876,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_TransSpeedDataType transSpeed;
@@ -1893,13 +1893,13 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
-    size_t cRCLActuateJointSize;
-    UA_CRCL_ActuateJointDataType *cRCLActuateJoint;
-    UA_CRCL_JointPositionsTolerancesDataType cRCLJointTolerances;
+    size_t actuateJointSize;
+    UA_CRCL_ActuateJointDataType *actuateJoint;
+    UA_CRCL_JointPositionsTolerancesDataType jointTolerances;
 } UA_ActuateJointsDataType;
 
 #define UA_TYPES_CRCL_ACTUATEJOINTSDATATYPE 125
@@ -1929,8 +1929,8 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a SetTransAccel Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    UA_CRCL_TransAccelDataType cRCLTransAccel;
+    UA_Boolean realTimeParameter;
+    UA_CRCL_TransAccelDataType transAccel;
 } UA_SetTransAccelParametersSetDataType;
 
 #define UA_TYPES_CRCL_SETTRANSACCELPARAMETERSSETDATATYPE 127
@@ -1940,10 +1940,10 @@ typedef struct {
  * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  * Parameters of a ActuateJoints Command. */
 typedef struct {
-    UA_Boolean cRCLRealTimeParameter;
-    size_t cRCLActuateJointSize;
-    UA_CRCL_ActuateJointDataType *cRCLActuateJoint;
-    UA_CRCL_JointPositionsTolerancesDataType cRCLJointTolerances;
+    UA_Boolean realTimeParameter;
+    size_t actuateJointSize;
+    UA_CRCL_ActuateJointDataType *actuateJoint;
+    UA_CRCL_JointPositionsTolerancesDataType jointTolerances;
 } UA_ActuateJointsParametersSetDataType;
 
 #define UA_TYPES_CRCL_ACTUATEJOINTSPARAMETERSSETDATATYPE 128
@@ -1956,8 +1956,8 @@ typedef struct {
     UA_UInt32 id;
     UA_String name;
     UA_UInt32 commandID;
-    UA_Boolean cRCLRealTimeCommand;
-    UA_NodeId cRCLRealTimeParameterNode;
+    UA_Boolean realTimeCommand;
+    UA_NodeId realTimeParameterNode;
     size_t guardSize;
     UA_CRCL_GuardDataType *guard;
     UA_CRCL_TransAccelDataType transAccel;

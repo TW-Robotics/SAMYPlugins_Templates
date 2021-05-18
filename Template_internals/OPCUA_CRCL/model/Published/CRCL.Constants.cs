@@ -238,7 +238,7 @@ namespace CRCL
         /// <summary>
         /// The identifier for the CRCL_ActuateJointDataType DataType.
         /// </summary>
-        public const uint CRCL_ActuateJointDataType = 15059;
+        public const uint CRCL_ActuateJointDataType = 15045;
 
         /// <summary>
         /// The identifier for the CRCL_JointForceTorqueDataType DataType.
@@ -308,12 +308,12 @@ namespace CRCL
         /// <summary>
         /// The identifier for the SetEndeffectorParametersDataType DataType.
         /// </summary>
-        public const uint SetEndeffectorParametersDataType = 15914;
+        public const uint SetEndeffectorParametersDataType = 15059;
 
         /// <summary>
         /// The identifier for the SetEndeffectorDataType DataType.
         /// </summary>
-        public const uint SetEndeffectorDataType = 15915;
+        public const uint SetEndeffectorDataType = 15060;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceDataType DataType.
@@ -533,182 +533,182 @@ namespace CRCL
         /// <summary>
         /// The identifier for the CRCLCommandParametersSetDataType DataType.
         /// </summary>
-        public const uint CRCLCommandParametersSetDataType = 15150;
+        public const uint CRCLCommandParametersSetDataType = 15107;
 
         /// <summary>
         /// The identifier for the InitCanonParametersSetDataType DataType.
         /// </summary>
-        public const uint InitCanonParametersSetDataType = 15293;
+        public const uint InitCanonParametersSetDataType = 15108;
 
         /// <summary>
         /// The identifier for the EndCanonParametersSetDataType DataType.
         /// </summary>
-        public const uint EndCanonParametersSetDataType = 15333;
+        public const uint EndCanonParametersSetDataType = 15109;
 
         /// <summary>
         /// The identifier for the GetStatusParametersSetDataType DataType.
         /// </summary>
-        public const uint GetStatusParametersSetDataType = 15334;
+        public const uint GetStatusParametersSetDataType = 15110;
 
         /// <summary>
         /// The identifier for the CloseToolChangerParametersSetDataType DataType.
         /// </summary>
-        public const uint CloseToolChangerParametersSetDataType = 15336;
+        public const uint CloseToolChangerParametersSetDataType = 15111;
 
         /// <summary>
         /// The identifier for the OpenToolChangerParametersSetDataType DataType.
         /// </summary>
-        public const uint OpenToolChangerParametersSetDataType = 15337;
+        public const uint OpenToolChangerParametersSetDataType = 15112;
 
         /// <summary>
         /// The identifier for the MessageParametersSetDataType DataType.
         /// </summary>
-        public const uint MessageParametersSetDataType = 15338;
+        public const uint MessageParametersSetDataType = 15113;
 
         /// <summary>
         /// The identifier for the MoveToParametersSetDataType DataType.
         /// </summary>
-        public const uint MoveToParametersSetDataType = 15496;
+        public const uint MoveToParametersSetDataType = 15114;
 
         /// <summary>
         /// The identifier for the MoveScrewParametersSetDataType DataType.
         /// </summary>
-        public const uint MoveScrewParametersSetDataType = 15510;
+        public const uint MoveScrewParametersSetDataType = 15115;
 
         /// <summary>
         /// The identifier for the MoveThroughToParametersSetDataType DataType.
         /// </summary>
-        public const uint MoveThroughToParametersSetDataType = 15511;
+        public const uint MoveThroughToParametersSetDataType = 15116;
 
         /// <summary>
         /// The identifier for the DwellParametersSetDataType DataType.
         /// </summary>
-        public const uint DwellParametersSetDataType = 15694;
+        public const uint DwellParametersSetDataType = 15117;
 
         /// <summary>
         /// The identifier for the ActuateJointsParametersSetDataType DataType.
         /// </summary>
-        public const uint ActuateJointsParametersSetDataType = 15695;
+        public const uint ActuateJointsParametersSetDataType = 15118;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsParametersSetDataType DataType.
         /// </summary>
-        public const uint ConfigureJointReportsParametersSetDataType = 15696;
+        public const uint ConfigureJointReportsParametersSetDataType = 15119;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesParametersSetDataType DataType.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType = 15698;
+        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType = 15120;
 
         /// <summary>
         /// The identifier for the SetRobotParametersParametersSetDataType DataType.
         /// </summary>
-        public const uint SetRobotParametersParametersSetDataType = 15871;
+        public const uint SetRobotParametersParametersSetDataType = 15121;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersParametersSetDataType DataType.
         /// </summary>
-        public const uint SetEndeffectorParametersParametersSetDataType = 15934;
+        public const uint SetEndeffectorParametersParametersSetDataType = 15122;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersSetDataType DataType.
         /// </summary>
-        public const uint SetEndeffectorParametersSetDataType = 15939;
+        public const uint SetEndeffectorParametersSetDataType = 15123;
 
         /// <summary>
         /// The identifier for the SetTransSpeedParametersSetDataType DataType.
         /// </summary>
-        public const uint SetTransSpeedParametersSetDataType = 15941;
+        public const uint SetTransSpeedParametersSetDataType = 15124;
 
         /// <summary>
         /// The identifier for the SetTransAccelParametersSetDataType DataType.
         /// </summary>
-        public const uint SetTransAccelParametersSetDataType = 15943;
+        public const uint SetTransAccelParametersSetDataType = 15125;
 
         /// <summary>
         /// The identifier for the SetRotSpeedParametersSetDataType DataType.
         /// </summary>
-        public const uint SetRotSpeedParametersSetDataType = 15945;
+        public const uint SetRotSpeedParametersSetDataType = 15126;
 
         /// <summary>
         /// The identifier for the SetRotAccelParametersSetDataType DataType.
         /// </summary>
-        public const uint SetRotAccelParametersSetDataType = 15947;
+        public const uint SetRotAccelParametersSetDataType = 15127;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsParametersSetDataType DataType.
         /// </summary>
-        public const uint SetAngleUnitsParametersSetDataType = 15949;
+        public const uint SetAngleUnitsParametersSetDataType = 15128;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceParametersSetDataType DataType.
         /// </summary>
-        public const uint SetEndPoseToleranceParametersSetDataType = 15951;
+        public const uint SetEndPoseToleranceParametersSetDataType = 15129;
 
         /// <summary>
         /// The identifier for the SetForceUnitsParametersSetDataType DataType.
         /// </summary>
-        public const uint SetForceUnitsParametersSetDataType = 15953;
+        public const uint SetForceUnitsParametersSetDataType = 15130;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceParametersSetDataType DataType.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceParametersSetDataType = 15955;
+        public const uint SetIntermediatePoseToleranceParametersSetDataType = 15131;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsParametersSetDataType DataType.
         /// </summary>
-        public const uint SetLengthUnitsParametersSetDataType = 15957;
+        public const uint SetLengthUnitsParametersSetDataType = 15132;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationParametersSetDataType DataType.
         /// </summary>
-        public const uint SetMotionCoordinationParametersSetDataType = 15959;
+        public const uint SetMotionCoordinationParametersSetDataType = 15133;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsParametersSetDataType DataType.
         /// </summary>
-        public const uint SetTorqueUnitsParametersSetDataType = 15961;
+        public const uint SetTorqueUnitsParametersSetDataType = 15134;
 
         /// <summary>
         /// The identifier for the StopMotionParametersSetDataType DataType.
         /// </summary>
-        public const uint StopMotionParametersSetDataType = 15963;
+        public const uint StopMotionParametersSetDataType = 15135;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportParametersSetDataType DataType.
         /// </summary>
-        public const uint ConfigureStatusReportParametersSetDataType = 15965;
+        public const uint ConfigureStatusReportParametersSetDataType = 15136;
 
         /// <summary>
         /// The identifier for the EnableSensorParametersSetDataType DataType.
         /// </summary>
-        public const uint EnableSensorParametersSetDataType = 15967;
+        public const uint EnableSensorParametersSetDataType = 15137;
 
         /// <summary>
         /// The identifier for the DisableSensorParametersSetDataType DataType.
         /// </summary>
-        public const uint DisableSensorParametersSetDataType = 15969;
+        public const uint DisableSensorParametersSetDataType = 15138;
 
         /// <summary>
         /// The identifier for the EnableGripperParametersSetDataType DataType.
         /// </summary>
-        public const uint EnableGripperParametersSetDataType = 15971;
+        public const uint EnableGripperParametersSetDataType = 15139;
 
         /// <summary>
         /// The identifier for the DisableGripperParametersSetDataType DataType.
         /// </summary>
-        public const uint DisableGripperParametersSetDataType = 15972;
+        public const uint DisableGripperParametersSetDataType = 15140;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusParametersSetDataType DataType.
         /// </summary>
-        public const uint EnableRobotParameterStatusParametersSetDataType = 15973;
+        public const uint EnableRobotParameterStatusParametersSetDataType = 15141;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusParametersSetDataType DataType.
         /// </summary>
-        public const uint DisableRobotParameterStatusParametersSetDataType = 15974;
+        public const uint DisableRobotParameterStatusParametersSetDataType = 15142;
     }
     #endregion
 
@@ -723,1877 +723,1877 @@ namespace CRCL
         /// <summary>
         /// The identifier for the CRCL_FractionDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_FractionDataType_Encoding_DefaultBinary = 15105;
+        public const uint CRCL_FractionDataType_Encoding_DefaultBinary = 15143;
 
         /// <summary>
         /// The identifier for the CRCL_DataThingDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_DataThingDataType_Encoding_DefaultBinary = 15106;
+        public const uint CRCL_DataThingDataType_Encoding_DefaultBinary = 15144;
 
         /// <summary>
         /// The identifier for the CRCL_PointDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_PointDataType_Encoding_DefaultBinary = 15107;
+        public const uint CRCL_PointDataType_Encoding_DefaultBinary = 15145;
 
         /// <summary>
         /// The identifier for the CRCL_VectorDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_VectorDataType_Encoding_DefaultBinary = 15108;
+        public const uint CRCL_VectorDataType_Encoding_DefaultBinary = 15146;
 
         /// <summary>
         /// The identifier for the CRCL_PoseDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_PoseDataType_Encoding_DefaultBinary = 15109;
+        public const uint CRCL_PoseDataType_Encoding_DefaultBinary = 15147;
 
         /// <summary>
         /// The identifier for the CRCL_TwistDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TwistDataType_Encoding_DefaultBinary = 15110;
+        public const uint CRCL_TwistDataType_Encoding_DefaultBinary = 15148;
 
         /// <summary>
         /// The identifier for the CRCL_WrenchDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_WrenchDataType_Encoding_DefaultBinary = 15111;
+        public const uint CRCL_WrenchDataType_Encoding_DefaultBinary = 15149;
 
         /// <summary>
         /// The identifier for the CRCL_PoseToleranceDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_PoseToleranceDataType_Encoding_DefaultBinary = 15112;
+        public const uint CRCL_PoseToleranceDataType_Encoding_DefaultBinary = 15150;
 
         /// <summary>
         /// The identifier for the CRCL_ParameterSettingDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ParameterSettingDataType_Encoding_DefaultBinary = 15113;
+        public const uint CRCL_ParameterSettingDataType_Encoding_DefaultBinary = 15151;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelAbsoluteDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_RotAccelAbsoluteDataType_Encoding_DefaultBinary = 15114;
+        public const uint CRCL_RotAccelAbsoluteDataType_Encoding_DefaultBinary = 15152;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelRelativeDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_RotAccelRelativeDataType_Encoding_DefaultBinary = 15115;
+        public const uint CRCL_RotAccelRelativeDataType_Encoding_DefaultBinary = 15153;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_RotAccelDataType_Encoding_DefaultBinary = 15116;
+        public const uint CRCL_RotAccelDataType_Encoding_DefaultBinary = 15154;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultBinary = 15117;
+        public const uint CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultBinary = 15155;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedRelativeDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_RotSpeedRelativeDataType_Encoding_DefaultBinary = 15118;
+        public const uint CRCL_RotSpeedRelativeDataType_Encoding_DefaultBinary = 15156;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_RotSpeedDataType_Encoding_DefaultBinary = 15119;
+        public const uint CRCL_RotSpeedDataType_Encoding_DefaultBinary = 15157;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelAbsoluteDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TransAccelAbsoluteDataType_Encoding_DefaultBinary = 15120;
+        public const uint CRCL_TransAccelAbsoluteDataType_Encoding_DefaultBinary = 15158;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelRelativeDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TransAccelRelativeDataType_Encoding_DefaultBinary = 15121;
+        public const uint CRCL_TransAccelRelativeDataType_Encoding_DefaultBinary = 15159;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TransAccelDataType_Encoding_DefaultBinary = 15122;
+        public const uint CRCL_TransAccelDataType_Encoding_DefaultBinary = 15160;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultBinary = 15123;
+        public const uint CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultBinary = 15161;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedRelativeDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TransSpeedRelativeDataType_Encoding_DefaultBinary = 15124;
+        public const uint CRCL_TransSpeedRelativeDataType_Encoding_DefaultBinary = 15162;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_TransSpeedDataType_Encoding_DefaultBinary = 15125;
+        public const uint CRCL_TransSpeedDataType_Encoding_DefaultBinary = 15163;
 
         /// <summary>
         /// The identifier for the CRCL_ConfigureJointReportDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ConfigureJointReportDataType_Encoding_DefaultBinary = 15126;
+        public const uint CRCL_ConfigureJointReportDataType_Encoding_DefaultBinary = 15164;
 
         /// <summary>
         /// The identifier for the CRCL_GuardDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_GuardDataType_Encoding_DefaultBinary = 15127;
+        public const uint CRCL_GuardDataType_Encoding_DefaultBinary = 15165;
 
         /// <summary>
         /// The identifier for the CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultBinary = 15128;
+        public const uint CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultBinary = 15166;
 
         /// <summary>
         /// The identifier for the CRCL_JointPositionsTolerancesDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointPositionsTolerancesDataType_Encoding_DefaultBinary = 15129;
+        public const uint CRCL_JointPositionsTolerancesDataType_Encoding_DefaultBinary = 15167;
 
         /// <summary>
         /// The identifier for the CRCL_PoseAndSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_PoseAndSetDataType_Encoding_DefaultBinary = 15130;
+        public const uint CRCL_PoseAndSetDataType_Encoding_DefaultBinary = 15168;
 
         /// <summary>
         /// The identifier for the CRCLCommandDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCLCommandDataType_Encoding_DefaultBinary = 15131;
+        public const uint CRCLCommandDataType_Encoding_DefaultBinary = 15169;
 
         /// <summary>
         /// The identifier for the MiddleCommandDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MiddleCommandDataType_Encoding_DefaultBinary = 15132;
+        public const uint MiddleCommandDataType_Encoding_DefaultBinary = 15170;
 
         /// <summary>
         /// The identifier for the EndCanonDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EndCanonDataType_Encoding_DefaultBinary = 15133;
+        public const uint EndCanonDataType_Encoding_DefaultBinary = 15171;
 
         /// <summary>
         /// The identifier for the InitCanonDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint InitCanonDataType_Encoding_DefaultBinary = 15134;
+        public const uint InitCanonDataType_Encoding_DefaultBinary = 15172;
 
         /// <summary>
         /// The identifier for the CRCL_JointDetailsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointDetailsDataType_Encoding_DefaultBinary = 15135;
+        public const uint CRCL_JointDetailsDataType_Encoding_DefaultBinary = 15173;
 
         /// <summary>
         /// The identifier for the CRCL_ActuateJointDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ActuateJointDataType_Encoding_DefaultBinary = 15991;
+        public const uint CRCL_ActuateJointDataType_Encoding_DefaultBinary = 15174;
 
         /// <summary>
         /// The identifier for the CRCL_JointForceTorqueDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointForceTorqueDataType_Encoding_DefaultBinary = 15137;
+        public const uint CRCL_JointForceTorqueDataType_Encoding_DefaultBinary = 15175;
 
         /// <summary>
         /// The identifier for the CRCL_JointSpeedAccelDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointSpeedAccelDataType_Encoding_DefaultBinary = 15138;
+        public const uint CRCL_JointSpeedAccelDataType_Encoding_DefaultBinary = 15176;
 
         /// <summary>
         /// The identifier for the ActuateJointsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint ActuateJointsDataType_Encoding_DefaultBinary = 15139;
+        public const uint ActuateJointsDataType_Encoding_DefaultBinary = 15177;
 
         /// <summary>
         /// The identifier for the MoveToDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MoveToDataType_Encoding_DefaultBinary = 15140;
+        public const uint MoveToDataType_Encoding_DefaultBinary = 15178;
 
         /// <summary>
         /// The identifier for the CloseToolChangerDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CloseToolChangerDataType_Encoding_DefaultBinary = 15141;
+        public const uint CloseToolChangerDataType_Encoding_DefaultBinary = 15179;
 
         /// <summary>
         /// The identifier for the DwellDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DwellDataType_Encoding_DefaultBinary = 15142;
+        public const uint DwellDataType_Encoding_DefaultBinary = 15180;
 
         /// <summary>
         /// The identifier for the GetStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint GetStatusDataType_Encoding_DefaultBinary = 15143;
+        public const uint GetStatusDataType_Encoding_DefaultBinary = 15181;
 
         /// <summary>
         /// The identifier for the MessageDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MessageDataType_Encoding_DefaultBinary = 15144;
+        public const uint MessageDataType_Encoding_DefaultBinary = 15182;
 
         /// <summary>
         /// The identifier for the MoveScrewDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MoveScrewDataType_Encoding_DefaultBinary = 15145;
+        public const uint MoveScrewDataType_Encoding_DefaultBinary = 15183;
 
         /// <summary>
         /// The identifier for the MoveThroughToDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MoveThroughToDataType_Encoding_DefaultBinary = 15146;
+        public const uint MoveThroughToDataType_Encoding_DefaultBinary = 15184;
 
         /// <summary>
         /// The identifier for the OpenToolChangerDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint OpenToolChangerDataType_Encoding_DefaultBinary = 15147;
+        public const uint OpenToolChangerDataType_Encoding_DefaultBinary = 15185;
 
         /// <summary>
         /// The identifier for the RunProgramDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint RunProgramDataType_Encoding_DefaultBinary = 15148;
+        public const uint RunProgramDataType_Encoding_DefaultBinary = 15186;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetAngleUnitsDataType_Encoding_DefaultBinary = 15149;
+        public const uint SetAngleUnitsDataType_Encoding_DefaultBinary = 15187;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetEndeffectorParametersDataType_Encoding_DefaultBinary = 15916;
+        public const uint SetEndeffectorParametersDataType_Encoding_DefaultBinary = 15188;
 
         /// <summary>
         /// The identifier for the SetEndeffectorDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetEndeffectorDataType_Encoding_DefaultBinary = 15917;
+        public const uint SetEndeffectorDataType_Encoding_DefaultBinary = 15189;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetEndPoseToleranceDataType_Encoding_DefaultBinary = 15152;
+        public const uint SetEndPoseToleranceDataType_Encoding_DefaultBinary = 15190;
 
         /// <summary>
         /// The identifier for the SetForceUnitsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetForceUnitsDataType_Encoding_DefaultBinary = 15153;
+        public const uint SetForceUnitsDataType_Encoding_DefaultBinary = 15191;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceDataType_Encoding_DefaultBinary = 15154;
+        public const uint SetIntermediatePoseToleranceDataType_Encoding_DefaultBinary = 15192;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetLengthUnitsDataType_Encoding_DefaultBinary = 15155;
+        public const uint SetLengthUnitsDataType_Encoding_DefaultBinary = 15193;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetMotionCoordinationDataType_Encoding_DefaultBinary = 15156;
+        public const uint SetMotionCoordinationDataType_Encoding_DefaultBinary = 15194;
 
         /// <summary>
         /// The identifier for the SetRobotParametersDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetRobotParametersDataType_Encoding_DefaultBinary = 15157;
+        public const uint SetRobotParametersDataType_Encoding_DefaultBinary = 15195;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetTorqueUnitsDataType_Encoding_DefaultBinary = 15158;
+        public const uint SetTorqueUnitsDataType_Encoding_DefaultBinary = 15196;
 
         /// <summary>
         /// The identifier for the StopMotionDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint StopMotionDataType_Encoding_DefaultBinary = 15159;
+        public const uint StopMotionDataType_Encoding_DefaultBinary = 15197;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint ConfigureStatusReportDataType_Encoding_DefaultBinary = 15160;
+        public const uint ConfigureStatusReportDataType_Encoding_DefaultBinary = 15198;
 
         /// <summary>
         /// The identifier for the EnableSensorDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EnableSensorDataType_Encoding_DefaultBinary = 15161;
+        public const uint EnableSensorDataType_Encoding_DefaultBinary = 15199;
 
         /// <summary>
         /// The identifier for the DisableSensorDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DisableSensorDataType_Encoding_DefaultBinary = 15162;
+        public const uint DisableSensorDataType_Encoding_DefaultBinary = 15200;
 
         /// <summary>
         /// The identifier for the EnableGripperDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EnableGripperDataType_Encoding_DefaultBinary = 15163;
+        public const uint EnableGripperDataType_Encoding_DefaultBinary = 15201;
 
         /// <summary>
         /// The identifier for the DisableGripperDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DisableGripperDataType_Encoding_DefaultBinary = 15164;
+        public const uint DisableGripperDataType_Encoding_DefaultBinary = 15202;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EnableRobotParameterStatusDataType_Encoding_DefaultBinary = 15165;
+        public const uint EnableRobotParameterStatusDataType_Encoding_DefaultBinary = 15203;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DisableRobotParameterStatusDataType_Encoding_DefaultBinary = 15166;
+        public const uint DisableRobotParameterStatusDataType_Encoding_DefaultBinary = 15204;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultBinary = 15167;
+        public const uint SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultBinary = 15205;
 
         /// <summary>
         /// The identifier for the SetRotAccelDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetRotAccelDataType_Encoding_DefaultBinary = 15168;
+        public const uint SetRotAccelDataType_Encoding_DefaultBinary = 15206;
 
         /// <summary>
         /// The identifier for the SetTransAccelDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetTransAccelDataType_Encoding_DefaultBinary = 15169;
+        public const uint SetTransAccelDataType_Encoding_DefaultBinary = 15207;
 
         /// <summary>
         /// The identifier for the SetRotSpeedDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetRotSpeedDataType_Encoding_DefaultBinary = 15170;
+        public const uint SetRotSpeedDataType_Encoding_DefaultBinary = 15208;
 
         /// <summary>
         /// The identifier for the SetTransSpeedDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetTransSpeedDataType_Encoding_DefaultBinary = 15171;
+        public const uint SetTransSpeedDataType_Encoding_DefaultBinary = 15209;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint ConfigureJointReportsDataType_Encoding_DefaultBinary = 15172;
+        public const uint ConfigureJointReportsDataType_Encoding_DefaultBinary = 15210;
 
         /// <summary>
         /// The identifier for the CRCL_CommandStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_CommandStatusDataType_Encoding_DefaultBinary = 15173;
+        public const uint CRCL_CommandStatusDataType_Encoding_DefaultBinary = 15211;
 
         /// <summary>
         /// The identifier for the CRCL_SensorStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_SensorStatusDataType_Encoding_DefaultBinary = 15174;
+        public const uint CRCL_SensorStatusDataType_Encoding_DefaultBinary = 15212;
 
         /// <summary>
         /// The identifier for the CRCL_CountSensorStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_CountSensorStatusDataType_Encoding_DefaultBinary = 15175;
+        public const uint CRCL_CountSensorStatusDataType_Encoding_DefaultBinary = 15213;
 
         /// <summary>
         /// The identifier for the CRCL_OnOffSensorStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_OnOffSensorStatusDataType_Encoding_DefaultBinary = 15176;
+        public const uint CRCL_OnOffSensorStatusDataType_Encoding_DefaultBinary = 15214;
 
         /// <summary>
         /// The identifier for the CRCL_ScalarSensorStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ScalarSensorStatusDataType_Encoding_DefaultBinary = 15177;
+        public const uint CRCL_ScalarSensorStatusDataType_Encoding_DefaultBinary = 15215;
 
         /// <summary>
         /// The identifier for the CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultBinary = 15178;
+        public const uint CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultBinary = 15216;
 
         /// <summary>
         /// The identifier for the CRCL_SensorStatusesDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_SensorStatusesDataType_Encoding_DefaultBinary = 15179;
+        public const uint CRCL_SensorStatusesDataType_Encoding_DefaultBinary = 15217;
 
         /// <summary>
         /// The identifier for the CRCL_GripperStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_GripperStatusDataType_Encoding_DefaultBinary = 15180;
+        public const uint CRCL_GripperStatusDataType_Encoding_DefaultBinary = 15218;
 
         /// <summary>
         /// The identifier for the CRCL_ParallelGripperStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ParallelGripperStatusDataType_Encoding_DefaultBinary = 15181;
+        public const uint CRCL_ParallelGripperStatusDataType_Encoding_DefaultBinary = 15219;
 
         /// <summary>
         /// The identifier for the CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultBinary = 15182;
+        public const uint CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultBinary = 15220;
 
         /// <summary>
         /// The identifier for the CRCL_VacuumGripperStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_VacuumGripperStatusDataType_Encoding_DefaultBinary = 15183;
+        public const uint CRCL_VacuumGripperStatusDataType_Encoding_DefaultBinary = 15221;
 
         /// <summary>
         /// The identifier for the CRCL_SettingsStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_SettingsStatusDataType_Encoding_DefaultBinary = 15184;
+        public const uint CRCL_SettingsStatusDataType_Encoding_DefaultBinary = 15222;
 
         /// <summary>
         /// The identifier for the CRCL_PoseStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_PoseStatusDataType_Encoding_DefaultBinary = 15185;
+        public const uint CRCL_PoseStatusDataType_Encoding_DefaultBinary = 15223;
 
         /// <summary>
         /// The identifier for the CRCL_JointLimitDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointLimitDataType_Encoding_DefaultBinary = 15186;
+        public const uint CRCL_JointLimitDataType_Encoding_DefaultBinary = 15224;
 
         /// <summary>
         /// The identifier for the CRCL_JointStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointStatusDataType_Encoding_DefaultBinary = 15187;
+        public const uint CRCL_JointStatusDataType_Encoding_DefaultBinary = 15225;
 
         /// <summary>
         /// The identifier for the CRCL_JointStatusesDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCL_JointStatusesDataType_Encoding_DefaultBinary = 15188;
+        public const uint CRCL_JointStatusesDataType_Encoding_DefaultBinary = 15226;
 
         /// <summary>
         /// The identifier for the CRCLStatusDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCLStatusDataType_Encoding_DefaultBinary = 15189;
+        public const uint CRCLStatusDataType_Encoding_DefaultBinary = 15227;
 
         /// <summary>
         /// The identifier for the PubSubIPAddresses_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint PubSubIPAddresses_Encoding_DefaultBinary = 15190;
+        public const uint PubSubIPAddresses_Encoding_DefaultBinary = 15228;
 
         /// <summary>
         /// The identifier for the SAMYRobotDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SAMYRobotDataType_Encoding_DefaultBinary = 15191;
+        public const uint SAMYRobotDataType_Encoding_DefaultBinary = 15229;
 
         /// <summary>
         /// The identifier for the CRCLCommandsUnionDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCLCommandsUnionDataType_Encoding_DefaultBinary = 15192;
+        public const uint CRCLCommandsUnionDataType_Encoding_DefaultBinary = 15230;
 
         /// <summary>
         /// The identifier for the CRCLSkillDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCLSkillDataType_Encoding_DefaultBinary = 15193;
+        public const uint CRCLSkillDataType_Encoding_DefaultBinary = 15231;
 
         /// <summary>
         /// The identifier for the CRCLCommandParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CRCLCommandParametersSetDataType_Encoding_DefaultBinary = 15975;
+        public const uint CRCLCommandParametersSetDataType_Encoding_DefaultBinary = 15232;
 
         /// <summary>
         /// The identifier for the InitCanonParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint InitCanonParametersSetDataType_Encoding_DefaultBinary = 15976;
+        public const uint InitCanonParametersSetDataType_Encoding_DefaultBinary = 15233;
 
         /// <summary>
         /// The identifier for the EndCanonParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EndCanonParametersSetDataType_Encoding_DefaultBinary = 15978;
+        public const uint EndCanonParametersSetDataType_Encoding_DefaultBinary = 15234;
 
         /// <summary>
         /// The identifier for the GetStatusParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint GetStatusParametersSetDataType_Encoding_DefaultBinary = 15979;
+        public const uint GetStatusParametersSetDataType_Encoding_DefaultBinary = 15235;
 
         /// <summary>
         /// The identifier for the CloseToolChangerParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint CloseToolChangerParametersSetDataType_Encoding_DefaultBinary = 15981;
+        public const uint CloseToolChangerParametersSetDataType_Encoding_DefaultBinary = 15236;
 
         /// <summary>
         /// The identifier for the OpenToolChangerParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint OpenToolChangerParametersSetDataType_Encoding_DefaultBinary = 15983;
+        public const uint OpenToolChangerParametersSetDataType_Encoding_DefaultBinary = 15237;
 
         /// <summary>
         /// The identifier for the MessageParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MessageParametersSetDataType_Encoding_DefaultBinary = 15984;
+        public const uint MessageParametersSetDataType_Encoding_DefaultBinary = 15238;
 
         /// <summary>
         /// The identifier for the MoveToParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MoveToParametersSetDataType_Encoding_DefaultBinary = 15986;
+        public const uint MoveToParametersSetDataType_Encoding_DefaultBinary = 15239;
 
         /// <summary>
         /// The identifier for the MoveScrewParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MoveScrewParametersSetDataType_Encoding_DefaultBinary = 15988;
+        public const uint MoveScrewParametersSetDataType_Encoding_DefaultBinary = 15240;
 
         /// <summary>
         /// The identifier for the MoveThroughToParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint MoveThroughToParametersSetDataType_Encoding_DefaultBinary = 15990;
+        public const uint MoveThroughToParametersSetDataType_Encoding_DefaultBinary = 15241;
 
         /// <summary>
         /// The identifier for the DwellParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DwellParametersSetDataType_Encoding_DefaultBinary = 16322;
+        public const uint DwellParametersSetDataType_Encoding_DefaultBinary = 15242;
 
         /// <summary>
         /// The identifier for the ActuateJointsParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint ActuateJointsParametersSetDataType_Encoding_DefaultBinary = 16323;
+        public const uint ActuateJointsParametersSetDataType_Encoding_DefaultBinary = 15243;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint ConfigureJointReportsParametersSetDataType_Encoding_DefaultBinary = 16324;
+        public const uint ConfigureJointReportsParametersSetDataType_Encoding_DefaultBinary = 15244;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultBinary = 16325;
+        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultBinary = 15245;
 
         /// <summary>
         /// The identifier for the SetRobotParametersParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetRobotParametersParametersSetDataType_Encoding_DefaultBinary = 16326;
+        public const uint SetRobotParametersParametersSetDataType_Encoding_DefaultBinary = 15246;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetEndeffectorParametersParametersSetDataType_Encoding_DefaultBinary = 16327;
+        public const uint SetEndeffectorParametersParametersSetDataType_Encoding_DefaultBinary = 15247;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetEndeffectorParametersSetDataType_Encoding_DefaultBinary = 16328;
+        public const uint SetEndeffectorParametersSetDataType_Encoding_DefaultBinary = 15248;
 
         /// <summary>
         /// The identifier for the SetTransSpeedParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetTransSpeedParametersSetDataType_Encoding_DefaultBinary = 16329;
+        public const uint SetTransSpeedParametersSetDataType_Encoding_DefaultBinary = 15249;
 
         /// <summary>
         /// The identifier for the SetTransAccelParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetTransAccelParametersSetDataType_Encoding_DefaultBinary = 16330;
+        public const uint SetTransAccelParametersSetDataType_Encoding_DefaultBinary = 15250;
 
         /// <summary>
         /// The identifier for the SetRotSpeedParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetRotSpeedParametersSetDataType_Encoding_DefaultBinary = 16331;
+        public const uint SetRotSpeedParametersSetDataType_Encoding_DefaultBinary = 15251;
 
         /// <summary>
         /// The identifier for the SetRotAccelParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetRotAccelParametersSetDataType_Encoding_DefaultBinary = 16332;
+        public const uint SetRotAccelParametersSetDataType_Encoding_DefaultBinary = 15252;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetAngleUnitsParametersSetDataType_Encoding_DefaultBinary = 16333;
+        public const uint SetAngleUnitsParametersSetDataType_Encoding_DefaultBinary = 15253;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetEndPoseToleranceParametersSetDataType_Encoding_DefaultBinary = 16334;
+        public const uint SetEndPoseToleranceParametersSetDataType_Encoding_DefaultBinary = 15254;
 
         /// <summary>
         /// The identifier for the SetForceUnitsParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetForceUnitsParametersSetDataType_Encoding_DefaultBinary = 16335;
+        public const uint SetForceUnitsParametersSetDataType_Encoding_DefaultBinary = 15255;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultBinary = 16336;
+        public const uint SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultBinary = 15256;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetLengthUnitsParametersSetDataType_Encoding_DefaultBinary = 16337;
+        public const uint SetLengthUnitsParametersSetDataType_Encoding_DefaultBinary = 15257;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetMotionCoordinationParametersSetDataType_Encoding_DefaultBinary = 16338;
+        public const uint SetMotionCoordinationParametersSetDataType_Encoding_DefaultBinary = 15258;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint SetTorqueUnitsParametersSetDataType_Encoding_DefaultBinary = 16339;
+        public const uint SetTorqueUnitsParametersSetDataType_Encoding_DefaultBinary = 15259;
 
         /// <summary>
         /// The identifier for the StopMotionParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint StopMotionParametersSetDataType_Encoding_DefaultBinary = 16340;
+        public const uint StopMotionParametersSetDataType_Encoding_DefaultBinary = 15260;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint ConfigureStatusReportParametersSetDataType_Encoding_DefaultBinary = 16341;
+        public const uint ConfigureStatusReportParametersSetDataType_Encoding_DefaultBinary = 15261;
 
         /// <summary>
         /// The identifier for the EnableSensorParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EnableSensorParametersSetDataType_Encoding_DefaultBinary = 16342;
+        public const uint EnableSensorParametersSetDataType_Encoding_DefaultBinary = 15262;
 
         /// <summary>
         /// The identifier for the DisableSensorParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DisableSensorParametersSetDataType_Encoding_DefaultBinary = 16343;
+        public const uint DisableSensorParametersSetDataType_Encoding_DefaultBinary = 15263;
 
         /// <summary>
         /// The identifier for the EnableGripperParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EnableGripperParametersSetDataType_Encoding_DefaultBinary = 16344;
+        public const uint EnableGripperParametersSetDataType_Encoding_DefaultBinary = 15264;
 
         /// <summary>
         /// The identifier for the DisableGripperParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DisableGripperParametersSetDataType_Encoding_DefaultBinary = 16345;
+        public const uint DisableGripperParametersSetDataType_Encoding_DefaultBinary = 15265;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultBinary = 16346;
+        public const uint EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultBinary = 15266;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultBinary Object.
         /// </summary>
-        public const uint DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultBinary = 16347;
+        public const uint DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultBinary = 15267;
 
         /// <summary>
         /// The identifier for the CRCL_FractionDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_FractionDataType_Encoding_DefaultXml = 15465;
+        public const uint CRCL_FractionDataType_Encoding_DefaultXml = 15647;
 
         /// <summary>
         /// The identifier for the CRCL_DataThingDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_DataThingDataType_Encoding_DefaultXml = 15466;
+        public const uint CRCL_DataThingDataType_Encoding_DefaultXml = 15648;
 
         /// <summary>
         /// The identifier for the CRCL_PointDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_PointDataType_Encoding_DefaultXml = 15467;
+        public const uint CRCL_PointDataType_Encoding_DefaultXml = 15649;
 
         /// <summary>
         /// The identifier for the CRCL_VectorDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_VectorDataType_Encoding_DefaultXml = 15468;
+        public const uint CRCL_VectorDataType_Encoding_DefaultXml = 15650;
 
         /// <summary>
         /// The identifier for the CRCL_PoseDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_PoseDataType_Encoding_DefaultXml = 15469;
+        public const uint CRCL_PoseDataType_Encoding_DefaultXml = 15651;
 
         /// <summary>
         /// The identifier for the CRCL_TwistDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TwistDataType_Encoding_DefaultXml = 15470;
+        public const uint CRCL_TwistDataType_Encoding_DefaultXml = 15652;
 
         /// <summary>
         /// The identifier for the CRCL_WrenchDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_WrenchDataType_Encoding_DefaultXml = 15471;
+        public const uint CRCL_WrenchDataType_Encoding_DefaultXml = 15653;
 
         /// <summary>
         /// The identifier for the CRCL_PoseToleranceDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_PoseToleranceDataType_Encoding_DefaultXml = 15472;
+        public const uint CRCL_PoseToleranceDataType_Encoding_DefaultXml = 15654;
 
         /// <summary>
         /// The identifier for the CRCL_ParameterSettingDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ParameterSettingDataType_Encoding_DefaultXml = 15473;
+        public const uint CRCL_ParameterSettingDataType_Encoding_DefaultXml = 15655;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelAbsoluteDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_RotAccelAbsoluteDataType_Encoding_DefaultXml = 15474;
+        public const uint CRCL_RotAccelAbsoluteDataType_Encoding_DefaultXml = 15656;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelRelativeDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_RotAccelRelativeDataType_Encoding_DefaultXml = 15475;
+        public const uint CRCL_RotAccelRelativeDataType_Encoding_DefaultXml = 15657;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_RotAccelDataType_Encoding_DefaultXml = 15476;
+        public const uint CRCL_RotAccelDataType_Encoding_DefaultXml = 15658;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultXml = 15477;
+        public const uint CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultXml = 15659;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedRelativeDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_RotSpeedRelativeDataType_Encoding_DefaultXml = 15478;
+        public const uint CRCL_RotSpeedRelativeDataType_Encoding_DefaultXml = 15660;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_RotSpeedDataType_Encoding_DefaultXml = 15479;
+        public const uint CRCL_RotSpeedDataType_Encoding_DefaultXml = 15661;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelAbsoluteDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TransAccelAbsoluteDataType_Encoding_DefaultXml = 15480;
+        public const uint CRCL_TransAccelAbsoluteDataType_Encoding_DefaultXml = 15662;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelRelativeDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TransAccelRelativeDataType_Encoding_DefaultXml = 15481;
+        public const uint CRCL_TransAccelRelativeDataType_Encoding_DefaultXml = 15663;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TransAccelDataType_Encoding_DefaultXml = 15482;
+        public const uint CRCL_TransAccelDataType_Encoding_DefaultXml = 15664;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultXml = 15483;
+        public const uint CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultXml = 15665;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedRelativeDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TransSpeedRelativeDataType_Encoding_DefaultXml = 15484;
+        public const uint CRCL_TransSpeedRelativeDataType_Encoding_DefaultXml = 15666;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_TransSpeedDataType_Encoding_DefaultXml = 15485;
+        public const uint CRCL_TransSpeedDataType_Encoding_DefaultXml = 15667;
 
         /// <summary>
         /// The identifier for the CRCL_ConfigureJointReportDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ConfigureJointReportDataType_Encoding_DefaultXml = 15486;
+        public const uint CRCL_ConfigureJointReportDataType_Encoding_DefaultXml = 15668;
 
         /// <summary>
         /// The identifier for the CRCL_GuardDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_GuardDataType_Encoding_DefaultXml = 15487;
+        public const uint CRCL_GuardDataType_Encoding_DefaultXml = 15669;
 
         /// <summary>
         /// The identifier for the CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultXml = 15488;
+        public const uint CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultXml = 15670;
 
         /// <summary>
         /// The identifier for the CRCL_JointPositionsTolerancesDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointPositionsTolerancesDataType_Encoding_DefaultXml = 15489;
+        public const uint CRCL_JointPositionsTolerancesDataType_Encoding_DefaultXml = 15671;
 
         /// <summary>
         /// The identifier for the CRCL_PoseAndSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_PoseAndSetDataType_Encoding_DefaultXml = 15490;
+        public const uint CRCL_PoseAndSetDataType_Encoding_DefaultXml = 15672;
 
         /// <summary>
         /// The identifier for the CRCLCommandDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCLCommandDataType_Encoding_DefaultXml = 15491;
+        public const uint CRCLCommandDataType_Encoding_DefaultXml = 15673;
 
         /// <summary>
         /// The identifier for the MiddleCommandDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MiddleCommandDataType_Encoding_DefaultXml = 15492;
+        public const uint MiddleCommandDataType_Encoding_DefaultXml = 15674;
 
         /// <summary>
         /// The identifier for the EndCanonDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EndCanonDataType_Encoding_DefaultXml = 15493;
+        public const uint EndCanonDataType_Encoding_DefaultXml = 15675;
 
         /// <summary>
         /// The identifier for the InitCanonDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint InitCanonDataType_Encoding_DefaultXml = 15494;
+        public const uint InitCanonDataType_Encoding_DefaultXml = 15676;
 
         /// <summary>
         /// The identifier for the CRCL_JointDetailsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointDetailsDataType_Encoding_DefaultXml = 15495;
+        public const uint CRCL_JointDetailsDataType_Encoding_DefaultXml = 15677;
 
         /// <summary>
         /// The identifier for the CRCL_ActuateJointDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ActuateJointDataType_Encoding_DefaultXml = 15995;
+        public const uint CRCL_ActuateJointDataType_Encoding_DefaultXml = 15678;
 
         /// <summary>
         /// The identifier for the CRCL_JointForceTorqueDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointForceTorqueDataType_Encoding_DefaultXml = 15497;
+        public const uint CRCL_JointForceTorqueDataType_Encoding_DefaultXml = 15679;
 
         /// <summary>
         /// The identifier for the CRCL_JointSpeedAccelDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointSpeedAccelDataType_Encoding_DefaultXml = 15498;
+        public const uint CRCL_JointSpeedAccelDataType_Encoding_DefaultXml = 15680;
 
         /// <summary>
         /// The identifier for the ActuateJointsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint ActuateJointsDataType_Encoding_DefaultXml = 15499;
+        public const uint ActuateJointsDataType_Encoding_DefaultXml = 15681;
 
         /// <summary>
         /// The identifier for the MoveToDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MoveToDataType_Encoding_DefaultXml = 15500;
+        public const uint MoveToDataType_Encoding_DefaultXml = 15682;
 
         /// <summary>
         /// The identifier for the CloseToolChangerDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CloseToolChangerDataType_Encoding_DefaultXml = 15501;
+        public const uint CloseToolChangerDataType_Encoding_DefaultXml = 15683;
 
         /// <summary>
         /// The identifier for the DwellDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DwellDataType_Encoding_DefaultXml = 15502;
+        public const uint DwellDataType_Encoding_DefaultXml = 15684;
 
         /// <summary>
         /// The identifier for the GetStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint GetStatusDataType_Encoding_DefaultXml = 15503;
+        public const uint GetStatusDataType_Encoding_DefaultXml = 15685;
 
         /// <summary>
         /// The identifier for the MessageDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MessageDataType_Encoding_DefaultXml = 15504;
+        public const uint MessageDataType_Encoding_DefaultXml = 15686;
 
         /// <summary>
         /// The identifier for the MoveScrewDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MoveScrewDataType_Encoding_DefaultXml = 15505;
+        public const uint MoveScrewDataType_Encoding_DefaultXml = 15687;
 
         /// <summary>
         /// The identifier for the MoveThroughToDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MoveThroughToDataType_Encoding_DefaultXml = 15506;
+        public const uint MoveThroughToDataType_Encoding_DefaultXml = 15688;
 
         /// <summary>
         /// The identifier for the OpenToolChangerDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint OpenToolChangerDataType_Encoding_DefaultXml = 15507;
+        public const uint OpenToolChangerDataType_Encoding_DefaultXml = 15689;
 
         /// <summary>
         /// The identifier for the RunProgramDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint RunProgramDataType_Encoding_DefaultXml = 15508;
+        public const uint RunProgramDataType_Encoding_DefaultXml = 15690;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetAngleUnitsDataType_Encoding_DefaultXml = 15509;
+        public const uint SetAngleUnitsDataType_Encoding_DefaultXml = 15691;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetEndeffectorParametersDataType_Encoding_DefaultXml = 15924;
+        public const uint SetEndeffectorParametersDataType_Encoding_DefaultXml = 15692;
 
         /// <summary>
         /// The identifier for the SetEndeffectorDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetEndeffectorDataType_Encoding_DefaultXml = 15925;
+        public const uint SetEndeffectorDataType_Encoding_DefaultXml = 15693;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetEndPoseToleranceDataType_Encoding_DefaultXml = 15512;
+        public const uint SetEndPoseToleranceDataType_Encoding_DefaultXml = 15694;
 
         /// <summary>
         /// The identifier for the SetForceUnitsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetForceUnitsDataType_Encoding_DefaultXml = 15513;
+        public const uint SetForceUnitsDataType_Encoding_DefaultXml = 15695;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceDataType_Encoding_DefaultXml = 15514;
+        public const uint SetIntermediatePoseToleranceDataType_Encoding_DefaultXml = 15696;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetLengthUnitsDataType_Encoding_DefaultXml = 15515;
+        public const uint SetLengthUnitsDataType_Encoding_DefaultXml = 15697;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetMotionCoordinationDataType_Encoding_DefaultXml = 15516;
+        public const uint SetMotionCoordinationDataType_Encoding_DefaultXml = 15698;
 
         /// <summary>
         /// The identifier for the SetRobotParametersDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetRobotParametersDataType_Encoding_DefaultXml = 15517;
+        public const uint SetRobotParametersDataType_Encoding_DefaultXml = 15699;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetTorqueUnitsDataType_Encoding_DefaultXml = 15518;
+        public const uint SetTorqueUnitsDataType_Encoding_DefaultXml = 15700;
 
         /// <summary>
         /// The identifier for the StopMotionDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint StopMotionDataType_Encoding_DefaultXml = 15519;
+        public const uint StopMotionDataType_Encoding_DefaultXml = 15701;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint ConfigureStatusReportDataType_Encoding_DefaultXml = 15520;
+        public const uint ConfigureStatusReportDataType_Encoding_DefaultXml = 15702;
 
         /// <summary>
         /// The identifier for the EnableSensorDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EnableSensorDataType_Encoding_DefaultXml = 15521;
+        public const uint EnableSensorDataType_Encoding_DefaultXml = 15703;
 
         /// <summary>
         /// The identifier for the DisableSensorDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DisableSensorDataType_Encoding_DefaultXml = 15522;
+        public const uint DisableSensorDataType_Encoding_DefaultXml = 15704;
 
         /// <summary>
         /// The identifier for the EnableGripperDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EnableGripperDataType_Encoding_DefaultXml = 15523;
+        public const uint EnableGripperDataType_Encoding_DefaultXml = 15705;
 
         /// <summary>
         /// The identifier for the DisableGripperDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DisableGripperDataType_Encoding_DefaultXml = 15524;
+        public const uint DisableGripperDataType_Encoding_DefaultXml = 15706;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EnableRobotParameterStatusDataType_Encoding_DefaultXml = 15525;
+        public const uint EnableRobotParameterStatusDataType_Encoding_DefaultXml = 15707;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DisableRobotParameterStatusDataType_Encoding_DefaultXml = 15526;
+        public const uint DisableRobotParameterStatusDataType_Encoding_DefaultXml = 15708;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultXml = 15527;
+        public const uint SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultXml = 15709;
 
         /// <summary>
         /// The identifier for the SetRotAccelDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetRotAccelDataType_Encoding_DefaultXml = 15528;
+        public const uint SetRotAccelDataType_Encoding_DefaultXml = 15710;
 
         /// <summary>
         /// The identifier for the SetTransAccelDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetTransAccelDataType_Encoding_DefaultXml = 15529;
+        public const uint SetTransAccelDataType_Encoding_DefaultXml = 15711;
 
         /// <summary>
         /// The identifier for the SetRotSpeedDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetRotSpeedDataType_Encoding_DefaultXml = 15530;
+        public const uint SetRotSpeedDataType_Encoding_DefaultXml = 15712;
 
         /// <summary>
         /// The identifier for the SetTransSpeedDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetTransSpeedDataType_Encoding_DefaultXml = 15531;
+        public const uint SetTransSpeedDataType_Encoding_DefaultXml = 15713;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint ConfigureJointReportsDataType_Encoding_DefaultXml = 15532;
+        public const uint ConfigureJointReportsDataType_Encoding_DefaultXml = 15714;
 
         /// <summary>
         /// The identifier for the CRCL_CommandStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_CommandStatusDataType_Encoding_DefaultXml = 15533;
+        public const uint CRCL_CommandStatusDataType_Encoding_DefaultXml = 15715;
 
         /// <summary>
         /// The identifier for the CRCL_SensorStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_SensorStatusDataType_Encoding_DefaultXml = 15534;
+        public const uint CRCL_SensorStatusDataType_Encoding_DefaultXml = 15716;
 
         /// <summary>
         /// The identifier for the CRCL_CountSensorStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_CountSensorStatusDataType_Encoding_DefaultXml = 15535;
+        public const uint CRCL_CountSensorStatusDataType_Encoding_DefaultXml = 15717;
 
         /// <summary>
         /// The identifier for the CRCL_OnOffSensorStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_OnOffSensorStatusDataType_Encoding_DefaultXml = 15536;
+        public const uint CRCL_OnOffSensorStatusDataType_Encoding_DefaultXml = 15718;
 
         /// <summary>
         /// The identifier for the CRCL_ScalarSensorStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ScalarSensorStatusDataType_Encoding_DefaultXml = 15537;
+        public const uint CRCL_ScalarSensorStatusDataType_Encoding_DefaultXml = 15719;
 
         /// <summary>
         /// The identifier for the CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultXml = 15538;
+        public const uint CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultXml = 15720;
 
         /// <summary>
         /// The identifier for the CRCL_SensorStatusesDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_SensorStatusesDataType_Encoding_DefaultXml = 15539;
+        public const uint CRCL_SensorStatusesDataType_Encoding_DefaultXml = 15721;
 
         /// <summary>
         /// The identifier for the CRCL_GripperStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_GripperStatusDataType_Encoding_DefaultXml = 15540;
+        public const uint CRCL_GripperStatusDataType_Encoding_DefaultXml = 15722;
 
         /// <summary>
         /// The identifier for the CRCL_ParallelGripperStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ParallelGripperStatusDataType_Encoding_DefaultXml = 15541;
+        public const uint CRCL_ParallelGripperStatusDataType_Encoding_DefaultXml = 15723;
 
         /// <summary>
         /// The identifier for the CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultXml = 15542;
+        public const uint CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultXml = 15724;
 
         /// <summary>
         /// The identifier for the CRCL_VacuumGripperStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_VacuumGripperStatusDataType_Encoding_DefaultXml = 15543;
+        public const uint CRCL_VacuumGripperStatusDataType_Encoding_DefaultXml = 15725;
 
         /// <summary>
         /// The identifier for the CRCL_SettingsStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_SettingsStatusDataType_Encoding_DefaultXml = 15544;
+        public const uint CRCL_SettingsStatusDataType_Encoding_DefaultXml = 15726;
 
         /// <summary>
         /// The identifier for the CRCL_PoseStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_PoseStatusDataType_Encoding_DefaultXml = 15545;
+        public const uint CRCL_PoseStatusDataType_Encoding_DefaultXml = 15727;
 
         /// <summary>
         /// The identifier for the CRCL_JointLimitDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointLimitDataType_Encoding_DefaultXml = 15546;
+        public const uint CRCL_JointLimitDataType_Encoding_DefaultXml = 15728;
 
         /// <summary>
         /// The identifier for the CRCL_JointStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointStatusDataType_Encoding_DefaultXml = 15547;
+        public const uint CRCL_JointStatusDataType_Encoding_DefaultXml = 15729;
 
         /// <summary>
         /// The identifier for the CRCL_JointStatusesDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCL_JointStatusesDataType_Encoding_DefaultXml = 15548;
+        public const uint CRCL_JointStatusesDataType_Encoding_DefaultXml = 15730;
 
         /// <summary>
         /// The identifier for the CRCLStatusDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCLStatusDataType_Encoding_DefaultXml = 15549;
+        public const uint CRCLStatusDataType_Encoding_DefaultXml = 15731;
 
         /// <summary>
         /// The identifier for the PubSubIPAddresses_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint PubSubIPAddresses_Encoding_DefaultXml = 15550;
+        public const uint PubSubIPAddresses_Encoding_DefaultXml = 15732;
 
         /// <summary>
         /// The identifier for the SAMYRobotDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SAMYRobotDataType_Encoding_DefaultXml = 15551;
+        public const uint SAMYRobotDataType_Encoding_DefaultXml = 15733;
 
         /// <summary>
         /// The identifier for the CRCLCommandsUnionDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCLCommandsUnionDataType_Encoding_DefaultXml = 15552;
+        public const uint CRCLCommandsUnionDataType_Encoding_DefaultXml = 15734;
 
         /// <summary>
         /// The identifier for the CRCLSkillDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCLSkillDataType_Encoding_DefaultXml = 15553;
+        public const uint CRCLSkillDataType_Encoding_DefaultXml = 15735;
 
         /// <summary>
         /// The identifier for the CRCLCommandParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CRCLCommandParametersSetDataType_Encoding_DefaultXml = 16456;
+        public const uint CRCLCommandParametersSetDataType_Encoding_DefaultXml = 15736;
 
         /// <summary>
         /// The identifier for the InitCanonParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint InitCanonParametersSetDataType_Encoding_DefaultXml = 16457;
+        public const uint InitCanonParametersSetDataType_Encoding_DefaultXml = 15737;
 
         /// <summary>
         /// The identifier for the EndCanonParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EndCanonParametersSetDataType_Encoding_DefaultXml = 16458;
+        public const uint EndCanonParametersSetDataType_Encoding_DefaultXml = 15738;
 
         /// <summary>
         /// The identifier for the GetStatusParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint GetStatusParametersSetDataType_Encoding_DefaultXml = 16459;
+        public const uint GetStatusParametersSetDataType_Encoding_DefaultXml = 15739;
 
         /// <summary>
         /// The identifier for the CloseToolChangerParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint CloseToolChangerParametersSetDataType_Encoding_DefaultXml = 16460;
+        public const uint CloseToolChangerParametersSetDataType_Encoding_DefaultXml = 15740;
 
         /// <summary>
         /// The identifier for the OpenToolChangerParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint OpenToolChangerParametersSetDataType_Encoding_DefaultXml = 16461;
+        public const uint OpenToolChangerParametersSetDataType_Encoding_DefaultXml = 15741;
 
         /// <summary>
         /// The identifier for the MessageParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MessageParametersSetDataType_Encoding_DefaultXml = 16462;
+        public const uint MessageParametersSetDataType_Encoding_DefaultXml = 15742;
 
         /// <summary>
         /// The identifier for the MoveToParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MoveToParametersSetDataType_Encoding_DefaultXml = 16463;
+        public const uint MoveToParametersSetDataType_Encoding_DefaultXml = 15743;
 
         /// <summary>
         /// The identifier for the MoveScrewParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MoveScrewParametersSetDataType_Encoding_DefaultXml = 16464;
+        public const uint MoveScrewParametersSetDataType_Encoding_DefaultXml = 15744;
 
         /// <summary>
         /// The identifier for the MoveThroughToParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint MoveThroughToParametersSetDataType_Encoding_DefaultXml = 16465;
+        public const uint MoveThroughToParametersSetDataType_Encoding_DefaultXml = 15745;
 
         /// <summary>
         /// The identifier for the DwellParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DwellParametersSetDataType_Encoding_DefaultXml = 16466;
+        public const uint DwellParametersSetDataType_Encoding_DefaultXml = 15746;
 
         /// <summary>
         /// The identifier for the ActuateJointsParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint ActuateJointsParametersSetDataType_Encoding_DefaultXml = 16467;
+        public const uint ActuateJointsParametersSetDataType_Encoding_DefaultXml = 15747;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint ConfigureJointReportsParametersSetDataType_Encoding_DefaultXml = 16468;
+        public const uint ConfigureJointReportsParametersSetDataType_Encoding_DefaultXml = 15748;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultXml = 16469;
+        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultXml = 15749;
 
         /// <summary>
         /// The identifier for the SetRobotParametersParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetRobotParametersParametersSetDataType_Encoding_DefaultXml = 16470;
+        public const uint SetRobotParametersParametersSetDataType_Encoding_DefaultXml = 15750;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetEndeffectorParametersParametersSetDataType_Encoding_DefaultXml = 16471;
+        public const uint SetEndeffectorParametersParametersSetDataType_Encoding_DefaultXml = 15751;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetEndeffectorParametersSetDataType_Encoding_DefaultXml = 16472;
+        public const uint SetEndeffectorParametersSetDataType_Encoding_DefaultXml = 15752;
 
         /// <summary>
         /// The identifier for the SetTransSpeedParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetTransSpeedParametersSetDataType_Encoding_DefaultXml = 16473;
+        public const uint SetTransSpeedParametersSetDataType_Encoding_DefaultXml = 15753;
 
         /// <summary>
         /// The identifier for the SetTransAccelParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetTransAccelParametersSetDataType_Encoding_DefaultXml = 16474;
+        public const uint SetTransAccelParametersSetDataType_Encoding_DefaultXml = 15754;
 
         /// <summary>
         /// The identifier for the SetRotSpeedParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetRotSpeedParametersSetDataType_Encoding_DefaultXml = 16475;
+        public const uint SetRotSpeedParametersSetDataType_Encoding_DefaultXml = 15755;
 
         /// <summary>
         /// The identifier for the SetRotAccelParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetRotAccelParametersSetDataType_Encoding_DefaultXml = 16476;
+        public const uint SetRotAccelParametersSetDataType_Encoding_DefaultXml = 15756;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetAngleUnitsParametersSetDataType_Encoding_DefaultXml = 16477;
+        public const uint SetAngleUnitsParametersSetDataType_Encoding_DefaultXml = 15757;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetEndPoseToleranceParametersSetDataType_Encoding_DefaultXml = 16478;
+        public const uint SetEndPoseToleranceParametersSetDataType_Encoding_DefaultXml = 15758;
 
         /// <summary>
         /// The identifier for the SetForceUnitsParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetForceUnitsParametersSetDataType_Encoding_DefaultXml = 16479;
+        public const uint SetForceUnitsParametersSetDataType_Encoding_DefaultXml = 15759;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultXml = 16480;
+        public const uint SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultXml = 15760;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetLengthUnitsParametersSetDataType_Encoding_DefaultXml = 16481;
+        public const uint SetLengthUnitsParametersSetDataType_Encoding_DefaultXml = 15761;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetMotionCoordinationParametersSetDataType_Encoding_DefaultXml = 16482;
+        public const uint SetMotionCoordinationParametersSetDataType_Encoding_DefaultXml = 15762;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint SetTorqueUnitsParametersSetDataType_Encoding_DefaultXml = 16483;
+        public const uint SetTorqueUnitsParametersSetDataType_Encoding_DefaultXml = 15763;
 
         /// <summary>
         /// The identifier for the StopMotionParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint StopMotionParametersSetDataType_Encoding_DefaultXml = 16484;
+        public const uint StopMotionParametersSetDataType_Encoding_DefaultXml = 15764;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint ConfigureStatusReportParametersSetDataType_Encoding_DefaultXml = 16485;
+        public const uint ConfigureStatusReportParametersSetDataType_Encoding_DefaultXml = 15765;
 
         /// <summary>
         /// The identifier for the EnableSensorParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EnableSensorParametersSetDataType_Encoding_DefaultXml = 16486;
+        public const uint EnableSensorParametersSetDataType_Encoding_DefaultXml = 15766;
 
         /// <summary>
         /// The identifier for the DisableSensorParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DisableSensorParametersSetDataType_Encoding_DefaultXml = 16487;
+        public const uint DisableSensorParametersSetDataType_Encoding_DefaultXml = 15767;
 
         /// <summary>
         /// The identifier for the EnableGripperParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EnableGripperParametersSetDataType_Encoding_DefaultXml = 16488;
+        public const uint EnableGripperParametersSetDataType_Encoding_DefaultXml = 15768;
 
         /// <summary>
         /// The identifier for the DisableGripperParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DisableGripperParametersSetDataType_Encoding_DefaultXml = 16489;
+        public const uint DisableGripperParametersSetDataType_Encoding_DefaultXml = 15769;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultXml = 16490;
+        public const uint EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultXml = 15770;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultXml Object.
         /// </summary>
-        public const uint DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultXml = 16491;
+        public const uint DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultXml = 15771;
 
         /// <summary>
         /// The identifier for the CRCL_FractionDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_FractionDataType_Encoding_DefaultJson = 15825;
+        public const uint CRCL_FractionDataType_Encoding_DefaultJson = 16151;
 
         /// <summary>
         /// The identifier for the CRCL_DataThingDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_DataThingDataType_Encoding_DefaultJson = 15826;
+        public const uint CRCL_DataThingDataType_Encoding_DefaultJson = 16152;
 
         /// <summary>
         /// The identifier for the CRCL_PointDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_PointDataType_Encoding_DefaultJson = 15827;
+        public const uint CRCL_PointDataType_Encoding_DefaultJson = 16153;
 
         /// <summary>
         /// The identifier for the CRCL_VectorDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_VectorDataType_Encoding_DefaultJson = 15828;
+        public const uint CRCL_VectorDataType_Encoding_DefaultJson = 16154;
 
         /// <summary>
         /// The identifier for the CRCL_PoseDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_PoseDataType_Encoding_DefaultJson = 15829;
+        public const uint CRCL_PoseDataType_Encoding_DefaultJson = 16155;
 
         /// <summary>
         /// The identifier for the CRCL_TwistDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TwistDataType_Encoding_DefaultJson = 15830;
+        public const uint CRCL_TwistDataType_Encoding_DefaultJson = 16156;
 
         /// <summary>
         /// The identifier for the CRCL_WrenchDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_WrenchDataType_Encoding_DefaultJson = 15831;
+        public const uint CRCL_WrenchDataType_Encoding_DefaultJson = 16157;
 
         /// <summary>
         /// The identifier for the CRCL_PoseToleranceDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_PoseToleranceDataType_Encoding_DefaultJson = 15832;
+        public const uint CRCL_PoseToleranceDataType_Encoding_DefaultJson = 16158;
 
         /// <summary>
         /// The identifier for the CRCL_ParameterSettingDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ParameterSettingDataType_Encoding_DefaultJson = 15833;
+        public const uint CRCL_ParameterSettingDataType_Encoding_DefaultJson = 16159;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelAbsoluteDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_RotAccelAbsoluteDataType_Encoding_DefaultJson = 15834;
+        public const uint CRCL_RotAccelAbsoluteDataType_Encoding_DefaultJson = 16160;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelRelativeDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_RotAccelRelativeDataType_Encoding_DefaultJson = 15835;
+        public const uint CRCL_RotAccelRelativeDataType_Encoding_DefaultJson = 16161;
 
         /// <summary>
         /// The identifier for the CRCL_RotAccelDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_RotAccelDataType_Encoding_DefaultJson = 15836;
+        public const uint CRCL_RotAccelDataType_Encoding_DefaultJson = 16162;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultJson = 15837;
+        public const uint CRCL_RotSpeedAbsoluteDataType_Encoding_DefaultJson = 16163;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedRelativeDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_RotSpeedRelativeDataType_Encoding_DefaultJson = 15838;
+        public const uint CRCL_RotSpeedRelativeDataType_Encoding_DefaultJson = 16164;
 
         /// <summary>
         /// The identifier for the CRCL_RotSpeedDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_RotSpeedDataType_Encoding_DefaultJson = 15839;
+        public const uint CRCL_RotSpeedDataType_Encoding_DefaultJson = 16165;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelAbsoluteDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TransAccelAbsoluteDataType_Encoding_DefaultJson = 15840;
+        public const uint CRCL_TransAccelAbsoluteDataType_Encoding_DefaultJson = 16166;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelRelativeDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TransAccelRelativeDataType_Encoding_DefaultJson = 15841;
+        public const uint CRCL_TransAccelRelativeDataType_Encoding_DefaultJson = 16167;
 
         /// <summary>
         /// The identifier for the CRCL_TransAccelDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TransAccelDataType_Encoding_DefaultJson = 15842;
+        public const uint CRCL_TransAccelDataType_Encoding_DefaultJson = 16168;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultJson = 15843;
+        public const uint CRCL_TransSpeedAbsoluteDataType_Encoding_DefaultJson = 16169;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedRelativeDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TransSpeedRelativeDataType_Encoding_DefaultJson = 15844;
+        public const uint CRCL_TransSpeedRelativeDataType_Encoding_DefaultJson = 16170;
 
         /// <summary>
         /// The identifier for the CRCL_TransSpeedDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_TransSpeedDataType_Encoding_DefaultJson = 15845;
+        public const uint CRCL_TransSpeedDataType_Encoding_DefaultJson = 16171;
 
         /// <summary>
         /// The identifier for the CRCL_ConfigureJointReportDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ConfigureJointReportDataType_Encoding_DefaultJson = 15846;
+        public const uint CRCL_ConfigureJointReportDataType_Encoding_DefaultJson = 16172;
 
         /// <summary>
         /// The identifier for the CRCL_GuardDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_GuardDataType_Encoding_DefaultJson = 15847;
+        public const uint CRCL_GuardDataType_Encoding_DefaultJson = 16173;
 
         /// <summary>
         /// The identifier for the CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultJson = 15848;
+        public const uint CRCL_JointPositionToleranceSettingDataType_Encoding_DefaultJson = 16174;
 
         /// <summary>
         /// The identifier for the CRCL_JointPositionsTolerancesDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointPositionsTolerancesDataType_Encoding_DefaultJson = 15849;
+        public const uint CRCL_JointPositionsTolerancesDataType_Encoding_DefaultJson = 16175;
 
         /// <summary>
         /// The identifier for the CRCL_PoseAndSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_PoseAndSetDataType_Encoding_DefaultJson = 15850;
+        public const uint CRCL_PoseAndSetDataType_Encoding_DefaultJson = 16176;
 
         /// <summary>
         /// The identifier for the CRCLCommandDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCLCommandDataType_Encoding_DefaultJson = 15851;
+        public const uint CRCLCommandDataType_Encoding_DefaultJson = 16177;
 
         /// <summary>
         /// The identifier for the MiddleCommandDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MiddleCommandDataType_Encoding_DefaultJson = 15852;
+        public const uint MiddleCommandDataType_Encoding_DefaultJson = 16178;
 
         /// <summary>
         /// The identifier for the EndCanonDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EndCanonDataType_Encoding_DefaultJson = 15853;
+        public const uint EndCanonDataType_Encoding_DefaultJson = 16179;
 
         /// <summary>
         /// The identifier for the InitCanonDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint InitCanonDataType_Encoding_DefaultJson = 15854;
+        public const uint InitCanonDataType_Encoding_DefaultJson = 16180;
 
         /// <summary>
         /// The identifier for the CRCL_JointDetailsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointDetailsDataType_Encoding_DefaultJson = 15855;
+        public const uint CRCL_JointDetailsDataType_Encoding_DefaultJson = 16181;
 
         /// <summary>
         /// The identifier for the CRCL_ActuateJointDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ActuateJointDataType_Encoding_DefaultJson = 15999;
+        public const uint CRCL_ActuateJointDataType_Encoding_DefaultJson = 16182;
 
         /// <summary>
         /// The identifier for the CRCL_JointForceTorqueDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointForceTorqueDataType_Encoding_DefaultJson = 15857;
+        public const uint CRCL_JointForceTorqueDataType_Encoding_DefaultJson = 16183;
 
         /// <summary>
         /// The identifier for the CRCL_JointSpeedAccelDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointSpeedAccelDataType_Encoding_DefaultJson = 15858;
+        public const uint CRCL_JointSpeedAccelDataType_Encoding_DefaultJson = 16184;
 
         /// <summary>
         /// The identifier for the ActuateJointsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint ActuateJointsDataType_Encoding_DefaultJson = 15859;
+        public const uint ActuateJointsDataType_Encoding_DefaultJson = 16185;
 
         /// <summary>
         /// The identifier for the MoveToDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MoveToDataType_Encoding_DefaultJson = 15860;
+        public const uint MoveToDataType_Encoding_DefaultJson = 16186;
 
         /// <summary>
         /// The identifier for the CloseToolChangerDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CloseToolChangerDataType_Encoding_DefaultJson = 15861;
+        public const uint CloseToolChangerDataType_Encoding_DefaultJson = 16187;
 
         /// <summary>
         /// The identifier for the DwellDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DwellDataType_Encoding_DefaultJson = 15862;
+        public const uint DwellDataType_Encoding_DefaultJson = 16188;
 
         /// <summary>
         /// The identifier for the GetStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint GetStatusDataType_Encoding_DefaultJson = 15863;
+        public const uint GetStatusDataType_Encoding_DefaultJson = 16189;
 
         /// <summary>
         /// The identifier for the MessageDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MessageDataType_Encoding_DefaultJson = 15864;
+        public const uint MessageDataType_Encoding_DefaultJson = 16190;
 
         /// <summary>
         /// The identifier for the MoveScrewDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MoveScrewDataType_Encoding_DefaultJson = 15865;
+        public const uint MoveScrewDataType_Encoding_DefaultJson = 16191;
 
         /// <summary>
         /// The identifier for the MoveThroughToDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MoveThroughToDataType_Encoding_DefaultJson = 15866;
+        public const uint MoveThroughToDataType_Encoding_DefaultJson = 16192;
 
         /// <summary>
         /// The identifier for the OpenToolChangerDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint OpenToolChangerDataType_Encoding_DefaultJson = 15867;
+        public const uint OpenToolChangerDataType_Encoding_DefaultJson = 16193;
 
         /// <summary>
         /// The identifier for the RunProgramDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint RunProgramDataType_Encoding_DefaultJson = 15868;
+        public const uint RunProgramDataType_Encoding_DefaultJson = 16194;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetAngleUnitsDataType_Encoding_DefaultJson = 15869;
+        public const uint SetAngleUnitsDataType_Encoding_DefaultJson = 16195;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetEndeffectorParametersDataType_Encoding_DefaultJson = 15932;
+        public const uint SetEndeffectorParametersDataType_Encoding_DefaultJson = 16196;
 
         /// <summary>
         /// The identifier for the SetEndeffectorDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetEndeffectorDataType_Encoding_DefaultJson = 15933;
+        public const uint SetEndeffectorDataType_Encoding_DefaultJson = 16197;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetEndPoseToleranceDataType_Encoding_DefaultJson = 15872;
+        public const uint SetEndPoseToleranceDataType_Encoding_DefaultJson = 16198;
 
         /// <summary>
         /// The identifier for the SetForceUnitsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetForceUnitsDataType_Encoding_DefaultJson = 15873;
+        public const uint SetForceUnitsDataType_Encoding_DefaultJson = 16199;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceDataType_Encoding_DefaultJson = 15874;
+        public const uint SetIntermediatePoseToleranceDataType_Encoding_DefaultJson = 16200;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetLengthUnitsDataType_Encoding_DefaultJson = 15875;
+        public const uint SetLengthUnitsDataType_Encoding_DefaultJson = 16201;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetMotionCoordinationDataType_Encoding_DefaultJson = 15876;
+        public const uint SetMotionCoordinationDataType_Encoding_DefaultJson = 16202;
 
         /// <summary>
         /// The identifier for the SetRobotParametersDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetRobotParametersDataType_Encoding_DefaultJson = 15877;
+        public const uint SetRobotParametersDataType_Encoding_DefaultJson = 16203;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetTorqueUnitsDataType_Encoding_DefaultJson = 15878;
+        public const uint SetTorqueUnitsDataType_Encoding_DefaultJson = 16204;
 
         /// <summary>
         /// The identifier for the StopMotionDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint StopMotionDataType_Encoding_DefaultJson = 15879;
+        public const uint StopMotionDataType_Encoding_DefaultJson = 16205;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint ConfigureStatusReportDataType_Encoding_DefaultJson = 15880;
+        public const uint ConfigureStatusReportDataType_Encoding_DefaultJson = 16206;
 
         /// <summary>
         /// The identifier for the EnableSensorDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EnableSensorDataType_Encoding_DefaultJson = 15881;
+        public const uint EnableSensorDataType_Encoding_DefaultJson = 16207;
 
         /// <summary>
         /// The identifier for the DisableSensorDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DisableSensorDataType_Encoding_DefaultJson = 15882;
+        public const uint DisableSensorDataType_Encoding_DefaultJson = 16208;
 
         /// <summary>
         /// The identifier for the EnableGripperDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EnableGripperDataType_Encoding_DefaultJson = 15883;
+        public const uint EnableGripperDataType_Encoding_DefaultJson = 16209;
 
         /// <summary>
         /// The identifier for the DisableGripperDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DisableGripperDataType_Encoding_DefaultJson = 15884;
+        public const uint DisableGripperDataType_Encoding_DefaultJson = 16210;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EnableRobotParameterStatusDataType_Encoding_DefaultJson = 15885;
+        public const uint EnableRobotParameterStatusDataType_Encoding_DefaultJson = 16211;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DisableRobotParameterStatusDataType_Encoding_DefaultJson = 15886;
+        public const uint DisableRobotParameterStatusDataType_Encoding_DefaultJson = 16212;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultJson = 15887;
+        public const uint SetDefaultJointPositionsTolerancesDataType_Encoding_DefaultJson = 16213;
 
         /// <summary>
         /// The identifier for the SetRotAccelDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetRotAccelDataType_Encoding_DefaultJson = 15888;
+        public const uint SetRotAccelDataType_Encoding_DefaultJson = 16214;
 
         /// <summary>
         /// The identifier for the SetTransAccelDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetTransAccelDataType_Encoding_DefaultJson = 15889;
+        public const uint SetTransAccelDataType_Encoding_DefaultJson = 16215;
 
         /// <summary>
         /// The identifier for the SetRotSpeedDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetRotSpeedDataType_Encoding_DefaultJson = 15890;
+        public const uint SetRotSpeedDataType_Encoding_DefaultJson = 16216;
 
         /// <summary>
         /// The identifier for the SetTransSpeedDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetTransSpeedDataType_Encoding_DefaultJson = 15891;
+        public const uint SetTransSpeedDataType_Encoding_DefaultJson = 16217;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint ConfigureJointReportsDataType_Encoding_DefaultJson = 15892;
+        public const uint ConfigureJointReportsDataType_Encoding_DefaultJson = 16218;
 
         /// <summary>
         /// The identifier for the CRCL_CommandStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_CommandStatusDataType_Encoding_DefaultJson = 15893;
+        public const uint CRCL_CommandStatusDataType_Encoding_DefaultJson = 16219;
 
         /// <summary>
         /// The identifier for the CRCL_SensorStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_SensorStatusDataType_Encoding_DefaultJson = 15894;
+        public const uint CRCL_SensorStatusDataType_Encoding_DefaultJson = 16220;
 
         /// <summary>
         /// The identifier for the CRCL_CountSensorStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_CountSensorStatusDataType_Encoding_DefaultJson = 15895;
+        public const uint CRCL_CountSensorStatusDataType_Encoding_DefaultJson = 16221;
 
         /// <summary>
         /// The identifier for the CRCL_OnOffSensorStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_OnOffSensorStatusDataType_Encoding_DefaultJson = 15896;
+        public const uint CRCL_OnOffSensorStatusDataType_Encoding_DefaultJson = 16222;
 
         /// <summary>
         /// The identifier for the CRCL_ScalarSensorStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ScalarSensorStatusDataType_Encoding_DefaultJson = 15897;
+        public const uint CRCL_ScalarSensorStatusDataType_Encoding_DefaultJson = 16223;
 
         /// <summary>
         /// The identifier for the CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultJson = 15898;
+        public const uint CRCL_ForceTorqueSensorStatusDataType_Encoding_DefaultJson = 16224;
 
         /// <summary>
         /// The identifier for the CRCL_SensorStatusesDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_SensorStatusesDataType_Encoding_DefaultJson = 15899;
+        public const uint CRCL_SensorStatusesDataType_Encoding_DefaultJson = 16225;
 
         /// <summary>
         /// The identifier for the CRCL_GripperStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_GripperStatusDataType_Encoding_DefaultJson = 15900;
+        public const uint CRCL_GripperStatusDataType_Encoding_DefaultJson = 16226;
 
         /// <summary>
         /// The identifier for the CRCL_ParallelGripperStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ParallelGripperStatusDataType_Encoding_DefaultJson = 15901;
+        public const uint CRCL_ParallelGripperStatusDataType_Encoding_DefaultJson = 16227;
 
         /// <summary>
         /// The identifier for the CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultJson = 15902;
+        public const uint CRCL_ThreeFingerGripperStatusDataType_Encoding_DefaultJson = 16228;
 
         /// <summary>
         /// The identifier for the CRCL_VacuumGripperStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_VacuumGripperStatusDataType_Encoding_DefaultJson = 15903;
+        public const uint CRCL_VacuumGripperStatusDataType_Encoding_DefaultJson = 16229;
 
         /// <summary>
         /// The identifier for the CRCL_SettingsStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_SettingsStatusDataType_Encoding_DefaultJson = 15904;
+        public const uint CRCL_SettingsStatusDataType_Encoding_DefaultJson = 16230;
 
         /// <summary>
         /// The identifier for the CRCL_PoseStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_PoseStatusDataType_Encoding_DefaultJson = 15905;
+        public const uint CRCL_PoseStatusDataType_Encoding_DefaultJson = 16231;
 
         /// <summary>
         /// The identifier for the CRCL_JointLimitDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointLimitDataType_Encoding_DefaultJson = 15906;
+        public const uint CRCL_JointLimitDataType_Encoding_DefaultJson = 16232;
 
         /// <summary>
         /// The identifier for the CRCL_JointStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointStatusDataType_Encoding_DefaultJson = 15907;
+        public const uint CRCL_JointStatusDataType_Encoding_DefaultJson = 16233;
 
         /// <summary>
         /// The identifier for the CRCL_JointStatusesDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCL_JointStatusesDataType_Encoding_DefaultJson = 15908;
+        public const uint CRCL_JointStatusesDataType_Encoding_DefaultJson = 16234;
 
         /// <summary>
         /// The identifier for the CRCLStatusDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCLStatusDataType_Encoding_DefaultJson = 15909;
+        public const uint CRCLStatusDataType_Encoding_DefaultJson = 16235;
 
         /// <summary>
         /// The identifier for the PubSubIPAddresses_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint PubSubIPAddresses_Encoding_DefaultJson = 15910;
+        public const uint PubSubIPAddresses_Encoding_DefaultJson = 16236;
 
         /// <summary>
         /// The identifier for the SAMYRobotDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SAMYRobotDataType_Encoding_DefaultJson = 15911;
+        public const uint SAMYRobotDataType_Encoding_DefaultJson = 16237;
 
         /// <summary>
         /// The identifier for the CRCLCommandsUnionDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCLCommandsUnionDataType_Encoding_DefaultJson = 15912;
+        public const uint CRCLCommandsUnionDataType_Encoding_DefaultJson = 16238;
 
         /// <summary>
         /// The identifier for the CRCLSkillDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCLSkillDataType_Encoding_DefaultJson = 15913;
+        public const uint CRCLSkillDataType_Encoding_DefaultJson = 16239;
 
         /// <summary>
         /// The identifier for the CRCLCommandParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CRCLCommandParametersSetDataType_Encoding_DefaultJson = 16600;
+        public const uint CRCLCommandParametersSetDataType_Encoding_DefaultJson = 16240;
 
         /// <summary>
         /// The identifier for the InitCanonParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint InitCanonParametersSetDataType_Encoding_DefaultJson = 16601;
+        public const uint InitCanonParametersSetDataType_Encoding_DefaultJson = 16241;
 
         /// <summary>
         /// The identifier for the EndCanonParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EndCanonParametersSetDataType_Encoding_DefaultJson = 16602;
+        public const uint EndCanonParametersSetDataType_Encoding_DefaultJson = 16242;
 
         /// <summary>
         /// The identifier for the GetStatusParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint GetStatusParametersSetDataType_Encoding_DefaultJson = 16603;
+        public const uint GetStatusParametersSetDataType_Encoding_DefaultJson = 16243;
 
         /// <summary>
         /// The identifier for the CloseToolChangerParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint CloseToolChangerParametersSetDataType_Encoding_DefaultJson = 16604;
+        public const uint CloseToolChangerParametersSetDataType_Encoding_DefaultJson = 16244;
 
         /// <summary>
         /// The identifier for the OpenToolChangerParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint OpenToolChangerParametersSetDataType_Encoding_DefaultJson = 16605;
+        public const uint OpenToolChangerParametersSetDataType_Encoding_DefaultJson = 16245;
 
         /// <summary>
         /// The identifier for the MessageParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MessageParametersSetDataType_Encoding_DefaultJson = 16606;
+        public const uint MessageParametersSetDataType_Encoding_DefaultJson = 16246;
 
         /// <summary>
         /// The identifier for the MoveToParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MoveToParametersSetDataType_Encoding_DefaultJson = 16607;
+        public const uint MoveToParametersSetDataType_Encoding_DefaultJson = 16247;
 
         /// <summary>
         /// The identifier for the MoveScrewParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MoveScrewParametersSetDataType_Encoding_DefaultJson = 16608;
+        public const uint MoveScrewParametersSetDataType_Encoding_DefaultJson = 16248;
 
         /// <summary>
         /// The identifier for the MoveThroughToParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint MoveThroughToParametersSetDataType_Encoding_DefaultJson = 16609;
+        public const uint MoveThroughToParametersSetDataType_Encoding_DefaultJson = 16249;
 
         /// <summary>
         /// The identifier for the DwellParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DwellParametersSetDataType_Encoding_DefaultJson = 16610;
+        public const uint DwellParametersSetDataType_Encoding_DefaultJson = 16250;
 
         /// <summary>
         /// The identifier for the ActuateJointsParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint ActuateJointsParametersSetDataType_Encoding_DefaultJson = 16611;
+        public const uint ActuateJointsParametersSetDataType_Encoding_DefaultJson = 16251;
 
         /// <summary>
         /// The identifier for the ConfigureJointReportsParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint ConfigureJointReportsParametersSetDataType_Encoding_DefaultJson = 16612;
+        public const uint ConfigureJointReportsParametersSetDataType_Encoding_DefaultJson = 16252;
 
         /// <summary>
         /// The identifier for the SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultJson = 16613;
+        public const uint SetDefaultJointPositionsTolerancesParametersSetDataType_Encoding_DefaultJson = 16253;
 
         /// <summary>
         /// The identifier for the SetRobotParametersParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetRobotParametersParametersSetDataType_Encoding_DefaultJson = 16614;
+        public const uint SetRobotParametersParametersSetDataType_Encoding_DefaultJson = 16254;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetEndeffectorParametersParametersSetDataType_Encoding_DefaultJson = 16615;
+        public const uint SetEndeffectorParametersParametersSetDataType_Encoding_DefaultJson = 16255;
 
         /// <summary>
         /// The identifier for the SetEndeffectorParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetEndeffectorParametersSetDataType_Encoding_DefaultJson = 16616;
+        public const uint SetEndeffectorParametersSetDataType_Encoding_DefaultJson = 16256;
 
         /// <summary>
         /// The identifier for the SetTransSpeedParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetTransSpeedParametersSetDataType_Encoding_DefaultJson = 16617;
+        public const uint SetTransSpeedParametersSetDataType_Encoding_DefaultJson = 16257;
 
         /// <summary>
         /// The identifier for the SetTransAccelParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetTransAccelParametersSetDataType_Encoding_DefaultJson = 16618;
+        public const uint SetTransAccelParametersSetDataType_Encoding_DefaultJson = 16258;
 
         /// <summary>
         /// The identifier for the SetRotSpeedParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetRotSpeedParametersSetDataType_Encoding_DefaultJson = 16619;
+        public const uint SetRotSpeedParametersSetDataType_Encoding_DefaultJson = 16259;
 
         /// <summary>
         /// The identifier for the SetRotAccelParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetRotAccelParametersSetDataType_Encoding_DefaultJson = 16620;
+        public const uint SetRotAccelParametersSetDataType_Encoding_DefaultJson = 16260;
 
         /// <summary>
         /// The identifier for the SetAngleUnitsParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetAngleUnitsParametersSetDataType_Encoding_DefaultJson = 16621;
+        public const uint SetAngleUnitsParametersSetDataType_Encoding_DefaultJson = 16261;
 
         /// <summary>
         /// The identifier for the SetEndPoseToleranceParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetEndPoseToleranceParametersSetDataType_Encoding_DefaultJson = 16622;
+        public const uint SetEndPoseToleranceParametersSetDataType_Encoding_DefaultJson = 16262;
 
         /// <summary>
         /// The identifier for the SetForceUnitsParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetForceUnitsParametersSetDataType_Encoding_DefaultJson = 16623;
+        public const uint SetForceUnitsParametersSetDataType_Encoding_DefaultJson = 16263;
 
         /// <summary>
         /// The identifier for the SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultJson = 16624;
+        public const uint SetIntermediatePoseToleranceParametersSetDataType_Encoding_DefaultJson = 16264;
 
         /// <summary>
         /// The identifier for the SetLengthUnitsParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetLengthUnitsParametersSetDataType_Encoding_DefaultJson = 16625;
+        public const uint SetLengthUnitsParametersSetDataType_Encoding_DefaultJson = 16265;
 
         /// <summary>
         /// The identifier for the SetMotionCoordinationParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetMotionCoordinationParametersSetDataType_Encoding_DefaultJson = 16626;
+        public const uint SetMotionCoordinationParametersSetDataType_Encoding_DefaultJson = 16266;
 
         /// <summary>
         /// The identifier for the SetTorqueUnitsParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint SetTorqueUnitsParametersSetDataType_Encoding_DefaultJson = 16627;
+        public const uint SetTorqueUnitsParametersSetDataType_Encoding_DefaultJson = 16267;
 
         /// <summary>
         /// The identifier for the StopMotionParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint StopMotionParametersSetDataType_Encoding_DefaultJson = 16628;
+        public const uint StopMotionParametersSetDataType_Encoding_DefaultJson = 16268;
 
         /// <summary>
         /// The identifier for the ConfigureStatusReportParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint ConfigureStatusReportParametersSetDataType_Encoding_DefaultJson = 16629;
+        public const uint ConfigureStatusReportParametersSetDataType_Encoding_DefaultJson = 16269;
 
         /// <summary>
         /// The identifier for the EnableSensorParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EnableSensorParametersSetDataType_Encoding_DefaultJson = 16630;
+        public const uint EnableSensorParametersSetDataType_Encoding_DefaultJson = 16270;
 
         /// <summary>
         /// The identifier for the DisableSensorParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DisableSensorParametersSetDataType_Encoding_DefaultJson = 16631;
+        public const uint DisableSensorParametersSetDataType_Encoding_DefaultJson = 16271;
 
         /// <summary>
         /// The identifier for the EnableGripperParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EnableGripperParametersSetDataType_Encoding_DefaultJson = 16632;
+        public const uint EnableGripperParametersSetDataType_Encoding_DefaultJson = 16272;
 
         /// <summary>
         /// The identifier for the DisableGripperParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DisableGripperParametersSetDataType_Encoding_DefaultJson = 16633;
+        public const uint DisableGripperParametersSetDataType_Encoding_DefaultJson = 16273;
 
         /// <summary>
         /// The identifier for the EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultJson = 16634;
+        public const uint EnableRobotParameterStatusParametersSetDataType_Encoding_DefaultJson = 16274;
 
         /// <summary>
         /// The identifier for the DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultJson Object.
         /// </summary>
-        public const uint DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultJson = 16635;
+        public const uint DisableRobotParameterStatusParametersSetDataType_Encoding_DefaultJson = 16275;
     }
     #endregion
 
@@ -2608,7 +2608,7 @@ namespace CRCL
         /// <summary>
         /// The identifier for the ISkillParameter ObjectType.
         /// </summary>
-        public const uint ISkillParameter = 15045;
+        public const uint ISkillParameter = 15105;
     }
     #endregion
 
@@ -2658,1287 +2658,1287 @@ namespace CRCL
         /// <summary>
         /// The identifier for the ISkillParameter_ReadParameterAtExecutionTime Variable.
         /// </summary>
-        public const uint ISkillParameter_ReadParameterAtExecutionTime = 15136;
+        public const uint ISkillParameter_ReadParameterAtExecutionTime = 15106;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema = 15194;
+        public const uint CRCL_BinarySchema = 15268;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_NamespaceUri Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_NamespaceUri = 15196;
+        public const uint CRCL_BinarySchema_NamespaceUri = 15270;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_Deprecated Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_Deprecated = 15197;
+        public const uint CRCL_BinarySchema_Deprecated = 15271;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_FractionDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_FractionDataType = 15198;
+        public const uint CRCL_BinarySchema_CRCL_FractionDataType = 15272;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_DataThingDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_DataThingDataType = 15201;
+        public const uint CRCL_BinarySchema_CRCL_DataThingDataType = 15275;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_PointDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_PointDataType = 15204;
+        public const uint CRCL_BinarySchema_CRCL_PointDataType = 15278;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_VectorDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_VectorDataType = 15207;
+        public const uint CRCL_BinarySchema_CRCL_VectorDataType = 15281;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_PoseDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_PoseDataType = 15210;
+        public const uint CRCL_BinarySchema_CRCL_PoseDataType = 15284;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TwistDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TwistDataType = 15213;
+        public const uint CRCL_BinarySchema_CRCL_TwistDataType = 15287;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_WrenchDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_WrenchDataType = 15216;
+        public const uint CRCL_BinarySchema_CRCL_WrenchDataType = 15290;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_PoseToleranceDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_PoseToleranceDataType = 15219;
+        public const uint CRCL_BinarySchema_CRCL_PoseToleranceDataType = 15293;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ParameterSettingDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ParameterSettingDataType = 15222;
+        public const uint CRCL_BinarySchema_CRCL_ParameterSettingDataType = 15296;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_RotAccelAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_RotAccelAbsoluteDataType = 15225;
+        public const uint CRCL_BinarySchema_CRCL_RotAccelAbsoluteDataType = 15299;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_RotAccelRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_RotAccelRelativeDataType = 15228;
+        public const uint CRCL_BinarySchema_CRCL_RotAccelRelativeDataType = 15302;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_RotAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_RotAccelDataType = 15231;
+        public const uint CRCL_BinarySchema_CRCL_RotAccelDataType = 15305;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_RotSpeedAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_RotSpeedAbsoluteDataType = 15234;
+        public const uint CRCL_BinarySchema_CRCL_RotSpeedAbsoluteDataType = 15308;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_RotSpeedRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_RotSpeedRelativeDataType = 15237;
+        public const uint CRCL_BinarySchema_CRCL_RotSpeedRelativeDataType = 15311;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_RotSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_RotSpeedDataType = 15240;
+        public const uint CRCL_BinarySchema_CRCL_RotSpeedDataType = 15314;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TransAccelAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TransAccelAbsoluteDataType = 15243;
+        public const uint CRCL_BinarySchema_CRCL_TransAccelAbsoluteDataType = 15317;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TransAccelRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TransAccelRelativeDataType = 15246;
+        public const uint CRCL_BinarySchema_CRCL_TransAccelRelativeDataType = 15320;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TransAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TransAccelDataType = 15249;
+        public const uint CRCL_BinarySchema_CRCL_TransAccelDataType = 15323;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TransSpeedAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TransSpeedAbsoluteDataType = 15252;
+        public const uint CRCL_BinarySchema_CRCL_TransSpeedAbsoluteDataType = 15326;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TransSpeedRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TransSpeedRelativeDataType = 15255;
+        public const uint CRCL_BinarySchema_CRCL_TransSpeedRelativeDataType = 15329;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_TransSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_TransSpeedDataType = 15258;
+        public const uint CRCL_BinarySchema_CRCL_TransSpeedDataType = 15332;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ConfigureJointReportDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ConfigureJointReportDataType = 15261;
+        public const uint CRCL_BinarySchema_CRCL_ConfigureJointReportDataType = 15335;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_GuardDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_GuardDataType = 15264;
+        public const uint CRCL_BinarySchema_CRCL_GuardDataType = 15338;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointPositionToleranceSettingDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointPositionToleranceSettingDataType = 15267;
+        public const uint CRCL_BinarySchema_CRCL_JointPositionToleranceSettingDataType = 15341;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointPositionsTolerancesDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointPositionsTolerancesDataType = 15270;
+        public const uint CRCL_BinarySchema_CRCL_JointPositionsTolerancesDataType = 15344;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_PoseAndSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_PoseAndSetDataType = 15273;
+        public const uint CRCL_BinarySchema_CRCL_PoseAndSetDataType = 15347;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCLCommandDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCLCommandDataType = 15276;
+        public const uint CRCL_BinarySchema_CRCLCommandDataType = 15350;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MiddleCommandDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MiddleCommandDataType = 15279;
+        public const uint CRCL_BinarySchema_MiddleCommandDataType = 15353;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EndCanonDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EndCanonDataType = 15282;
+        public const uint CRCL_BinarySchema_EndCanonDataType = 15356;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_InitCanonDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_InitCanonDataType = 15285;
+        public const uint CRCL_BinarySchema_InitCanonDataType = 15359;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointDetailsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointDetailsDataType = 15288;
+        public const uint CRCL_BinarySchema_CRCL_JointDetailsDataType = 15362;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ActuateJointDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ActuateJointDataType = 15992;
+        public const uint CRCL_BinarySchema_CRCL_ActuateJointDataType = 15365;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointForceTorqueDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointForceTorqueDataType = 15294;
+        public const uint CRCL_BinarySchema_CRCL_JointForceTorqueDataType = 15368;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointSpeedAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointSpeedAccelDataType = 15297;
+        public const uint CRCL_BinarySchema_CRCL_JointSpeedAccelDataType = 15371;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_ActuateJointsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_ActuateJointsDataType = 15300;
+        public const uint CRCL_BinarySchema_ActuateJointsDataType = 15374;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MoveToDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MoveToDataType = 15303;
+        public const uint CRCL_BinarySchema_MoveToDataType = 15377;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CloseToolChangerDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CloseToolChangerDataType = 15306;
+        public const uint CRCL_BinarySchema_CloseToolChangerDataType = 15380;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DwellDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DwellDataType = 15309;
+        public const uint CRCL_BinarySchema_DwellDataType = 15383;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_GetStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_GetStatusDataType = 15312;
+        public const uint CRCL_BinarySchema_GetStatusDataType = 15386;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MessageDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MessageDataType = 15315;
+        public const uint CRCL_BinarySchema_MessageDataType = 15389;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MoveScrewDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MoveScrewDataType = 15318;
+        public const uint CRCL_BinarySchema_MoveScrewDataType = 15392;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MoveThroughToDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MoveThroughToDataType = 15321;
+        public const uint CRCL_BinarySchema_MoveThroughToDataType = 15395;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_OpenToolChangerDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_OpenToolChangerDataType = 15324;
+        public const uint CRCL_BinarySchema_OpenToolChangerDataType = 15398;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_RunProgramDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_RunProgramDataType = 15327;
+        public const uint CRCL_BinarySchema_RunProgramDataType = 15401;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetAngleUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetAngleUnitsDataType = 15330;
+        public const uint CRCL_BinarySchema_SetAngleUnitsDataType = 15404;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetEndeffectorParametersDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetEndeffectorParametersDataType = 15918;
+        public const uint CRCL_BinarySchema_SetEndeffectorParametersDataType = 15407;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetEndeffectorDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetEndeffectorDataType = 15921;
+        public const uint CRCL_BinarySchema_SetEndeffectorDataType = 15410;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetEndPoseToleranceDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetEndPoseToleranceDataType = 15339;
+        public const uint CRCL_BinarySchema_SetEndPoseToleranceDataType = 15413;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetForceUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetForceUnitsDataType = 15342;
+        public const uint CRCL_BinarySchema_SetForceUnitsDataType = 15416;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetIntermediatePoseToleranceDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetIntermediatePoseToleranceDataType = 15345;
+        public const uint CRCL_BinarySchema_SetIntermediatePoseToleranceDataType = 15419;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetLengthUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetLengthUnitsDataType = 15348;
+        public const uint CRCL_BinarySchema_SetLengthUnitsDataType = 15422;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetMotionCoordinationDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetMotionCoordinationDataType = 15351;
+        public const uint CRCL_BinarySchema_SetMotionCoordinationDataType = 15425;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetRobotParametersDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetRobotParametersDataType = 15354;
+        public const uint CRCL_BinarySchema_SetRobotParametersDataType = 15428;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetTorqueUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetTorqueUnitsDataType = 15357;
+        public const uint CRCL_BinarySchema_SetTorqueUnitsDataType = 15431;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_StopMotionDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_StopMotionDataType = 15360;
+        public const uint CRCL_BinarySchema_StopMotionDataType = 15434;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_ConfigureStatusReportDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_ConfigureStatusReportDataType = 15363;
+        public const uint CRCL_BinarySchema_ConfigureStatusReportDataType = 15437;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EnableSensorDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EnableSensorDataType = 15366;
+        public const uint CRCL_BinarySchema_EnableSensorDataType = 15440;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DisableSensorDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DisableSensorDataType = 15369;
+        public const uint CRCL_BinarySchema_DisableSensorDataType = 15443;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EnableGripperDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EnableGripperDataType = 15372;
+        public const uint CRCL_BinarySchema_EnableGripperDataType = 15446;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DisableGripperDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DisableGripperDataType = 15375;
+        public const uint CRCL_BinarySchema_DisableGripperDataType = 15449;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EnableRobotParameterStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EnableRobotParameterStatusDataType = 15378;
+        public const uint CRCL_BinarySchema_EnableRobotParameterStatusDataType = 15452;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DisableRobotParameterStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DisableRobotParameterStatusDataType = 15381;
+        public const uint CRCL_BinarySchema_DisableRobotParameterStatusDataType = 15455;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetDefaultJointPositionsTolerancesDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetDefaultJointPositionsTolerancesDataType = 15384;
+        public const uint CRCL_BinarySchema_SetDefaultJointPositionsTolerancesDataType = 15458;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetRotAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetRotAccelDataType = 15387;
+        public const uint CRCL_BinarySchema_SetRotAccelDataType = 15461;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetTransAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetTransAccelDataType = 15390;
+        public const uint CRCL_BinarySchema_SetTransAccelDataType = 15464;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetRotSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetRotSpeedDataType = 15393;
+        public const uint CRCL_BinarySchema_SetRotSpeedDataType = 15467;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetTransSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetTransSpeedDataType = 15396;
+        public const uint CRCL_BinarySchema_SetTransSpeedDataType = 15470;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_ConfigureJointReportsDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_ConfigureJointReportsDataType = 15399;
+        public const uint CRCL_BinarySchema_ConfigureJointReportsDataType = 15473;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_CommandStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_CommandStatusDataType = 15402;
+        public const uint CRCL_BinarySchema_CRCL_CommandStatusDataType = 15476;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_SensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_SensorStatusDataType = 15405;
+        public const uint CRCL_BinarySchema_CRCL_SensorStatusDataType = 15479;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_CountSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_CountSensorStatusDataType = 15408;
+        public const uint CRCL_BinarySchema_CRCL_CountSensorStatusDataType = 15482;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_OnOffSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_OnOffSensorStatusDataType = 15411;
+        public const uint CRCL_BinarySchema_CRCL_OnOffSensorStatusDataType = 15485;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ScalarSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ScalarSensorStatusDataType = 15414;
+        public const uint CRCL_BinarySchema_CRCL_ScalarSensorStatusDataType = 15488;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ForceTorqueSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ForceTorqueSensorStatusDataType = 15417;
+        public const uint CRCL_BinarySchema_CRCL_ForceTorqueSensorStatusDataType = 15491;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_SensorStatusesDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_SensorStatusesDataType = 15420;
+        public const uint CRCL_BinarySchema_CRCL_SensorStatusesDataType = 15494;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_GripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_GripperStatusDataType = 15423;
+        public const uint CRCL_BinarySchema_CRCL_GripperStatusDataType = 15497;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ParallelGripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ParallelGripperStatusDataType = 15426;
+        public const uint CRCL_BinarySchema_CRCL_ParallelGripperStatusDataType = 15500;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_ThreeFingerGripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_ThreeFingerGripperStatusDataType = 15429;
+        public const uint CRCL_BinarySchema_CRCL_ThreeFingerGripperStatusDataType = 15503;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_VacuumGripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_VacuumGripperStatusDataType = 15432;
+        public const uint CRCL_BinarySchema_CRCL_VacuumGripperStatusDataType = 15506;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_SettingsStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_SettingsStatusDataType = 15435;
+        public const uint CRCL_BinarySchema_CRCL_SettingsStatusDataType = 15509;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_PoseStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_PoseStatusDataType = 15438;
+        public const uint CRCL_BinarySchema_CRCL_PoseStatusDataType = 15512;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointLimitDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointLimitDataType = 15441;
+        public const uint CRCL_BinarySchema_CRCL_JointLimitDataType = 15515;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointStatusDataType = 15444;
+        public const uint CRCL_BinarySchema_CRCL_JointStatusDataType = 15518;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCL_JointStatusesDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCL_JointStatusesDataType = 15447;
+        public const uint CRCL_BinarySchema_CRCL_JointStatusesDataType = 15521;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCLStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCLStatusDataType = 15450;
+        public const uint CRCL_BinarySchema_CRCLStatusDataType = 15524;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_PubSubIPAddresses Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_PubSubIPAddresses = 15453;
+        public const uint CRCL_BinarySchema_PubSubIPAddresses = 15527;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SAMYRobotDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SAMYRobotDataType = 15456;
+        public const uint CRCL_BinarySchema_SAMYRobotDataType = 15530;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCLCommandsUnionDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCLCommandsUnionDataType = 15459;
+        public const uint CRCL_BinarySchema_CRCLCommandsUnionDataType = 15533;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCLSkillDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCLSkillDataType = 15462;
+        public const uint CRCL_BinarySchema_CRCLSkillDataType = 15536;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CRCLCommandParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CRCLCommandParametersSetDataType = 16348;
+        public const uint CRCL_BinarySchema_CRCLCommandParametersSetDataType = 15539;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_InitCanonParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_InitCanonParametersSetDataType = 16351;
+        public const uint CRCL_BinarySchema_InitCanonParametersSetDataType = 15542;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EndCanonParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EndCanonParametersSetDataType = 16354;
+        public const uint CRCL_BinarySchema_EndCanonParametersSetDataType = 15545;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_GetStatusParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_GetStatusParametersSetDataType = 16357;
+        public const uint CRCL_BinarySchema_GetStatusParametersSetDataType = 15548;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_CloseToolChangerParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_CloseToolChangerParametersSetDataType = 16360;
+        public const uint CRCL_BinarySchema_CloseToolChangerParametersSetDataType = 15551;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_OpenToolChangerParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_OpenToolChangerParametersSetDataType = 16363;
+        public const uint CRCL_BinarySchema_OpenToolChangerParametersSetDataType = 15554;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MessageParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MessageParametersSetDataType = 16366;
+        public const uint CRCL_BinarySchema_MessageParametersSetDataType = 15557;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MoveToParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MoveToParametersSetDataType = 16369;
+        public const uint CRCL_BinarySchema_MoveToParametersSetDataType = 15560;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MoveScrewParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MoveScrewParametersSetDataType = 16372;
+        public const uint CRCL_BinarySchema_MoveScrewParametersSetDataType = 15563;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_MoveThroughToParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_MoveThroughToParametersSetDataType = 16375;
+        public const uint CRCL_BinarySchema_MoveThroughToParametersSetDataType = 15566;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DwellParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DwellParametersSetDataType = 16378;
+        public const uint CRCL_BinarySchema_DwellParametersSetDataType = 15569;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_ActuateJointsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_ActuateJointsParametersSetDataType = 16381;
+        public const uint CRCL_BinarySchema_ActuateJointsParametersSetDataType = 15572;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_ConfigureJointReportsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_ConfigureJointReportsParametersSetDataType = 16384;
+        public const uint CRCL_BinarySchema_ConfigureJointReportsParametersSetDataType = 15575;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetDefaultJointPositionsTolerancesParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetDefaultJointPositionsTolerancesParametersSetDataType = 16387;
+        public const uint CRCL_BinarySchema_SetDefaultJointPositionsTolerancesParametersSetDataType = 15578;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetRobotParametersParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetRobotParametersParametersSetDataType = 16390;
+        public const uint CRCL_BinarySchema_SetRobotParametersParametersSetDataType = 15581;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetEndeffectorParametersParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetEndeffectorParametersParametersSetDataType = 16393;
+        public const uint CRCL_BinarySchema_SetEndeffectorParametersParametersSetDataType = 15584;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetEndeffectorParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetEndeffectorParametersSetDataType = 16396;
+        public const uint CRCL_BinarySchema_SetEndeffectorParametersSetDataType = 15587;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetTransSpeedParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetTransSpeedParametersSetDataType = 16399;
+        public const uint CRCL_BinarySchema_SetTransSpeedParametersSetDataType = 15590;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetTransAccelParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetTransAccelParametersSetDataType = 16402;
+        public const uint CRCL_BinarySchema_SetTransAccelParametersSetDataType = 15593;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetRotSpeedParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetRotSpeedParametersSetDataType = 16405;
+        public const uint CRCL_BinarySchema_SetRotSpeedParametersSetDataType = 15596;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetRotAccelParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetRotAccelParametersSetDataType = 16408;
+        public const uint CRCL_BinarySchema_SetRotAccelParametersSetDataType = 15599;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetAngleUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetAngleUnitsParametersSetDataType = 16411;
+        public const uint CRCL_BinarySchema_SetAngleUnitsParametersSetDataType = 15602;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetEndPoseToleranceParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetEndPoseToleranceParametersSetDataType = 16414;
+        public const uint CRCL_BinarySchema_SetEndPoseToleranceParametersSetDataType = 15605;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetForceUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetForceUnitsParametersSetDataType = 16417;
+        public const uint CRCL_BinarySchema_SetForceUnitsParametersSetDataType = 15608;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetIntermediatePoseToleranceParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetIntermediatePoseToleranceParametersSetDataType = 16420;
+        public const uint CRCL_BinarySchema_SetIntermediatePoseToleranceParametersSetDataType = 15611;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetLengthUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetLengthUnitsParametersSetDataType = 16423;
+        public const uint CRCL_BinarySchema_SetLengthUnitsParametersSetDataType = 15614;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetMotionCoordinationParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetMotionCoordinationParametersSetDataType = 16426;
+        public const uint CRCL_BinarySchema_SetMotionCoordinationParametersSetDataType = 15617;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_SetTorqueUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_SetTorqueUnitsParametersSetDataType = 16429;
+        public const uint CRCL_BinarySchema_SetTorqueUnitsParametersSetDataType = 15620;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_StopMotionParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_StopMotionParametersSetDataType = 16432;
+        public const uint CRCL_BinarySchema_StopMotionParametersSetDataType = 15623;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_ConfigureStatusReportParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_ConfigureStatusReportParametersSetDataType = 16435;
+        public const uint CRCL_BinarySchema_ConfigureStatusReportParametersSetDataType = 15626;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EnableSensorParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EnableSensorParametersSetDataType = 16438;
+        public const uint CRCL_BinarySchema_EnableSensorParametersSetDataType = 15629;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DisableSensorParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DisableSensorParametersSetDataType = 16441;
+        public const uint CRCL_BinarySchema_DisableSensorParametersSetDataType = 15632;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EnableGripperParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EnableGripperParametersSetDataType = 16444;
+        public const uint CRCL_BinarySchema_EnableGripperParametersSetDataType = 15635;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DisableGripperParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DisableGripperParametersSetDataType = 16447;
+        public const uint CRCL_BinarySchema_DisableGripperParametersSetDataType = 15638;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_EnableRobotParameterStatusParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_EnableRobotParameterStatusParametersSetDataType = 16450;
+        public const uint CRCL_BinarySchema_EnableRobotParameterStatusParametersSetDataType = 15641;
 
         /// <summary>
         /// The identifier for the CRCL_BinarySchema_DisableRobotParameterStatusParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_BinarySchema_DisableRobotParameterStatusParametersSetDataType = 16453;
+        public const uint CRCL_BinarySchema_DisableRobotParameterStatusParametersSetDataType = 15644;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema = 15554;
+        public const uint CRCL_XmlSchema = 15772;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_NamespaceUri Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_NamespaceUri = 15556;
+        public const uint CRCL_XmlSchema_NamespaceUri = 15774;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_Deprecated Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_Deprecated = 15557;
+        public const uint CRCL_XmlSchema_Deprecated = 15775;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_FractionDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_FractionDataType = 15558;
+        public const uint CRCL_XmlSchema_CRCL_FractionDataType = 15776;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_DataThingDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_DataThingDataType = 15561;
+        public const uint CRCL_XmlSchema_CRCL_DataThingDataType = 15779;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_PointDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_PointDataType = 15564;
+        public const uint CRCL_XmlSchema_CRCL_PointDataType = 15782;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_VectorDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_VectorDataType = 15567;
+        public const uint CRCL_XmlSchema_CRCL_VectorDataType = 15785;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_PoseDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_PoseDataType = 15570;
+        public const uint CRCL_XmlSchema_CRCL_PoseDataType = 15788;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TwistDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TwistDataType = 15573;
+        public const uint CRCL_XmlSchema_CRCL_TwistDataType = 15791;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_WrenchDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_WrenchDataType = 15576;
+        public const uint CRCL_XmlSchema_CRCL_WrenchDataType = 15794;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_PoseToleranceDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_PoseToleranceDataType = 15579;
+        public const uint CRCL_XmlSchema_CRCL_PoseToleranceDataType = 15797;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ParameterSettingDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ParameterSettingDataType = 15582;
+        public const uint CRCL_XmlSchema_CRCL_ParameterSettingDataType = 15800;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_RotAccelAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_RotAccelAbsoluteDataType = 15585;
+        public const uint CRCL_XmlSchema_CRCL_RotAccelAbsoluteDataType = 15803;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_RotAccelRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_RotAccelRelativeDataType = 15588;
+        public const uint CRCL_XmlSchema_CRCL_RotAccelRelativeDataType = 15806;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_RotAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_RotAccelDataType = 15591;
+        public const uint CRCL_XmlSchema_CRCL_RotAccelDataType = 15809;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_RotSpeedAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_RotSpeedAbsoluteDataType = 15594;
+        public const uint CRCL_XmlSchema_CRCL_RotSpeedAbsoluteDataType = 15812;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_RotSpeedRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_RotSpeedRelativeDataType = 15597;
+        public const uint CRCL_XmlSchema_CRCL_RotSpeedRelativeDataType = 15815;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_RotSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_RotSpeedDataType = 15600;
+        public const uint CRCL_XmlSchema_CRCL_RotSpeedDataType = 15818;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TransAccelAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TransAccelAbsoluteDataType = 15603;
+        public const uint CRCL_XmlSchema_CRCL_TransAccelAbsoluteDataType = 15821;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TransAccelRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TransAccelRelativeDataType = 15606;
+        public const uint CRCL_XmlSchema_CRCL_TransAccelRelativeDataType = 15824;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TransAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TransAccelDataType = 15609;
+        public const uint CRCL_XmlSchema_CRCL_TransAccelDataType = 15827;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TransSpeedAbsoluteDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TransSpeedAbsoluteDataType = 15612;
+        public const uint CRCL_XmlSchema_CRCL_TransSpeedAbsoluteDataType = 15830;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TransSpeedRelativeDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TransSpeedRelativeDataType = 15615;
+        public const uint CRCL_XmlSchema_CRCL_TransSpeedRelativeDataType = 15833;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_TransSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_TransSpeedDataType = 15618;
+        public const uint CRCL_XmlSchema_CRCL_TransSpeedDataType = 15836;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ConfigureJointReportDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ConfigureJointReportDataType = 15621;
+        public const uint CRCL_XmlSchema_CRCL_ConfigureJointReportDataType = 15839;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_GuardDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_GuardDataType = 15624;
+        public const uint CRCL_XmlSchema_CRCL_GuardDataType = 15842;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointPositionToleranceSettingDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointPositionToleranceSettingDataType = 15627;
+        public const uint CRCL_XmlSchema_CRCL_JointPositionToleranceSettingDataType = 15845;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointPositionsTolerancesDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointPositionsTolerancesDataType = 15630;
+        public const uint CRCL_XmlSchema_CRCL_JointPositionsTolerancesDataType = 15848;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_PoseAndSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_PoseAndSetDataType = 15633;
+        public const uint CRCL_XmlSchema_CRCL_PoseAndSetDataType = 15851;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCLCommandDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCLCommandDataType = 15636;
+        public const uint CRCL_XmlSchema_CRCLCommandDataType = 15854;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MiddleCommandDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MiddleCommandDataType = 15639;
+        public const uint CRCL_XmlSchema_MiddleCommandDataType = 15857;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EndCanonDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EndCanonDataType = 15642;
+        public const uint CRCL_XmlSchema_EndCanonDataType = 15860;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_InitCanonDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_InitCanonDataType = 15645;
+        public const uint CRCL_XmlSchema_InitCanonDataType = 15863;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointDetailsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointDetailsDataType = 15648;
+        public const uint CRCL_XmlSchema_CRCL_JointDetailsDataType = 15866;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ActuateJointDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ActuateJointDataType = 15996;
+        public const uint CRCL_XmlSchema_CRCL_ActuateJointDataType = 15869;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointForceTorqueDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointForceTorqueDataType = 15654;
+        public const uint CRCL_XmlSchema_CRCL_JointForceTorqueDataType = 15872;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointSpeedAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointSpeedAccelDataType = 15657;
+        public const uint CRCL_XmlSchema_CRCL_JointSpeedAccelDataType = 15875;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_ActuateJointsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_ActuateJointsDataType = 15660;
+        public const uint CRCL_XmlSchema_ActuateJointsDataType = 15878;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MoveToDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MoveToDataType = 15663;
+        public const uint CRCL_XmlSchema_MoveToDataType = 15881;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CloseToolChangerDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CloseToolChangerDataType = 15666;
+        public const uint CRCL_XmlSchema_CloseToolChangerDataType = 15884;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DwellDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DwellDataType = 15669;
+        public const uint CRCL_XmlSchema_DwellDataType = 15887;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_GetStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_GetStatusDataType = 15672;
+        public const uint CRCL_XmlSchema_GetStatusDataType = 15890;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MessageDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MessageDataType = 15675;
+        public const uint CRCL_XmlSchema_MessageDataType = 15893;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MoveScrewDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MoveScrewDataType = 15678;
+        public const uint CRCL_XmlSchema_MoveScrewDataType = 15896;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MoveThroughToDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MoveThroughToDataType = 15681;
+        public const uint CRCL_XmlSchema_MoveThroughToDataType = 15899;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_OpenToolChangerDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_OpenToolChangerDataType = 15684;
+        public const uint CRCL_XmlSchema_OpenToolChangerDataType = 15902;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_RunProgramDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_RunProgramDataType = 15687;
+        public const uint CRCL_XmlSchema_RunProgramDataType = 15905;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetAngleUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetAngleUnitsDataType = 15690;
+        public const uint CRCL_XmlSchema_SetAngleUnitsDataType = 15908;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetEndeffectorParametersDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetEndeffectorParametersDataType = 15926;
+        public const uint CRCL_XmlSchema_SetEndeffectorParametersDataType = 15911;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetEndeffectorDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetEndeffectorDataType = 15929;
+        public const uint CRCL_XmlSchema_SetEndeffectorDataType = 15914;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetEndPoseToleranceDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetEndPoseToleranceDataType = 15699;
+        public const uint CRCL_XmlSchema_SetEndPoseToleranceDataType = 15917;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetForceUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetForceUnitsDataType = 15702;
+        public const uint CRCL_XmlSchema_SetForceUnitsDataType = 15920;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetIntermediatePoseToleranceDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetIntermediatePoseToleranceDataType = 15705;
+        public const uint CRCL_XmlSchema_SetIntermediatePoseToleranceDataType = 15923;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetLengthUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetLengthUnitsDataType = 15708;
+        public const uint CRCL_XmlSchema_SetLengthUnitsDataType = 15926;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetMotionCoordinationDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetMotionCoordinationDataType = 15711;
+        public const uint CRCL_XmlSchema_SetMotionCoordinationDataType = 15929;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetRobotParametersDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetRobotParametersDataType = 15714;
+        public const uint CRCL_XmlSchema_SetRobotParametersDataType = 15932;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetTorqueUnitsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetTorqueUnitsDataType = 15717;
+        public const uint CRCL_XmlSchema_SetTorqueUnitsDataType = 15935;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_StopMotionDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_StopMotionDataType = 15720;
+        public const uint CRCL_XmlSchema_StopMotionDataType = 15938;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_ConfigureStatusReportDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_ConfigureStatusReportDataType = 15723;
+        public const uint CRCL_XmlSchema_ConfigureStatusReportDataType = 15941;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EnableSensorDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EnableSensorDataType = 15726;
+        public const uint CRCL_XmlSchema_EnableSensorDataType = 15944;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DisableSensorDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DisableSensorDataType = 15729;
+        public const uint CRCL_XmlSchema_DisableSensorDataType = 15947;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EnableGripperDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EnableGripperDataType = 15732;
+        public const uint CRCL_XmlSchema_EnableGripperDataType = 15950;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DisableGripperDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DisableGripperDataType = 15735;
+        public const uint CRCL_XmlSchema_DisableGripperDataType = 15953;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EnableRobotParameterStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EnableRobotParameterStatusDataType = 15738;
+        public const uint CRCL_XmlSchema_EnableRobotParameterStatusDataType = 15956;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DisableRobotParameterStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DisableRobotParameterStatusDataType = 15741;
+        public const uint CRCL_XmlSchema_DisableRobotParameterStatusDataType = 15959;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetDefaultJointPositionsTolerancesDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetDefaultJointPositionsTolerancesDataType = 15744;
+        public const uint CRCL_XmlSchema_SetDefaultJointPositionsTolerancesDataType = 15962;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetRotAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetRotAccelDataType = 15747;
+        public const uint CRCL_XmlSchema_SetRotAccelDataType = 15965;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetTransAccelDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetTransAccelDataType = 15750;
+        public const uint CRCL_XmlSchema_SetTransAccelDataType = 15968;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetRotSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetRotSpeedDataType = 15753;
+        public const uint CRCL_XmlSchema_SetRotSpeedDataType = 15971;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetTransSpeedDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetTransSpeedDataType = 15756;
+        public const uint CRCL_XmlSchema_SetTransSpeedDataType = 15974;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_ConfigureJointReportsDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_ConfigureJointReportsDataType = 15759;
+        public const uint CRCL_XmlSchema_ConfigureJointReportsDataType = 15977;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_CommandStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_CommandStatusDataType = 15762;
+        public const uint CRCL_XmlSchema_CRCL_CommandStatusDataType = 15980;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_SensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_SensorStatusDataType = 15765;
+        public const uint CRCL_XmlSchema_CRCL_SensorStatusDataType = 15983;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_CountSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_CountSensorStatusDataType = 15768;
+        public const uint CRCL_XmlSchema_CRCL_CountSensorStatusDataType = 15986;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_OnOffSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_OnOffSensorStatusDataType = 15771;
+        public const uint CRCL_XmlSchema_CRCL_OnOffSensorStatusDataType = 15989;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ScalarSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ScalarSensorStatusDataType = 15774;
+        public const uint CRCL_XmlSchema_CRCL_ScalarSensorStatusDataType = 15992;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ForceTorqueSensorStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ForceTorqueSensorStatusDataType = 15777;
+        public const uint CRCL_XmlSchema_CRCL_ForceTorqueSensorStatusDataType = 15995;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_SensorStatusesDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_SensorStatusesDataType = 15780;
+        public const uint CRCL_XmlSchema_CRCL_SensorStatusesDataType = 15998;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_GripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_GripperStatusDataType = 15783;
+        public const uint CRCL_XmlSchema_CRCL_GripperStatusDataType = 16001;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ParallelGripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ParallelGripperStatusDataType = 15786;
+        public const uint CRCL_XmlSchema_CRCL_ParallelGripperStatusDataType = 16004;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_ThreeFingerGripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_ThreeFingerGripperStatusDataType = 15789;
+        public const uint CRCL_XmlSchema_CRCL_ThreeFingerGripperStatusDataType = 16007;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_VacuumGripperStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_VacuumGripperStatusDataType = 15792;
+        public const uint CRCL_XmlSchema_CRCL_VacuumGripperStatusDataType = 16010;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_SettingsStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_SettingsStatusDataType = 15795;
+        public const uint CRCL_XmlSchema_CRCL_SettingsStatusDataType = 16013;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_PoseStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_PoseStatusDataType = 15798;
+        public const uint CRCL_XmlSchema_CRCL_PoseStatusDataType = 16016;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointLimitDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointLimitDataType = 15801;
+        public const uint CRCL_XmlSchema_CRCL_JointLimitDataType = 16019;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointStatusDataType = 15804;
+        public const uint CRCL_XmlSchema_CRCL_JointStatusDataType = 16022;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCL_JointStatusesDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCL_JointStatusesDataType = 15807;
+        public const uint CRCL_XmlSchema_CRCL_JointStatusesDataType = 16025;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCLStatusDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCLStatusDataType = 15810;
+        public const uint CRCL_XmlSchema_CRCLStatusDataType = 16028;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_PubSubIPAddresses Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_PubSubIPAddresses = 15813;
+        public const uint CRCL_XmlSchema_PubSubIPAddresses = 16031;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SAMYRobotDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SAMYRobotDataType = 15816;
+        public const uint CRCL_XmlSchema_SAMYRobotDataType = 16034;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCLCommandsUnionDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCLCommandsUnionDataType = 15819;
+        public const uint CRCL_XmlSchema_CRCLCommandsUnionDataType = 16037;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCLSkillDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCLSkillDataType = 15822;
+        public const uint CRCL_XmlSchema_CRCLSkillDataType = 16040;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CRCLCommandParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CRCLCommandParametersSetDataType = 16492;
+        public const uint CRCL_XmlSchema_CRCLCommandParametersSetDataType = 16043;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_InitCanonParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_InitCanonParametersSetDataType = 16495;
+        public const uint CRCL_XmlSchema_InitCanonParametersSetDataType = 16046;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EndCanonParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EndCanonParametersSetDataType = 16498;
+        public const uint CRCL_XmlSchema_EndCanonParametersSetDataType = 16049;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_GetStatusParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_GetStatusParametersSetDataType = 16501;
+        public const uint CRCL_XmlSchema_GetStatusParametersSetDataType = 16052;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_CloseToolChangerParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_CloseToolChangerParametersSetDataType = 16504;
+        public const uint CRCL_XmlSchema_CloseToolChangerParametersSetDataType = 16055;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_OpenToolChangerParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_OpenToolChangerParametersSetDataType = 16507;
+        public const uint CRCL_XmlSchema_OpenToolChangerParametersSetDataType = 16058;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MessageParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MessageParametersSetDataType = 16510;
+        public const uint CRCL_XmlSchema_MessageParametersSetDataType = 16061;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MoveToParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MoveToParametersSetDataType = 16513;
+        public const uint CRCL_XmlSchema_MoveToParametersSetDataType = 16064;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MoveScrewParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MoveScrewParametersSetDataType = 16516;
+        public const uint CRCL_XmlSchema_MoveScrewParametersSetDataType = 16067;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_MoveThroughToParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_MoveThroughToParametersSetDataType = 16519;
+        public const uint CRCL_XmlSchema_MoveThroughToParametersSetDataType = 16070;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DwellParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DwellParametersSetDataType = 16522;
+        public const uint CRCL_XmlSchema_DwellParametersSetDataType = 16073;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_ActuateJointsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_ActuateJointsParametersSetDataType = 16525;
+        public const uint CRCL_XmlSchema_ActuateJointsParametersSetDataType = 16076;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_ConfigureJointReportsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_ConfigureJointReportsParametersSetDataType = 16528;
+        public const uint CRCL_XmlSchema_ConfigureJointReportsParametersSetDataType = 16079;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetDefaultJointPositionsTolerancesParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetDefaultJointPositionsTolerancesParametersSetDataType = 16531;
+        public const uint CRCL_XmlSchema_SetDefaultJointPositionsTolerancesParametersSetDataType = 16082;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetRobotParametersParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetRobotParametersParametersSetDataType = 16534;
+        public const uint CRCL_XmlSchema_SetRobotParametersParametersSetDataType = 16085;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetEndeffectorParametersParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetEndeffectorParametersParametersSetDataType = 16537;
+        public const uint CRCL_XmlSchema_SetEndeffectorParametersParametersSetDataType = 16088;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetEndeffectorParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetEndeffectorParametersSetDataType = 16540;
+        public const uint CRCL_XmlSchema_SetEndeffectorParametersSetDataType = 16091;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetTransSpeedParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetTransSpeedParametersSetDataType = 16543;
+        public const uint CRCL_XmlSchema_SetTransSpeedParametersSetDataType = 16094;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetTransAccelParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetTransAccelParametersSetDataType = 16546;
+        public const uint CRCL_XmlSchema_SetTransAccelParametersSetDataType = 16097;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetRotSpeedParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetRotSpeedParametersSetDataType = 16549;
+        public const uint CRCL_XmlSchema_SetRotSpeedParametersSetDataType = 16100;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetRotAccelParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetRotAccelParametersSetDataType = 16552;
+        public const uint CRCL_XmlSchema_SetRotAccelParametersSetDataType = 16103;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetAngleUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetAngleUnitsParametersSetDataType = 16555;
+        public const uint CRCL_XmlSchema_SetAngleUnitsParametersSetDataType = 16106;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetEndPoseToleranceParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetEndPoseToleranceParametersSetDataType = 16558;
+        public const uint CRCL_XmlSchema_SetEndPoseToleranceParametersSetDataType = 16109;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetForceUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetForceUnitsParametersSetDataType = 16561;
+        public const uint CRCL_XmlSchema_SetForceUnitsParametersSetDataType = 16112;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetIntermediatePoseToleranceParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetIntermediatePoseToleranceParametersSetDataType = 16564;
+        public const uint CRCL_XmlSchema_SetIntermediatePoseToleranceParametersSetDataType = 16115;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetLengthUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetLengthUnitsParametersSetDataType = 16567;
+        public const uint CRCL_XmlSchema_SetLengthUnitsParametersSetDataType = 16118;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetMotionCoordinationParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetMotionCoordinationParametersSetDataType = 16570;
+        public const uint CRCL_XmlSchema_SetMotionCoordinationParametersSetDataType = 16121;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_SetTorqueUnitsParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_SetTorqueUnitsParametersSetDataType = 16573;
+        public const uint CRCL_XmlSchema_SetTorqueUnitsParametersSetDataType = 16124;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_StopMotionParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_StopMotionParametersSetDataType = 16576;
+        public const uint CRCL_XmlSchema_StopMotionParametersSetDataType = 16127;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_ConfigureStatusReportParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_ConfigureStatusReportParametersSetDataType = 16579;
+        public const uint CRCL_XmlSchema_ConfigureStatusReportParametersSetDataType = 16130;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EnableSensorParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EnableSensorParametersSetDataType = 16582;
+        public const uint CRCL_XmlSchema_EnableSensorParametersSetDataType = 16133;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DisableSensorParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DisableSensorParametersSetDataType = 16585;
+        public const uint CRCL_XmlSchema_DisableSensorParametersSetDataType = 16136;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EnableGripperParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EnableGripperParametersSetDataType = 16588;
+        public const uint CRCL_XmlSchema_EnableGripperParametersSetDataType = 16139;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DisableGripperParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DisableGripperParametersSetDataType = 16591;
+        public const uint CRCL_XmlSchema_DisableGripperParametersSetDataType = 16142;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_EnableRobotParameterStatusParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_EnableRobotParameterStatusParametersSetDataType = 16594;
+        public const uint CRCL_XmlSchema_EnableRobotParameterStatusParametersSetDataType = 16145;
 
         /// <summary>
         /// The identifier for the CRCL_XmlSchema_DisableRobotParameterStatusParametersSetDataType Variable.
         /// </summary>
-        public const uint CRCL_XmlSchema_DisableRobotParameterStatusParametersSetDataType = 16597;
+        public const uint CRCL_XmlSchema_DisableRobotParameterStatusParametersSetDataType = 16148;
     }
     #endregion
 

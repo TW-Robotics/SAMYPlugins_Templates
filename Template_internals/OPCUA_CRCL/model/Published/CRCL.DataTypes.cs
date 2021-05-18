@@ -7398,8 +7398,8 @@ namespace CRCL
         private void Initialize()
         {
             m_commandID = (uint)0;
-            m_cRCL:RealTimeCommand = true;
-            m_cRCL:RealTimeParameterNode = null;
+            m_realTimeCommand = true;
+            m_realTimeParameterNode = null;
             m_guard = new CRCL_GuardDataTypeCollection();
         }
         #endregion
@@ -7414,19 +7414,19 @@ namespace CRCL
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:RealTimeCommand", IsRequired = false, Order = 2)]
-        public bool CRCL:RealTimeCommand
+        [DataMember(Name = "RealTimeCommand", IsRequired = false, Order = 2)]
+        public bool RealTimeCommand
         {
-            get { return m_cRCL:RealTimeCommand;  }
-            set { m_cRCL:RealTimeCommand = value; }
+            get { return m_realTimeCommand;  }
+            set { m_realTimeCommand = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:RealTimeParameterNode", IsRequired = false, Order = 3)]
-        public NodeId CRCL:RealTimeParameterNode
+        [DataMember(Name = "RealTimeParameterNode", IsRequired = false, Order = 3)]
+        public NodeId RealTimeParameterNode
         {
-            get { return m_cRCL:RealTimeParameterNode;  }
-            set { m_cRCL:RealTimeParameterNode = value; }
+            get { return m_realTimeParameterNode;  }
+            set { m_realTimeParameterNode = value; }
         }
 
         /// <summary>
@@ -7479,8 +7479,8 @@ namespace CRCL
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
             encoder.WriteUInt32("commandID", commandID);
-            encoder.WriteBoolean("CRCL:RealTimeCommand", CRCL:RealTimeCommand);
-            encoder.WriteNodeId("CRCL:RealTimeParameterNode", CRCL:RealTimeParameterNode);
+            encoder.WriteBoolean("RealTimeCommand", RealTimeCommand);
+            encoder.WriteNodeId("RealTimeParameterNode", RealTimeParameterNode);
             encoder.WriteEncodeableArray("Guard", Guard.ToArray(), typeof(CRCL_GuardDataType));
 
             encoder.PopNamespace();
@@ -7494,8 +7494,8 @@ namespace CRCL
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
             commandID = decoder.ReadUInt32("commandID");
-            CRCL:RealTimeCommand = decoder.ReadBoolean("CRCL:RealTimeCommand");
-            CRCL:RealTimeParameterNode = decoder.ReadNodeId("CRCL:RealTimeParameterNode");
+            RealTimeCommand = decoder.ReadBoolean("RealTimeCommand");
+            RealTimeParameterNode = decoder.ReadNodeId("RealTimeParameterNode");
             Guard = (CRCL_GuardDataTypeCollection)decoder.ReadEncodeableArray("Guard", typeof(CRCL_GuardDataType));
 
             decoder.PopNamespace();
@@ -7518,8 +7518,8 @@ namespace CRCL
 
             if (!base.IsEqual(encodeable)) return false;
             if (!Utils.IsEqual(m_commandID, value.m_commandID)) return false;
-            if (!Utils.IsEqual(m_cRCL:RealTimeCommand, value.m_cRCL:RealTimeCommand)) return false;
-            if (!Utils.IsEqual(m_cRCL:RealTimeParameterNode, value.m_cRCL:RealTimeParameterNode)) return false;
+            if (!Utils.IsEqual(m_realTimeCommand, value.m_realTimeCommand)) return false;
+            if (!Utils.IsEqual(m_realTimeParameterNode, value.m_realTimeParameterNode)) return false;
             if (!Utils.IsEqual(m_guard, value.m_guard)) return false;
 
             return true;
@@ -7539,8 +7539,8 @@ namespace CRCL
             CRCLCommandDataType clone = (CRCLCommandDataType)base.MemberwiseClone();
 
             clone.m_commandID = (uint)Utils.Clone(this.m_commandID);
-            clone.m_cRCL:RealTimeCommand = (bool)Utils.Clone(this.m_cRCL:RealTimeCommand);
-            clone.m_cRCL:RealTimeParameterNode = (NodeId)Utils.Clone(this.m_cRCL:RealTimeParameterNode);
+            clone.m_realTimeCommand = (bool)Utils.Clone(this.m_realTimeCommand);
+            clone.m_realTimeParameterNode = (NodeId)Utils.Clone(this.m_realTimeParameterNode);
             clone.m_guard = (CRCL_GuardDataTypeCollection)Utils.Clone(this.m_guard);
 
             return clone;
@@ -7549,8 +7549,8 @@ namespace CRCL
 
         #region Private Fields
         private uint m_commandID;
-        private bool m_cRCL:RealTimeCommand;
-        private NodeId m_cRCL:RealTimeParameterNode;
+        private bool m_realTimeCommand;
+        private NodeId m_realTimeParameterNode;
         private CRCL_GuardDataTypeCollection m_guard;
         #endregion
     }
@@ -8578,8 +8578,8 @@ namespace CRCL
         private void Initialize()
         {
             m_jointNumber = (int)0;
-            m_cRCL:JointPosition = (double)0;
-            m_cRCL:JointDetails = new CRCL_JointDetailsDataType();
+            m_jointPosition = (double)0;
+            m_jointDetails = new CRCL_JointDetailsDataType();
         }
         #endregion
 
@@ -8593,31 +8593,31 @@ namespace CRCL
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:JointPosition", IsRequired = false, Order = 2)]
-        public double CRCL:JointPosition
+        [DataMember(Name = "JointPosition", IsRequired = false, Order = 2)]
+        public double JointPosition
         {
-            get { return m_cRCL:JointPosition;  }
-            set { m_cRCL:JointPosition = value; }
+            get { return m_jointPosition;  }
+            set { m_jointPosition = value; }
         }
 
         /// <summary>
         /// JointDetails of CRCL ActuateJointType
         /// </summary>
-        [DataMember(Name = "CRCL:JointDetails", IsRequired = false, Order = 3)]
-        public CRCL_JointDetailsDataType CRCL:JointDetails
+        [DataMember(Name = "JointDetails", IsRequired = false, Order = 3)]
+        public CRCL_JointDetailsDataType JointDetails
         {
             get
             {
-                return m_cRCL:JointDetails;
+                return m_jointDetails;
             }
 
             set
             {
-                m_cRCL:JointDetails = value;
+                m_jointDetails = value;
 
                 if (value == null)
                 {
-                    m_cRCL:JointDetails = new CRCL_JointDetailsDataType();
+                    m_jointDetails = new CRCL_JointDetailsDataType();
                 }
             }
         }
@@ -8650,8 +8650,8 @@ namespace CRCL
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
             encoder.WriteInt32("JointNumber", JointNumber);
-            encoder.WriteDouble("CRCL:JointPosition", CRCL:JointPosition);
-            encoder.WriteEncodeable("CRCL:JointDetails", CRCL:JointDetails, typeof(CRCL_JointDetailsDataType));
+            encoder.WriteDouble("JointPosition", JointPosition);
+            encoder.WriteEncodeable("JointDetails", JointDetails, typeof(CRCL_JointDetailsDataType));
 
             encoder.PopNamespace();
         }
@@ -8664,8 +8664,8 @@ namespace CRCL
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
             JointNumber = decoder.ReadInt32("JointNumber");
-            CRCL:JointPosition = decoder.ReadDouble("CRCL:JointPosition");
-            CRCL:JointDetails = (CRCL_JointDetailsDataType)decoder.ReadEncodeable("CRCL:JointDetails", typeof(CRCL_JointDetailsDataType));
+            JointPosition = decoder.ReadDouble("JointPosition");
+            JointDetails = (CRCL_JointDetailsDataType)decoder.ReadEncodeable("JointDetails", typeof(CRCL_JointDetailsDataType));
 
             decoder.PopNamespace();
         }
@@ -8687,8 +8687,8 @@ namespace CRCL
 
             if (!base.IsEqual(encodeable)) return false;
             if (!Utils.IsEqual(m_jointNumber, value.m_jointNumber)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointPosition, value.m_cRCL:JointPosition)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointDetails, value.m_cRCL:JointDetails)) return false;
+            if (!Utils.IsEqual(m_jointPosition, value.m_jointPosition)) return false;
+            if (!Utils.IsEqual(m_jointDetails, value.m_jointDetails)) return false;
 
             return true;
         }    
@@ -8707,8 +8707,8 @@ namespace CRCL
             CRCL_ActuateJointDataType clone = (CRCL_ActuateJointDataType)base.MemberwiseClone();
 
             clone.m_jointNumber = (int)Utils.Clone(this.m_jointNumber);
-            clone.m_cRCL:JointPosition = (double)Utils.Clone(this.m_cRCL:JointPosition);
-            clone.m_cRCL:JointDetails = (CRCL_JointDetailsDataType)Utils.Clone(this.m_cRCL:JointDetails);
+            clone.m_jointPosition = (double)Utils.Clone(this.m_jointPosition);
+            clone.m_jointDetails = (CRCL_JointDetailsDataType)Utils.Clone(this.m_jointDetails);
 
             return clone;
         }
@@ -8716,8 +8716,8 @@ namespace CRCL
 
         #region Private Fields
         private int m_jointNumber;
-        private double m_cRCL:JointPosition;
-        private CRCL_JointDetailsDataType m_cRCL:JointDetails;
+        private double m_jointPosition;
+        private CRCL_JointDetailsDataType m_jointDetails;
         #endregion
     }
 
@@ -8841,26 +8841,26 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:Setting = (double)0;
-            m_cRCL:ChangeRate = (double)0;
+            m_setting = (double)0;
+            m_changeRate = (double)0;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:Setting", IsRequired = false, Order = 1)]
-        public double CRCL:Setting
+        [DataMember(Name = "Setting", IsRequired = false, Order = 1)]
+        public double Setting
         {
-            get { return m_cRCL:Setting;  }
-            set { m_cRCL:Setting = value; }
+            get { return m_setting;  }
+            set { m_setting = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:ChangeRate", IsRequired = false, Order = 2)]
-        public double CRCL:ChangeRate
+        [DataMember(Name = "ChangeRate", IsRequired = false, Order = 2)]
+        public double ChangeRate
         {
-            get { return m_cRCL:ChangeRate;  }
-            set { m_cRCL:ChangeRate = value; }
+            get { return m_changeRate;  }
+            set { m_changeRate = value; }
         }
         #endregion
 
@@ -8890,8 +8890,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteDouble("CRCL:Setting", CRCL:Setting);
-            encoder.WriteDouble("CRCL:ChangeRate", CRCL:ChangeRate);
+            encoder.WriteDouble("Setting", Setting);
+            encoder.WriteDouble("ChangeRate", ChangeRate);
 
             encoder.PopNamespace();
         }
@@ -8903,8 +8903,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:Setting = decoder.ReadDouble("CRCL:Setting");
-            CRCL:ChangeRate = decoder.ReadDouble("CRCL:ChangeRate");
+            Setting = decoder.ReadDouble("Setting");
+            ChangeRate = decoder.ReadDouble("ChangeRate");
 
             decoder.PopNamespace();
         }
@@ -8925,8 +8925,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:Setting, value.m_cRCL:Setting)) return false;
-            if (!Utils.IsEqual(m_cRCL:ChangeRate, value.m_cRCL:ChangeRate)) return false;
+            if (!Utils.IsEqual(m_setting, value.m_setting)) return false;
+            if (!Utils.IsEqual(m_changeRate, value.m_changeRate)) return false;
 
             return true;
         }    
@@ -8944,16 +8944,16 @@ namespace CRCL
         {
             CRCL_JointForceTorqueDataType clone = (CRCL_JointForceTorqueDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:Setting = (double)Utils.Clone(this.m_cRCL:Setting);
-            clone.m_cRCL:ChangeRate = (double)Utils.Clone(this.m_cRCL:ChangeRate);
+            clone.m_setting = (double)Utils.Clone(this.m_setting);
+            clone.m_changeRate = (double)Utils.Clone(this.m_changeRate);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private double m_cRCL:Setting;
-        private double m_cRCL:ChangeRate;
+        private double m_setting;
+        private double m_changeRate;
         #endregion
     }
 
@@ -9077,26 +9077,26 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:JointSpeed = (double)0;
-            m_cRCL:JointAccel = (double)0;
+            m_jointSpeed = (double)0;
+            m_jointAccel = (double)0;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:JointSpeed", IsRequired = false, Order = 1)]
-        public double CRCL:JointSpeed
+        [DataMember(Name = "JointSpeed", IsRequired = false, Order = 1)]
+        public double JointSpeed
         {
-            get { return m_cRCL:JointSpeed;  }
-            set { m_cRCL:JointSpeed = value; }
+            get { return m_jointSpeed;  }
+            set { m_jointSpeed = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:JointAccel", IsRequired = false, Order = 2)]
-        public double CRCL:JointAccel
+        [DataMember(Name = "JointAccel", IsRequired = false, Order = 2)]
+        public double JointAccel
         {
-            get { return m_cRCL:JointAccel;  }
-            set { m_cRCL:JointAccel = value; }
+            get { return m_jointAccel;  }
+            set { m_jointAccel = value; }
         }
         #endregion
 
@@ -9126,8 +9126,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteDouble("CRCL:JointSpeed", CRCL:JointSpeed);
-            encoder.WriteDouble("CRCL:JointAccel", CRCL:JointAccel);
+            encoder.WriteDouble("JointSpeed", JointSpeed);
+            encoder.WriteDouble("JointAccel", JointAccel);
 
             encoder.PopNamespace();
         }
@@ -9139,8 +9139,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:JointSpeed = decoder.ReadDouble("CRCL:JointSpeed");
-            CRCL:JointAccel = decoder.ReadDouble("CRCL:JointAccel");
+            JointSpeed = decoder.ReadDouble("JointSpeed");
+            JointAccel = decoder.ReadDouble("JointAccel");
 
             decoder.PopNamespace();
         }
@@ -9161,8 +9161,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointSpeed, value.m_cRCL:JointSpeed)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointAccel, value.m_cRCL:JointAccel)) return false;
+            if (!Utils.IsEqual(m_jointSpeed, value.m_jointSpeed)) return false;
+            if (!Utils.IsEqual(m_jointAccel, value.m_jointAccel)) return false;
 
             return true;
         }    
@@ -9180,16 +9180,16 @@ namespace CRCL
         {
             CRCL_JointSpeedAccelDataType clone = (CRCL_JointSpeedAccelDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:JointSpeed = (double)Utils.Clone(this.m_cRCL:JointSpeed);
-            clone.m_cRCL:JointAccel = (double)Utils.Clone(this.m_cRCL:JointAccel);
+            clone.m_jointSpeed = (double)Utils.Clone(this.m_jointSpeed);
+            clone.m_jointAccel = (double)Utils.Clone(this.m_jointAccel);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private double m_cRCL:JointSpeed;
-        private double m_cRCL:JointAccel;
+        private double m_jointSpeed;
+        private double m_jointAccel;
         #endregion
     }
 
@@ -9313,8 +9313,8 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ActuateJoint = new CRCL_ActuateJointDataTypeCollection();
-            m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+            m_actuateJoint = new CRCL_ActuateJointDataTypeCollection();
+            m_jointTolerances = new CRCL_JointPositionsTolerancesDataType();
         }
         #endregion
 
@@ -9323,21 +9323,21 @@ namespace CRCL
         /// Array of ActuateJoint of a ActuateJoints Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:ActuateJoint", IsRequired = false, Order = 1)]
-        public CRCL_ActuateJointDataTypeCollection CRCL:ActuateJoint
+        [DataMember(Name = "ActuateJoint", IsRequired = false, Order = 1)]
+        public CRCL_ActuateJointDataTypeCollection ActuateJoint
         {
             get
             {
-                return m_cRCL:ActuateJoint;
+                return m_actuateJoint;
             }
 
             set
             {
-                m_cRCL:ActuateJoint = value;
+                m_actuateJoint = value;
 
                 if (value == null)
                 {
-                    m_cRCL:ActuateJoint = new CRCL_ActuateJointDataTypeCollection();
+                    m_actuateJoint = new CRCL_ActuateJointDataTypeCollection();
                 }
             }
         }
@@ -9346,21 +9346,21 @@ namespace CRCL
         /// JointTolerances of a ActuateJoints Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:JointTolerances", IsRequired = false, Order = 2)]
-        public CRCL_JointPositionsTolerancesDataType CRCL:JointTolerances
+        [DataMember(Name = "JointTolerances", IsRequired = false, Order = 2)]
+        public CRCL_JointPositionsTolerancesDataType JointTolerances
         {
             get
             {
-                return m_cRCL:JointTolerances;
+                return m_jointTolerances;
             }
 
             set
             {
-                m_cRCL:JointTolerances = value;
+                m_jointTolerances = value;
 
                 if (value == null)
                 {
-                    m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+                    m_jointTolerances = new CRCL_JointPositionsTolerancesDataType();
                 }
             }
         }
@@ -9392,8 +9392,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeableArray("CRCL:ActuateJoint", CRCL:ActuateJoint.ToArray(), typeof(CRCL_ActuateJointDataType));
-            encoder.WriteEncodeable("CRCL:JointTolerances", CRCL:JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
+            encoder.WriteEncodeableArray("ActuateJoint", ActuateJoint.ToArray(), typeof(CRCL_ActuateJointDataType));
+            encoder.WriteEncodeable("JointTolerances", JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
 
             encoder.PopNamespace();
         }
@@ -9405,8 +9405,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ActuateJoint = (CRCL_ActuateJointDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ActuateJoint", typeof(CRCL_ActuateJointDataType));
-            CRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("CRCL:JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
+            ActuateJoint = (CRCL_ActuateJointDataTypeCollection)decoder.ReadEncodeableArray("ActuateJoint", typeof(CRCL_ActuateJointDataType));
+            JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
 
             decoder.PopNamespace();
         }
@@ -9427,8 +9427,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:ActuateJoint, value.m_cRCL:ActuateJoint)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointTolerances, value.m_cRCL:JointTolerances)) return false;
+            if (!Utils.IsEqual(m_actuateJoint, value.m_actuateJoint)) return false;
+            if (!Utils.IsEqual(m_jointTolerances, value.m_jointTolerances)) return false;
 
             return true;
         }    
@@ -9446,16 +9446,16 @@ namespace CRCL
         {
             ActuateJointsDataType clone = (ActuateJointsDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ActuateJoint = (CRCL_ActuateJointDataTypeCollection)Utils.Clone(this.m_cRCL:ActuateJoint);
-            clone.m_cRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_cRCL:JointTolerances);
+            clone.m_actuateJoint = (CRCL_ActuateJointDataTypeCollection)Utils.Clone(this.m_actuateJoint);
+            clone.m_jointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_jointTolerances);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_ActuateJointDataTypeCollection m_cRCL:ActuateJoint;
-        private CRCL_JointPositionsTolerancesDataType m_cRCL:JointTolerances;
+        private CRCL_ActuateJointDataTypeCollection m_actuateJoint;
+        private CRCL_JointPositionsTolerancesDataType m_jointTolerances;
         #endregion
     }
 
@@ -24504,17 +24504,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:RealTimeParameter = true;
+            m_realTimeParameter = true;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:RealTimeParameter", IsRequired = false, Order = 1)]
-        public bool CRCL:RealTimeParameter
+        [DataMember(Name = "RealTimeParameter", IsRequired = false, Order = 1)]
+        public bool RealTimeParameter
         {
-            get { return m_cRCL:RealTimeParameter;  }
-            set { m_cRCL:RealTimeParameter = value; }
+            get { return m_realTimeParameter;  }
+            set { m_realTimeParameter = value; }
         }
         #endregion
 
@@ -24542,7 +24542,7 @@ namespace CRCL
         {
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:RealTimeParameter", CRCL:RealTimeParameter);
+            encoder.WriteBoolean("RealTimeParameter", RealTimeParameter);
 
             encoder.PopNamespace();
         }
@@ -24552,7 +24552,7 @@ namespace CRCL
         {
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:RealTimeParameter = decoder.ReadBoolean("CRCL:RealTimeParameter");
+            RealTimeParameter = decoder.ReadBoolean("RealTimeParameter");
 
             decoder.PopNamespace();
         }
@@ -24572,7 +24572,7 @@ namespace CRCL
                 return false;
             }
 
-            if (!Utils.IsEqual(m_cRCL:RealTimeParameter, value.m_cRCL:RealTimeParameter)) return false;
+            if (!Utils.IsEqual(m_realTimeParameter, value.m_realTimeParameter)) return false;
 
             return true;
         }
@@ -24590,14 +24590,14 @@ namespace CRCL
         {
             CRCLCommandParametersSetDataType clone = (CRCLCommandParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:RealTimeParameter = (bool)Utils.Clone(this.m_cRCL:RealTimeParameter);
+            clone.m_realTimeParameter = (bool)Utils.Clone(this.m_realTimeParameter);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:RealTimeParameter;
+        private bool m_realTimeParameter;
         #endregion
     }
 
@@ -25761,17 +25761,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:Message = null;
+            m_message = null;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:Message", IsRequired = false, Order = 1)]
-        public string CRCL:Message
+        [DataMember(Name = "Message", IsRequired = false, Order = 1)]
+        public string Message
         {
-            get { return m_cRCL:Message;  }
-            set { m_cRCL:Message = value; }
+            get { return m_message;  }
+            set { m_message = value; }
         }
         #endregion
 
@@ -25801,7 +25801,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:Message", CRCL:Message);
+            encoder.WriteString("Message", Message);
 
             encoder.PopNamespace();
         }
@@ -25813,7 +25813,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:Message = decoder.ReadString("CRCL:Message");
+            Message = decoder.ReadString("Message");
 
             decoder.PopNamespace();
         }
@@ -25834,7 +25834,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:Message, value.m_cRCL:Message)) return false;
+            if (!Utils.IsEqual(m_message, value.m_message)) return false;
 
             return true;
         }    
@@ -25852,14 +25852,14 @@ namespace CRCL
         {
             MessageParametersSetDataType clone = (MessageParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:Message = (string)Utils.Clone(this.m_cRCL:Message);
+            clone.m_message = (string)Utils.Clone(this.m_message);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:Message;
+        private string m_message;
         #endregion
     }
 
@@ -25983,39 +25983,39 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:MoveStraight = true;
-            m_cRCL:EndPosition = new CRCL_PoseDataType();
+            m_moveStraight = true;
+            m_endPosition = new CRCL_PoseDataType();
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:MoveStraight", IsRequired = false, Order = 1)]
-        public bool CRCL:MoveStraight
+        [DataMember(Name = "MoveStraight", IsRequired = false, Order = 1)]
+        public bool MoveStraight
         {
-            get { return m_cRCL:MoveStraight;  }
-            set { m_cRCL:MoveStraight = value; }
+            get { return m_moveStraight;  }
+            set { m_moveStraight = value; }
         }
 
         /// <summary>
         /// EndPosition of a moveTo command
             
         /// </summary>
-        [DataMember(Name = "CRCL:EndPosition", IsRequired = false, Order = 2)]
-        public CRCL_PoseDataType CRCL:EndPosition
+        [DataMember(Name = "EndPosition", IsRequired = false, Order = 2)]
+        public CRCL_PoseDataType EndPosition
         {
             get
             {
-                return m_cRCL:EndPosition;
+                return m_endPosition;
             }
 
             set
             {
-                m_cRCL:EndPosition = value;
+                m_endPosition = value;
 
                 if (value == null)
                 {
-                    m_cRCL:EndPosition = new CRCL_PoseDataType();
+                    m_endPosition = new CRCL_PoseDataType();
                 }
             }
         }
@@ -26047,8 +26047,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:MoveStraight", CRCL:MoveStraight);
-            encoder.WriteEncodeable("CRCL:EndPosition", CRCL:EndPosition, typeof(CRCL_PoseDataType));
+            encoder.WriteBoolean("MoveStraight", MoveStraight);
+            encoder.WriteEncodeable("EndPosition", EndPosition, typeof(CRCL_PoseDataType));
 
             encoder.PopNamespace();
         }
@@ -26060,8 +26060,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:MoveStraight = decoder.ReadBoolean("CRCL:MoveStraight");
-            CRCL:EndPosition = (CRCL_PoseDataType)decoder.ReadEncodeable("CRCL:EndPosition", typeof(CRCL_PoseDataType));
+            MoveStraight = decoder.ReadBoolean("MoveStraight");
+            EndPosition = (CRCL_PoseDataType)decoder.ReadEncodeable("EndPosition", typeof(CRCL_PoseDataType));
 
             decoder.PopNamespace();
         }
@@ -26082,8 +26082,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:MoveStraight, value.m_cRCL:MoveStraight)) return false;
-            if (!Utils.IsEqual(m_cRCL:EndPosition, value.m_cRCL:EndPosition)) return false;
+            if (!Utils.IsEqual(m_moveStraight, value.m_moveStraight)) return false;
+            if (!Utils.IsEqual(m_endPosition, value.m_endPosition)) return false;
 
             return true;
         }    
@@ -26101,16 +26101,16 @@ namespace CRCL
         {
             MoveToParametersSetDataType clone = (MoveToParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:MoveStraight = (bool)Utils.Clone(this.m_cRCL:MoveStraight);
-            clone.m_cRCL:EndPosition = (CRCL_PoseDataType)Utils.Clone(this.m_cRCL:EndPosition);
+            clone.m_moveStraight = (bool)Utils.Clone(this.m_moveStraight);
+            clone.m_endPosition = (CRCL_PoseDataType)Utils.Clone(this.m_endPosition);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:MoveStraight;
-        private CRCL_PoseDataType m_cRCL:EndPosition;
+        private bool m_moveStraight;
+        private CRCL_PoseDataType m_endPosition;
         #endregion
     }
 
@@ -26234,11 +26234,11 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:StartPosition = new CRCL_PoseDataType();
-            m_cRCL:AxisPoint = new CRCL_PointDataType();
-            m_cRCL:AxialDistanceFree = (double)0;
-            m_cRCL:AxialDistanceScrew = (double)0;
-            m_cRCL:Turn = (double)0;
+            m_startPosition = new CRCL_PoseDataType();
+            m_axisPoint = new CRCL_PointDataType();
+            m_axialDistanceFree = (double)0;
+            m_axialDistanceScrew = (double)0;
+            m_turn = (double)0;
         }
         #endregion
 
@@ -26247,21 +26247,21 @@ namespace CRCL
         /// StartPosition of a MoveScrew Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:StartPosition", IsRequired = false, Order = 1)]
-        public CRCL_PoseDataType CRCL:StartPosition
+        [DataMember(Name = "StartPosition", IsRequired = false, Order = 1)]
+        public CRCL_PoseDataType StartPosition
         {
             get
             {
-                return m_cRCL:StartPosition;
+                return m_startPosition;
             }
 
             set
             {
-                m_cRCL:StartPosition = value;
+                m_startPosition = value;
 
                 if (value == null)
                 {
-                    m_cRCL:StartPosition = new CRCL_PoseDataType();
+                    m_startPosition = new CRCL_PoseDataType();
                 }
             }
         }
@@ -26270,47 +26270,47 @@ namespace CRCL
         /// AxisPoint of a MoveScrew Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:AxisPoint", IsRequired = false, Order = 2)]
-        public CRCL_PointDataType CRCL:AxisPoint
+        [DataMember(Name = "AxisPoint", IsRequired = false, Order = 2)]
+        public CRCL_PointDataType AxisPoint
         {
             get
             {
-                return m_cRCL:AxisPoint;
+                return m_axisPoint;
             }
 
             set
             {
-                m_cRCL:AxisPoint = value;
+                m_axisPoint = value;
 
                 if (value == null)
                 {
-                    m_cRCL:AxisPoint = new CRCL_PointDataType();
+                    m_axisPoint = new CRCL_PointDataType();
                 }
             }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:AxialDistanceFree", IsRequired = false, Order = 3)]
-        public double CRCL:AxialDistanceFree
+        [DataMember(Name = "AxialDistanceFree", IsRequired = false, Order = 3)]
+        public double AxialDistanceFree
         {
-            get { return m_cRCL:AxialDistanceFree;  }
-            set { m_cRCL:AxialDistanceFree = value; }
+            get { return m_axialDistanceFree;  }
+            set { m_axialDistanceFree = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:AxialDistanceScrew", IsRequired = false, Order = 4)]
-        public double CRCL:AxialDistanceScrew
+        [DataMember(Name = "AxialDistanceScrew", IsRequired = false, Order = 4)]
+        public double AxialDistanceScrew
         {
-            get { return m_cRCL:AxialDistanceScrew;  }
-            set { m_cRCL:AxialDistanceScrew = value; }
+            get { return m_axialDistanceScrew;  }
+            set { m_axialDistanceScrew = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:Turn", IsRequired = false, Order = 5)]
-        public double CRCL:Turn
+        [DataMember(Name = "Turn", IsRequired = false, Order = 5)]
+        public double Turn
         {
-            get { return m_cRCL:Turn;  }
-            set { m_cRCL:Turn = value; }
+            get { return m_turn;  }
+            set { m_turn = value; }
         }
         #endregion
 
@@ -26340,11 +26340,11 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:StartPosition", CRCL:StartPosition, typeof(CRCL_PoseDataType));
-            encoder.WriteEncodeable("CRCL:AxisPoint", CRCL:AxisPoint, typeof(CRCL_PointDataType));
-            encoder.WriteDouble("CRCL:AxialDistanceFree", CRCL:AxialDistanceFree);
-            encoder.WriteDouble("CRCL:AxialDistanceScrew", CRCL:AxialDistanceScrew);
-            encoder.WriteDouble("CRCL:Turn", CRCL:Turn);
+            encoder.WriteEncodeable("StartPosition", StartPosition, typeof(CRCL_PoseDataType));
+            encoder.WriteEncodeable("AxisPoint", AxisPoint, typeof(CRCL_PointDataType));
+            encoder.WriteDouble("AxialDistanceFree", AxialDistanceFree);
+            encoder.WriteDouble("AxialDistanceScrew", AxialDistanceScrew);
+            encoder.WriteDouble("Turn", Turn);
 
             encoder.PopNamespace();
         }
@@ -26356,11 +26356,11 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:StartPosition = (CRCL_PoseDataType)decoder.ReadEncodeable("CRCL:StartPosition", typeof(CRCL_PoseDataType));
-            CRCL:AxisPoint = (CRCL_PointDataType)decoder.ReadEncodeable("CRCL:AxisPoint", typeof(CRCL_PointDataType));
-            CRCL:AxialDistanceFree = decoder.ReadDouble("CRCL:AxialDistanceFree");
-            CRCL:AxialDistanceScrew = decoder.ReadDouble("CRCL:AxialDistanceScrew");
-            CRCL:Turn = decoder.ReadDouble("CRCL:Turn");
+            StartPosition = (CRCL_PoseDataType)decoder.ReadEncodeable("StartPosition", typeof(CRCL_PoseDataType));
+            AxisPoint = (CRCL_PointDataType)decoder.ReadEncodeable("AxisPoint", typeof(CRCL_PointDataType));
+            AxialDistanceFree = decoder.ReadDouble("AxialDistanceFree");
+            AxialDistanceScrew = decoder.ReadDouble("AxialDistanceScrew");
+            Turn = decoder.ReadDouble("Turn");
 
             decoder.PopNamespace();
         }
@@ -26381,11 +26381,11 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:StartPosition, value.m_cRCL:StartPosition)) return false;
-            if (!Utils.IsEqual(m_cRCL:AxisPoint, value.m_cRCL:AxisPoint)) return false;
-            if (!Utils.IsEqual(m_cRCL:AxialDistanceFree, value.m_cRCL:AxialDistanceFree)) return false;
-            if (!Utils.IsEqual(m_cRCL:AxialDistanceScrew, value.m_cRCL:AxialDistanceScrew)) return false;
-            if (!Utils.IsEqual(m_cRCL:Turn, value.m_cRCL:Turn)) return false;
+            if (!Utils.IsEqual(m_startPosition, value.m_startPosition)) return false;
+            if (!Utils.IsEqual(m_axisPoint, value.m_axisPoint)) return false;
+            if (!Utils.IsEqual(m_axialDistanceFree, value.m_axialDistanceFree)) return false;
+            if (!Utils.IsEqual(m_axialDistanceScrew, value.m_axialDistanceScrew)) return false;
+            if (!Utils.IsEqual(m_turn, value.m_turn)) return false;
 
             return true;
         }    
@@ -26403,22 +26403,22 @@ namespace CRCL
         {
             MoveScrewParametersSetDataType clone = (MoveScrewParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:StartPosition = (CRCL_PoseDataType)Utils.Clone(this.m_cRCL:StartPosition);
-            clone.m_cRCL:AxisPoint = (CRCL_PointDataType)Utils.Clone(this.m_cRCL:AxisPoint);
-            clone.m_cRCL:AxialDistanceFree = (double)Utils.Clone(this.m_cRCL:AxialDistanceFree);
-            clone.m_cRCL:AxialDistanceScrew = (double)Utils.Clone(this.m_cRCL:AxialDistanceScrew);
-            clone.m_cRCL:Turn = (double)Utils.Clone(this.m_cRCL:Turn);
+            clone.m_startPosition = (CRCL_PoseDataType)Utils.Clone(this.m_startPosition);
+            clone.m_axisPoint = (CRCL_PointDataType)Utils.Clone(this.m_axisPoint);
+            clone.m_axialDistanceFree = (double)Utils.Clone(this.m_axialDistanceFree);
+            clone.m_axialDistanceScrew = (double)Utils.Clone(this.m_axialDistanceScrew);
+            clone.m_turn = (double)Utils.Clone(this.m_turn);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_PoseDataType m_cRCL:StartPosition;
-        private CRCL_PointDataType m_cRCL:AxisPoint;
-        private double m_cRCL:AxialDistanceFree;
-        private double m_cRCL:AxialDistanceScrew;
-        private double m_cRCL:Turn;
+        private CRCL_PoseDataType m_startPosition;
+        private CRCL_PointDataType m_axisPoint;
+        private double m_axialDistanceFree;
+        private double m_axialDistanceScrew;
+        private double m_turn;
         #endregion
     }
 
@@ -26542,50 +26542,50 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:MoveStraight = true;
-            m_cRCL:Waypoint = new CRCL_PoseDataTypeCollection();
-            m_cRCL:NumPositions = (int)0;
+            m_moveStraight = true;
+            m_waypoint = new CRCL_PoseDataTypeCollection();
+            m_numPositions = (int)0;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:MoveStraight", IsRequired = false, Order = 1)]
-        public bool CRCL:MoveStraight
+        [DataMember(Name = "MoveStraight", IsRequired = false, Order = 1)]
+        public bool MoveStraight
         {
-            get { return m_cRCL:MoveStraight;  }
-            set { m_cRCL:MoveStraight = value; }
+            get { return m_moveStraight;  }
+            set { m_moveStraight = value; }
         }
 
         /// <summary>
         /// Waypoint of a MoveThroughTo Command (requires minimum two poses)
             
         /// </summary>
-        [DataMember(Name = "CRCL:Waypoint", IsRequired = false, Order = 2)]
-        public CRCL_PoseDataTypeCollection CRCL:Waypoint
+        [DataMember(Name = "Waypoint", IsRequired = false, Order = 2)]
+        public CRCL_PoseDataTypeCollection Waypoint
         {
             get
             {
-                return m_cRCL:Waypoint;
+                return m_waypoint;
             }
 
             set
             {
-                m_cRCL:Waypoint = value;
+                m_waypoint = value;
 
                 if (value == null)
                 {
-                    m_cRCL:Waypoint = new CRCL_PoseDataTypeCollection();
+                    m_waypoint = new CRCL_PoseDataTypeCollection();
                 }
             }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:NumPositions", IsRequired = false, Order = 3)]
-        public int CRCL:NumPositions
+        [DataMember(Name = "NumPositions", IsRequired = false, Order = 3)]
+        public int NumPositions
         {
-            get { return m_cRCL:NumPositions;  }
-            set { m_cRCL:NumPositions = value; }
+            get { return m_numPositions;  }
+            set { m_numPositions = value; }
         }
         #endregion
 
@@ -26615,9 +26615,9 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:MoveStraight", CRCL:MoveStraight);
-            encoder.WriteEncodeableArray("CRCL:Waypoint", CRCL:Waypoint.ToArray(), typeof(CRCL_PoseDataType));
-            encoder.WriteInt32("CRCL:NumPositions", CRCL:NumPositions);
+            encoder.WriteBoolean("MoveStraight", MoveStraight);
+            encoder.WriteEncodeableArray("Waypoint", Waypoint.ToArray(), typeof(CRCL_PoseDataType));
+            encoder.WriteInt32("NumPositions", NumPositions);
 
             encoder.PopNamespace();
         }
@@ -26629,9 +26629,9 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:MoveStraight = decoder.ReadBoolean("CRCL:MoveStraight");
-            CRCL:Waypoint = (CRCL_PoseDataTypeCollection)decoder.ReadEncodeableArray("CRCL:Waypoint", typeof(CRCL_PoseDataType));
-            CRCL:NumPositions = decoder.ReadInt32("CRCL:NumPositions");
+            MoveStraight = decoder.ReadBoolean("MoveStraight");
+            Waypoint = (CRCL_PoseDataTypeCollection)decoder.ReadEncodeableArray("Waypoint", typeof(CRCL_PoseDataType));
+            NumPositions = decoder.ReadInt32("NumPositions");
 
             decoder.PopNamespace();
         }
@@ -26652,9 +26652,9 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:MoveStraight, value.m_cRCL:MoveStraight)) return false;
-            if (!Utils.IsEqual(m_cRCL:Waypoint, value.m_cRCL:Waypoint)) return false;
-            if (!Utils.IsEqual(m_cRCL:NumPositions, value.m_cRCL:NumPositions)) return false;
+            if (!Utils.IsEqual(m_moveStraight, value.m_moveStraight)) return false;
+            if (!Utils.IsEqual(m_waypoint, value.m_waypoint)) return false;
+            if (!Utils.IsEqual(m_numPositions, value.m_numPositions)) return false;
 
             return true;
         }    
@@ -26672,18 +26672,18 @@ namespace CRCL
         {
             MoveThroughToParametersSetDataType clone = (MoveThroughToParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:MoveStraight = (bool)Utils.Clone(this.m_cRCL:MoveStraight);
-            clone.m_cRCL:Waypoint = (CRCL_PoseDataTypeCollection)Utils.Clone(this.m_cRCL:Waypoint);
-            clone.m_cRCL:NumPositions = (int)Utils.Clone(this.m_cRCL:NumPositions);
+            clone.m_moveStraight = (bool)Utils.Clone(this.m_moveStraight);
+            clone.m_waypoint = (CRCL_PoseDataTypeCollection)Utils.Clone(this.m_waypoint);
+            clone.m_numPositions = (int)Utils.Clone(this.m_numPositions);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:MoveStraight;
-        private CRCL_PoseDataTypeCollection m_cRCL:Waypoint;
-        private int m_cRCL:NumPositions;
+        private bool m_moveStraight;
+        private CRCL_PoseDataTypeCollection m_waypoint;
+        private int m_numPositions;
         #endregion
     }
 
@@ -26807,17 +26807,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:DwellTime = true;
+            m_dwellTime = true;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:DwellTime", IsRequired = false, Order = 1)]
-        public bool CRCL:DwellTime
+        [DataMember(Name = "DwellTime", IsRequired = false, Order = 1)]
+        public bool DwellTime
         {
-            get { return m_cRCL:DwellTime;  }
-            set { m_cRCL:DwellTime = value; }
+            get { return m_dwellTime;  }
+            set { m_dwellTime = value; }
         }
         #endregion
 
@@ -26847,7 +26847,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:DwellTime", CRCL:DwellTime);
+            encoder.WriteBoolean("DwellTime", DwellTime);
 
             encoder.PopNamespace();
         }
@@ -26859,7 +26859,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:DwellTime = decoder.ReadBoolean("CRCL:DwellTime");
+            DwellTime = decoder.ReadBoolean("DwellTime");
 
             decoder.PopNamespace();
         }
@@ -26880,7 +26880,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:DwellTime, value.m_cRCL:DwellTime)) return false;
+            if (!Utils.IsEqual(m_dwellTime, value.m_dwellTime)) return false;
 
             return true;
         }    
@@ -26898,14 +26898,14 @@ namespace CRCL
         {
             DwellParametersSetDataType clone = (DwellParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:DwellTime = (bool)Utils.Clone(this.m_cRCL:DwellTime);
+            clone.m_dwellTime = (bool)Utils.Clone(this.m_dwellTime);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:DwellTime;
+        private bool m_dwellTime;
         #endregion
     }
 
@@ -27029,8 +27029,8 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ActuateJoint = new CRCL_ActuateJointDataTypeCollection();
-            m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+            m_actuateJoint = new CRCL_ActuateJointDataTypeCollection();
+            m_jointTolerances = new CRCL_JointPositionsTolerancesDataType();
         }
         #endregion
 
@@ -27039,21 +27039,21 @@ namespace CRCL
         /// Array of ActuateJoint of a ActuateJoints Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:ActuateJoint", IsRequired = false, Order = 1)]
-        public CRCL_ActuateJointDataTypeCollection CRCL:ActuateJoint
+        [DataMember(Name = "ActuateJoint", IsRequired = false, Order = 1)]
+        public CRCL_ActuateJointDataTypeCollection ActuateJoint
         {
             get
             {
-                return m_cRCL:ActuateJoint;
+                return m_actuateJoint;
             }
 
             set
             {
-                m_cRCL:ActuateJoint = value;
+                m_actuateJoint = value;
 
                 if (value == null)
                 {
-                    m_cRCL:ActuateJoint = new CRCL_ActuateJointDataTypeCollection();
+                    m_actuateJoint = new CRCL_ActuateJointDataTypeCollection();
                 }
             }
         }
@@ -27062,21 +27062,21 @@ namespace CRCL
         /// JointTolerances of a ActuateJoints Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:JointTolerances", IsRequired = false, Order = 2)]
-        public CRCL_JointPositionsTolerancesDataType CRCL:JointTolerances
+        [DataMember(Name = "JointTolerances", IsRequired = false, Order = 2)]
+        public CRCL_JointPositionsTolerancesDataType JointTolerances
         {
             get
             {
-                return m_cRCL:JointTolerances;
+                return m_jointTolerances;
             }
 
             set
             {
-                m_cRCL:JointTolerances = value;
+                m_jointTolerances = value;
 
                 if (value == null)
                 {
-                    m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+                    m_jointTolerances = new CRCL_JointPositionsTolerancesDataType();
                 }
             }
         }
@@ -27108,8 +27108,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeableArray("CRCL:ActuateJoint", CRCL:ActuateJoint.ToArray(), typeof(CRCL_ActuateJointDataType));
-            encoder.WriteEncodeable("CRCL:JointTolerances", CRCL:JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
+            encoder.WriteEncodeableArray("ActuateJoint", ActuateJoint.ToArray(), typeof(CRCL_ActuateJointDataType));
+            encoder.WriteEncodeable("JointTolerances", JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
 
             encoder.PopNamespace();
         }
@@ -27121,8 +27121,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ActuateJoint = (CRCL_ActuateJointDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ActuateJoint", typeof(CRCL_ActuateJointDataType));
-            CRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("CRCL:JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
+            ActuateJoint = (CRCL_ActuateJointDataTypeCollection)decoder.ReadEncodeableArray("ActuateJoint", typeof(CRCL_ActuateJointDataType));
+            JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
 
             decoder.PopNamespace();
         }
@@ -27143,8 +27143,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:ActuateJoint, value.m_cRCL:ActuateJoint)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointTolerances, value.m_cRCL:JointTolerances)) return false;
+            if (!Utils.IsEqual(m_actuateJoint, value.m_actuateJoint)) return false;
+            if (!Utils.IsEqual(m_jointTolerances, value.m_jointTolerances)) return false;
 
             return true;
         }    
@@ -27162,16 +27162,16 @@ namespace CRCL
         {
             ActuateJointsParametersSetDataType clone = (ActuateJointsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ActuateJoint = (CRCL_ActuateJointDataTypeCollection)Utils.Clone(this.m_cRCL:ActuateJoint);
-            clone.m_cRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_cRCL:JointTolerances);
+            clone.m_actuateJoint = (CRCL_ActuateJointDataTypeCollection)Utils.Clone(this.m_actuateJoint);
+            clone.m_jointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_jointTolerances);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_ActuateJointDataTypeCollection m_cRCL:ActuateJoint;
-        private CRCL_JointPositionsTolerancesDataType m_cRCL:JointTolerances;
+        private CRCL_ActuateJointDataTypeCollection m_actuateJoint;
+        private CRCL_JointPositionsTolerancesDataType m_jointTolerances;
         #endregion
     }
 
@@ -27295,39 +27295,39 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ResetAll = true;
-            m_cRCL:ConfigureJointReport = new CRCL_ConfigureJointReportDataTypeCollection();
+            m_resetAll = true;
+            m_configureJointReport = new CRCL_ConfigureJointReportDataTypeCollection();
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:ResetAll", IsRequired = false, Order = 1)]
-        public bool CRCL:ResetAll
+        [DataMember(Name = "ResetAll", IsRequired = false, Order = 1)]
+        public bool ResetAll
         {
-            get { return m_cRCL:ResetAll;  }
-            set { m_cRCL:ResetAll = value; }
+            get { return m_resetAll;  }
+            set { m_resetAll = value; }
         }
 
         /// <summary>
         /// Array of ConfigureJointReport of a ConfigureJointreports Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:ConfigureJointReport", IsRequired = false, Order = 2)]
-        public CRCL_ConfigureJointReportDataTypeCollection CRCL:ConfigureJointReport
+        [DataMember(Name = "ConfigureJointReport", IsRequired = false, Order = 2)]
+        public CRCL_ConfigureJointReportDataTypeCollection ConfigureJointReport
         {
             get
             {
-                return m_cRCL:ConfigureJointReport;
+                return m_configureJointReport;
             }
 
             set
             {
-                m_cRCL:ConfigureJointReport = value;
+                m_configureJointReport = value;
 
                 if (value == null)
                 {
-                    m_cRCL:ConfigureJointReport = new CRCL_ConfigureJointReportDataTypeCollection();
+                    m_configureJointReport = new CRCL_ConfigureJointReportDataTypeCollection();
                 }
             }
         }
@@ -27359,8 +27359,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:ResetAll", CRCL:ResetAll);
-            encoder.WriteEncodeableArray("CRCL:ConfigureJointReport", CRCL:ConfigureJointReport.ToArray(), typeof(CRCL_ConfigureJointReportDataType));
+            encoder.WriteBoolean("ResetAll", ResetAll);
+            encoder.WriteEncodeableArray("ConfigureJointReport", ConfigureJointReport.ToArray(), typeof(CRCL_ConfigureJointReportDataType));
 
             encoder.PopNamespace();
         }
@@ -27372,8 +27372,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ResetAll = decoder.ReadBoolean("CRCL:ResetAll");
-            CRCL:ConfigureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ConfigureJointReport", typeof(CRCL_ConfigureJointReportDataType));
+            ResetAll = decoder.ReadBoolean("ResetAll");
+            ConfigureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)decoder.ReadEncodeableArray("ConfigureJointReport", typeof(CRCL_ConfigureJointReportDataType));
 
             decoder.PopNamespace();
         }
@@ -27394,8 +27394,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:ResetAll, value.m_cRCL:ResetAll)) return false;
-            if (!Utils.IsEqual(m_cRCL:ConfigureJointReport, value.m_cRCL:ConfigureJointReport)) return false;
+            if (!Utils.IsEqual(m_resetAll, value.m_resetAll)) return false;
+            if (!Utils.IsEqual(m_configureJointReport, value.m_configureJointReport)) return false;
 
             return true;
         }    
@@ -27413,16 +27413,16 @@ namespace CRCL
         {
             ConfigureJointReportsParametersSetDataType clone = (ConfigureJointReportsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ResetAll = (bool)Utils.Clone(this.m_cRCL:ResetAll);
-            clone.m_cRCL:ConfigureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)Utils.Clone(this.m_cRCL:ConfigureJointReport);
+            clone.m_resetAll = (bool)Utils.Clone(this.m_resetAll);
+            clone.m_configureJointReport = (CRCL_ConfigureJointReportDataTypeCollection)Utils.Clone(this.m_configureJointReport);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:ResetAll;
-        private CRCL_ConfigureJointReportDataTypeCollection m_cRCL:ConfigureJointReport;
+        private bool m_resetAll;
+        private CRCL_ConfigureJointReportDataTypeCollection m_configureJointReport;
         #endregion
     }
 
@@ -27546,7 +27546,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+            m_jointTolerances = new CRCL_JointPositionsTolerancesDataType();
         }
         #endregion
 
@@ -27555,21 +27555,21 @@ namespace CRCL
         /// JointTolerances of a SetDefaultJointPositionsTolerances Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:JointTolerances", IsRequired = false, Order = 1)]
-        public CRCL_JointPositionsTolerancesDataType CRCL:JointTolerances
+        [DataMember(Name = "JointTolerances", IsRequired = false, Order = 1)]
+        public CRCL_JointPositionsTolerancesDataType JointTolerances
         {
             get
             {
-                return m_cRCL:JointTolerances;
+                return m_jointTolerances;
             }
 
             set
             {
-                m_cRCL:JointTolerances = value;
+                m_jointTolerances = value;
 
                 if (value == null)
                 {
-                    m_cRCL:JointTolerances = new CRCL_JointPositionsTolerancesDataType();
+                    m_jointTolerances = new CRCL_JointPositionsTolerancesDataType();
                 }
             }
         }
@@ -27601,7 +27601,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:JointTolerances", CRCL:JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
+            encoder.WriteEncodeable("JointTolerances", JointTolerances, typeof(CRCL_JointPositionsTolerancesDataType));
 
             encoder.PopNamespace();
         }
@@ -27613,7 +27613,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("CRCL:JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
+            JointTolerances = (CRCL_JointPositionsTolerancesDataType)decoder.ReadEncodeable("JointTolerances", typeof(CRCL_JointPositionsTolerancesDataType));
 
             decoder.PopNamespace();
         }
@@ -27634,7 +27634,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:JointTolerances, value.m_cRCL:JointTolerances)) return false;
+            if (!Utils.IsEqual(m_jointTolerances, value.m_jointTolerances)) return false;
 
             return true;
         }    
@@ -27652,14 +27652,14 @@ namespace CRCL
         {
             SetDefaultJointPositionsTolerancesParametersSetDataType clone = (SetDefaultJointPositionsTolerancesParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:JointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_cRCL:JointTolerances);
+            clone.m_jointTolerances = (CRCL_JointPositionsTolerancesDataType)Utils.Clone(this.m_jointTolerances);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_JointPositionsTolerancesDataType m_cRCL:JointTolerances;
+        private CRCL_JointPositionsTolerancesDataType m_jointTolerances;
         #endregion
     }
 
@@ -27783,7 +27783,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ParameterSetting = new CRCL_ParameterSettingDataTypeCollection();
+            m_parameterSetting = new CRCL_ParameterSettingDataTypeCollection();
         }
         #endregion
 
@@ -27792,21 +27792,21 @@ namespace CRCL
         /// Array of ParameterSetting of a SetRobotParameters Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:ParameterSetting", IsRequired = false, Order = 1)]
-        public CRCL_ParameterSettingDataTypeCollection CRCL:ParameterSetting
+        [DataMember(Name = "ParameterSetting", IsRequired = false, Order = 1)]
+        public CRCL_ParameterSettingDataTypeCollection ParameterSetting
         {
             get
             {
-                return m_cRCL:ParameterSetting;
+                return m_parameterSetting;
             }
 
             set
             {
-                m_cRCL:ParameterSetting = value;
+                m_parameterSetting = value;
 
                 if (value == null)
                 {
-                    m_cRCL:ParameterSetting = new CRCL_ParameterSettingDataTypeCollection();
+                    m_parameterSetting = new CRCL_ParameterSettingDataTypeCollection();
                 }
             }
         }
@@ -27838,7 +27838,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeableArray("CRCL:ParameterSetting", CRCL:ParameterSetting.ToArray(), typeof(CRCL_ParameterSettingDataType));
+            encoder.WriteEncodeableArray("ParameterSetting", ParameterSetting.ToArray(), typeof(CRCL_ParameterSettingDataType));
 
             encoder.PopNamespace();
         }
@@ -27850,7 +27850,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ParameterSetting = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ParameterSetting", typeof(CRCL_ParameterSettingDataType));
+            ParameterSetting = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("ParameterSetting", typeof(CRCL_ParameterSettingDataType));
 
             decoder.PopNamespace();
         }
@@ -27871,7 +27871,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:ParameterSetting, value.m_cRCL:ParameterSetting)) return false;
+            if (!Utils.IsEqual(m_parameterSetting, value.m_parameterSetting)) return false;
 
             return true;
         }    
@@ -27889,14 +27889,14 @@ namespace CRCL
         {
             SetRobotParametersParametersSetDataType clone = (SetRobotParametersParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ParameterSetting = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_cRCL:ParameterSetting);
+            clone.m_parameterSetting = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_parameterSetting);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_ParameterSettingDataTypeCollection m_cRCL:ParameterSetting;
+        private CRCL_ParameterSettingDataTypeCollection m_parameterSetting;
         #endregion
     }
 
@@ -28020,7 +28020,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ParameterSetting = new CRCL_ParameterSettingDataTypeCollection();
+            m_parameterSetting = new CRCL_ParameterSettingDataTypeCollection();
         }
         #endregion
 
@@ -28029,21 +28029,21 @@ namespace CRCL
         /// Array of ParameterSetting of a SetEndeffectorParameters Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:ParameterSetting", IsRequired = false, Order = 1)]
-        public CRCL_ParameterSettingDataTypeCollection CRCL:ParameterSetting
+        [DataMember(Name = "ParameterSetting", IsRequired = false, Order = 1)]
+        public CRCL_ParameterSettingDataTypeCollection ParameterSetting
         {
             get
             {
-                return m_cRCL:ParameterSetting;
+                return m_parameterSetting;
             }
 
             set
             {
-                m_cRCL:ParameterSetting = value;
+                m_parameterSetting = value;
 
                 if (value == null)
                 {
-                    m_cRCL:ParameterSetting = new CRCL_ParameterSettingDataTypeCollection();
+                    m_parameterSetting = new CRCL_ParameterSettingDataTypeCollection();
                 }
             }
         }
@@ -28075,7 +28075,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeableArray("CRCL:ParameterSetting", CRCL:ParameterSetting.ToArray(), typeof(CRCL_ParameterSettingDataType));
+            encoder.WriteEncodeableArray("ParameterSetting", ParameterSetting.ToArray(), typeof(CRCL_ParameterSettingDataType));
 
             encoder.PopNamespace();
         }
@@ -28087,7 +28087,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ParameterSetting = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("CRCL:ParameterSetting", typeof(CRCL_ParameterSettingDataType));
+            ParameterSetting = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("ParameterSetting", typeof(CRCL_ParameterSettingDataType));
 
             decoder.PopNamespace();
         }
@@ -28108,7 +28108,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:ParameterSetting, value.m_cRCL:ParameterSetting)) return false;
+            if (!Utils.IsEqual(m_parameterSetting, value.m_parameterSetting)) return false;
 
             return true;
         }    
@@ -28126,14 +28126,14 @@ namespace CRCL
         {
             SetEndeffectorParametersParametersSetDataType clone = (SetEndeffectorParametersParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ParameterSetting = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_cRCL:ParameterSetting);
+            clone.m_parameterSetting = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_parameterSetting);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_ParameterSettingDataTypeCollection m_cRCL:ParameterSetting;
+        private CRCL_ParameterSettingDataTypeCollection m_parameterSetting;
         #endregion
     }
 
@@ -28257,7 +28257,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:Setting = new CRCL_FractionDataType();
+            m_setting = new CRCL_FractionDataType();
         }
         #endregion
 
@@ -28266,21 +28266,21 @@ namespace CRCL
         /// Setting of a SetEndeffector Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:Setting", IsRequired = false, Order = 1)]
-        public CRCL_FractionDataType CRCL:Setting
+        [DataMember(Name = "Setting", IsRequired = false, Order = 1)]
+        public CRCL_FractionDataType Setting
         {
             get
             {
-                return m_cRCL:Setting;
+                return m_setting;
             }
 
             set
             {
-                m_cRCL:Setting = value;
+                m_setting = value;
 
                 if (value == null)
                 {
-                    m_cRCL:Setting = new CRCL_FractionDataType();
+                    m_setting = new CRCL_FractionDataType();
                 }
             }
         }
@@ -28312,7 +28312,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:Setting", CRCL:Setting, typeof(CRCL_FractionDataType));
+            encoder.WriteEncodeable("Setting", Setting, typeof(CRCL_FractionDataType));
 
             encoder.PopNamespace();
         }
@@ -28324,7 +28324,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:Setting = (CRCL_FractionDataType)decoder.ReadEncodeable("CRCL:Setting", typeof(CRCL_FractionDataType));
+            Setting = (CRCL_FractionDataType)decoder.ReadEncodeable("Setting", typeof(CRCL_FractionDataType));
 
             decoder.PopNamespace();
         }
@@ -28345,7 +28345,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:Setting, value.m_cRCL:Setting)) return false;
+            if (!Utils.IsEqual(m_setting, value.m_setting)) return false;
 
             return true;
         }    
@@ -28363,14 +28363,14 @@ namespace CRCL
         {
             SetEndeffectorParametersSetDataType clone = (SetEndeffectorParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:Setting = (CRCL_FractionDataType)Utils.Clone(this.m_cRCL:Setting);
+            clone.m_setting = (CRCL_FractionDataType)Utils.Clone(this.m_setting);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_FractionDataType m_cRCL:Setting;
+        private CRCL_FractionDataType m_setting;
         #endregion
     }
 
@@ -28494,7 +28494,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:TransSpeed = new CRCL_TransSpeedDataType();
+            m_transSpeed = new CRCL_TransSpeedDataType();
         }
         #endregion
 
@@ -28503,21 +28503,21 @@ namespace CRCL
         /// SetTransSpeed of a SetTransSpeed Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:TransSpeed", IsRequired = false, Order = 1)]
-        public CRCL_TransSpeedDataType CRCL:TransSpeed
+        [DataMember(Name = "TransSpeed", IsRequired = false, Order = 1)]
+        public CRCL_TransSpeedDataType TransSpeed
         {
             get
             {
-                return m_cRCL:TransSpeed;
+                return m_transSpeed;
             }
 
             set
             {
-                m_cRCL:TransSpeed = value;
+                m_transSpeed = value;
 
                 if (value == null)
                 {
-                    m_cRCL:TransSpeed = new CRCL_TransSpeedDataType();
+                    m_transSpeed = new CRCL_TransSpeedDataType();
                 }
             }
         }
@@ -28549,7 +28549,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:TransSpeed", CRCL:TransSpeed, typeof(CRCL_TransSpeedDataType));
+            encoder.WriteEncodeable("TransSpeed", TransSpeed, typeof(CRCL_TransSpeedDataType));
 
             encoder.PopNamespace();
         }
@@ -28561,7 +28561,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:TransSpeed = (CRCL_TransSpeedDataType)decoder.ReadEncodeable("CRCL:TransSpeed", typeof(CRCL_TransSpeedDataType));
+            TransSpeed = (CRCL_TransSpeedDataType)decoder.ReadEncodeable("TransSpeed", typeof(CRCL_TransSpeedDataType));
 
             decoder.PopNamespace();
         }
@@ -28582,7 +28582,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:TransSpeed, value.m_cRCL:TransSpeed)) return false;
+            if (!Utils.IsEqual(m_transSpeed, value.m_transSpeed)) return false;
 
             return true;
         }    
@@ -28600,14 +28600,14 @@ namespace CRCL
         {
             SetTransSpeedParametersSetDataType clone = (SetTransSpeedParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:TransSpeed = (CRCL_TransSpeedDataType)Utils.Clone(this.m_cRCL:TransSpeed);
+            clone.m_transSpeed = (CRCL_TransSpeedDataType)Utils.Clone(this.m_transSpeed);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_TransSpeedDataType m_cRCL:TransSpeed;
+        private CRCL_TransSpeedDataType m_transSpeed;
         #endregion
     }
 
@@ -28731,7 +28731,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:TransAccel = new CRCL_TransAccelDataType();
+            m_transAccel = new CRCL_TransAccelDataType();
         }
         #endregion
 
@@ -28740,21 +28740,21 @@ namespace CRCL
         /// TransAccel of a SetTransSpeed Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:TransAccel", IsRequired = false, Order = 1)]
-        public CRCL_TransAccelDataType CRCL:TransAccel
+        [DataMember(Name = "TransAccel", IsRequired = false, Order = 1)]
+        public CRCL_TransAccelDataType TransAccel
         {
             get
             {
-                return m_cRCL:TransAccel;
+                return m_transAccel;
             }
 
             set
             {
-                m_cRCL:TransAccel = value;
+                m_transAccel = value;
 
                 if (value == null)
                 {
-                    m_cRCL:TransAccel = new CRCL_TransAccelDataType();
+                    m_transAccel = new CRCL_TransAccelDataType();
                 }
             }
         }
@@ -28786,7 +28786,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:TransAccel", CRCL:TransAccel, typeof(CRCL_TransAccelDataType));
+            encoder.WriteEncodeable("TransAccel", TransAccel, typeof(CRCL_TransAccelDataType));
 
             encoder.PopNamespace();
         }
@@ -28798,7 +28798,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:TransAccel = (CRCL_TransAccelDataType)decoder.ReadEncodeable("CRCL:TransAccel", typeof(CRCL_TransAccelDataType));
+            TransAccel = (CRCL_TransAccelDataType)decoder.ReadEncodeable("TransAccel", typeof(CRCL_TransAccelDataType));
 
             decoder.PopNamespace();
         }
@@ -28819,7 +28819,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:TransAccel, value.m_cRCL:TransAccel)) return false;
+            if (!Utils.IsEqual(m_transAccel, value.m_transAccel)) return false;
 
             return true;
         }    
@@ -28837,14 +28837,14 @@ namespace CRCL
         {
             SetTransAccelParametersSetDataType clone = (SetTransAccelParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:TransAccel = (CRCL_TransAccelDataType)Utils.Clone(this.m_cRCL:TransAccel);
+            clone.m_transAccel = (CRCL_TransAccelDataType)Utils.Clone(this.m_transAccel);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_TransAccelDataType m_cRCL:TransAccel;
+        private CRCL_TransAccelDataType m_transAccel;
         #endregion
     }
 
@@ -28968,7 +28968,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:RotSpeed = new CRCL_RotSpeedDataType();
+            m_rotSpeed = new CRCL_RotSpeedDataType();
         }
         #endregion
 
@@ -28977,21 +28977,21 @@ namespace CRCL
         /// RotSpeed of a RotSpeed Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:RotSpeed", IsRequired = false, Order = 1)]
-        public CRCL_RotSpeedDataType CRCL:RotSpeed
+        [DataMember(Name = "RotSpeed", IsRequired = false, Order = 1)]
+        public CRCL_RotSpeedDataType RotSpeed
         {
             get
             {
-                return m_cRCL:RotSpeed;
+                return m_rotSpeed;
             }
 
             set
             {
-                m_cRCL:RotSpeed = value;
+                m_rotSpeed = value;
 
                 if (value == null)
                 {
-                    m_cRCL:RotSpeed = new CRCL_RotSpeedDataType();
+                    m_rotSpeed = new CRCL_RotSpeedDataType();
                 }
             }
         }
@@ -29023,7 +29023,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:RotSpeed", CRCL:RotSpeed, typeof(CRCL_RotSpeedDataType));
+            encoder.WriteEncodeable("RotSpeed", RotSpeed, typeof(CRCL_RotSpeedDataType));
 
             encoder.PopNamespace();
         }
@@ -29035,7 +29035,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:RotSpeed = (CRCL_RotSpeedDataType)decoder.ReadEncodeable("CRCL:RotSpeed", typeof(CRCL_RotSpeedDataType));
+            RotSpeed = (CRCL_RotSpeedDataType)decoder.ReadEncodeable("RotSpeed", typeof(CRCL_RotSpeedDataType));
 
             decoder.PopNamespace();
         }
@@ -29056,7 +29056,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:RotSpeed, value.m_cRCL:RotSpeed)) return false;
+            if (!Utils.IsEqual(m_rotSpeed, value.m_rotSpeed)) return false;
 
             return true;
         }    
@@ -29074,14 +29074,14 @@ namespace CRCL
         {
             SetRotSpeedParametersSetDataType clone = (SetRotSpeedParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:RotSpeed = (CRCL_RotSpeedDataType)Utils.Clone(this.m_cRCL:RotSpeed);
+            clone.m_rotSpeed = (CRCL_RotSpeedDataType)Utils.Clone(this.m_rotSpeed);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_RotSpeedDataType m_cRCL:RotSpeed;
+        private CRCL_RotSpeedDataType m_rotSpeed;
         #endregion
     }
 
@@ -29205,7 +29205,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:RotAccel = new CRCL_RotAccelDataType();
+            m_rotAccel = new CRCL_RotAccelDataType();
         }
         #endregion
 
@@ -29214,21 +29214,21 @@ namespace CRCL
         /// RotAccel of a SetRotAccel Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:RotAccel", IsRequired = false, Order = 1)]
-        public CRCL_RotAccelDataType CRCL:RotAccel
+        [DataMember(Name = "RotAccel", IsRequired = false, Order = 1)]
+        public CRCL_RotAccelDataType RotAccel
         {
             get
             {
-                return m_cRCL:RotAccel;
+                return m_rotAccel;
             }
 
             set
             {
-                m_cRCL:RotAccel = value;
+                m_rotAccel = value;
 
                 if (value == null)
                 {
-                    m_cRCL:RotAccel = new CRCL_RotAccelDataType();
+                    m_rotAccel = new CRCL_RotAccelDataType();
                 }
             }
         }
@@ -29260,7 +29260,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:RotAccel", CRCL:RotAccel, typeof(CRCL_RotAccelDataType));
+            encoder.WriteEncodeable("RotAccel", RotAccel, typeof(CRCL_RotAccelDataType));
 
             encoder.PopNamespace();
         }
@@ -29272,7 +29272,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:RotAccel = (CRCL_RotAccelDataType)decoder.ReadEncodeable("CRCL:RotAccel", typeof(CRCL_RotAccelDataType));
+            RotAccel = (CRCL_RotAccelDataType)decoder.ReadEncodeable("RotAccel", typeof(CRCL_RotAccelDataType));
 
             decoder.PopNamespace();
         }
@@ -29293,7 +29293,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:RotAccel, value.m_cRCL:RotAccel)) return false;
+            if (!Utils.IsEqual(m_rotAccel, value.m_rotAccel)) return false;
 
             return true;
         }    
@@ -29311,14 +29311,14 @@ namespace CRCL
         {
             SetRotAccelParametersSetDataType clone = (SetRotAccelParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:RotAccel = (CRCL_RotAccelDataType)Utils.Clone(this.m_cRCL:RotAccel);
+            clone.m_rotAccel = (CRCL_RotAccelDataType)Utils.Clone(this.m_rotAccel);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_RotAccelDataType m_cRCL:RotAccel;
+        private CRCL_RotAccelDataType m_rotAccel;
         #endregion
     }
 
@@ -29442,17 +29442,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:UnitName = CRCL_AngleUnitEnumDataType.DEGREE;
+            m_unitName = CRCL_AngleUnitEnumDataType.DEGREE;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:UnitName", IsRequired = false, Order = 1)]
-        public CRCL_AngleUnitEnumDataType CRCL:UnitName
+        [DataMember(Name = "UnitName", IsRequired = false, Order = 1)]
+        public CRCL_AngleUnitEnumDataType UnitName
         {
-            get { return m_cRCL:UnitName;  }
-            set { m_cRCL:UnitName = value; }
+            get { return m_unitName;  }
+            set { m_unitName = value; }
         }
         #endregion
 
@@ -29482,7 +29482,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEnumerated("CRCL:UnitName", CRCL:UnitName);
+            encoder.WriteEnumerated("UnitName", UnitName);
 
             encoder.PopNamespace();
         }
@@ -29494,7 +29494,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:UnitName = (CRCL_AngleUnitEnumDataType)decoder.ReadEnumerated("CRCL:UnitName", typeof(CRCL_AngleUnitEnumDataType));
+            UnitName = (CRCL_AngleUnitEnumDataType)decoder.ReadEnumerated("UnitName", typeof(CRCL_AngleUnitEnumDataType));
 
             decoder.PopNamespace();
         }
@@ -29515,7 +29515,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:UnitName, value.m_cRCL:UnitName)) return false;
+            if (!Utils.IsEqual(m_unitName, value.m_unitName)) return false;
 
             return true;
         }    
@@ -29533,14 +29533,14 @@ namespace CRCL
         {
             SetAngleUnitsParametersSetDataType clone = (SetAngleUnitsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:UnitName = (CRCL_AngleUnitEnumDataType)Utils.Clone(this.m_cRCL:UnitName);
+            clone.m_unitName = (CRCL_AngleUnitEnumDataType)Utils.Clone(this.m_unitName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_AngleUnitEnumDataType m_cRCL:UnitName;
+        private CRCL_AngleUnitEnumDataType m_unitName;
         #endregion
     }
 
@@ -29664,7 +29664,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:Tolerance = new CRCL_PoseToleranceDataType();
+            m_tolerance = new CRCL_PoseToleranceDataType();
         }
         #endregion
 
@@ -29673,21 +29673,21 @@ namespace CRCL
         /// Tolerance of a SetEndPoseTolerance Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:Tolerance", IsRequired = false, Order = 1)]
-        public CRCL_PoseToleranceDataType CRCL:Tolerance
+        [DataMember(Name = "Tolerance", IsRequired = false, Order = 1)]
+        public CRCL_PoseToleranceDataType Tolerance
         {
             get
             {
-                return m_cRCL:Tolerance;
+                return m_tolerance;
             }
 
             set
             {
-                m_cRCL:Tolerance = value;
+                m_tolerance = value;
 
                 if (value == null)
                 {
-                    m_cRCL:Tolerance = new CRCL_PoseToleranceDataType();
+                    m_tolerance = new CRCL_PoseToleranceDataType();
                 }
             }
         }
@@ -29719,7 +29719,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:Tolerance", CRCL:Tolerance, typeof(CRCL_PoseToleranceDataType));
+            encoder.WriteEncodeable("Tolerance", Tolerance, typeof(CRCL_PoseToleranceDataType));
 
             encoder.PopNamespace();
         }
@@ -29731,7 +29731,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:Tolerance = (CRCL_PoseToleranceDataType)decoder.ReadEncodeable("CRCL:Tolerance", typeof(CRCL_PoseToleranceDataType));
+            Tolerance = (CRCL_PoseToleranceDataType)decoder.ReadEncodeable("Tolerance", typeof(CRCL_PoseToleranceDataType));
 
             decoder.PopNamespace();
         }
@@ -29752,7 +29752,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:Tolerance, value.m_cRCL:Tolerance)) return false;
+            if (!Utils.IsEqual(m_tolerance, value.m_tolerance)) return false;
 
             return true;
         }    
@@ -29770,14 +29770,14 @@ namespace CRCL
         {
             SetEndPoseToleranceParametersSetDataType clone = (SetEndPoseToleranceParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:Tolerance = (CRCL_PoseToleranceDataType)Utils.Clone(this.m_cRCL:Tolerance);
+            clone.m_tolerance = (CRCL_PoseToleranceDataType)Utils.Clone(this.m_tolerance);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_PoseToleranceDataType m_cRCL:Tolerance;
+        private CRCL_PoseToleranceDataType m_tolerance;
         #endregion
     }
 
@@ -29901,17 +29901,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:UnitName = CRCL_ForceUnitEnumDataType.NEWTON;
+            m_unitName = CRCL_ForceUnitEnumDataType.NEWTON;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:UnitName", IsRequired = false, Order = 1)]
-        public CRCL_ForceUnitEnumDataType CRCL:UnitName
+        [DataMember(Name = "UnitName", IsRequired = false, Order = 1)]
+        public CRCL_ForceUnitEnumDataType UnitName
         {
-            get { return m_cRCL:UnitName;  }
-            set { m_cRCL:UnitName = value; }
+            get { return m_unitName;  }
+            set { m_unitName = value; }
         }
         #endregion
 
@@ -29941,7 +29941,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEnumerated("CRCL:UnitName", CRCL:UnitName);
+            encoder.WriteEnumerated("UnitName", UnitName);
 
             encoder.PopNamespace();
         }
@@ -29953,7 +29953,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:UnitName = (CRCL_ForceUnitEnumDataType)decoder.ReadEnumerated("CRCL:UnitName", typeof(CRCL_ForceUnitEnumDataType));
+            UnitName = (CRCL_ForceUnitEnumDataType)decoder.ReadEnumerated("UnitName", typeof(CRCL_ForceUnitEnumDataType));
 
             decoder.PopNamespace();
         }
@@ -29974,7 +29974,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:UnitName, value.m_cRCL:UnitName)) return false;
+            if (!Utils.IsEqual(m_unitName, value.m_unitName)) return false;
 
             return true;
         }    
@@ -29992,14 +29992,14 @@ namespace CRCL
         {
             SetForceUnitsParametersSetDataType clone = (SetForceUnitsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:UnitName = (CRCL_ForceUnitEnumDataType)Utils.Clone(this.m_cRCL:UnitName);
+            clone.m_unitName = (CRCL_ForceUnitEnumDataType)Utils.Clone(this.m_unitName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_ForceUnitEnumDataType m_cRCL:UnitName;
+        private CRCL_ForceUnitEnumDataType m_unitName;
         #endregion
     }
 
@@ -30123,7 +30123,7 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:Tolerance = new CRCL_PoseToleranceDataType();
+            m_tolerance = new CRCL_PoseToleranceDataType();
         }
         #endregion
 
@@ -30132,21 +30132,21 @@ namespace CRCL
         /// Tolerance of a SetIntermediatePoseTolerance Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:Tolerance", IsRequired = false, Order = 1)]
-        public CRCL_PoseToleranceDataType CRCL:Tolerance
+        [DataMember(Name = "Tolerance", IsRequired = false, Order = 1)]
+        public CRCL_PoseToleranceDataType Tolerance
         {
             get
             {
-                return m_cRCL:Tolerance;
+                return m_tolerance;
             }
 
             set
             {
-                m_cRCL:Tolerance = value;
+                m_tolerance = value;
 
                 if (value == null)
                 {
-                    m_cRCL:Tolerance = new CRCL_PoseToleranceDataType();
+                    m_tolerance = new CRCL_PoseToleranceDataType();
                 }
             }
         }
@@ -30178,7 +30178,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEncodeable("CRCL:Tolerance", CRCL:Tolerance, typeof(CRCL_PoseToleranceDataType));
+            encoder.WriteEncodeable("Tolerance", Tolerance, typeof(CRCL_PoseToleranceDataType));
 
             encoder.PopNamespace();
         }
@@ -30190,7 +30190,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:Tolerance = (CRCL_PoseToleranceDataType)decoder.ReadEncodeable("CRCL:Tolerance", typeof(CRCL_PoseToleranceDataType));
+            Tolerance = (CRCL_PoseToleranceDataType)decoder.ReadEncodeable("Tolerance", typeof(CRCL_PoseToleranceDataType));
 
             decoder.PopNamespace();
         }
@@ -30211,7 +30211,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:Tolerance, value.m_cRCL:Tolerance)) return false;
+            if (!Utils.IsEqual(m_tolerance, value.m_tolerance)) return false;
 
             return true;
         }    
@@ -30229,14 +30229,14 @@ namespace CRCL
         {
             SetIntermediatePoseToleranceParametersSetDataType clone = (SetIntermediatePoseToleranceParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:Tolerance = (CRCL_PoseToleranceDataType)Utils.Clone(this.m_cRCL:Tolerance);
+            clone.m_tolerance = (CRCL_PoseToleranceDataType)Utils.Clone(this.m_tolerance);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_PoseToleranceDataType m_cRCL:Tolerance;
+        private CRCL_PoseToleranceDataType m_tolerance;
         #endregion
     }
 
@@ -30360,17 +30360,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:UnitName = CRCL_LengthUnitEnumDataType.METER;
+            m_unitName = CRCL_LengthUnitEnumDataType.METER;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:UnitName", IsRequired = false, Order = 1)]
-        public CRCL_LengthUnitEnumDataType CRCL:UnitName
+        [DataMember(Name = "UnitName", IsRequired = false, Order = 1)]
+        public CRCL_LengthUnitEnumDataType UnitName
         {
-            get { return m_cRCL:UnitName;  }
-            set { m_cRCL:UnitName = value; }
+            get { return m_unitName;  }
+            set { m_unitName = value; }
         }
         #endregion
 
@@ -30400,7 +30400,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEnumerated("CRCL:UnitName", CRCL:UnitName);
+            encoder.WriteEnumerated("UnitName", UnitName);
 
             encoder.PopNamespace();
         }
@@ -30412,7 +30412,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:UnitName = (CRCL_LengthUnitEnumDataType)decoder.ReadEnumerated("CRCL:UnitName", typeof(CRCL_LengthUnitEnumDataType));
+            UnitName = (CRCL_LengthUnitEnumDataType)decoder.ReadEnumerated("UnitName", typeof(CRCL_LengthUnitEnumDataType));
 
             decoder.PopNamespace();
         }
@@ -30433,7 +30433,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:UnitName, value.m_cRCL:UnitName)) return false;
+            if (!Utils.IsEqual(m_unitName, value.m_unitName)) return false;
 
             return true;
         }    
@@ -30451,14 +30451,14 @@ namespace CRCL
         {
             SetLengthUnitsParametersSetDataType clone = (SetLengthUnitsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:UnitName = (CRCL_LengthUnitEnumDataType)Utils.Clone(this.m_cRCL:UnitName);
+            clone.m_unitName = (CRCL_LengthUnitEnumDataType)Utils.Clone(this.m_unitName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_LengthUnitEnumDataType m_cRCL:UnitName;
+        private CRCL_LengthUnitEnumDataType m_unitName;
         #endregion
     }
 
@@ -30582,17 +30582,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:Coordinated = true;
+            m_coordinated = true;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:Coordinated", IsRequired = false, Order = 1)]
-        public bool CRCL:Coordinated
+        [DataMember(Name = "Coordinated", IsRequired = false, Order = 1)]
+        public bool Coordinated
         {
-            get { return m_cRCL:Coordinated;  }
-            set { m_cRCL:Coordinated = value; }
+            get { return m_coordinated;  }
+            set { m_coordinated = value; }
         }
         #endregion
 
@@ -30622,7 +30622,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:Coordinated", CRCL:Coordinated);
+            encoder.WriteBoolean("Coordinated", Coordinated);
 
             encoder.PopNamespace();
         }
@@ -30634,7 +30634,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:Coordinated = decoder.ReadBoolean("CRCL:Coordinated");
+            Coordinated = decoder.ReadBoolean("Coordinated");
 
             decoder.PopNamespace();
         }
@@ -30655,7 +30655,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:Coordinated, value.m_cRCL:Coordinated)) return false;
+            if (!Utils.IsEqual(m_coordinated, value.m_coordinated)) return false;
 
             return true;
         }    
@@ -30673,14 +30673,14 @@ namespace CRCL
         {
             SetMotionCoordinationParametersSetDataType clone = (SetMotionCoordinationParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:Coordinated = (bool)Utils.Clone(this.m_cRCL:Coordinated);
+            clone.m_coordinated = (bool)Utils.Clone(this.m_coordinated);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:Coordinated;
+        private bool m_coordinated;
         #endregion
     }
 
@@ -30804,17 +30804,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:UnitName = CRCL_TorqueUnitEnumDataType.NEWTONMETER;
+            m_unitName = CRCL_TorqueUnitEnumDataType.NEWTONMETER;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:UnitName", IsRequired = false, Order = 1)]
-        public CRCL_TorqueUnitEnumDataType CRCL:UnitName
+        [DataMember(Name = "UnitName", IsRequired = false, Order = 1)]
+        public CRCL_TorqueUnitEnumDataType UnitName
         {
-            get { return m_cRCL:UnitName;  }
-            set { m_cRCL:UnitName = value; }
+            get { return m_unitName;  }
+            set { m_unitName = value; }
         }
         #endregion
 
@@ -30844,7 +30844,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEnumerated("CRCL:UnitName", CRCL:UnitName);
+            encoder.WriteEnumerated("UnitName", UnitName);
 
             encoder.PopNamespace();
         }
@@ -30856,7 +30856,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:UnitName = (CRCL_TorqueUnitEnumDataType)decoder.ReadEnumerated("CRCL:UnitName", typeof(CRCL_TorqueUnitEnumDataType));
+            UnitName = (CRCL_TorqueUnitEnumDataType)decoder.ReadEnumerated("UnitName", typeof(CRCL_TorqueUnitEnumDataType));
 
             decoder.PopNamespace();
         }
@@ -30877,7 +30877,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:UnitName, value.m_cRCL:UnitName)) return false;
+            if (!Utils.IsEqual(m_unitName, value.m_unitName)) return false;
 
             return true;
         }    
@@ -30895,14 +30895,14 @@ namespace CRCL
         {
             SetTorqueUnitsParametersSetDataType clone = (SetTorqueUnitsParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:UnitName = (CRCL_TorqueUnitEnumDataType)Utils.Clone(this.m_cRCL:UnitName);
+            clone.m_unitName = (CRCL_TorqueUnitEnumDataType)Utils.Clone(this.m_unitName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_TorqueUnitEnumDataType m_cRCL:UnitName;
+        private CRCL_TorqueUnitEnumDataType m_unitName;
         #endregion
     }
 
@@ -31026,17 +31026,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:StopCondition = CRCL_StopConditionEnumDataType.IMMEDIATE;
+            m_stopCondition = CRCL_StopConditionEnumDataType.IMMEDIATE;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:StopCondition", IsRequired = false, Order = 1)]
-        public CRCL_StopConditionEnumDataType CRCL:StopCondition
+        [DataMember(Name = "StopCondition", IsRequired = false, Order = 1)]
+        public CRCL_StopConditionEnumDataType StopCondition
         {
-            get { return m_cRCL:StopCondition;  }
-            set { m_cRCL:StopCondition = value; }
+            get { return m_stopCondition;  }
+            set { m_stopCondition = value; }
         }
         #endregion
 
@@ -31066,7 +31066,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteEnumerated("CRCL:StopCondition", CRCL:StopCondition);
+            encoder.WriteEnumerated("StopCondition", StopCondition);
 
             encoder.PopNamespace();
         }
@@ -31078,7 +31078,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:StopCondition = (CRCL_StopConditionEnumDataType)decoder.ReadEnumerated("CRCL:StopCondition", typeof(CRCL_StopConditionEnumDataType));
+            StopCondition = (CRCL_StopConditionEnumDataType)decoder.ReadEnumerated("StopCondition", typeof(CRCL_StopConditionEnumDataType));
 
             decoder.PopNamespace();
         }
@@ -31099,7 +31099,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:StopCondition, value.m_cRCL:StopCondition)) return false;
+            if (!Utils.IsEqual(m_stopCondition, value.m_stopCondition)) return false;
 
             return true;
         }    
@@ -31117,14 +31117,14 @@ namespace CRCL
         {
             StopMotionParametersSetDataType clone = (StopMotionParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:StopCondition = (CRCL_StopConditionEnumDataType)Utils.Clone(this.m_cRCL:StopCondition);
+            clone.m_stopCondition = (CRCL_StopConditionEnumDataType)Utils.Clone(this.m_stopCondition);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private CRCL_StopConditionEnumDataType m_cRCL:StopCondition;
+        private CRCL_StopConditionEnumDataType m_stopCondition;
         #endregion
     }
 
@@ -31248,62 +31248,62 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:ReportJointStatuses = true;
-            m_cRCL:ReportPoseStatus = true;
-            m_cRCL:ReportGripperStatus = true;
-            m_cRCL:ReportSettingsStatus = true;
-            m_cRCL:ReportSensorsStatus = true;
-            m_cRCL:ReportGuardsStatus = true;
+            m_reportJointStatuses = true;
+            m_reportPoseStatus = true;
+            m_reportGripperStatus = true;
+            m_reportSettingsStatus = true;
+            m_reportSensorsStatus = true;
+            m_reportGuardsStatus = true;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:ReportJointStatuses", IsRequired = false, Order = 1)]
-        public bool CRCL:ReportJointStatuses
+        [DataMember(Name = "ReportJointStatuses", IsRequired = false, Order = 1)]
+        public bool ReportJointStatuses
         {
-            get { return m_cRCL:ReportJointStatuses;  }
-            set { m_cRCL:ReportJointStatuses = value; }
+            get { return m_reportJointStatuses;  }
+            set { m_reportJointStatuses = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:ReportPoseStatus", IsRequired = false, Order = 2)]
-        public bool CRCL:ReportPoseStatus
+        [DataMember(Name = "ReportPoseStatus", IsRequired = false, Order = 2)]
+        public bool ReportPoseStatus
         {
-            get { return m_cRCL:ReportPoseStatus;  }
-            set { m_cRCL:ReportPoseStatus = value; }
+            get { return m_reportPoseStatus;  }
+            set { m_reportPoseStatus = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:ReportGripperStatus", IsRequired = false, Order = 3)]
-        public bool CRCL:ReportGripperStatus
+        [DataMember(Name = "ReportGripperStatus", IsRequired = false, Order = 3)]
+        public bool ReportGripperStatus
         {
-            get { return m_cRCL:ReportGripperStatus;  }
-            set { m_cRCL:ReportGripperStatus = value; }
+            get { return m_reportGripperStatus;  }
+            set { m_reportGripperStatus = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:ReportSettingsStatus", IsRequired = false, Order = 4)]
-        public bool CRCL:ReportSettingsStatus
+        [DataMember(Name = "ReportSettingsStatus", IsRequired = false, Order = 4)]
+        public bool ReportSettingsStatus
         {
-            get { return m_cRCL:ReportSettingsStatus;  }
-            set { m_cRCL:ReportSettingsStatus = value; }
+            get { return m_reportSettingsStatus;  }
+            set { m_reportSettingsStatus = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:ReportSensorsStatus", IsRequired = false, Order = 5)]
-        public bool CRCL:ReportSensorsStatus
+        [DataMember(Name = "ReportSensorsStatus", IsRequired = false, Order = 5)]
+        public bool ReportSensorsStatus
         {
-            get { return m_cRCL:ReportSensorsStatus;  }
-            set { m_cRCL:ReportSensorsStatus = value; }
+            get { return m_reportSensorsStatus;  }
+            set { m_reportSensorsStatus = value; }
         }
 
         /// <remarks />
-        [DataMember(Name = "CRCL:ReportGuardsStatus", IsRequired = false, Order = 6)]
-        public bool CRCL:ReportGuardsStatus
+        [DataMember(Name = "ReportGuardsStatus", IsRequired = false, Order = 6)]
+        public bool ReportGuardsStatus
         {
-            get { return m_cRCL:ReportGuardsStatus;  }
-            set { m_cRCL:ReportGuardsStatus = value; }
+            get { return m_reportGuardsStatus;  }
+            set { m_reportGuardsStatus = value; }
         }
         #endregion
 
@@ -31333,12 +31333,12 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("CRCL:ReportJointStatuses", CRCL:ReportJointStatuses);
-            encoder.WriteBoolean("CRCL:ReportPoseStatus", CRCL:ReportPoseStatus);
-            encoder.WriteBoolean("CRCL:ReportGripperStatus", CRCL:ReportGripperStatus);
-            encoder.WriteBoolean("CRCL:ReportSettingsStatus", CRCL:ReportSettingsStatus);
-            encoder.WriteBoolean("CRCL:ReportSensorsStatus", CRCL:ReportSensorsStatus);
-            encoder.WriteBoolean("CRCL:ReportGuardsStatus", CRCL:ReportGuardsStatus);
+            encoder.WriteBoolean("ReportJointStatuses", ReportJointStatuses);
+            encoder.WriteBoolean("ReportPoseStatus", ReportPoseStatus);
+            encoder.WriteBoolean("ReportGripperStatus", ReportGripperStatus);
+            encoder.WriteBoolean("ReportSettingsStatus", ReportSettingsStatus);
+            encoder.WriteBoolean("ReportSensorsStatus", ReportSensorsStatus);
+            encoder.WriteBoolean("ReportGuardsStatus", ReportGuardsStatus);
 
             encoder.PopNamespace();
         }
@@ -31350,12 +31350,12 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:ReportJointStatuses = decoder.ReadBoolean("CRCL:ReportJointStatuses");
-            CRCL:ReportPoseStatus = decoder.ReadBoolean("CRCL:ReportPoseStatus");
-            CRCL:ReportGripperStatus = decoder.ReadBoolean("CRCL:ReportGripperStatus");
-            CRCL:ReportSettingsStatus = decoder.ReadBoolean("CRCL:ReportSettingsStatus");
-            CRCL:ReportSensorsStatus = decoder.ReadBoolean("CRCL:ReportSensorsStatus");
-            CRCL:ReportGuardsStatus = decoder.ReadBoolean("CRCL:ReportGuardsStatus");
+            ReportJointStatuses = decoder.ReadBoolean("ReportJointStatuses");
+            ReportPoseStatus = decoder.ReadBoolean("ReportPoseStatus");
+            ReportGripperStatus = decoder.ReadBoolean("ReportGripperStatus");
+            ReportSettingsStatus = decoder.ReadBoolean("ReportSettingsStatus");
+            ReportSensorsStatus = decoder.ReadBoolean("ReportSensorsStatus");
+            ReportGuardsStatus = decoder.ReadBoolean("ReportGuardsStatus");
 
             decoder.PopNamespace();
         }
@@ -31376,12 +31376,12 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:ReportJointStatuses, value.m_cRCL:ReportJointStatuses)) return false;
-            if (!Utils.IsEqual(m_cRCL:ReportPoseStatus, value.m_cRCL:ReportPoseStatus)) return false;
-            if (!Utils.IsEqual(m_cRCL:ReportGripperStatus, value.m_cRCL:ReportGripperStatus)) return false;
-            if (!Utils.IsEqual(m_cRCL:ReportSettingsStatus, value.m_cRCL:ReportSettingsStatus)) return false;
-            if (!Utils.IsEqual(m_cRCL:ReportSensorsStatus, value.m_cRCL:ReportSensorsStatus)) return false;
-            if (!Utils.IsEqual(m_cRCL:ReportGuardsStatus, value.m_cRCL:ReportGuardsStatus)) return false;
+            if (!Utils.IsEqual(m_reportJointStatuses, value.m_reportJointStatuses)) return false;
+            if (!Utils.IsEqual(m_reportPoseStatus, value.m_reportPoseStatus)) return false;
+            if (!Utils.IsEqual(m_reportGripperStatus, value.m_reportGripperStatus)) return false;
+            if (!Utils.IsEqual(m_reportSettingsStatus, value.m_reportSettingsStatus)) return false;
+            if (!Utils.IsEqual(m_reportSensorsStatus, value.m_reportSensorsStatus)) return false;
+            if (!Utils.IsEqual(m_reportGuardsStatus, value.m_reportGuardsStatus)) return false;
 
             return true;
         }    
@@ -31399,24 +31399,24 @@ namespace CRCL
         {
             ConfigureStatusReportParametersSetDataType clone = (ConfigureStatusReportParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:ReportJointStatuses = (bool)Utils.Clone(this.m_cRCL:ReportJointStatuses);
-            clone.m_cRCL:ReportPoseStatus = (bool)Utils.Clone(this.m_cRCL:ReportPoseStatus);
-            clone.m_cRCL:ReportGripperStatus = (bool)Utils.Clone(this.m_cRCL:ReportGripperStatus);
-            clone.m_cRCL:ReportSettingsStatus = (bool)Utils.Clone(this.m_cRCL:ReportSettingsStatus);
-            clone.m_cRCL:ReportSensorsStatus = (bool)Utils.Clone(this.m_cRCL:ReportSensorsStatus);
-            clone.m_cRCL:ReportGuardsStatus = (bool)Utils.Clone(this.m_cRCL:ReportGuardsStatus);
+            clone.m_reportJointStatuses = (bool)Utils.Clone(this.m_reportJointStatuses);
+            clone.m_reportPoseStatus = (bool)Utils.Clone(this.m_reportPoseStatus);
+            clone.m_reportGripperStatus = (bool)Utils.Clone(this.m_reportGripperStatus);
+            clone.m_reportSettingsStatus = (bool)Utils.Clone(this.m_reportSettingsStatus);
+            clone.m_reportSensorsStatus = (bool)Utils.Clone(this.m_reportSensorsStatus);
+            clone.m_reportGuardsStatus = (bool)Utils.Clone(this.m_reportGuardsStatus);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_cRCL:ReportJointStatuses;
-        private bool m_cRCL:ReportPoseStatus;
-        private bool m_cRCL:ReportGripperStatus;
-        private bool m_cRCL:ReportSettingsStatus;
-        private bool m_cRCL:ReportSensorsStatus;
-        private bool m_cRCL:ReportGuardsStatus;
+        private bool m_reportJointStatuses;
+        private bool m_reportPoseStatus;
+        private bool m_reportGripperStatus;
+        private bool m_reportSettingsStatus;
+        private bool m_reportSensorsStatus;
+        private bool m_reportGuardsStatus;
         #endregion
     }
 
@@ -31540,39 +31540,39 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:SensorID = null;
-            m_cRCL:SensorOption = new CRCL_ParameterSettingDataTypeCollection();
+            m_sensorID = null;
+            m_sensorOption = new CRCL_ParameterSettingDataTypeCollection();
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:SensorID", IsRequired = false, Order = 1)]
-        public string CRCL:SensorID
+        [DataMember(Name = "SensorID", IsRequired = false, Order = 1)]
+        public string SensorID
         {
-            get { return m_cRCL:SensorID;  }
-            set { m_cRCL:SensorID = value; }
+            get { return m_sensorID;  }
+            set { m_sensorID = value; }
         }
 
         /// <summary>
         /// Array of ParameterSetting of a EnableSensor Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:SensorOption", IsRequired = false, Order = 2)]
-        public CRCL_ParameterSettingDataTypeCollection CRCL:SensorOption
+        [DataMember(Name = "SensorOption", IsRequired = false, Order = 2)]
+        public CRCL_ParameterSettingDataTypeCollection SensorOption
         {
             get
             {
-                return m_cRCL:SensorOption;
+                return m_sensorOption;
             }
 
             set
             {
-                m_cRCL:SensorOption = value;
+                m_sensorOption = value;
 
                 if (value == null)
                 {
-                    m_cRCL:SensorOption = new CRCL_ParameterSettingDataTypeCollection();
+                    m_sensorOption = new CRCL_ParameterSettingDataTypeCollection();
                 }
             }
         }
@@ -31604,8 +31604,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:SensorID", CRCL:SensorID);
-            encoder.WriteEncodeableArray("CRCL:SensorOption", CRCL:SensorOption.ToArray(), typeof(CRCL_ParameterSettingDataType));
+            encoder.WriteString("SensorID", SensorID);
+            encoder.WriteEncodeableArray("SensorOption", SensorOption.ToArray(), typeof(CRCL_ParameterSettingDataType));
 
             encoder.PopNamespace();
         }
@@ -31617,8 +31617,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:SensorID = decoder.ReadString("CRCL:SensorID");
-            CRCL:SensorOption = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("CRCL:SensorOption", typeof(CRCL_ParameterSettingDataType));
+            SensorID = decoder.ReadString("SensorID");
+            SensorOption = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("SensorOption", typeof(CRCL_ParameterSettingDataType));
 
             decoder.PopNamespace();
         }
@@ -31639,8 +31639,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:SensorID, value.m_cRCL:SensorID)) return false;
-            if (!Utils.IsEqual(m_cRCL:SensorOption, value.m_cRCL:SensorOption)) return false;
+            if (!Utils.IsEqual(m_sensorID, value.m_sensorID)) return false;
+            if (!Utils.IsEqual(m_sensorOption, value.m_sensorOption)) return false;
 
             return true;
         }    
@@ -31658,16 +31658,16 @@ namespace CRCL
         {
             EnableSensorParametersSetDataType clone = (EnableSensorParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:SensorID = (string)Utils.Clone(this.m_cRCL:SensorID);
-            clone.m_cRCL:SensorOption = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_cRCL:SensorOption);
+            clone.m_sensorID = (string)Utils.Clone(this.m_sensorID);
+            clone.m_sensorOption = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_sensorOption);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:SensorID;
-        private CRCL_ParameterSettingDataTypeCollection m_cRCL:SensorOption;
+        private string m_sensorID;
+        private CRCL_ParameterSettingDataTypeCollection m_sensorOption;
         #endregion
     }
 
@@ -31791,17 +31791,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:SensorID = null;
+            m_sensorID = null;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:SensorID", IsRequired = false, Order = 1)]
-        public string CRCL:SensorID
+        [DataMember(Name = "SensorID", IsRequired = false, Order = 1)]
+        public string SensorID
         {
-            get { return m_cRCL:SensorID;  }
-            set { m_cRCL:SensorID = value; }
+            get { return m_sensorID;  }
+            set { m_sensorID = value; }
         }
         #endregion
 
@@ -31831,7 +31831,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:SensorID", CRCL:SensorID);
+            encoder.WriteString("SensorID", SensorID);
 
             encoder.PopNamespace();
         }
@@ -31843,7 +31843,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:SensorID = decoder.ReadString("CRCL:SensorID");
+            SensorID = decoder.ReadString("SensorID");
 
             decoder.PopNamespace();
         }
@@ -31864,7 +31864,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:SensorID, value.m_cRCL:SensorID)) return false;
+            if (!Utils.IsEqual(m_sensorID, value.m_sensorID)) return false;
 
             return true;
         }    
@@ -31882,14 +31882,14 @@ namespace CRCL
         {
             DisableSensorParametersSetDataType clone = (DisableSensorParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:SensorID = (string)Utils.Clone(this.m_cRCL:SensorID);
+            clone.m_sensorID = (string)Utils.Clone(this.m_sensorID);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:SensorID;
+        private string m_sensorID;
         #endregion
     }
 
@@ -32013,39 +32013,39 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:GripperName = null;
-            m_cRCL:GripperOption = new CRCL_ParameterSettingDataTypeCollection();
+            m_gripperName = null;
+            m_gripperOption = new CRCL_ParameterSettingDataTypeCollection();
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:GripperName", IsRequired = false, Order = 1)]
-        public string CRCL:GripperName
+        [DataMember(Name = "GripperName", IsRequired = false, Order = 1)]
+        public string GripperName
         {
-            get { return m_cRCL:GripperName;  }
-            set { m_cRCL:GripperName = value; }
+            get { return m_gripperName;  }
+            set { m_gripperName = value; }
         }
 
         /// <summary>
         /// Array of ParameterSetting of a EnableGripper Command
             
         /// </summary>
-        [DataMember(Name = "CRCL:GripperOption", IsRequired = false, Order = 2)]
-        public CRCL_ParameterSettingDataTypeCollection CRCL:GripperOption
+        [DataMember(Name = "GripperOption", IsRequired = false, Order = 2)]
+        public CRCL_ParameterSettingDataTypeCollection GripperOption
         {
             get
             {
-                return m_cRCL:GripperOption;
+                return m_gripperOption;
             }
 
             set
             {
-                m_cRCL:GripperOption = value;
+                m_gripperOption = value;
 
                 if (value == null)
                 {
-                    m_cRCL:GripperOption = new CRCL_ParameterSettingDataTypeCollection();
+                    m_gripperOption = new CRCL_ParameterSettingDataTypeCollection();
                 }
             }
         }
@@ -32077,8 +32077,8 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:GripperName", CRCL:GripperName);
-            encoder.WriteEncodeableArray("CRCL:GripperOption", CRCL:GripperOption.ToArray(), typeof(CRCL_ParameterSettingDataType));
+            encoder.WriteString("GripperName", GripperName);
+            encoder.WriteEncodeableArray("GripperOption", GripperOption.ToArray(), typeof(CRCL_ParameterSettingDataType));
 
             encoder.PopNamespace();
         }
@@ -32090,8 +32090,8 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:GripperName = decoder.ReadString("CRCL:GripperName");
-            CRCL:GripperOption = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("CRCL:GripperOption", typeof(CRCL_ParameterSettingDataType));
+            GripperName = decoder.ReadString("GripperName");
+            GripperOption = (CRCL_ParameterSettingDataTypeCollection)decoder.ReadEncodeableArray("GripperOption", typeof(CRCL_ParameterSettingDataType));
 
             decoder.PopNamespace();
         }
@@ -32112,8 +32112,8 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:GripperName, value.m_cRCL:GripperName)) return false;
-            if (!Utils.IsEqual(m_cRCL:GripperOption, value.m_cRCL:GripperOption)) return false;
+            if (!Utils.IsEqual(m_gripperName, value.m_gripperName)) return false;
+            if (!Utils.IsEqual(m_gripperOption, value.m_gripperOption)) return false;
 
             return true;
         }    
@@ -32131,16 +32131,16 @@ namespace CRCL
         {
             EnableGripperParametersSetDataType clone = (EnableGripperParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:GripperName = (string)Utils.Clone(this.m_cRCL:GripperName);
-            clone.m_cRCL:GripperOption = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_cRCL:GripperOption);
+            clone.m_gripperName = (string)Utils.Clone(this.m_gripperName);
+            clone.m_gripperOption = (CRCL_ParameterSettingDataTypeCollection)Utils.Clone(this.m_gripperOption);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:GripperName;
-        private CRCL_ParameterSettingDataTypeCollection m_cRCL:GripperOption;
+        private string m_gripperName;
+        private CRCL_ParameterSettingDataTypeCollection m_gripperOption;
         #endregion
     }
 
@@ -32264,17 +32264,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:GripperName = null;
+            m_gripperName = null;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:GripperName", IsRequired = false, Order = 1)]
-        public string CRCL:GripperName
+        [DataMember(Name = "GripperName", IsRequired = false, Order = 1)]
+        public string GripperName
         {
-            get { return m_cRCL:GripperName;  }
-            set { m_cRCL:GripperName = value; }
+            get { return m_gripperName;  }
+            set { m_gripperName = value; }
         }
         #endregion
 
@@ -32304,7 +32304,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:GripperName", CRCL:GripperName);
+            encoder.WriteString("GripperName", GripperName);
 
             encoder.PopNamespace();
         }
@@ -32316,7 +32316,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:GripperName = decoder.ReadString("CRCL:GripperName");
+            GripperName = decoder.ReadString("GripperName");
 
             decoder.PopNamespace();
         }
@@ -32337,7 +32337,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:GripperName, value.m_cRCL:GripperName)) return false;
+            if (!Utils.IsEqual(m_gripperName, value.m_gripperName)) return false;
 
             return true;
         }    
@@ -32355,14 +32355,14 @@ namespace CRCL
         {
             DisableGripperParametersSetDataType clone = (DisableGripperParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:GripperName = (string)Utils.Clone(this.m_cRCL:GripperName);
+            clone.m_gripperName = (string)Utils.Clone(this.m_gripperName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:GripperName;
+        private string m_gripperName;
         #endregion
     }
 
@@ -32486,17 +32486,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:RobotParameterName = null;
+            m_robotParameterName = null;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:RobotParameterName", IsRequired = false, Order = 1)]
-        public string CRCL:RobotParameterName
+        [DataMember(Name = "RobotParameterName", IsRequired = false, Order = 1)]
+        public string RobotParameterName
         {
-            get { return m_cRCL:RobotParameterName;  }
-            set { m_cRCL:RobotParameterName = value; }
+            get { return m_robotParameterName;  }
+            set { m_robotParameterName = value; }
         }
         #endregion
 
@@ -32526,7 +32526,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:RobotParameterName", CRCL:RobotParameterName);
+            encoder.WriteString("RobotParameterName", RobotParameterName);
 
             encoder.PopNamespace();
         }
@@ -32538,7 +32538,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:RobotParameterName = decoder.ReadString("CRCL:RobotParameterName");
+            RobotParameterName = decoder.ReadString("RobotParameterName");
 
             decoder.PopNamespace();
         }
@@ -32559,7 +32559,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:RobotParameterName, value.m_cRCL:RobotParameterName)) return false;
+            if (!Utils.IsEqual(m_robotParameterName, value.m_robotParameterName)) return false;
 
             return true;
         }    
@@ -32577,14 +32577,14 @@ namespace CRCL
         {
             EnableRobotParameterStatusParametersSetDataType clone = (EnableRobotParameterStatusParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:RobotParameterName = (string)Utils.Clone(this.m_cRCL:RobotParameterName);
+            clone.m_robotParameterName = (string)Utils.Clone(this.m_robotParameterName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:RobotParameterName;
+        private string m_robotParameterName;
         #endregion
     }
 
@@ -32708,17 +32708,17 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_cRCL:RobotParameterName = null;
+            m_robotParameterName = null;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "CRCL:RobotParameterName", IsRequired = false, Order = 1)]
-        public string CRCL:RobotParameterName
+        [DataMember(Name = "RobotParameterName", IsRequired = false, Order = 1)]
+        public string RobotParameterName
         {
-            get { return m_cRCL:RobotParameterName;  }
-            set { m_cRCL:RobotParameterName = value; }
+            get { return m_robotParameterName;  }
+            set { m_robotParameterName = value; }
         }
         #endregion
 
@@ -32748,7 +32748,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteString("CRCL:RobotParameterName", CRCL:RobotParameterName);
+            encoder.WriteString("RobotParameterName", RobotParameterName);
 
             encoder.PopNamespace();
         }
@@ -32760,7 +32760,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            CRCL:RobotParameterName = decoder.ReadString("CRCL:RobotParameterName");
+            RobotParameterName = decoder.ReadString("RobotParameterName");
 
             decoder.PopNamespace();
         }
@@ -32781,7 +32781,7 @@ namespace CRCL
             }
 
             if (!base.IsEqual(encodeable)) return false;
-            if (!Utils.IsEqual(m_cRCL:RobotParameterName, value.m_cRCL:RobotParameterName)) return false;
+            if (!Utils.IsEqual(m_robotParameterName, value.m_robotParameterName)) return false;
 
             return true;
         }    
@@ -32799,14 +32799,14 @@ namespace CRCL
         {
             DisableRobotParameterStatusParametersSetDataType clone = (DisableRobotParameterStatusParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_cRCL:RobotParameterName = (string)Utils.Clone(this.m_cRCL:RobotParameterName);
+            clone.m_robotParameterName = (string)Utils.Clone(this.m_robotParameterName);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private string m_cRCL:RobotParameterName;
+        private string m_robotParameterName;
         #endregion
     }
 
