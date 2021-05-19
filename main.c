@@ -296,8 +296,8 @@ int main(int argc, char** argv) {
     Robot robot;
 #endif // USE_CPP
 #endif // USE PYTHON
-//    robot.running = &running;
- //   std::thread run(runSkill, &samyRobot, &robot);
+    robot.running = &running;
+    std::thread run(runSkill, &samyRobot, &robot);
 
     //Thread to be able to stop the robot during move commands.
  //   std::thread stop_thread(stopRobot, std::ref(robot));
@@ -320,7 +320,7 @@ int main(int argc, char** argv) {
     }
 
  //   stop_thread.join();
- //   run.join();
+    run.join();
     UA_Server_delete(samyRobot.server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }
