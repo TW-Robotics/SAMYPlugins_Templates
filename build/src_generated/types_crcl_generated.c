@@ -1,5 +1,5 @@
 /* Generated from CRCL.Types.bsd with script /usr/local/share/open62541/tools/generate_datatypes.py
- * on host jbg by user jbg at 2021-05-18 10:39:31 */
+ * on host jbg by user jbg at 2021-05-21 09:48:07 */
 
 #include "types_crcl_generated.h"
 
@@ -1172,7 +1172,7 @@ static UA_DataTypeMember DwellParametersSetDataType_members[2] = {
     UA_TYPENAME("RealTimeParameter") /* .memberName */
 },
 {
-    UA_TYPES_BOOLEAN, /* .memberTypeIndex */
+    UA_TYPES_DOUBLE, /* .memberTypeIndex */
     offsetof(UA_DwellParametersSetDataType, dwellTime) - offsetof(UA_DwellParametersSetDataType, realTimeParameter) - sizeof(UA_Boolean), /* .padding */
     true, /* .namespaceZero */
     false, /* .isArray */

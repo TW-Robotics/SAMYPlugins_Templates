@@ -1,4 +1,4 @@
-/* Generated from CRCL.Types.bsd with script /usr/local/share/open62541/tools/generate_datatypes.py * on host jbg by user jbg at 2021-05-18 10:39:31 */
+/* Generated from CRCL.Types.bsd with script /usr/local/share/open62541/tools/generate_datatypes.py * on host jbg by user jbg at 2021-05-21 09:48:07 */
 
 #ifndef TYPES_CRCL_GENERATED_H_
 #define TYPES_CRCL_GENERATED_H_
@@ -574,7 +574,7 @@ typedef struct {
  * Parameters of a Dwell Command. */
 typedef struct {
     UA_Boolean realTimeParameter;
-    UA_Boolean dwellTime;
+    UA_Double dwellTime;
 } UA_DwellParametersSetDataType;
 
 #define UA_TYPES_CRCL_DWELLPARAMETERSSETDATATYPE 42

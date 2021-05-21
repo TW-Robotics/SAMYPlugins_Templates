@@ -1122,7 +1122,7 @@
   <opc:StructuredType Name="DwellParametersSetDataType" BaseType="tns:CRCLCommandParametersSetDataType">
     <opc:Documentation>Parameters of a Dwell Command.</opc:Documentation>
     <opc:Field Name="RealTimeParameter" TypeName="opc:Boolean" SourceType="tns:CRCLCommandParametersSetDataType" />
-    <opc:Field Name="DwellTime" TypeName="opc:Boolean" />
+    <opc:Field Name="DwellTime" TypeName="opc:Double" />
   </opc:StructuredType>
 
   <opc:StructuredType Name="ActuateJointsParametersSetDataType" BaseType="tns:CRCLCommandParametersSetDataType">

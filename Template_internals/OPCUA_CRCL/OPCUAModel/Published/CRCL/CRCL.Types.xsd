@@ -2352,7 +2352,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:CRCLCommandParametersSetDataType">
         <xs:sequence>
-          <xs:element name="DwellTime" type="xs:boolean" minOccurs="0" />
+          <xs:element name="DwellTime" type="xs:double" minOccurs="0" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

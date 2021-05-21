@@ -285,11 +285,11 @@ int main(int argc, char** argv) {
 
 #ifdef USE_PYTHON
     std::cout << "Conecting to Robot" << std::endl;
- //   Robot robot(path, ipAddress);
- //   if (!robot.initRobot()){
- //       printf("No connection to robot.\nExit programm...\n");
- //       return -1;
- //   }
+    Robot robot(path, ipAddress);
+    if (!robot.initRobot()){
+        printf("No connection to robot.\nExit programm...\n");
+        return -1;
+    }
 #else
 #ifdef USE_CPP
     std::cout << "Conecting to Robot" << std::endl;

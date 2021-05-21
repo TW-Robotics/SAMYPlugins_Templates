@@ -26807,14 +26807,14 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
-            m_dwellTime = true;
+            m_dwellTime = (double)0;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
         [DataMember(Name = "DwellTime", IsRequired = false, Order = 1)]
-        public bool DwellTime
+        public double DwellTime
         {
             get { return m_dwellTime;  }
             set { m_dwellTime = value; }
@@ -26847,7 +26847,7 @@ namespace CRCL
 
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            encoder.WriteBoolean("DwellTime", DwellTime);
+            encoder.WriteDouble("DwellTime", DwellTime);
 
             encoder.PopNamespace();
         }
@@ -26859,7 +26859,7 @@ namespace CRCL
 
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
-            DwellTime = decoder.ReadBoolean("DwellTime");
+            DwellTime = decoder.ReadDouble("DwellTime");
 
             decoder.PopNamespace();
         }
@@ -26898,14 +26898,14 @@ namespace CRCL
         {
             DwellParametersSetDataType clone = (DwellParametersSetDataType)base.MemberwiseClone();
 
-            clone.m_dwellTime = (bool)Utils.Clone(this.m_dwellTime);
+            clone.m_dwellTime = (double)Utils.Clone(this.m_dwellTime);
 
             return clone;
         }
         #endregion
 
         #region Private Fields
-        private bool m_dwellTime;
+        private double m_dwellTime;
         #endregion
     }
 

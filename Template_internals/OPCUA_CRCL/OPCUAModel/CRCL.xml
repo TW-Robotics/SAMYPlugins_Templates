@@ -1671,7 +1671,7 @@
     <Description>Parameters of a Dwell Command.
     </Description>
     <Fields>
-          <Field Name="DwellTime" DataType="ua:Boolean"
+          <Field Name="DwellTime" DataType="ua:Double"
                     ModellingRule="Mandatory" ValueRank="Scalar">
             <Description>DwellTime of a Dwell Command
             </Description>
