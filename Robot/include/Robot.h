@@ -24,7 +24,6 @@ public:
     boost::python::object pythonRobot;
     boost::python::object pythonPlugin;
     UA_Boolean* running;
-
 private:
     std::string address;
     std::string pathToPythonRobot;

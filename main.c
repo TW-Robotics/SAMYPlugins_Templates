@@ -18,6 +18,8 @@
 #include "namespace_crcl_generated.h"
 #include "types_crcl_generated_handling.h"
 
+#include <helpers.h>
+
 //#include <mutex>
 
 const size_t array_size = 9;
@@ -131,6 +133,7 @@ void configureSAMYPluginServer(UA_Server* server, UA_UInt32 port){
 void runSkill(SAMYRobot* samyRobot, Robot* robot){
     while (running == true){
         if (updated_skill == true){
+            SAMY::printCRCLSkill( &samyRobot->requested_skill );
             for (int i=0; i < samyRobot->requested_skill.cRCLCommandsSize; i++){
                 if (running == false) break;
 
