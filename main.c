@@ -48,105 +48,71 @@ void stopRobot(Robot& robot){
     }
 }
 
-UA_StatusCode configureSamyRobot(SAMYRobot* samyRobot, UA_UInt16 id, char* robotName){
-    samyRobot->id = id; /* IT MUST BE A UINT16 number, otherwise it changes the number when compiling due to overflow!!! Compile with pedantic?*/
-    samyRobot->name = UA_STRING(robotName);
-    samyRobot->SAMYRobotVariableNodeId = UA_NODEID_STRING(1, "Robot");
-}
-
-UA_StatusCode addRobotToServer(UA_Server* server, SAMYRobot* samyRobot){
-    UA_SAMYRobotDataType robotOPCUA;
-
-    robotOPCUA.id = samyRobot->id;
-    robotOPCUA.name = samyRobot->name;
-
-    UA_PubSubIPAddresses pubSubAddresses;
-    pubSubAddresses.iPAddress_Skill = UA_STRING("None");
-    pubSubAddresses.iPAddress_Status = UA_STRING("None");
-    robotOPCUA.iPAddresses = pubSubAddresses;
-
-    robotOPCUA.requested_Skill.cRCLCommands = NULL;
-    robotOPCUA.requested_Skill.cRCLCommandsSize = 0;
-    robotOPCUA.requested_Skill.id = 10;
-    robotOPCUA.requested_Skill.name = UA_STRING("skill");
-
-    UA_VariableAttributes vattr = UA_VariableAttributes_default;
-
-    vattr.description = UA_LOCALIZEDTEXT("locale", (char*)samyRobot->name.data);
-    vattr.valueRank = UA_VALUERANK_ANY;
-    vattr.displayName = UA_LOCALIZEDTEXT("locale", (char*)samyRobot->name.data);
-    vattr.dataType = UA_TYPES_CRCL[UA_TYPES_CRCL_SAMYROBOTDATATYPE].typeId;
-    UA_UInt32 myArrayDimensions[1] = {1};
-    vattr.value.arrayDimensions = myArrayDimensions;
-    vattr.value.arrayDimensionsSize = 1;
-    vattr.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
-
-    UA_Variant_setScalar(&vattr.value, &robotOPCUA, &UA_TYPES_CRCL[UA_TYPES_CRCL_SAMYROBOTDATATYPE]);
-
-    UA_StatusCode retVal = UA_Server_addVariableNode(server, samyRobot->SAMYRobotVariableNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT), UA_QUALIFIEDNAME(1, (char*)samyRobot->name.data),
-                                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vattr, NULL, NULL);
-
-    if(retVal == UA_STATUSCODE_GOOD){
-        printf("ROBOT CORRECTLY ADDED TO PLUGIN SERVER\n");
-
-    }else{
-        printf("ERRORR ADDING ROBOT TO PLUGIN SERVER\n");
-    }
-    return retVal;
-}
-
-UA_StatusCode addLastSkill_succeeded_VariableNode(UA_Server* server){
-    UA_Boolean skillFinished = true;
-
-    UA_VariableAttributes vattr = UA_VariableAttributes_default;
-
-    vattr.description = UA_LOCALIZEDTEXT("locale", "lastSkill_succeeded Boolean");
-    vattr.valueRank = UA_VALUERANK_SCALAR;
-    vattr.displayName = UA_LOCALIZEDTEXT("locale", "lastSkill_succeeded Boolean");
-    vattr.dataType = UA_TYPES[UA_TYPES_BOOLEAN].typeId;
-    UA_UInt32 myArrayDimensions[1] = {1};
-    vattr.value.arrayDimensions = myArrayDimensions;
-    vattr.value.arrayDimensionsSize = 1;
-    vattr.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
-
-    UA_Variant_setScalar(&vattr.value, &skillFinished, &UA_TYPES[UA_TYPES_BOOLEAN]);
-
-    UA_StatusCode retVal = UA_Server_addVariableNode(server, UA_NODEID_STRING(1, "lastSkill_succeeded"), UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT), UA_QUALIFIEDNAME(1, "lastSkill_succeeded"),
-                                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vattr, NULL, NULL);
-
-    if(retVal == UA_STATUSCODE_GOOD){
-        printf("lastSkill_succeeded BOOLEAN VARIABLE CORRECTLY ADDED TO PLUGIN SERVER\n");
-
-    }else{
-        printf("ERRORR ADDING lastSkill_succeeded VARIABLE TO PLUGIN SERVER\n");
-    }
-    return retVal;
-}
-
-void configureSAMYPluginServer(UA_Server* server, UA_UInt32 port){
-    UA_ServerConfig *config = UA_Server_getConfig(server);
-    UA_ServerConfig_setMinimal(config, port, NULL);
-}
-
 void runSkill(SAMYRobot* samyRobot, Robot* robot){
     while (running == true){
         if (updated_skill == true){
-            SAMY::printCRCLSkill( &samyRobot->requested_skill );
+            SAMY::HelperFunctions::printCRCLSkill( &samyRobot->requested_skill );
             for (int i=0; i < samyRobot->requested_skill.cRCLCommandsSize; i++){
                 if (running == false) break;
 
         UA_CRCLCommandsUnionDataType* val = &(samyRobot->requested_skill.cRCLCommands[i]);
-        //printf("\n readSAMYRobot, COMMAND NUMBER %i \n", i);
-        //printf("\n readSAMYRobot, switchValue %i \n", val->switchField);
-
                 switch (val->switchField){
                 case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_NONE:
                     {
                         break;
                     }
                 case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENDCANONCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MESSAGECOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
+                    {
+                        UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(val->fields);
+                        printf("C++ found moveto command\n");
+                        executeMoveToCommand(moveTo, robot, &robot_access);
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVESCREWCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETHROUGHTOCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DWELLCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ACTUATEJOINTSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CONFIGUREJOINTREPORTSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETDEFAULTJOINTPOSITIONSTOLERANCESCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_GETSTATUSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CLOSETOOLCHANGERCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_OPENTOOLCHANGERCOMMAND:
                     {
                         break;
                     }
@@ -157,33 +123,7 @@ void runSkill(SAMYRobot* samyRobot, Robot* robot){
                         executeSetRobotParametersCommand(robotParameters, robot);
                         break;
                     }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
-                    {
-                        UA_SetTransSpeedDataType* transSpeed = (UA_SetTransSpeedDataType*)&(val->fields);
-                        printf("C++: found setTransSpeed\n");
-                        executeSetTransSpeedCommand(transSpeed, robot);
-                        break;
-                    }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
-                    {
-                        UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(val->fields);
-                        printf("C++ found moveto command\n");
-                        executeMoveToCommand(moveTo, robot, &robot_access);
-                        break;
-                    }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DWELLCOMMAND:
-                    {
-                        break;
-                    }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_GETSTATUSCOMMAND:
-                    {
-                        break;
-                    }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MESSAGECOMMAND:
-                    {
-                        break;
-                    }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CLOSETOOLCHANGERCOMMAND:
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETENDEFFECTORPARAMETERSCOMMAND:
                     {
                         break;
                     }
@@ -193,7 +133,83 @@ void runSkill(SAMYRobot* samyRobot, Robot* robot){
                         executeSetEndeffectorCommand(setEndEffector, robot);
                         break;
                     }
-                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENDCANONCOMMAND:
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSACCELCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
+                    {
+                        UA_SetTransSpeedDataType* transSpeed = (UA_SetTransSpeedDataType*)&(val->fields);
+                        printf("C++: found setTransSpeed\n");
+                        executeSetTransSpeedCommand(transSpeed, robot);
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROTACCELCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROTSPEEDCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETANGLEUNITSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETENDPOSETOLERANCECOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETFORCEUNITSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETINTERMEDIATEPOSETOLERANCECOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETLENGTHUNITSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETMOTIONCOORDINATIONCOMMAND:
+                    {
+                        break;
+                    }
+
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTORQUEUNITSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_STOPMOTIONCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CONFIGURESTATUSREPORTCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENABLESENSORCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DISABLESENSORCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENABLEGRIPPERCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DISABLEGRIPPERCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENABLEROBOTPARAMETERSTATUSCOMMAND:
+                    {
+                        break;
+                    }
+                case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DISABLEROBOTPARAMETERSTATUSCOMMAND:
                     {
                         break;
                     }
@@ -216,8 +232,6 @@ void runSkill(SAMYRobot* samyRobot, Robot* robot){
 }
 
 void executeSkill(){
-    //printf("C++ execute Skill start\n");
-
     updated_skill = true;
 }
 
@@ -240,7 +254,6 @@ updateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
     UA_CRCLSkillDataType_copy(&(opcuaRobot->requested_Skill),
         &(samyRobot->requested_skill));
 
-        printf("\n\n START EXECUTION if  SKILL\n\n");
         executeSkill();
     }
 }
@@ -262,7 +275,6 @@ monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot) {
     printf("Monitor lastSkillSucceededVariable added\n");
 }
 
-
 int main(int argc, char** argv) {
 
     signal(SIGINT, stopHandler);
@@ -270,10 +282,10 @@ int main(int argc, char** argv) {
     printf("C++: Starting Plugin\n");
 
     SAMYRobot samyRobot;
-    configureSamyRobot(&samyRobot, 1, "Robot");
+    SAMY::HelperFunctions::configureSamyRobot(&samyRobot, 1, "Robot");
 
     samyRobot.server = UA_Server_new();
-    configureSAMYPluginServer(samyRobot.server, 4840);
+    SAMY::HelperFunctions::configureSAMYPluginServer(samyRobot.server, 4840);
 
     // create Python/C++/C robot TODO
     std::string path; // Path to Python Code
@@ -315,8 +327,8 @@ int main(int argc, char** argv) {
         retval = UA_STATUSCODE_BADUNEXPECTEDERROR;
     } else {/*If custom namespace succesfully added*/
 
-        addRobotToServer(samyRobot.server, &samyRobot);
-        addLastSkill_succeeded_VariableNode(samyRobot.server);
+        SAMY::HelperFunctions::addRobotToServer(samyRobot.server, &samyRobot);
+        SAMY::HelperFunctions::addLastSkill_succeeded_VariableNode(samyRobot.server);
 
         monitorLastSkill_Succeeded_Variable(samyRobot.server, &samyRobot);
 

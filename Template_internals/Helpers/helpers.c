@@ -1,6 +1,89 @@
 #include <helpers.h>
 
 namespace SAMY {
+namespace HelperFunctions {
+
+UA_StatusCode configureSamyRobot(SAMYRobot* samyRobot, UA_UInt16 id, char* robotName){
+    samyRobot->id = id; /* IT MUST BE A UINT16 number, otherwise it changes the number when compiling due to overflow!!! Compile with pedantic?*/
+    samyRobot->name = UA_STRING(robotName);
+    samyRobot->SAMYRobotVariableNodeId = UA_NODEID_STRING(1, "Robot");
+}
+
+UA_StatusCode addRobotToServer(UA_Server* server, SAMYRobot* samyRobot){
+    UA_SAMYRobotDataType robotOPCUA;
+
+    robotOPCUA.id = samyRobot->id;
+    robotOPCUA.name = samyRobot->name;
+
+    UA_PubSubIPAddresses pubSubAddresses;
+    pubSubAddresses.iPAddress_Skill = UA_STRING("None");
+    pubSubAddresses.iPAddress_Status = UA_STRING("None");
+    robotOPCUA.iPAddresses = pubSubAddresses;
+
+    robotOPCUA.requested_Skill.cRCLCommands = NULL;
+    robotOPCUA.requested_Skill.cRCLCommandsSize = 0;
+    robotOPCUA.requested_Skill.id = 10;
+    robotOPCUA.requested_Skill.name = UA_STRING("skill");
+
+    UA_VariableAttributes vattr = UA_VariableAttributes_default;
+
+    vattr.description = UA_LOCALIZEDTEXT("locale", (char*)samyRobot->name.data);
+    vattr.valueRank = UA_VALUERANK_ANY;
+    vattr.displayName = UA_LOCALIZEDTEXT("locale", (char*)samyRobot->name.data);
+    vattr.dataType = UA_TYPES_CRCL[UA_TYPES_CRCL_SAMYROBOTDATATYPE].typeId;
+    UA_UInt32 myArrayDimensions[1] = {1};
+    vattr.value.arrayDimensions = myArrayDimensions;
+    vattr.value.arrayDimensionsSize = 1;
+    vattr.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
+
+    UA_Variant_setScalar(&vattr.value, &robotOPCUA, &UA_TYPES_CRCL[UA_TYPES_CRCL_SAMYROBOTDATATYPE]);
+
+    UA_StatusCode retVal = UA_Server_addVariableNode(server, samyRobot->SAMYRobotVariableNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT), UA_QUALIFIEDNAME(1, (char*)samyRobot->name.data),
+                                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vattr, NULL, NULL);
+
+    if(retVal == UA_STATUSCODE_GOOD){
+        printf("ROBOT CORRECTLY ADDED TO PLUGIN SERVER\n");
+
+    }else{
+        printf("ERRORR ADDING ROBOT TO PLUGIN SERVER\n");
+    }
+    return retVal;
+}
+
+void configureSAMYPluginServer(UA_Server* server, UA_UInt32 port){
+    UA_ServerConfig *config = UA_Server_getConfig(server);
+    UA_ServerConfig_setMinimal(config, port, NULL);
+}
+
+UA_StatusCode addLastSkill_succeeded_VariableNode(UA_Server* server){
+    UA_Boolean skillFinished = true;
+
+    UA_VariableAttributes vattr = UA_VariableAttributes_default;
+
+    vattr.description = UA_LOCALIZEDTEXT("locale", "lastSkill_succeeded Boolean");
+    vattr.valueRank = UA_VALUERANK_SCALAR;
+    vattr.displayName = UA_LOCALIZEDTEXT("locale", "lastSkill_succeeded Boolean");
+    vattr.dataType = UA_TYPES[UA_TYPES_BOOLEAN].typeId;
+    UA_UInt32 myArrayDimensions[1] = {1};
+    vattr.value.arrayDimensions = myArrayDimensions;
+    vattr.value.arrayDimensionsSize = 1;
+    vattr.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
+
+    UA_Variant_setScalar(&vattr.value, &skillFinished, &UA_TYPES[UA_TYPES_BOOLEAN]);
+
+    UA_StatusCode retVal = UA_Server_addVariableNode(server, UA_NODEID_STRING(1, "lastSkill_succeeded"), UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT), UA_QUALIFIEDNAME(1, "lastSkill_succeeded"),
+                                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vattr, NULL, NULL);
+
+    if(retVal == UA_STATUSCODE_GOOD){
+        printf("lastSkill_succeeded BOOLEAN VARIABLE CORRECTLY ADDED TO PLUGIN SERVER\n");
+
+    }else{
+        printf("ERRORR ADDING lastSkill_succeeded VARIABLE TO PLUGIN SERVER\n");
+    }
+    return retVal;
+}
 
 void printCRCLSkill( const UA_CRCLSkillDataType* skill){
     std::cout << "Number of commands in Skill: " << skill->cRCLCommandsSize << std::endl;
@@ -407,4 +490,5 @@ void printCRCLSkill( const UA_CRCLSkillDataType* skill){
     std::cout<< "\t}" << std::endl;
 }
 
-}
+} /* namespace HelperFunctions */
+} /* namespace SAMY */
