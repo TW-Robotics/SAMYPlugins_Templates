@@ -5,6 +5,9 @@ rm -r ../model
 echo "Creating new ../model folder"
 mkdir ../model
 
+echo "Removing administrator rights requeriments"
+chmod -R 777 ..
+
 echo "Copying the new compilated OPC UA model into ../model folder"
 cp -R ./Published/CRCL ../model/Published
 cp  ./CRCL.xml ../model

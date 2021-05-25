@@ -45,9 +45,10 @@ endif()
 
 if(ROBOT_CODE_PYTHON)
     add_compile_definitions(USE_PYTHON)
-    find_package(Python 3 COMPONENTS Interpreter Development REQUIRED) #3.8.2
+  #  find_package(Python 3 COMPONENTS Interpreter Development REQUIRED) #3.8.2
+    find_package(PythonLibs )
     find_package(Boost COMPONENTS python REQUIRED)
-    include_directories("${Python_INCLUDE_DIRS}")
+    include_directories("${PYTHON_INCLUDE_DIR}")
     include_directories("${Boost_INCLUDE_DIRS}")
     include_directories("/usr/include/boost")
 endif()
@@ -67,10 +68,11 @@ include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/include
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/include/open62541/plugin")
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/plugins/")
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/Communication/include")
+include_directories("${PROJECT_SOURCE_DIR}/Template_internals/Helpers/include")
 include_directories("${PROJECT_SOURCE_DIR}/Robot/include")
 
 # The generated files are: "namespace_${NAMESPACE_NAME}_... .c/.h"
-set(NAMESPACE_NAME "crcl")
+set(NAMESPACE_NAME_CRCL "crcl")
 # The compiled namespace is: "${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME}"
 set(NAMESPACE_PREFIX "pref")
 #add_subdirectory("${PROJECT_SOURCE_DIR}/OPCUA_CRCL")
@@ -78,7 +80,7 @@ set(NAMESPACE_PREFIX "pref")
 
 ua_generate_nodeset_and_datatypes(
         INTERNAL
-        NAME "${NAMESPACE_NAME}"
+        NAME "${NAMESPACE_NAME_CRCL}"
         FILE_NS "${CMAKE_CURRENT_LIST_DIR}/Template_internals/OPCUA_CRCL/model/Published/CRCL.NodeSet2.xml"
         TARGET_PREFIX "${NAMESPACE_PREFIX}"
         FILE_CSV "${CMAKE_CURRENT_LIST_DIR}/Template_internals/OPCUA_CRCL/model/Published/CRCL.csv"
@@ -88,29 +90,28 @@ ua_generate_nodeset_and_datatypes(
         NAMESPACE_MAP 2:https://crcl.org
 )
 
-
 add_executable(${PROJECT_NAME}
-                "${UA_NODESET_CRCL_SOURCES}"
-                "${UA_TYPES_CRCL_SOURCES}"
+                ${UA_NODESET_CRCL_SOURCES}
+                ${UA_TYPES_CRCL_SOURCES}
 		"./Template_internals/Communication/Publisher.c" 
 		"./Template_internals/Communication/Subscriber.c" 
 		"./Template_internals/Communication/SAMYRobot.c"
 		"./Robot/Robot.c"
 		"./SAMYPlugin_Template.c"
+                "./Template_internals/Helpers/helpers.c"
 		"main.c"
 		)
 
-
 # Make sure the nodeset compiler is execute before compiling the main file
 add_dependencies(${PROJECT_NAME}
-                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME}
+                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
                  )
 
 target_link_libraries(${PROJECT_NAME} open62541::open62541)
 
 if( ROBOT_CODE_PYTHON )
-	target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES} ${Python_LIBRARIES} )
+        target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES} ${PYTHON_LIBRARY} )
 endif()
 
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${Python_LIBRARIES})
+target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES})
 

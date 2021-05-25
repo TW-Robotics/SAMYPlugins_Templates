@@ -1,4 +1,5 @@
-﻿#include <open62541/plugin/log_stdout.h>
+﻿
+#include <open62541/plugin/log_stdout.h>
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 /* Files namespace_foo_flt_generated.h and namespace_foo_flt_generated.c are created from FooFlt.NodeSet2.xml in the
@@ -324,4 +325,3 @@ int main(int argc, char** argv) {
     UA_Server_delete(samyRobot.server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }
-
