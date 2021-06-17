@@ -219,7 +219,8 @@ void runSkill(SAMYRobot* samyRobot, Robot* robot){
                     }
                 }
             }
-        updated_skill = false;
+
+            updated_skill = false;
             UA_Boolean reset = true;
             UA_Variant var;
             UA_Variant_init(&var);
@@ -259,7 +260,7 @@ updateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
 }
 
 static void
-monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot) {
+monitorLastSkill_Succeeded_Variable(UA_Server *server, SAMYRobot* samyRobot){
 
     UA_MonitoredItemCreateRequest requestMon;
     UA_MonitoredItemCreateRequest_init(&requestMon);
@@ -300,7 +301,7 @@ int main(int argc, char** argv) {
     }
 
 #ifdef USE_PYTHON
-    std::cout << "Conecting to Robot" << std::endl;
+    std::cout << "Connecting to Robot" << std::endl;
     Robot robot(path, ipAddress);
     if (!robot.initRobot()){
         printf("No connection to robot.\nExit programm...\n");
