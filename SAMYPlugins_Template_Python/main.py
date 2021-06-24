@@ -2,7 +2,6 @@ import sys
 import time
 from IPython import embed
 
-from samyrobot import SAMYRobot
 from CRCL_DataTypes import *
 
 from opcua.common.xmlexporter import XmlExporter
@@ -118,6 +117,11 @@ class Plugin():
 
 if __name__ == "__main__":
 
+    if len(sys.argv) < 4:
+        print("To few arguments:")
+        print("\"address of SAMYCore\" \"port of SAMYCore\" \"address of robot\"")
+        sys.exit(1)
+    address = sys.argv[1]
     #robot = plugin.create_robot_object("172.17.0.3")
     plugin = Plugin()#(robot)
 
