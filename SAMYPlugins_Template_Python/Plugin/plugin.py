@@ -155,7 +155,7 @@ class Plugin():
     def subscribe_to_core(self, node_id_):
         try:
             # Connect to nextSkillNodeId Node
-            next_skill_node_id_node = self.opcua_core_client.get_node(ua.NodeId(node_id_, 8))
+            next_skill_node_id_node = self.opcua_core_client.get_node(ua.NodeId(int(node_id_), 8))
             # Getting the root node is not stricly neccessary but recomended
             root = self.opcua_core_client.get_root_node()
             # Subscribe to next_skill_node_id_node
