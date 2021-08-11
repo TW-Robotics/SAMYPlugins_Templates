@@ -2,6 +2,7 @@ import sys
 import time
 from IPython import embed
 import threading
+import logging
 
 from CRCL_DataTypes import *
 
@@ -21,10 +22,17 @@ from pprint import pprint
 class ErrorHandler(pub.IListenerExcHandler):
     def __call__(self, listenerID, topicObj):
         print(listenerID)
+        print(topicObj)
         pub.sendMessage("command_error")
 
 class Plugin():
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        log_handler = logging.StreamHandler()
+        log_handler.setFormatter(logging.Formatter("%(levelname)s %(filename)s - %(message)s"))
+        self.logger.addHandler(log_handler)
+
         self.idx = None
         self.robot_node = None
         self.thread = None
@@ -38,7 +46,7 @@ class Plugin():
         self.reset_method_id = None
         self.log_file = open("message_log.txt", "w")
         self.crcl_command_dict = None
-        pub.setListenerExcHandler(ErrorHandler())
+        #pub.setListenerExcHandler(ErrorHandler())
         self.log_all_messages()
         self.create_subscribers()
         #self.get_list_of_datatypes()
@@ -50,13 +58,12 @@ class Plugin():
         #print("Python: New data change event:", node, val)
         # Start a thread for each skill that gets executed
         # Get node of the skill
-        print(val)
         self.my_skill_node = self.opcua_core_client.get_node(val)
         self.thread = threading.Thread(target=self.command_thread, args=())
         self.thread.start()
 
     def event_notification(self, event):
-        print("Python: New event", event)
+        self.logger.info("Python: New event", event)
 
 ######################### OPCUA CLIENT SECTION END #############################
 
@@ -67,7 +74,7 @@ class Plugin():
             return int(elem[0][:1])
 
     def command_thread(self):
-        print("Command Thread started\n")
+        self.logger.info("Command Thread started\n")
         # Get the node id for each method of the skill
         my_skill_method_node_ids = self.my_skill_node.get_methods()
         # Connect methodes of skill to the signals of the plugin
@@ -90,22 +97,23 @@ class Plugin():
         for i in range(len(parameter_nodes_sorted)):
             val = parameter_nodes_sorted[i][1].get_value()
             topic = self.crcl_command_dict[type(val)]
-            print(topic)
+            self.logger.info(topic)
             pub.sendMessage(topic, data=val)
+        pub.sendMessage("command_reset")
 
     def connect_to_core(self, address_, port_):
         # Connect to SAMYCore opcua server
         while True:
             try:
                 # Create opcua client connection with SAMYCore
-                print("Connecting to SAMYCore")
+                self.logger.info("Connecting to SAMYCore")
                 address = ("opc.tcp://{}:{}").format(address_, port_)
                 self.opcua_core_client = Client(address)
                 self.opcua_core_client.connect()
-                print("Connected to SAMYCore")
+                self.logger.info("Connected to SAMYCore")
                 break
             except:
-                print("Connection with SAMYCore failed!!!!!\n Retry in 3 seconds....")
+                self.logger.info("Connection with SAMYCore failed!!!!!\n Retry in 3 seconds....")
                 time.sleep(3)
         # Get information about all nodes of SAMYCore opcua server
         self.opcua_core_client.load_type_definitions()
@@ -149,7 +157,7 @@ class Plugin():
         }
 
     def disconnect_core(self):
-        print("Stopping plugin")
+        self.logger.info("Stopping plugin")
         self.opcua_core_client.disconnect()
 
     def subscribe_to_core(self, node_id_):
@@ -163,30 +171,27 @@ class Plugin():
             handle = sub.subscribe_data_change(next_skill_node_id_node)
             embed()
         finally:
-            print("Subscription closed")
+            self.logger.info("Subscription closed")
             #self.opcua_core_client.disconnect()
 
-    def get_list_of_datatypes(self):
-        clsmembers = inspect.getmembers(sys.modules["CRCL_DataTypes"], inspect.isclass)
-        print(clsmembers)
 
     def send_command_reset(self):
-        print("Command is finished")
+        self.logger.info("Command is finished")
         # Call methode finished in oocua server
         self.my_skill_node.call_method(self.reset_method_id)
 
     def send_command_halt(self):
-        print("Command is on hold")
+        self.logger.info("Command is on hold")
         # Call methode halt in opcua server
         self.my_skill_node.call_method(self.halt_method_id)
 
     def send_command_error(self):
-        print("Command faild to execute")
+        self.logger.info("Command faild to execute")
         # Call methode error in opcua
         #self.my_skill_node.call_method(self.)
 
     def send_command_suspend(self):
-        print("Command suspended")
+        self.logger.info("Command suspended")
         # Call methode error in opcua
         self.my_skill_node.call_method(self.suspend_method_id)
 
