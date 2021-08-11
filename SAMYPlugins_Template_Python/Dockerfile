@@ -25,4 +25,4 @@ EXPOSE 4840
 
 #ENTRYPOINT ["tail"]
 #CMD ["-f","/dev/null"]
-CMD python3 /usr/src/samy/main.py ${IP_ADDRESS}
+CMD python3 /usr/src/samy/main.py core
