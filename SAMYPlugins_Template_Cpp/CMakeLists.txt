@@ -13,7 +13,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
-project(SAMYPlugIn_Base VERSION 0.1 LANGUAGES CXX C)
+project(SAMYPlugin_Template_Cpp VERSION 0.1 LANGUAGES CXX C)
 
 set(CPP_COMPILATION "Force compilation with a C++ compiler. By default C++98. If you want to use another standard, set the variable CPP_STANDARD" ON)
 #cmake_dependent_option(SET_CPP_STANDARD "Allows setting a specific CPP standard. Default standard is C++98" OFF "CPP_COMPILATION" OFF)
@@ -21,20 +21,22 @@ set(CPP_STANDARD "98" CACHE STRING "98")
 set(CPP_EXTENSIONS "Uses compiler-specific extensions to the CPP standard" OFF)
 
 if(CPP_COMPILATION)
-	message(STATUS "C++ Compiler set.")
+        message(STATUS "C++ Compiler set.")
         add_compile_definitions(USE_CPP)
-  set(CPP_STANDARD 11)
-	enable_language(CXX)
-	SET(CMAKE_CXX_STANDARD ${CPP_STANDARD})
-	SET(CMAKE_CXX_FLAGS "-Wno-write-strings")
-	FILE(GLOB_RECURSE CFILES "${CMAKE_SOURCE_DIR}/*.c")
-	SET_SOURCE_FILES_PROPERTIES(${CFILES} PROPERTIES LANGUAGE CXX )
-	set(CMAKE_CXX_EXTENSIONS OFF)
-	if(CPP_EXTENSIONS)
-		set(CMAKE_CXX_EXTENSIONS ON)
-	endif()
+        set(CPP_STANDARD 11)
+        enable_language(CXX)
+        find_package(Boost COMPONENTS)
+        include_directories("${Boost_INCLUDE_DIRS}")
+        SET(CMAKE_CXX_STANDARD ${CPP_STANDARD})
+        SET(CMAKE_CXX_FLAGS "-Wno-write-strings")
+        FILE(GLOB_RECURSE CFILES "${CMAKE_SOURCE_DIR}/*.c")
+        SET_SOURCE_FILES_PROPERTIES(${CFILES} PROPERTIES LANGUAGE CXX )
+        set(CMAKE_CXX_EXTENSIONS OFF)
+        if(CPP_EXTENSIONS)
+                set(CMAKE_CXX_EXTENSIONS ON)
+        endif()
 else()
-	SET(CMAKE_C_FLAGS "-Wno-write-strings")
+        SET(CMAKE_C_FLAGS "-Wno-write-strings")
 endif()
 
 # open62541 v1.2 must be installed!
@@ -54,6 +56,7 @@ include_directories("${PROJECT_SOURCE_DIR}/Template_internals/OPCUA_CRCL/plugins
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/Communication/include")
 include_directories("${PROJECT_SOURCE_DIR}/Template_internals/Helpers/include")
 include_directories("${PROJECT_SOURCE_DIR}/Robot/include")
+include_directories("${PROJECT_SOURCE_DIR}/Plugin/include")
 
 # The generated files are: "namespace_${NAMESPACE_NAME}_... .c/.h"
 set(NAMESPACE_NAME_CRCL "crcl")
@@ -76,18 +79,18 @@ ua_generate_nodeset_and_datatypes(
 add_executable(${PROJECT_NAME}
                 ${UA_NODESET_CRCL_SOURCES}
                 ${UA_TYPES_CRCL_SOURCES}
-		"./Template_internals/Communication/Publisher.c"
-		"./Template_internals/Communication/Subscriber.c"
-		"./Template_internals/Communication/SAMYRobot.c"
-		"./Robot/Robot.c"
-		"./SAMYPlugin_Template.c"
-    "./Template_internals/Helpers/helpers.c"
-		"main.c"
-		)
+                #"./Template_internals/Communication/publisher.c"
+                #"./Template_internals/Communication/subscriber.c"
+                "./Template_internals/Communication/samy_robot.c"
+                "./Robot/robot.cpp"
+                "./Plugin/plugin.cpp"
+                "./Template_internals/Helpers/helpers.cpp"
+                "main.cpp"
+                )
 
 # Make sure the nodeset compiler is execute before compiling the main file
 add_dependencies(${PROJECT_NAME}
                  ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
                  )
 
-target_link_libraries(${PROJECT_NAME} open62541::open62541)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} open62541::open62541)

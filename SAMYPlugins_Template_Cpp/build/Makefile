@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named SAMYPlugIn_Base
+# Target rules for targets named SAMYPlugin_Template_Cpp
 
 # Build rule for target.
-SAMYPlugIn_Base: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 SAMYPlugIn_Base
-.PHONY : SAMYPlugIn_Base
+SAMYPlugin_Template_Cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 SAMYPlugin_Template_Cpp
+.PHONY : SAMYPlugin_Template_Cpp
 
 # fast build rule for target.
-SAMYPlugIn_Base/fast:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/build
-.PHONY : SAMYPlugIn_Base/fast
+SAMYPlugin_Template_Cpp/fast:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/build
+.PHONY : SAMYPlugin_Template_Cpp/fast
 
 #=============================================================================
 # Target rules for targets named pref-ns-crcl
@@ -162,194 +162,140 @@ pref-types-crcl/fast:
 	$(MAKE) -f CMakeFiles/pref-types-crcl.dir/build.make CMakeFiles/pref-types-crcl.dir/build
 .PHONY : pref-types-crcl/fast
 
-Robot/Robot.o: Robot/Robot.c.o
+Plugin/plugin.o: Plugin/plugin.cpp.o
 
-.PHONY : Robot/Robot.o
-
-# target to build an object file
-Robot/Robot.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Robot/Robot.c.o
-.PHONY : Robot/Robot.c.o
-
-Robot/Robot.i: Robot/Robot.c.i
-
-.PHONY : Robot/Robot.i
-
-# target to preprocess a source file
-Robot/Robot.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Robot/Robot.c.i
-.PHONY : Robot/Robot.c.i
-
-Robot/Robot.s: Robot/Robot.c.s
-
-.PHONY : Robot/Robot.s
-
-# target to generate assembly for a file
-Robot/Robot.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Robot/Robot.c.s
-.PHONY : Robot/Robot.c.s
-
-SAMYPlugin_Template.o: SAMYPlugin_Template.c.o
-
-.PHONY : SAMYPlugin_Template.o
+.PHONY : Plugin/plugin.o
 
 # target to build an object file
-SAMYPlugin_Template.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/SAMYPlugin_Template.c.o
-.PHONY : SAMYPlugin_Template.c.o
+Plugin/plugin.cpp.o:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Plugin/plugin.cpp.o
+.PHONY : Plugin/plugin.cpp.o
 
-SAMYPlugin_Template.i: SAMYPlugin_Template.c.i
+Plugin/plugin.i: Plugin/plugin.cpp.i
 
-.PHONY : SAMYPlugin_Template.i
+.PHONY : Plugin/plugin.i
 
 # target to preprocess a source file
-SAMYPlugin_Template.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/SAMYPlugin_Template.c.i
-.PHONY : SAMYPlugin_Template.c.i
+Plugin/plugin.cpp.i:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Plugin/plugin.cpp.i
+.PHONY : Plugin/plugin.cpp.i
 
-SAMYPlugin_Template.s: SAMYPlugin_Template.c.s
+Plugin/plugin.s: Plugin/plugin.cpp.s
 
-.PHONY : SAMYPlugin_Template.s
+.PHONY : Plugin/plugin.s
 
 # target to generate assembly for a file
-SAMYPlugin_Template.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/SAMYPlugin_Template.c.s
-.PHONY : SAMYPlugin_Template.c.s
+Plugin/plugin.cpp.s:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Plugin/plugin.cpp.s
+.PHONY : Plugin/plugin.cpp.s
 
-Template_internals/Communication/Publisher.o: Template_internals/Communication/Publisher.c.o
+Robot/robot.o: Robot/robot.cpp.o
 
-.PHONY : Template_internals/Communication/Publisher.o
+.PHONY : Robot/robot.o
 
 # target to build an object file
-Template_internals/Communication/Publisher.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/Publisher.c.o
-.PHONY : Template_internals/Communication/Publisher.c.o
+Robot/robot.cpp.o:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Robot/robot.cpp.o
+.PHONY : Robot/robot.cpp.o
 
-Template_internals/Communication/Publisher.i: Template_internals/Communication/Publisher.c.i
+Robot/robot.i: Robot/robot.cpp.i
 
-.PHONY : Template_internals/Communication/Publisher.i
+.PHONY : Robot/robot.i
 
 # target to preprocess a source file
-Template_internals/Communication/Publisher.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/Publisher.c.i
-.PHONY : Template_internals/Communication/Publisher.c.i
+Robot/robot.cpp.i:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Robot/robot.cpp.i
+.PHONY : Robot/robot.cpp.i
 
-Template_internals/Communication/Publisher.s: Template_internals/Communication/Publisher.c.s
+Robot/robot.s: Robot/robot.cpp.s
 
-.PHONY : Template_internals/Communication/Publisher.s
+.PHONY : Robot/robot.s
 
 # target to generate assembly for a file
-Template_internals/Communication/Publisher.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/Publisher.c.s
-.PHONY : Template_internals/Communication/Publisher.c.s
+Robot/robot.cpp.s:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Robot/robot.cpp.s
+.PHONY : Robot/robot.cpp.s
 
-Template_internals/Communication/SAMYRobot.o: Template_internals/Communication/SAMYRobot.c.o
+Template_internals/Communication/samy_robot.o: Template_internals/Communication/samy_robot.c.o
 
-.PHONY : Template_internals/Communication/SAMYRobot.o
+.PHONY : Template_internals/Communication/samy_robot.o
 
 # target to build an object file
-Template_internals/Communication/SAMYRobot.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/SAMYRobot.c.o
-.PHONY : Template_internals/Communication/SAMYRobot.c.o
+Template_internals/Communication/samy_robot.c.o:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Template_internals/Communication/samy_robot.c.o
+.PHONY : Template_internals/Communication/samy_robot.c.o
 
-Template_internals/Communication/SAMYRobot.i: Template_internals/Communication/SAMYRobot.c.i
+Template_internals/Communication/samy_robot.i: Template_internals/Communication/samy_robot.c.i
 
-.PHONY : Template_internals/Communication/SAMYRobot.i
-
-# target to preprocess a source file
-Template_internals/Communication/SAMYRobot.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/SAMYRobot.c.i
-.PHONY : Template_internals/Communication/SAMYRobot.c.i
-
-Template_internals/Communication/SAMYRobot.s: Template_internals/Communication/SAMYRobot.c.s
-
-.PHONY : Template_internals/Communication/SAMYRobot.s
-
-# target to generate assembly for a file
-Template_internals/Communication/SAMYRobot.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/SAMYRobot.c.s
-.PHONY : Template_internals/Communication/SAMYRobot.c.s
-
-Template_internals/Communication/Subscriber.o: Template_internals/Communication/Subscriber.c.o
-
-.PHONY : Template_internals/Communication/Subscriber.o
-
-# target to build an object file
-Template_internals/Communication/Subscriber.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/Subscriber.c.o
-.PHONY : Template_internals/Communication/Subscriber.c.o
-
-Template_internals/Communication/Subscriber.i: Template_internals/Communication/Subscriber.c.i
-
-.PHONY : Template_internals/Communication/Subscriber.i
+.PHONY : Template_internals/Communication/samy_robot.i
 
 # target to preprocess a source file
-Template_internals/Communication/Subscriber.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/Subscriber.c.i
-.PHONY : Template_internals/Communication/Subscriber.c.i
+Template_internals/Communication/samy_robot.c.i:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Template_internals/Communication/samy_robot.c.i
+.PHONY : Template_internals/Communication/samy_robot.c.i
 
-Template_internals/Communication/Subscriber.s: Template_internals/Communication/Subscriber.c.s
+Template_internals/Communication/samy_robot.s: Template_internals/Communication/samy_robot.c.s
 
-.PHONY : Template_internals/Communication/Subscriber.s
+.PHONY : Template_internals/Communication/samy_robot.s
 
 # target to generate assembly for a file
-Template_internals/Communication/Subscriber.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Communication/Subscriber.c.s
-.PHONY : Template_internals/Communication/Subscriber.c.s
+Template_internals/Communication/samy_robot.c.s:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Template_internals/Communication/samy_robot.c.s
+.PHONY : Template_internals/Communication/samy_robot.c.s
 
-Template_internals/Helpers/helpers.o: Template_internals/Helpers/helpers.c.o
+Template_internals/Helpers/helpers.o: Template_internals/Helpers/helpers.cpp.o
 
 .PHONY : Template_internals/Helpers/helpers.o
 
 # target to build an object file
-Template_internals/Helpers/helpers.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Helpers/helpers.c.o
-.PHONY : Template_internals/Helpers/helpers.c.o
+Template_internals/Helpers/helpers.cpp.o:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Template_internals/Helpers/helpers.cpp.o
+.PHONY : Template_internals/Helpers/helpers.cpp.o
 
-Template_internals/Helpers/helpers.i: Template_internals/Helpers/helpers.c.i
+Template_internals/Helpers/helpers.i: Template_internals/Helpers/helpers.cpp.i
 
 .PHONY : Template_internals/Helpers/helpers.i
 
 # target to preprocess a source file
-Template_internals/Helpers/helpers.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Helpers/helpers.c.i
-.PHONY : Template_internals/Helpers/helpers.c.i
+Template_internals/Helpers/helpers.cpp.i:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Template_internals/Helpers/helpers.cpp.i
+.PHONY : Template_internals/Helpers/helpers.cpp.i
 
-Template_internals/Helpers/helpers.s: Template_internals/Helpers/helpers.c.s
+Template_internals/Helpers/helpers.s: Template_internals/Helpers/helpers.cpp.s
 
 .PHONY : Template_internals/Helpers/helpers.s
 
 # target to generate assembly for a file
-Template_internals/Helpers/helpers.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/Template_internals/Helpers/helpers.c.s
-.PHONY : Template_internals/Helpers/helpers.c.s
+Template_internals/Helpers/helpers.cpp.s:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/Template_internals/Helpers/helpers.cpp.s
+.PHONY : Template_internals/Helpers/helpers.cpp.s
 
-main.o: main.c.o
+main.o: main.cpp.o
 
 .PHONY : main.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/main.c.o
-.PHONY : main.c.o
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-main.i: main.c.i
+main.i: main.cpp.i
 
 .PHONY : main.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/main.c.i
-.PHONY : main.c.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-main.s: main.c.s
+main.s: main.cpp.s
 
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/main.c.s
-.PHONY : main.c.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 src_generated/namespace_crcl_generated.o: src_generated/namespace_crcl_generated.c.o
 
@@ -357,7 +303,7 @@ src_generated/namespace_crcl_generated.o: src_generated/namespace_crcl_generated
 
 # target to build an object file
 src_generated/namespace_crcl_generated.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/src_generated/namespace_crcl_generated.c.o
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/namespace_crcl_generated.c.o
 .PHONY : src_generated/namespace_crcl_generated.c.o
 
 src_generated/namespace_crcl_generated.i: src_generated/namespace_crcl_generated.c.i
@@ -366,7 +312,7 @@ src_generated/namespace_crcl_generated.i: src_generated/namespace_crcl_generated
 
 # target to preprocess a source file
 src_generated/namespace_crcl_generated.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/src_generated/namespace_crcl_generated.c.i
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/namespace_crcl_generated.c.i
 .PHONY : src_generated/namespace_crcl_generated.c.i
 
 src_generated/namespace_crcl_generated.s: src_generated/namespace_crcl_generated.c.s
@@ -375,7 +321,7 @@ src_generated/namespace_crcl_generated.s: src_generated/namespace_crcl_generated
 
 # target to generate assembly for a file
 src_generated/namespace_crcl_generated.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/src_generated/namespace_crcl_generated.c.s
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/namespace_crcl_generated.c.s
 .PHONY : src_generated/namespace_crcl_generated.c.s
 
 src_generated/types_crcl_generated.o: src_generated/types_crcl_generated.c.o
@@ -384,7 +330,7 @@ src_generated/types_crcl_generated.o: src_generated/types_crcl_generated.c.o
 
 # target to build an object file
 src_generated/types_crcl_generated.c.o:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/src_generated/types_crcl_generated.c.o
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/types_crcl_generated.c.o
 .PHONY : src_generated/types_crcl_generated.c.o
 
 src_generated/types_crcl_generated.i: src_generated/types_crcl_generated.c.i
@@ -393,7 +339,7 @@ src_generated/types_crcl_generated.i: src_generated/types_crcl_generated.c.i
 
 # target to preprocess a source file
 src_generated/types_crcl_generated.c.i:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/src_generated/types_crcl_generated.c.i
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/types_crcl_generated.c.i
 .PHONY : src_generated/types_crcl_generated.c.i
 
 src_generated/types_crcl_generated.s: src_generated/types_crcl_generated.c.s
@@ -402,7 +348,7 @@ src_generated/types_crcl_generated.s: src_generated/types_crcl_generated.c.s
 
 # target to generate assembly for a file
 src_generated/types_crcl_generated.c.s:
-	$(MAKE) -f CMakeFiles/SAMYPlugIn_Base.dir/build.make CMakeFiles/SAMYPlugIn_Base.dir/src_generated/types_crcl_generated.c.s
+	$(MAKE) -f CMakeFiles/SAMYPlugin_Template_Cpp.dir/build.make CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/types_crcl_generated.c.s
 .PHONY : src_generated/types_crcl_generated.c.s
 
 # Help Target
@@ -412,26 +358,20 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... SAMYPlugIn_Base"
+	@echo "... SAMYPlugin_Template_Cpp"
 	@echo "... pref-ns-crcl"
 	@echo "... edit_cache"
 	@echo "... pref-ids-crcl"
 	@echo "... pref-types-crcl"
-	@echo "... Robot/Robot.o"
-	@echo "... Robot/Robot.i"
-	@echo "... Robot/Robot.s"
-	@echo "... SAMYPlugin_Template.o"
-	@echo "... SAMYPlugin_Template.i"
-	@echo "... SAMYPlugin_Template.s"
-	@echo "... Template_internals/Communication/Publisher.o"
-	@echo "... Template_internals/Communication/Publisher.i"
-	@echo "... Template_internals/Communication/Publisher.s"
-	@echo "... Template_internals/Communication/SAMYRobot.o"
-	@echo "... Template_internals/Communication/SAMYRobot.i"
-	@echo "... Template_internals/Communication/SAMYRobot.s"
-	@echo "... Template_internals/Communication/Subscriber.o"
-	@echo "... Template_internals/Communication/Subscriber.i"
-	@echo "... Template_internals/Communication/Subscriber.s"
+	@echo "... Plugin/plugin.o"
+	@echo "... Plugin/plugin.i"
+	@echo "... Plugin/plugin.s"
+	@echo "... Robot/robot.o"
+	@echo "... Robot/robot.i"
+	@echo "... Robot/robot.s"
+	@echo "... Template_internals/Communication/samy_robot.o"
+	@echo "... Template_internals/Communication/samy_robot.i"
+	@echo "... Template_internals/Communication/samy_robot.s"
 	@echo "... Template_internals/Helpers/helpers.o"
 	@echo "... Template_internals/Helpers/helpers.i"
 	@echo "... Template_internals/Helpers/helpers.s"

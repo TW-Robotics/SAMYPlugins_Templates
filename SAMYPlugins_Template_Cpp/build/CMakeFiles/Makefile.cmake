@@ -11,6 +11,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
+  "/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake"
+  "/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfigVersion.cmake"
+  "/usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config-version.cmake"
+  "/usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config.cmake"
   "/usr/local/lib/cmake/open62541/open62541Config.cmake"
   "/usr/local/lib/cmake/open62541/open62541ConfigVersion.cmake"
   "/usr/local/lib/cmake/open62541/open62541Macros.cmake"
@@ -32,6 +36,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.16/Modules/Compiler/GNU-C.cmake"
   "/usr/share/cmake-3.16/Modules/Compiler/GNU-CXX.cmake"
   "/usr/share/cmake-3.16/Modules/Compiler/GNU.cmake"
+  "/usr/share/cmake-3.16/Modules/FindBoost.cmake"
   "/usr/share/cmake-3.16/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.16/Modules/FindPackageMessage.cmake"
   "/usr/share/cmake-3.16/Modules/FindPythonInterp.cmake"
@@ -57,7 +62,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/SAMYPlugIn_Base.dir/DependInfo.cmake"
+  "CMakeFiles/SAMYPlugin_Template_Cpp.dir/DependInfo.cmake"
   "CMakeFiles/pref-ns-crcl.dir/DependInfo.cmake"
   "CMakeFiles/pref-ids-crcl.dir/DependInfo.cmake"
   "CMakeFiles/pref-types-crcl.dir/DependInfo.cmake"

@@ -1,9 +1,9 @@
 #ifndef HELPERS_H
-#define HELPERS
+#define HELPERS_H
 
 #include "namespace_crcl_generated.h"
 #include <types_crcl_generated_handling.h>
-#include "SAMYRobot.h"
+#include "samy_robot.h"
 #include <iostream>
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>

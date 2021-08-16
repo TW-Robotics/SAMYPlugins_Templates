@@ -1,5 +1,5 @@
 /home/felix/Desktop/SAMY/SAMYPlugins_Template_Cpp/build/CMakeFiles/rebuild_cache.dir
-/home/felix/Desktop/SAMY/SAMYPlugins_Template_Cpp/build/CMakeFiles/SAMYPlugIn_Base.dir
+/home/felix/Desktop/SAMY/SAMYPlugins_Template_Cpp/build/CMakeFiles/SAMYPlugin_Template_Cpp.dir
 /home/felix/Desktop/SAMY/SAMYPlugins_Template_Cpp/build/CMakeFiles/pref-ns-crcl.dir
 /home/felix/Desktop/SAMY/SAMYPlugins_Template_Cpp/build/CMakeFiles/edit_cache.dir
 /home/felix/Desktop/SAMY/SAMYPlugins_Template_Cpp/build/CMakeFiles/pref-ids-crcl.dir
