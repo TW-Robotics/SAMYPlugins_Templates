@@ -1,0 +1,12 @@
+PUBSUB: New topic "command_reset" created
+PUBSUB: Subscribed listener "Plugin.send_command_reset" to topic "command_reset"
+PUBSUB: New topic "command_halt" created
+PUBSUB: Subscribed listener "Plugin.send_command_halt" to topic "command_halt"
+PUBSUB: New topic "command_error" created
+PUBSUB: Subscribed listener "Plugin.send_command_error" to topic "command_error"
+PUBSUB: New topic "command_suspend" created
+PUBSUB: Subscribed listener "Plugin.send_command_suspend" to topic "command_suspend"
+PUBSUB: New topic "MoveTo" created
+PUBSUB: Subscribed listener "Robot.example" to topic "MoveTo"
+PUBSUB: New topic "SetEndeffector" created
+PUBSUB: Subscribed listener "Robot.example2" to topic "SetEndeffector"

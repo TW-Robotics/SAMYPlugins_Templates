@@ -54,8 +54,14 @@ class Plugin():
 ######################### OPCUA CLIENT SECTION #################################
 
     def datachange_notification(self, node, val, data):
-        #print("Python: New data change event:", node, val)
         # Start a thread for each skill that gets executed
+        self.logger.info("\n\n Subscription Info \n")
+        self.logger.info(data.monitored_item.Value.SourceTimestamp)
+        self.logger.info(data.monitored_item.Value.ServerTimestamp)
+        self.logger.info(data.monitored_item.Value.Value)
+        self.logger.info(data.monitored_item.Value.StatusCode)
+        # TODO Check if node id is not 0. Ignore datachange if that is the case
+
         # Get node of the skill
         self.my_skill_node = self.opcua_core_client.get_node(val)
         self.thread = threading.Thread(target=self.command_thread, args=())
@@ -76,13 +82,27 @@ class Plugin():
         self.logger.info("Command Thread started\n")
         # Get the node id for each method of the skill
         my_skill_method_node_ids = self.my_skill_node.get_methods()
+        #self.logger.info(my_skill_method_node_ids)
         # Connect methodes of skill to the signals of the plugin
-        self.start_method_id = my_skill_method_node_ids[0]
-        self.resume_method_id = my_skill_method_node_ids[1]
-        self.suspend_method_id = my_skill_method_node_ids[2]
-        self.halt_method_id = my_skill_method_node_ids[3]
-        self.reset_method_id = my_skill_method_node_ids[4]
-        parameter_set_node = self.my_skill_node.get_child("3:ParameterSet")
+        for i, node_id in enumerate(my_skill_method_node_ids):
+            browse_name = node_id.get_browse_name()
+            #self.logger.info(browse_name)
+            if browse_name.Name == "Halt":
+                self.halt_method_id = node_id
+            elif browse_name.Name == "Reset":
+                self.reset_method_id = node_id
+            elif browse_name.Name == "Start":
+                self.start_method_id = node_id
+            elif browse_name.Name == "Resume":
+                self.resume_method_id = node_id
+            elif browse_name.Name == "Suspend":
+                self.suspend_method_id = node_id
+
+        ns = self.my_skill_node.nodeid.NamespaceIndex
+        self.logger.info("my_skill_node = {}".format(self.my_skill_node))
+        self.logger.info("Robot NamespaceIndex = {}".format(ns))
+        parameter_set_node = self.my_skill_node.get_child("3:ParameterSet") #3
+        self.logger.info("parameter_set_node = {}".format(parameter_set_node))
         parameter_set_variable_node_ids = parameter_set_node.get_variables()
         parameter_nodes = {}
 
@@ -159,12 +179,16 @@ class Plugin():
         self.logger.info("Stopping plugin")
         self.opcua_core_client.disconnect()
 
-    def subscribe_to_core(self, node_id_):
+    def subscribe_to_core(self, robot_name_):
         try:
-            # Connect to nextSkillNodeId Node
-            next_skill_node_id_node = self.opcua_core_client.get_node(ua.NodeId(int(node_id_), 8))
             # Getting the root node is not stricly neccessary but recomended
             root = self.opcua_core_client.get_root_node()
+            objects = self.opcua_core_client.get_objects_node()
+            nodes = objects.get_child(["3:DeviceSet"])
+            for object in nodes.get_children():
+                if object.get_browse_name().Name == robot_name_:
+                    ns = object.nodeid.NamespaceIndex
+                    next_skill_node_id_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:NextSkillNodeId".format(ns)])
             # Subscribe to next_skill_node_id_node
             sub = self.opcua_core_client.create_subscription(500, self)
             handle = sub.subscribe_data_change(next_skill_node_id_node)
@@ -176,22 +200,25 @@ class Plugin():
 
     def send_command_reset(self):
         self.logger.info("Command is finished")
+        self.logger.info(self.reset_method_id)
         # Call methode finished in oocua server
         self.my_skill_node.call_method(self.reset_method_id)
 
     def send_command_halt(self):
         self.logger.info("Command is on hold")
+        self.logger.info(self.halt_method_id)
         # Call methode halt in opcua server
         self.my_skill_node.call_method(self.halt_method_id)
 
     def send_command_error(self):
-        self.logger.info("Command faild to execute")
+        self.logger.error("Command faild to execute")
         self.logger.error("Error:", exc_info=True)
         # Call methode error in opcua
         #self.my_skill_node.call_method(self.)
 
     def send_command_suspend(self):
         self.logger.info("Command suspended")
+        self.logger.info(self.suspend_method_id)
         # Call methode error in opcua
         self.my_skill_node.call_method(self.suspend_method_id)
 

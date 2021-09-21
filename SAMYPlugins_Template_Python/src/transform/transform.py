@@ -1,7 +1,7 @@
 import numpy
 import math
 from scipy.spatial.transform import Rotation as R
-from CRCL_DataTypes import *
+#from CRCL_DataTypes import *
 
 # epsilon for testing whether a number is close to zero
 _EPS = numpy.finfo(float).eps * 4.0
@@ -222,19 +222,19 @@ def matrix_to_quaternion(xAxis, zAxis):
     # the x output vector component.  Qyx is therefore the same as
     # M[0,1].  The notation is from the Wikipedia article.
 
-    xaxis = numpy.array([xAxis.I, xAxis.J, xAxis.K])
-    zaxis = numpy.array([zAxis.I, zAxis.J, zAxis.K])
+    xaxis = numpy.array([xAxis.i, xAxis.j, xAxis.k])
+    zaxis = numpy.array([zAxis.i, zAxis.j, zAxis.k])
     yaxis = numpy.cross(zaxis, xaxis)
 
-    Qxx = xAxis.I
-    Qyx = xAxis.J
-    Qzx = xAxis.K
+    Qxx = xAxis.i
+    Qyx = xAxis.j
+    Qzx = xAxis.k
     Qxy = yaxis[0]
     Qyy = yaxis[1]
     Qzy = yaxis[2]
-    Qxz = zAxis.I
-    Qyz = zAxis.J
-    Qzz = zAxis.K
+    Qxz = zAxis.i
+    Qyz = zAxis.j
+    Qzz = zAxis.k
 
     # Fill only lower half of symmetric matrix
     K = numpy.array([
