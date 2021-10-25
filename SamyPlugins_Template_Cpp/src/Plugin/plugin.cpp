@@ -292,12 +292,12 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                 UA_Variant_init(&myVar);
                 printf("Read data from core\n");
                 UA_Client_readValueAttribute(samy_core_client, ref->nodeId.nodeId, &myVar);
-                std::cout << "Typecasting to Extension object " << std::endl;
+                std::cout << "Got value from server" << std::endl;
                 if (UA_Variant_hasScalarType(&myVar, &UA_TYPES[UA_TYPES_EXTENSIONOBJECT])){
                     std::cout << "Typecasting to Extension object " << std::endl;
                     UA_ExtensionObject myExtension = *(UA_ExtensionObject*)myVar.data;
                     std::cout << "Encoding: " << myExtension.encoding << std::endl;
-                    UA_MoveToParametersSetDataType* data = (UA_MoveToParametersSetDataType*)&myExtension.content.decoded.data;
+                    UA_MoveToParametersSetDataType* data = (UA_MoveToParametersSetDataType*)&myVar.data;
                     std::cout << "MoveStraight: " << data->moveStraight << std::endl;
                 }
 
