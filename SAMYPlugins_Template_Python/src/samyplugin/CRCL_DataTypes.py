@@ -383,9 +383,9 @@ class CRCL_RotAccelDataType(object):
     __repr__ = __str__
 
     def __init__(self):
-        self.isUnion = True
-        self.switchField = 0
-        self.unionValue = None
+        self.SwitchField = 0
+        self.RotAccelAbsoluteDataType = ua.CRCL_RotAccelAbsoluteDataType()
+        self.RotAccelRelativeDataType = ua.CRCL_RotAccelRelativeDataType()
 
 
 class CRCL_RotSpeedAbsoluteDataType(object):
@@ -452,9 +452,9 @@ class CRCL_RotSpeedDataType(object):
     __repr__ = __str__
 
     def __init__(self):
-        self.isUnion = True
-        self.switchField = 0
-        self.unionValue = None
+        self.SwitchField = 0
+        self.RotSpeedAbsoluteDataType = ua.CRCL_RotSpeedAbsoluteDataType()
+        self.RotSpeedRelativeDataType = ua.CRCL_RotSpeedRelativeDataType()
 
 
 class CRCL_TransAccelAbsoluteDataType(object):
@@ -521,9 +521,9 @@ class CRCL_TransAccelDataType(object):
     __repr__ = __str__
 
     def __init__(self):
-        self.isUnion = True
-        self.switchField = 0
-        self.unionValue = None
+        self.SwitchField = 0
+        self.TransAccelAbsoluteDataType = ua.CRCL_TransAccelAbsoluteDataType()
+        self.TransAccelRelativeDataType = ua.CRCL_TransAccelRelativeDataType()
 
 
 class CRCL_TransSpeedAbsoluteDataType(object):
@@ -590,9 +590,9 @@ class CRCL_TransSpeedDataType(object):
     __repr__ = __str__
 
     def __init__(self):
-        self.isUnion = True
-        self.switchField = 0
-        self.unionValue = None
+        self.SwitchField = 0
+        self.TransSpeedAbsoluteDataType = ua.CRCL_TransSpeedAbsoluteDataType()
+        self.TransSpeedRelativeDataType = ua.CRCL_TransSpeedRelativeDataType()
 
 
 class CRCL_ConfigureJointReportDataType(object):
@@ -882,9 +882,9 @@ class CRCL_JointDetailsDataType(object):
     __repr__ = __str__
 
     def __init__(self):
-        self.isUnion = True
-        self.switchField = 0
-        self.unionValue = None
+        self.SwitchField = 0
+        self.JointSpeedAccel = ua.CRCL_JointSpeedAccelDataType()
+        self.JointForceTorque = ua.CRCL_JointForceTorqueDataType()
 
 
 class CRCL_ActuateJointDataType(object):
@@ -2708,9 +2708,42 @@ class CRCLCommandsUnionDataType(object):
     __repr__ = __str__
 
     def __init__(self):
-        self.isUnion = True
-        self.switchField = 0
-        self.unionValue = None
+        self.SwitchField = 0
+        self.InitCanonCommand = ua.InitCanonDataType()
+        self.EndCanonCommand = ua.EndCanonDataType()
+        self.MessageCommand = ua.MessageDataType()
+        self.MoveToCommand = ua.MoveToDataType()
+        self.MoveScrewCommand = ua.MoveScrewDataType()
+        self.MoveThroughToCommand = ua.MoveThroughToDataType()
+        self.DwellCommand = ua.DwellDataType()
+        self.ActuateJointsCommand = ua.ActuateJointsDataType()
+        self.ConfigureJointReportsCommand = ua.ConfigureJointReportsDataType()
+        self.SetDefaultJointPositionsTolerancesCommand = ua.SetDefaultJointPositionsTolerancesDataType()
+        self.GetStatusCommand = ua.GetStatusDataType()
+        self.CloseToolChangerCommand = ua.CloseToolChangerDataType()
+        self.OpenToolChangerCommand = ua.OpenToolChangerDataType()
+        self.SetRobotParametersCommand = ua.SetRobotParametersDataType()
+        self.SetEndeffectorParametersCommand = ua.SetEndeffectorParametersDataType()
+        self.SetEndeffectorCommand = ua.SetEndeffectorDataType()
+        self.SetTransAccelCommand = ua.SetTransAccelDataType()
+        self.SetTransSpeedCommand = ua.SetTransSpeedDataType()
+        self.SetRotAccelCommand = ua.SetRotAccelDataType()
+        self.SetRotSpeedCommand = ua.SetRotSpeedDataType()
+        self.SetAngleUnitsCommand = ua.SetAngleUnitsDataType()
+        self.SetEndPoseToleranceCommand = ua.SetEndPoseToleranceDataType()
+        self.SetForceUnitsCommand = ua.SetForceUnitsDataType()
+        self.SetIntermediatePoseToleranceCommand = ua.SetIntermediatePoseToleranceDataType()
+        self.SetLengthUnitsCommand = ua.SetLengthUnitsDataType()
+        self.SetMotionCoordinationCommand = ua.SetMotionCoordinationDataType()
+        self.SetTorqueUnitsCommand = ua.SetTorqueUnitsDataType()
+        self.StopMotionCommand = ua.StopMotionDataType()
+        self.ConfigureStatusReportCommand = ua.ConfigureStatusReportDataType()
+        self.EnableSensorCommand = ua.EnableSensorDataType()
+        self.DisableSensorCommand = ua.DisableSensorDataType()
+        self.EnableGripperCommand = ua.EnableGripperDataType()
+        self.DisableGripperCommand = ua.DisableGripperDataType()
+        self.EnableRobotParameterStatusCommand = ua.EnableRobotParameterStatusDataType()
+        self.DisableRobotParameterStatusCommand = ua.DisableRobotParameterStatusDataType()
 
 
 class CRCLSkillDataType(object):
@@ -2743,6 +2776,7 @@ class CRCLCommandParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
     ]
     def __str__(self):
@@ -2752,6 +2786,7 @@ class CRCLCommandParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
 
 
@@ -2762,6 +2797,7 @@ class InitCanonParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
     ]
     def __str__(self):
@@ -2771,6 +2807,7 @@ class InitCanonParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
 
 
@@ -2781,6 +2818,7 @@ class EndCanonParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
     ]
     def __str__(self):
@@ -2790,6 +2828,7 @@ class EndCanonParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
 
 
@@ -2800,6 +2839,7 @@ class GetStatusParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
     ]
     def __str__(self):
@@ -2809,6 +2849,7 @@ class GetStatusParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
 
 
@@ -2819,6 +2860,7 @@ class CloseToolChangerParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
     ]
     def __str__(self):
@@ -2828,6 +2870,7 @@ class CloseToolChangerParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
 
 
@@ -2838,6 +2881,7 @@ class OpenToolChangerParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
     ]
     def __str__(self):
@@ -2847,6 +2891,7 @@ class OpenToolChangerParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
 
 
@@ -2857,6 +2902,7 @@ class MessageParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('Message', 'String'),
     ]
@@ -2867,6 +2913,7 @@ class MessageParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.Message = None
 
@@ -2878,6 +2925,7 @@ class MoveToParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('MoveStraight', 'Boolean'),
         ('EndPosition', 'CRCL_PoseDataType'),
@@ -2889,6 +2937,7 @@ class MoveToParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.MoveStraight = True
         self.EndPosition = ua.CRCL_PoseDataType()
@@ -2901,6 +2950,7 @@ class MoveScrewParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('StartPosition', 'CRCL_PoseDataType'),
         ('AxisPoint', 'CRCL_PointDataType'),
@@ -2915,6 +2965,7 @@ class MoveScrewParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.StartPosition = ua.CRCL_PoseDataType()
         self.AxisPoint = ua.CRCL_PointDataType()
@@ -2930,6 +2981,7 @@ class MoveThroughToParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('MoveStraight', 'Boolean'),
         ('Waypoint', 'ListOfCRCL_PoseDataType'),
@@ -2942,6 +2994,7 @@ class MoveThroughToParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.MoveStraight = True
         self.Waypoint = []
@@ -2955,6 +3008,7 @@ class DwellParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('DwellTime', 'Double'),
     ]
@@ -2965,6 +3019,7 @@ class DwellParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.DwellTime = 0
 
@@ -2976,6 +3031,7 @@ class ActuateJointsParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('ActuateJoint', 'ListOfCRCL_ActuateJointDataType'),
         ('JointTolerances', 'CRCL_JointPositionsTolerancesDataType'),
@@ -2987,6 +3043,7 @@ class ActuateJointsParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.ActuateJoint = []
         self.JointTolerances = ua.CRCL_JointPositionsTolerancesDataType()
@@ -2999,6 +3056,7 @@ class ConfigureJointReportsParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('ResetAll', 'Boolean'),
         ('ConfigureJointReport', 'ListOfCRCL_ConfigureJointReportDataType'),
@@ -3010,6 +3068,7 @@ class ConfigureJointReportsParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.ResetAll = True
         self.ConfigureJointReport = []
@@ -3022,6 +3081,7 @@ class SetDefaultJointPositionsTolerancesParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('JointTolerances', 'CRCL_JointPositionsTolerancesDataType'),
     ]
@@ -3032,6 +3092,7 @@ class SetDefaultJointPositionsTolerancesParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.JointTolerances = ua.CRCL_JointPositionsTolerancesDataType()
 
@@ -3043,6 +3104,7 @@ class SetRobotParametersParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('ParameterSetting', 'ListOfCRCL_ParameterSettingDataType'),
     ]
@@ -3053,6 +3115,7 @@ class SetRobotParametersParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.ParameterSetting = []
 
@@ -3064,6 +3127,7 @@ class SetEndeffectorParametersParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('ParameterSetting', 'ListOfCRCL_ParameterSettingDataType'),
     ]
@@ -3074,6 +3138,7 @@ class SetEndeffectorParametersParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.ParameterSetting = []
 
@@ -3085,6 +3150,7 @@ class SetEndeffectorParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('Setting', 'CRCL_FractionDataType'),
     ]
@@ -3095,6 +3161,7 @@ class SetEndeffectorParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.Setting = ua.CRCL_FractionDataType()
 
@@ -3106,6 +3173,7 @@ class SetTransSpeedParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('TransSpeed', 'CRCL_TransSpeedDataType'),
     ]
@@ -3116,6 +3184,7 @@ class SetTransSpeedParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.TransSpeed = ua.CRCL_TransSpeedDataType()
 
@@ -3127,6 +3196,7 @@ class SetTransAccelParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('TransAccel', 'CRCL_TransAccelDataType'),
     ]
@@ -3137,6 +3207,7 @@ class SetTransAccelParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.TransAccel = ua.CRCL_TransAccelDataType()
 
@@ -3148,6 +3219,7 @@ class SetRotSpeedParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('RotSpeed', 'CRCL_RotSpeedDataType'),
     ]
@@ -3158,6 +3230,7 @@ class SetRotSpeedParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.RotSpeed = ua.CRCL_RotSpeedDataType()
 
@@ -3169,6 +3242,7 @@ class SetRotAccelParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('RotAccel', 'CRCL_RotAccelDataType'),
     ]
@@ -3179,6 +3253,7 @@ class SetRotAccelParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.RotAccel = ua.CRCL_RotAccelDataType()
 
@@ -3190,6 +3265,7 @@ class SetAngleUnitsParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('UnitName', 'CRCL_AngleUnitEnumDataType'),
     ]
@@ -3200,6 +3276,7 @@ class SetAngleUnitsParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.UnitName = ua.CRCL_AngleUnitEnumDataType(1)
 
@@ -3211,6 +3288,7 @@ class SetEndPoseToleranceParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('Tolerance', 'CRCL_PoseToleranceDataType'),
     ]
@@ -3221,6 +3299,7 @@ class SetEndPoseToleranceParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.Tolerance = ua.CRCL_PoseToleranceDataType()
 
@@ -3232,6 +3311,7 @@ class SetForceUnitsParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('UnitName', 'CRCL_ForceUnitEnumDataType'),
     ]
@@ -3242,6 +3322,7 @@ class SetForceUnitsParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.UnitName = ua.CRCL_ForceUnitEnumDataType(2)
 
@@ -3253,6 +3334,7 @@ class SetIntermediatePoseToleranceParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('Tolerance', 'CRCL_PoseToleranceDataType'),
     ]
@@ -3263,6 +3345,7 @@ class SetIntermediatePoseToleranceParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.Tolerance = ua.CRCL_PoseToleranceDataType()
 
@@ -3274,6 +3357,7 @@ class SetLengthUnitsParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('UnitName', 'CRCL_LengthUnitEnumDataType'),
     ]
@@ -3284,6 +3368,7 @@ class SetLengthUnitsParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.UnitName = ua.CRCL_LengthUnitEnumDataType(2)
 
@@ -3295,6 +3380,7 @@ class SetMotionCoordinationParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('Coordinated', 'Boolean'),
     ]
@@ -3305,6 +3391,7 @@ class SetMotionCoordinationParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.Coordinated = True
 
@@ -3316,6 +3403,7 @@ class SetTorqueUnitsParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('UnitName', 'CRCL_TorqueUnitEnumDataType'),
     ]
@@ -3326,6 +3414,7 @@ class SetTorqueUnitsParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.UnitName = ua.CRCL_TorqueUnitEnumDataType(1)
 
@@ -3337,6 +3426,7 @@ class StopMotionParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('StopCondition', 'CRCL_StopConditionEnumDataType'),
     ]
@@ -3347,6 +3437,7 @@ class StopMotionParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.StopCondition = ua.CRCL_StopConditionEnumDataType(2)
 
@@ -3358,6 +3449,7 @@ class ConfigureStatusReportParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('ReportJointStatuses', 'Boolean'),
         ('ReportPoseStatus', 'Boolean'),
@@ -3373,6 +3465,7 @@ class ConfigureStatusReportParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.ReportJointStatuses = True
         self.ReportPoseStatus = True
@@ -3389,6 +3482,7 @@ class EnableSensorParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('SensorID', 'String'),
         ('SensorOption', 'ListOfCRCL_ParameterSettingDataType'),
@@ -3400,6 +3494,7 @@ class EnableSensorParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.SensorID = None
         self.SensorOption = []
@@ -3412,6 +3507,7 @@ class DisableSensorParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('SensorID', 'String'),
     ]
@@ -3422,6 +3518,7 @@ class DisableSensorParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.SensorID = None
 
@@ -3433,6 +3530,7 @@ class EnableGripperParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('GripperName', 'String'),
         ('GripperOption', 'ListOfCRCL_ParameterSettingDataType'),
@@ -3444,6 +3542,7 @@ class EnableGripperParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.GripperName = None
         self.GripperOption = []
@@ -3456,6 +3555,7 @@ class DisableGripperParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('GripperName', 'String'),
     ]
@@ -3466,6 +3566,7 @@ class DisableGripperParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.GripperName = None
 
@@ -3477,6 +3578,7 @@ class EnableRobotParameterStatusParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('RobotParameterName', 'String'),
     ]
@@ -3487,6 +3589,7 @@ class EnableRobotParameterStatusParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.RobotParameterName = None
 
@@ -3498,6 +3601,7 @@ class DisableRobotParameterStatusParametersSetDataType(object):
     '''
 
     ua_types = [
+        ('Name', 'String'),
         ('RealTimeParameter', 'Boolean'),
         ('RobotParameterName', 'String'),
     ]
@@ -3508,5 +3612,6 @@ class DisableRobotParameterStatusParametersSetDataType(object):
     __repr__ = __str__
 
     def __init__(self):
+        self.Name = None
         self.RealTimeParameter = True
         self.RobotParameterName = None

@@ -161,7 +161,7 @@ def where_clause_from_evtype(evtypes):
         el.FilterOperands.append(op)
 
     el.FilterOperator = ua.FilterOperator.InList
-    cf.Elements.append(el)
+    #cf.Elements.append(el)
 
     return cf
 
@@ -227,4 +227,3 @@ def _find_parent_eventtype(node):
         return parents[0].nodeid.Identifier, opcua.common.event_objects.IMPLEMENTED_EVENTS[parents[0].nodeid.Identifier]
     else:
         return _find_parent_eventtype(parents[0])
-

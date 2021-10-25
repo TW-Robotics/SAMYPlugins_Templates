@@ -21,7 +21,7 @@ from pprint import pprint
 
 class ErrorHandler(pub.IListenerExcHandler):
     def __call__(self, listenerID, topicObj):
-        print(topicObj)
+        print("Error while processing {} Topic.".format(topicObj))
         pub.sendMessage("command_error")
 
 class Plugin():
@@ -34,6 +34,7 @@ class Plugin():
 
         self.idx = None
         self.robot_node = None
+        self.robot_state_node = None
         self.thread = None
         self.opcua_core_client = None
         self.next_skill_node_id = None
@@ -45,6 +46,9 @@ class Plugin():
         self.reset_method_id = None
         self.log_file = open("message_log.txt", "w")
         self.crcl_command_dict = None
+        self.information_source_nodes = None
+        self.information_source_nodes_dict = {}
+        self.skill_error = False
         pub.setListenerExcHandler(ErrorHandler())
         self.log_all_messages()
         self.create_subscribers()
@@ -55,20 +59,30 @@ class Plugin():
 
     def datachange_notification(self, node, val, data):
         # Start a thread for each skill that gets executed
-        self.logger.info("\n\n Subscription Info \n")
-        self.logger.info(data.monitored_item.Value.SourceTimestamp)
-        self.logger.info(data.monitored_item.Value.ServerTimestamp)
-        self.logger.info(data.monitored_item.Value.Value)
-        self.logger.info(data.monitored_item.Value.StatusCode)
+        # self.logger.info("\n\n Subscription Info \n")
+        self.logger.info("Got datachange_notification", data)
+        # self.logger.info(data.monitored_item.Value.SourceTimestamp)
+        # self.logger.info(data.monitored_item.Value.ServerTimestamp)
+        # self.logger.info(data.monitored_item.Value.Value)
+        # self.logger.info(data.monitored_item.Value.StatusCode)
         # TODO Check if node id is not 0. Ignore datachange if that is the case
 
         # Get node of the skill
-        self.my_skill_node = self.opcua_core_client.get_node(val)
-        self.thread = threading.Thread(target=self.command_thread, args=())
-        self.thread.start()
+        # self.my_skill_node = self.opcua_core_client.get_node(val)
+        # self.thread = threading.Thread(target=self.command_thread, args=())
+        # self.thread.start()
 
     def event_notification(self, event):
-        self.logger.info("Python: New event", event)
+        self.logger.debug("\n\n\n")
+        self.logger.debug("Python: New event {}".format(event))
+        self.logger.debug("\n\n", event.SourceNode)
+        text = event.Message.Text
+        self.logger.info(text)
+        words = text.split(" ")
+        if words[len(words)-1] == "Running":
+            self.my_skill_node = self.opcua_core_client.get_node(event.SourceNode)
+            self.thread = threading.Thread(target=self.command_thread, args=())
+            self.thread.start()
 
 ######################### OPCUA CLIENT SECTION END #############################
 
@@ -99,10 +113,10 @@ class Plugin():
                 self.suspend_method_id = node_id
 
         ns = self.my_skill_node.nodeid.NamespaceIndex
-        self.logger.info("my_skill_node = {}".format(self.my_skill_node))
-        self.logger.info("Robot NamespaceIndex = {}".format(ns))
+        self.logger.debug("my_skill_node = {}".format(self.my_skill_node))
+        self.logger.debug("Robot NamespaceIndex = {}".format(ns))
         parameter_set_node = self.my_skill_node.get_child("3:ParameterSet") #3
-        self.logger.info("parameter_set_node = {}".format(parameter_set_node))
+        self.logger.debug("parameter_set_node = {}".format(parameter_set_node))
         parameter_set_variable_node_ids = parameter_set_node.get_variables()
         parameter_nodes = {}
 
@@ -112,13 +126,18 @@ class Plugin():
 
         parameter_nodes_sorted = sorted(parameter_nodes.items(), key=self.sort_by_number)
         #pprint(parameter_nodes_sorted)
-
+        # Reset skill error
+        self.skill_error = False
         for i in range(len(parameter_nodes_sorted)):
-            val = parameter_nodes_sorted[i][1].get_value()
-            topic = self.crcl_command_dict[type(val)]
-            self.logger.info(topic)
-            pub.sendMessage(topic, data=val)
-        pub.sendMessage("command_reset")
+            if not self.skill_error:
+                val = parameter_nodes_sorted[i][1].get_value()
+                topic = self.crcl_command_dict[type(val)]
+                self.logger.debug(topic)
+                pub.sendMessage(topic, data=val)
+            else:
+                break
+        if not self.skill_error:
+            pub.sendMessage("command_reset")
 
     def connect_to_core(self, address_, port_):
         # Connect to SAMYCore opcua server
@@ -177,7 +196,11 @@ class Plugin():
 
     def disconnect_core(self):
         self.logger.info("Stopping plugin")
+        for skill_node in self.skill_list:
+            skill_node.call_method("0:Halt")
+            self.logger.info("Halt called for {}".format(skill_node))
         self.opcua_core_client.disconnect()
+        time.sleep(1)
 
     def subscribe_to_core(self, robot_name_):
         try:
@@ -185,30 +208,65 @@ class Plugin():
             root = self.opcua_core_client.get_root_node()
             objects = self.opcua_core_client.get_objects_node()
             nodes = objects.get_child(["3:DeviceSet"])
+            namespaces = self.get_namespaces(self.opcua_core_client)
+            nsFortissDI = namespaces["https://fortiss.org/UA/DI/"]
+            skillTransitionEventBrowsePath = str(nsFortissDI) + ':SkillTransitionEventType'
+            samy_event = root.get_child(["0:Types","0:EventTypes","0:BaseEventType","0:TransitionEventType","0:ProgramTransitionEventType", skillTransitionEventBrowsePath])
+            self.logger.debug("SamyEvent: ", samy_event)
             for object in nodes.get_children():
                 if object.get_browse_name().Name == robot_name_:
                     ns = object.nodeid.NamespaceIndex
-                    next_skill_node_id_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:NextSkillNodeId".format(ns)])
+                    self.robot_node = object
+                    self.robot_state_node = self.robot_node.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:CurrentState".format(ns)])
+                    #next_skill_node_id_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:NextSkillNodeId".format(ns)])
+                    skills_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "5:Skills"])
+            # Get all skill node ids and reset them
+            self.skill_list = skills_node.get_children()
+            self.logger.debug("\n\n\n\n")
+            self.logger.debug("robot_node = ", self.robot_node)
+            self.logger.debug("skills_node = {}".format(skills_node))
+            self.logger.debug("skill_list= {}".format(self.skill_list))
+            for skill_node in self.skill_list:
+                skill_node.call_method("0:Reset")
+                self.logger.info("Reset called for {}".format(skill_node))
             # Subscribe to next_skill_node_id_node
-            sub = self.opcua_core_client.create_subscription(500, self)
-            handle = sub.subscribe_data_change(next_skill_node_id_node)
+            sub = self.opcua_core_client.create_subscription(100, self)
+            #handle = sub.subscribe_data_change(robot_node)
+            handle = sub.subscribe_events(self.robot_node, samy_event)
             embed()
         finally:
             self.logger.info("Subscription closed")
             #self.opcua_core_client.disconnect()
 
+    def get_namespaces(self, client):
+        namespaces = {}
+        root_node = client.get_root_node()
+        browse_path = ["0:Objects", "0:Server", "0:NamespaceArray"]
+        namespaceArrayNode = root_node.get_child(browse_path)
+        namespacesValue = namespaceArrayNode.get_value()
+        for i, namespace in enumerate(namespacesValue):
+            namespaces[namespace] = i
+        return namespaces
 
     def send_command_reset(self):
         self.logger.info("Command is finished")
         self.logger.info(self.reset_method_id)
+        self.skill_error = True
         # Call methode finished in oocua server
         self.my_skill_node.call_method(self.reset_method_id)
 
     def send_command_halt(self):
-        self.logger.info("Command is on hold")
+        self.logger.info("Command is on hald")
         self.logger.info(self.halt_method_id)
+        self.skill_error = True
         # Call methode halt in opcua server
+        #self.thread.exit()
         self.my_skill_node.call_method(self.halt_method_id)
+        time.sleep(0.2)
+        val = self.robot_state_node.get_value()
+        val.Text = "Ready"
+        self.logger.info("Writing to RobotState Node: {}".format(self.robot_state_node))
+        self.robot_state_node.set_value(val)
 
     def send_command_error(self):
         self.logger.error("Command faild to execute")
@@ -222,6 +280,23 @@ class Plugin():
         # Call methode error in opcua
         self.my_skill_node.call_method(self.suspend_method_id)
 
+    def get_information_source_nodes(self):
+        root = self.opcua_core_client.get_root_node()
+        objects = self.opcua_core_client.get_objects_node()
+        namespaces = self.get_namespaces(self.opcua_core_client)
+        ns_id = namespaces["http://SAMY.org/InformationSources"]
+        information_source_node = objects.get_child(["{}:InformationSources".format(ns_id)])
+        self.information_source_nodes = information_source_node.get_children()
+        for node in self.information_source_nodes:
+            self.information_source_nodes_dict[node.get_browse_name().Name] = node.get_child(["{}:{}_0".format(ns_id, node.get_browse_name().Name)])
+        self.logger.info("Dict: {}".format(self.information_source_nodes_dict))
+
+    def write_information_source(self, name, data):
+        self.logger.info("Writing Iformation source")
+        self.logger.info("Information Source info : Name: {}  Data: {}".format(name, data))
+        self.information_source_nodes_dict[name].set_value(data)
+        self.logger.info("Information Source {} set to {}".format(name, data))
+
     def log_all_messages(self):
         useNotifyByWriteFile(self.log_file)
 
@@ -230,3 +305,4 @@ class Plugin():
         pub.subscribe(self.send_command_halt, "command_halt")
         pub.subscribe(self.send_command_error, "command_error")
         pub.subscribe(self.send_command_suspend, "command_suspend")
+        pub.subscribe(self.write_information_source, "write_information_source")

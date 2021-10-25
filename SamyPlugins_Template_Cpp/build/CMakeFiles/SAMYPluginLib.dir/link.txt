@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSAMYPluginLib.a  CMakeFiles/SAMYPluginLib.dir/src_generated/namespace_crcl_generated.c.o CMakeFiles/SAMYPluginLib.dir/src_generated/types_crcl_generated.c.o CMakeFiles/SAMYPluginLib.dir/src/Plugin/plugin.cpp.o CMakeFiles/SAMYPluginLib.dir/src/Helpers/helpers.cpp.o
+/usr/bin/ranlib libSAMYPluginLib.a
