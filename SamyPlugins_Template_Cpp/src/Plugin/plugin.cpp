@@ -17,62 +17,52 @@ Plugin::~Plugin()
 }
 
 UA_StatusCode Plugin::ConnectToCore(std::string samyCoreAddress, std::string samyCorePort){
-    // Setup custom Data Types
-    UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
-
     samy_core_client = UA_Client_new();
-    UA_ClientConfig *cc = UA_Client_getConfig(samy_core_client);
+    std::string endpoint = "opc.tcp://"+ samyCoreAddress + ":" + samyCorePort;
+    UA_DataTypeArray customDataTypes{NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
+
+    UA_ClientConfig *cc = UA_Client_getConfig( samy_core_client );
+
     UA_ClientConfig_setDefault(cc);
     cc->customDataTypes = &customDataTypes;
+    //cc->stateCallback = stateCallback;
 
-    /* Listing endpoints */
-    UA_EndpointDescription* endpointArray = NULL;
-    size_t endpointArraySize = 0;
-    UA_StatusCode retval = UA_Client_getEndpoints(samy_core_client, "opc.tcp://localhost:4840",
-                                                  &endpointArraySize, &endpointArray);
-    if(retval != UA_STATUSCODE_GOOD) {
-        UA_Array_delete(endpointArray, endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
-        UA_Client_delete(samy_core_client);
-        return EXIT_FAILURE;
-    }
-    printf("%i endpoints found\n", (int)endpointArraySize);
-    for(size_t i=0;i<endpointArraySize;i++) {
-        printf("URL of endpoint %i is %.*s\n", (int)i,
-               (int)endpointArray[i].endpointUrl.length,
-               endpointArray[i].endpointUrl.data);
-    }
-    UA_Array_delete(endpointArray,endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
-
-    std::string endpoint = "opc.tcp://"+ samyCoreAddress + ":" + samyCorePort;
-
-    retval = UA_Client_connect(samy_core_client, endpoint.c_str());
+    UA_StatusCode retval = UA_Client_connect( samy_core_client, endpoint.c_str() );
 
     if(retval != UA_STATUSCODE_GOOD) {
         UA_Client_delete(samy_core_client);
     }
+
+    // Testing Read Value
+    UA_Variant var;
+    UA_Variant_init( &var );
+    retval |= UA_Client_readValueAttribute( samy_core_client, UA_NODEID_NUMERIC(9,56693), &var);
+    if(retval != UA_STATUSCODE_GOOD) {
+        std::cout << "Reading not succesfull" << std::endl;
+    } else std::cout << "Reading was sucessfull" << std::endl;
 
     return retval;
 }
 
 UA_StatusCode Plugin::GetRobotNodeId(std::string robotName){
-    UA_NodeId* tmp_node_id = UA_NodeId_new();
+    UA_NodeId tmp_node_id;
     UA_NodeId object_node_id = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, &object_node_id,
-                                               tmp_node_id, "DeviceSet");
-    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, tmp_node_id,
+                                               &tmp_node_id, "DeviceSet");
+    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, &tmp_node_id,
                                                robot_node_id, robotName);
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, robot_node_id,
-                                               tmp_node_id, "Controllers");
-    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, tmp_node_id,
+                                               &tmp_node_id, "Controllers");
+    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, &tmp_node_id,
                                                robot_controller_node_id, robotName);
     return UA_STATUSCODE_GOOD;
 }
 
 UA_StatusCode Plugin::GetSkillNodeId(std::string skillName, UA_NodeId* skillNodeId){
-    UA_NodeId* tmp_node_id = UA_NodeId_new();
+    UA_NodeId tmp_node_id;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, robot_controller_node_id,
-                                               tmp_node_id, "Skills");
-    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, tmp_node_id,
+                                               &tmp_node_id, "Skills");
+    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, &tmp_node_id,
                                                skillNodeId, skillName);
     return UA_STATUSCODE_GOOD;
 }
@@ -98,41 +88,43 @@ UA_StatusCode Plugin::GetSkillMethods(UA_NodeId* skillNode,
             }
         }
     }
+    UA_BrowseRequest_clear(&bReq);
+    UA_BrowseResponse_clear(&bResp);
     return UA_STATUSCODE_GOOD;
 }
 
 UA_StatusCode Plugin::callMethod(UA_NodeId* methodNode, UA_NodeId* objectNode){
  /* Call a remote method */
-//    retval()
-//    UA_Variant input;
-//    UA_String argString = UA_STRING("Hello Server");
-//    UA_Variant_init(&input);
-//    UA_Variant_setScalarCopy(&input, &argString, &UA_TYPES[UA_TYPES_STRING]);
-//    size_t outputSize;
-//    UA_Variant *output;
-//    retval = UA_Client_call(samy_core_client, *objectNode,
-//                            *methodNode, 1, &input, &outputSize, &output);
-//    if(retval == UA_STATUSCODE_GOOD) {
-//        printf("Method call was successful, and %lu returned values available.\n",
-//               (unsigned long)outputSize);
-//        UA_Array_delete(output, outputSize, &UA_TYPES[UA_TYPES_VARIANT]);
-//    } else {
-//        printf("Method call was unsuccessful, and %x returned values available.\n", retval);
-//    }
-//    UA_Variant_clear(&input);
+    UA_StatusCode retval;
+    UA_Variant input;
+    UA_String argString = UA_STRING("Hello Server");
+    UA_Variant_init(&input);
+    UA_Variant_setScalarCopy(&input, &argString, &UA_TYPES[UA_TYPES_STRING]);
+    size_t outputSize;
+    UA_Variant *output;
+    retval = UA_Client_call(samy_core_client, *objectNode,
+                            *methodNode, 1, &input, &outputSize, &output);
+    if(retval == UA_STATUSCODE_GOOD) {
+        printf("Method call was successful, and %lu returned values available.\n",
+               (unsigned long)outputSize);
+        UA_Array_delete(output, outputSize, &UA_TYPES[UA_TYPES_VARIANT]);
+    } else {
+        printf("Method call was unsuccessful, and %x returned values available.\n", retval);
+    }
+    UA_Variant_clear(&input);
 }
 
 UA_StatusCode Plugin::GetListOfSkills(){
-    UA_NodeId * skillsNodeId = UA_NodeId_new();
+    UA_NodeId skillsNodeId;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, robot_controller_node_id,
-                                               skillsNodeId, "Skills");
+                                               &skillsNodeId, "Skills");
 
     UA_BrowseRequest bReq;
     UA_BrowseRequest_init(&bReq);
     bReq.requestedMaxReferencesPerNode = 0;
     bReq.nodesToBrowse = UA_BrowseDescription_new();
     bReq.nodesToBrowseSize = 1;
-    bReq.nodesToBrowse[0].nodeId = *skillsNodeId;
+    bReq.nodesToBrowse[0].nodeId = skillsNodeId;
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client, bReq);
     for(size_t i = 0; i < bResp.resultsSize; ++i) {
@@ -147,6 +139,9 @@ UA_StatusCode Plugin::GetListOfSkills(){
             }
         }
     }
+    UA_BrowseRequest_clear(&bReq);
+    UA_BrowseResponse_clear(&bResp);
+
     // Remove Mandatory Node
     skillList.erase(skillList.begin());
 
@@ -156,49 +151,20 @@ UA_StatusCode Plugin::GetListOfSkills(){
     return UA_STATUSCODE_GOOD;
 }
 
+UA_StatusCode Plugin::resetAllSkills(){
+    UA_StatusCode retval;
+//    for (int i = 0; i < skillList.size(); i++){
+//        printf("Skill Name %d: %s\n", i, skillList[i].name.c_str());
+//        retval = callMethod skillList[i]
+//    }
+}
+
 UA_StatusCode Plugin::RunClient(int timeout){
     UA_StatusCode retval;
     while (*running){
         retval = UA_Client_run_iterate(samy_core_client, timeout);
     }
     return retval;
-}
-
-void Plugin::handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
-                            UA_UInt32 monId, void *monContext,
-                            size_t nEventFields, UA_Variant *eventFields) {
-    Plugin* plugin;
-    plugin = (Plugin*)monContext;
-
-    printf("New Event!!\n");
-    for (size_t i = 0; i < nEventFields; i++){
-        if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_UINT16])){
-            UA_UInt16 severity = *(UA_UInt16 *)eventFields[i].data;
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Severity: %u", severity);
-        }
-        else if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_LOCALIZEDTEXT])) {
-            UA_LocalizedText *lt = (UA_LocalizedText *)eventFields[i].data;
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                        "Message: '%.*s'", (int)lt->text.length, lt->text.data);
-            // Check if text includes a skill name from the skill list.
-            std::string text((const char*)lt->text.data);
-            for (int i = 0; i < skillList.size(); i++){
-                if(text.find(skillList[i].name) != std::string::npos &&
-                        text.find("Ready to Running") != std::string::npos){
-                    printf("Found Skill with NodeId %d to execute\n", skillList[i].skillNodeId.identifier.numeric);
-                    plugin->ExecuteSkill(&skillList[i].skillNodeId);
-                }
-            }
-        }
-        else if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_NODEID])){
-            UA_NodeId nextSkillNodeId = *(UA_NodeId *)eventFields[i].data;
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "NodeID: %d", nextSkillNodeId.identifier.numeric);
-        }
-        else {
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                                "Don't know how to handle type: '%s'", eventFields[i].type->typeName);
-        }
-    }
 }
 
 UA_StatusCode Plugin::SubscribeToRobot(){
@@ -212,6 +178,7 @@ UA_StatusCode Plugin::SubscribeToRobot(){
         UA_Client_delete(samy_core_client);
         return EXIT_FAILURE;
     }
+
 
     UA_UInt32 subId = response.subscriptionId;
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Create subscription succeeded, id %u", subId);
@@ -258,6 +225,52 @@ void Plugin::SendCommandIsDone(){
     // Call methode finished in opcua server
 }
 
+void Plugin::handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
+                            UA_UInt32 monId, void *monContext,
+                            size_t nEventFields, UA_Variant *eventFields) {
+    Plugin* plugin;
+    plugin = (Plugin*)monContext;
+
+    // Testing Read Value
+    UA_StatusCode retval = UA_STATUSCODE_GOOD;
+    UA_Variant var;
+    UA_Variant_init( &var );
+    retval |= UA_Client_readValueAttribute( plugin->samy_core_client, UA_NODEID_NUMERIC(9,56693), &var);
+    if(retval != UA_STATUSCODE_GOOD) {
+        std::cout << "Reading not succesfull" << std::endl;
+    } else std::cout << "Reading was sucessfull" << std::endl;
+
+    for (size_t i = 0; i < nEventFields; i++){
+        if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_UINT16])){
+            UA_UInt16 severity = *(UA_UInt16 *)eventFields[i].data;
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Severity: %u", severity);
+        }
+        else if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_LOCALIZEDTEXT])) {
+            UA_LocalizedText *lt = (UA_LocalizedText *)eventFields[i].data;
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
+                        "Message: '%.*s'", (int)lt->text.length, lt->text.data);
+            // Check if text includes a skill name from the skill list.
+            std::string text((const char*)lt->text.data);
+            for (int i = 0; i < skillList.size(); i++){
+                if(text.find(skillList[i].name) != std::string::npos &&
+                        text.find("Ready to Running") != std::string::npos){
+                    printf("Found Skill with NodeId %d to execute\n", skillList[i].skillNodeId.identifier.numeric);
+                    plugin->ExecuteSkill(&skillList[i].skillNodeId);
+                }
+            }
+        }
+        else if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_NODEID])){
+            UA_NodeId nextSkillNodeId = *(UA_NodeId *)eventFields[i].data;
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "NodeID: %d", nextSkillNodeId.identifier.numeric);
+        }
+        else {
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
+                                "Don't know how to handle type: '%s'", eventFields[i].type->typeName);
+        }
+    }
+}
+
+
 
 void Plugin::ExecuteSkill(UA_NodeId* skillNode){
 
@@ -265,14 +278,15 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     //GetSkillMethods(skillNode, &methods);
 
     std::cout << "Get Paramter Node" << std::endl;
-    UA_NodeId* paramter_node_id = UA_NodeId_new();
+    UA_NodeId paramter_node_id;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, skillNode,
-                                               paramter_node_id, "ParameterSet");
+                                               &paramter_node_id, "ParameterSet");
 
     std::cout << "Get node data type" << std::endl;
-    UA_NodeId *node_data_type = UA_NodeId_new();
-    UA_Client_readDataTypeAttribute(samy_core_client, *paramter_node_id, node_data_type);
-    std::cout << "Node type:" << node_data_type->identifier.numeric << std::endl;
+    UA_NodeId node_data_type2;
+    UA_Client_readDataTypeAttribute(samy_core_client, UA_NODEID_NUMERIC(9, 56678), &node_data_type2);
+    std::cout << "Node type:" << node_data_type2.identifier.numeric << std::endl;
+
 
     std::cout << "Browse all paramter value nodes" << std::endl;
     UA_BrowseRequest bReq;
@@ -280,7 +294,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     bReq.requestedMaxReferencesPerNode = 0;
     bReq.nodesToBrowse = UA_BrowseDescription_new();
     bReq.nodesToBrowseSize = 1;
-    bReq.nodesToBrowse[0].nodeId = *paramter_node_id; /* browse objects folder */
+    bReq.nodesToBrowse[0].nodeId = paramter_node_id; /* browse objects folder */
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client, bReq);
     for(size_t i = 0; i < bResp.resultsSize; ++i) {
@@ -291,6 +305,13 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                 UA_Variant myVar;
                 UA_Variant_init(&myVar);
                 printf("Read data from core\n");
+                std::cout<<"NODEID SKILL PARAMETER   " << ref->nodeId.nodeId.identifier.numeric << std::endl;
+
+                std::cout << "Get node data type" << std::endl;
+                UA_NodeId node_data_type;
+                UA_Client_readDataTypeAttribute(samy_core_client, ref->nodeId.nodeId, &node_data_type);
+                std::cout << "Node type of paramter node:" << node_data_type.identifier.numeric << std::endl;
+
                 UA_Client_readValueAttribute(samy_core_client, ref->nodeId.nodeId, &myVar);
                 std::cout << "Got value from server" << std::endl;
                 if (UA_Variant_hasScalarType(&myVar, &UA_TYPES[UA_TYPES_EXTENSIONOBJECT])){
@@ -304,6 +325,8 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
             }
         }
     }
+    UA_BrowseRequest_clear(&bReq);
+    UA_BrowseResponse_clear(&bResp);
 
 
 

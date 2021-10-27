@@ -1535,14 +1535,19 @@
     </Children>
   </ObjectType>
 
+
+
   <DataType SymbolicName="CRCL:CRCLCommandParametersSetDataType" BaseType="ua:Structure" IsAbstract="true"
               SupportsEvents="true" ValueRank="Scalar" ModellingRule="Mandatory">
     <Description>Parameters of a CRCL Command.
     </Description>
     <Fields>
+          <Field Name="Name" DataType="ua:String" ModellingRule="Mandatory" ValueRank="Scalar">
+            <Description>Name of the parameter set, so commands' parameters can be stored in a database and refered</Description>
+          </Field>
           <Field Name="RealTimeParameter" DataType="ua:Boolean"
                     ModellingRule="Mandatory" ValueRank="Scalar">
-            <Description>Boolean indicating whether this command of the skill should be used the corresponding Real Time Node
+            <Description>Boolean indicating whether the command of the skill taking this parameter should use the corresponding Real Time Node
             </Description>
           </Field>
     </Fields>

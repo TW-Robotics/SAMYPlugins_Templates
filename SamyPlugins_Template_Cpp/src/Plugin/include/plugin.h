@@ -52,6 +52,7 @@ public:
     UA_StatusCode GetSkillNodeId(std::string skillName, UA_NodeId* skillNodeId);
     UA_StatusCode GetSkillMethods(UA_NodeId* skillNode, std::unordered_map<std::string, UA_NodeId> *methods);
     UA_StatusCode callMethod(UA_NodeId *methodNode, UA_NodeId *objectNode);
+    UA_StatusCode resetAllSkills();
     UA_StatusCode GetListOfSkills();
     UA_StatusCode RunClient(int timeout);
     UA_StatusCode SubscribeToRobot();

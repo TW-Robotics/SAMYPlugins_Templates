@@ -24504,13 +24504,22 @@ namespace CRCL
         /// </summary>
         private void Initialize()
         {
+            m_name = null;
             m_realTimeParameter = true;
         }
         #endregion
 
         #region Public Properties
         /// <remarks />
-        [DataMember(Name = "RealTimeParameter", IsRequired = false, Order = 1)]
+        [DataMember(Name = "Name", IsRequired = false, Order = 1)]
+        public string Name
+        {
+            get { return m_name;  }
+            set { m_name = value; }
+        }
+
+        /// <remarks />
+        [DataMember(Name = "RealTimeParameter", IsRequired = false, Order = 2)]
         public bool RealTimeParameter
         {
             get { return m_realTimeParameter;  }
@@ -24542,6 +24551,7 @@ namespace CRCL
         {
             encoder.PushNamespace(CRCL.Namespaces.CRCL);
 
+            encoder.WriteString("Name", Name);
             encoder.WriteBoolean("RealTimeParameter", RealTimeParameter);
 
             encoder.PopNamespace();
@@ -24552,6 +24562,7 @@ namespace CRCL
         {
             decoder.PushNamespace(CRCL.Namespaces.CRCL);
 
+            Name = decoder.ReadString("Name");
             RealTimeParameter = decoder.ReadBoolean("RealTimeParameter");
 
             decoder.PopNamespace();
@@ -24572,6 +24583,7 @@ namespace CRCL
                 return false;
             }
 
+            if (!Utils.IsEqual(m_name, value.m_name)) return false;
             if (!Utils.IsEqual(m_realTimeParameter, value.m_realTimeParameter)) return false;
 
             return true;
@@ -24590,6 +24602,7 @@ namespace CRCL
         {
             CRCLCommandParametersSetDataType clone = (CRCLCommandParametersSetDataType)base.MemberwiseClone();
 
+            clone.m_name = (string)Utils.Clone(this.m_name);
             clone.m_realTimeParameter = (bool)Utils.Clone(this.m_realTimeParameter);
 
             return clone;
@@ -24597,6 +24610,7 @@ namespace CRCL
         #endregion
 
         #region Private Fields
+        private string m_name;
         private bool m_realTimeParameter;
         #endregion
     }
