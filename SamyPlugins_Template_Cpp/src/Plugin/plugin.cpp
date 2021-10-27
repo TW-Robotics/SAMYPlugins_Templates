@@ -16,7 +16,77 @@ Plugin::~Plugin()
     UA_Client_delete(samy_core_client);
 }
 
+
+
+void readTestFunction(std::string samyCoreAddress, std::string samyCorePort, const UA_NodeId& nodeToRead){
+
+    UA_StatusCode retval = UA_STATUSCODE_GOOD;
+
+    /* READS CORRECTLY WITH A CLIENT FROM THE SAMYCORE */
+    std::cout << "||||||||||||||||||||||||||||||||||BEGIN READ TEST FUNCTION|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"<< std::endl;
+
+    UA_Client* client = UA_Client_new();
+    std::string address = "opc.tcp://"+ samyCoreAddress + ":" + samyCorePort;
+
+    UA_DataTypeArray customParametersSetDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
+
+
+    UA_ClientConfig *ccc = UA_Client_getConfig( client );
+
+    UA_ClientConfig_setDefault(ccc);
+    ccc->customDataTypes = &customParametersSetDataTypes;
+
+    UA_Client_connect( client, address.c_str() );
+
+    UA_Variant var2;
+    UA_Variant_init( &var2 );
+    retval |= UA_Client_readValueAttribute( client, nodeToRead, &var2);
+
+    UA_MoveToParametersSetDataType* commandParameters;
+    commandParameters = (UA_MoveToParametersSetDataType*)var2.data;
+    UA_String str;
+    UA_String_init( &str );
+    UA_print( commandParameters, &UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE], &str );
+    std::cout << str.data << std::endl;
+    UA_String_clear( &str );
+
+    retval |= UA_Client_disconnect(client);
+    UA_Client_delete(client);
+
+    std::cout << "||||||||||||||||||||||||||||||||||END READ TEST FUNCTION|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"<< std::endl;
+}
+
+
+void readTestFunction2(const UA_NodeId& nodeToRead, UA_Client* client){
+
+    UA_StatusCode retval = UA_STATUSCODE_GOOD;
+
+    /* READS CORRECTLY WITH A CLIENT FROM THE SAMYCORE */
+    std::cout << "||||||||||||||||||||||||||||||||||BEGIN READ TEST FUNCTION2|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"<< std::endl;
+
+    UA_Variant var2;
+    UA_Variant_init( &var2 );
+    std::cout << "AQUI 0"<<std::endl;
+    retval |= UA_Client_readValueAttribute( client, nodeToRead, &var2);
+    std::cout << "AQUI 1"<<std::endl;
+
+    UA_MoveToParametersSetDataType* commandParameters;
+    commandParameters = (UA_MoveToParametersSetDataType*)var2.data;
+    UA_String str;
+    UA_String_init( &str );
+    UA_print( commandParameters, &UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE], &str );
+    std::cout << str.data << std::endl;
+    UA_String_clear( &str );
+
+    std::cout << "||||||||||||||||||||||||||||||||||END READ TEST FUNCTION|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"<< std::endl;
+}
+
+
+
 UA_StatusCode Plugin::ConnectToCore(std::string samyCoreAddress, std::string samyCorePort){
+
+    readTestFunction(samyCoreAddress, samyCorePort, UA_NODEID_NUMERIC(8,55766));
+
     samy_core_client = UA_Client_new();
     std::string endpoint = "opc.tcp://"+ samyCoreAddress + ":" + samyCorePort;
     UA_DataTypeArray customDataTypes{NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
@@ -36,7 +106,7 @@ UA_StatusCode Plugin::ConnectToCore(std::string samyCoreAddress, std::string sam
     // Testing Read Value
     UA_Variant var;
     UA_Variant_init( &var );
-    retval |= UA_Client_readValueAttribute( samy_core_client, UA_NODEID_NUMERIC(9,56693), &var);
+    retval |= UA_Client_readValueAttribute( samy_core_client, UA_NODEID_NUMERIC(8,55766), &var);
     if(retval != UA_STATUSCODE_GOOD) {
         std::cout << "Reading not succesfull" << std::endl;
     } else std::cout << "Reading was sucessfull" << std::endl;
@@ -186,7 +256,7 @@ UA_StatusCode Plugin::SubscribeToRobot(){
     // Add a MonitoredItem
     UA_MonitoredItemCreateRequest item;
     UA_MonitoredItemCreateRequest_init(&item);
-    item.itemToMonitor.nodeId = UA_NODEID_NUMERIC(9, 15001);
+    item.itemToMonitor.nodeId = UA_NODEID_NUMERIC(8, 15001);
     item.itemToMonitor.attributeId = UA_ATTRIBUTEID_EVENTNOTIFIER;
     item.monitoringMode = UA_MONITORINGMODE_REPORTING;
 
@@ -203,7 +273,7 @@ UA_StatusCode Plugin::SubscribeToRobot(){
     UA_MonitoredItemCreateResult result =
         UA_Client_MonitoredItems_createEvent(samy_core_client, subId,
                                              UA_TIMESTAMPSTORETURN_BOTH, item,
-                                             (void*)(this), handler_events, NULL);
+                                             (void*)(this), this->handler_events, NULL);
 
     printf("\nStatus Code result: %d\n", result.statusCode);
     printf("UA_STATUSCODE_GOOD: %d\n", UA_STATUSCODE_GOOD);
@@ -231,11 +301,16 @@ void Plugin::handler_events(UA_Client *client, UA_UInt32 subId, void *subContext
     Plugin* plugin;
     plugin = (Plugin*)monContext;
 
+    std::cout << "HANDLER EVENTS FUNCTION" << std::endl;
+    std::thread thread_object_1(readTestFunction, "localhost", "4840", UA_NODEID_NUMERIC(8,55766));
+    thread_object_1.join();
+
     // Testing Read Value
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
     UA_Variant var;
     UA_Variant_init( &var );
     retval |= UA_Client_readValueAttribute( plugin->samy_core_client, UA_NODEID_NUMERIC(9,56693), &var);
+
     if(retval != UA_STATUSCODE_GOOD) {
         std::cout << "Reading not succesfull" << std::endl;
     } else std::cout << "Reading was sucessfull" << std::endl;
@@ -254,6 +329,7 @@ void Plugin::handler_events(UA_Client *client, UA_UInt32 subId, void *subContext
             for (int i = 0; i < skillList.size(); i++){
                 if(text.find(skillList[i].name) != std::string::npos &&
                         text.find("Ready to Running") != std::string::npos){
+
                     printf("Found Skill with NodeId %d to execute\n", skillList[i].skillNodeId.identifier.numeric);
                     plugin->ExecuteSkill(&skillList[i].skillNodeId);
                 }
@@ -277,18 +353,14 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     std::unordered_map<std::string, UA_NodeId> methods;
     //GetSkillMethods(skillNode, &methods);
 
-    std::cout << "Get Paramter Node" << std::endl;
+    std::cout << "Get ParameterSet Node" << std::endl;
     UA_NodeId paramter_node_id;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, skillNode,
                                                &paramter_node_id, "ParameterSet");
 
-    std::cout << "Get node data type" << std::endl;
-    UA_NodeId node_data_type2;
-    UA_Client_readDataTypeAttribute(samy_core_client, UA_NODEID_NUMERIC(9, 56678), &node_data_type2);
-    std::cout << "Node type:" << node_data_type2.identifier.numeric << std::endl;
+    std::cout << "ParameterSet Node: " << paramter_node_id.namespaceIndex << "  " << paramter_node_id.identifier.numeric << std::endl;
 
-
-    std::cout << "Browse all paramter value nodes" << std::endl;
+    std::cout << "Browse all parameter value nodes" << std::endl;
     UA_BrowseRequest bReq;
     UA_BrowseRequest_init(&bReq);
     bReq.requestedMaxReferencesPerNode = 0;
@@ -297,6 +369,9 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     bReq.nodesToBrowse[0].nodeId = paramter_node_id; /* browse objects folder */
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client, bReq);
+
+    std::cout << "Skill has "<< bResp.resultsSize << "parameters" << std::endl;
+
     for(size_t i = 0; i < bResp.resultsSize; ++i) {
         for(size_t j = 0; j < bResp.results[i].referencesSize; ++j) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
@@ -307,10 +382,14 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                 printf("Read data from core\n");
                 std::cout<<"NODEID SKILL PARAMETER   " << ref->nodeId.nodeId.identifier.numeric << std::endl;
 
+
+    //            readTestFunction("localhost", "4840", ref->nodeId.nodeId);
+
+
                 std::cout << "Get node data type" << std::endl;
                 UA_NodeId node_data_type;
                 UA_Client_readDataTypeAttribute(samy_core_client, ref->nodeId.nodeId, &node_data_type);
-                std::cout << "Node type of paramter node:" << node_data_type.identifier.numeric << std::endl;
+                std::cout << "DataType of parameter node: " << node_data_type.namespaceIndex <<"  "<< node_data_type.identifier.numeric << std::endl;
 
                 UA_Client_readValueAttribute(samy_core_client, ref->nodeId.nodeId, &myVar);
                 std::cout << "Got value from server" << std::endl;

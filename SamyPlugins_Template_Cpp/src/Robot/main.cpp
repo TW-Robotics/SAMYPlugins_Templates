@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     std::cout << "Conecting to Robot" << std::endl;
     std::shared_ptr<Robot> robot(new Robot(address, &signals));
 
-    // Connect methodes to signals
+    // Connect methods to signals
     signals.MoveTo.connect(boost::bind(&Robot::ExecuteMoveTo, robot, _1));
 
     // Connect to SAMYCore and start listending for commands.

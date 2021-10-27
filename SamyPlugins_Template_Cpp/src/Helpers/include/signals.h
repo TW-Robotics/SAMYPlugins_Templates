@@ -2,8 +2,8 @@
 #define SIGNALS_H
 
 #include <boost/signals2.hpp>
-#include "namespace_crcl_generated.h"
-#include "types_crcl_generated_handling.h"
+#include <namespace_crcl_generated.h>
+#include <types_crcl_generated_handling.h>
 
 struct Signals{
     // Signals for CRCL commands

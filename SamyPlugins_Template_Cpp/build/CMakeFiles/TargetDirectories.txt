@@ -1,7 +1,0 @@
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/rebuild_cache.dir
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/test_robot.dir
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/SAMYPluginLib.dir
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/pref-ns-crcl.dir
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/edit_cache.dir
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/pref-ids-crcl.dir
-/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SamyPlugins_Template_Cpp/build/CMakeFiles/pref-types-crcl.dir

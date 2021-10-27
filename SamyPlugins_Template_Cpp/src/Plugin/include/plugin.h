@@ -5,9 +5,9 @@
 #include <open62541/client_highlevel.h>
 #include <open62541/client_subscriptions.h>
 #include <open62541/plugin/log_stdout.h>
-#include "namespace_crcl_generated.h"
-#include "types_crcl_generated.h"
-#include "types_crcl_generated_handling.h"
+#include <namespace_crcl_generated.h>
+#include <namespace_crcl_generated.h>
+#include <types_crcl_generated_handling.h>
 
 #include "samy_robot.h"
 #include <helpers.h>
@@ -17,6 +17,7 @@
 #include <signals.h>
 #include <vector>
 #include <unordered_map>
+#include <thread>
 
 struct skill
 {
@@ -39,7 +40,7 @@ private:
     UA_MonitoredItemCreateResult monResponse;
     UA_MonitoredItemCreateRequest monRequest;
     static std::vector<struct skill> skillList;
-    Signals * signals;
+    Signals* signals;
 public:
     Plugin(Signals* signals_);
     ~Plugin();

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libSAMYPlugin_Template_Cpp.a  CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/namespace_crcl_generated.c.o CMakeFiles/SAMYPlugin_Template_Cpp.dir/src_generated/types_crcl_generated.c.o CMakeFiles/SAMYPlugin_Template_Cpp.dir/src/Communication/samy_robot.c.o CMakeFiles/SAMYPlugin_Template_Cpp.dir/src/Plugin/plugin.cpp.o CMakeFiles/SAMYPlugin_Template_Cpp.dir/src/Helpers/helpers.cpp.o
-/usr/bin/ranlib libSAMYPlugin_Template_Cpp.a

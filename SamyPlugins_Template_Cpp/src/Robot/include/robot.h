@@ -5,8 +5,8 @@
 #include <string>
 #include <iostream>
 
-#include "namespace_crcl_generated.h"
-#include "types_crcl_generated_handling.h"
+#include <namespace_crcl_generated.h>
+#include <types_crcl_generated_handling.h>
 
 class Robot
 {
