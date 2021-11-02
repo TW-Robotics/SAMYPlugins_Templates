@@ -12,6 +12,9 @@
 #include "samy_robot.h"
 #include <helpers.h>
 
+#include <boost/thread.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/asio/executor_work_guard.hpp>
 #include <boost/signals2.hpp>
 #include <functional>
 #include <signals.h>
@@ -28,39 +31,49 @@ struct skill
 class Plugin
 {
 private:
-    void MonitorLastSkillSucceededVariable(UA_Server *server, SAMYRobot* robots);
-    void MonitorNextSkillIdVariable(UA_Server* server, SAMYRobot* robot);
-    static void UpdateAndExecuteRequestedSkill(UA_Server *server, UA_UInt32 monitoredItemId,
-                                      void *monitoredItemContext, const UA_NodeId *nodeId,
-                                      void *nodeContext, UA_UInt32 attributeId,
-                                      const UA_DataValue *value);
-    UA_Client* samy_core_client;
-    UA_NodeId* robot_node_id;
-    UA_NodeId* robot_controller_node_id;
-    UA_MonitoredItemCreateResult monResponse;
-    UA_MonitoredItemCreateRequest monRequest;
-    static std::vector<struct skill> skillList;
-    Signals* signals;
-public:
-    Plugin(Signals* signals_);
-    ~Plugin();
-    static void handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
-                                UA_UInt32 monId, void *monContext,
-                                size_t nEventFields, UA_Variant *eventFields);
-
-    UA_StatusCode ConnectToCore(std::string samyCoreAddress, std::string samyCorePort);
+    bool StartReadThread();
+    void RunService();
+    UA_StatusCode ConnectToCore();
+    UA_StatusCode SubscribeToRobot();
     UA_StatusCode GetRobotNodeId(std::string robotName);
     UA_StatusCode GetSkillNodeId(std::string skillName, UA_NodeId* skillNodeId);
-    UA_StatusCode GetSkillMethods(UA_NodeId* skillNode, std::unordered_map<std::string, UA_NodeId> *methods);
-    UA_StatusCode callMethod(UA_NodeId *methodNode, UA_NodeId *objectNode);
-    UA_StatusCode resetAllSkills();
     UA_StatusCode GetListOfSkills();
-    UA_StatusCode RunClient(int timeout);
-    UA_StatusCode SubscribeToRobot();
-    void ExecuteSkill(UA_NodeId* skillNode);
+// ################ Methode Handling  ########################
+    UA_StatusCode CallMethod(UA_NodeId *methodNode, UA_NodeId *objectNode);
+    UA_StatusCode GetSkillMethods(UA_NodeId* skillNode, std::unordered_map<std::string, UA_NodeId> *methods);
+    UA_StatusCode ResetSkill(UA_NodeId* skillNode);
+    UA_StatusCode HaltSkill(UA_NodeId* skillNode);
+    UA_StatusCode ResetAllSkills();
+    UA_StatusCode HaltAllSkills();
+// ################ Methode Handling  ########################
     void SendCommandIsDone();
-    bool *running;
+    static void HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
+                                UA_UInt32 monId, void *monContext,
+                                size_t nEventFields, UA_Variant *eventFields);
+    void ExecuteSkill(UA_NodeId* skillNode);
 
+    std::string samyCoreAddress;
+    std::string samyCorePort;
+    UA_Client* samy_core_client;
+    UA_Client* samy_core_client_read;
+    UA_NodeId* robot_node_id;
+    UA_NodeId* robot_controller_node_id;
+    static std::vector<struct skill> skillList;
+    Signals* signals;
+
+    // Variables for reading values from server in seperate thread
+    bool m_started = false;
+    boost::asio::io_service m_service;
+    boost::asio::executor_work_guard<boost::asio::io_context::executor_type> m_worker;
+    boost::thread m_thread;
+
+public:
+    Plugin(std::string samyCoreAddress_, std::string samyCorePort_, Signals* signals_);
+    ~Plugin();
+    UA_StatusCode InitPlugin(std::string robotName);
+    UA_StatusCode RunClient(int timeout);
+
+    bool *running;
 };
 
 #endif // PLUGIN_H

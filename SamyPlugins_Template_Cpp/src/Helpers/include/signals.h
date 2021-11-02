@@ -10,7 +10,7 @@ struct Signals{
     boost::signals2::signal<void(UA_InitCanonDataType*)> InitCanon;
     boost::signals2::signal<void(UA_EndCanonDataType*)> EndCanon;
     boost::signals2::signal<void(UA_MessageDataType*)> Message;
-    boost::signals2::signal<void(UA_MoveToDataType*)> MoveTo;
+    boost::signals2::signal<void(UA_MoveToParametersSetDataType*)> MoveTo;
     boost::signals2::signal<void(UA_MoveScrewDataType*)> MoveScrew;
     boost::signals2::signal<void(UA_MoveThroughToDataType*)> MoveThroughTo;
     boost::signals2::signal<void(UA_DwellDataType*)> Dwell;
@@ -45,6 +45,9 @@ struct Signals{
     boost::signals2::signal<void(UA_DisableRobotParameterStatusDataType*)> DisableRobotParameterStatus;
     // Signals for skill methods
     boost::signals2::signal<void(std::string*)> Reset;
+    boost::signals2::signal<void(std::string*)> Start;
+    boost::signals2::signal<void(std::string*)> Hold;
+    boost::signals2::signal<void(std::string*)> Resume;
 };
 
 #endif

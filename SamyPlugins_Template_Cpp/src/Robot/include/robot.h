@@ -14,7 +14,7 @@ public:
     Robot(std::string address_, Signals* signals_);
     ~Robot()=default;
 
-    void ExecuteMoveTo(UA_MoveToDataType *moveTo);
+    void ExecuteMoveTo(UA_MoveToParametersSetDataType *moveTo);
 private:
     Signals* signals;
     std::string address;

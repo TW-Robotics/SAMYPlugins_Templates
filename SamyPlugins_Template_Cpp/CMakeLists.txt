@@ -19,7 +19,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(SAMYPluginLib VERSION 0.1 LANGUAGES CXX C)
 
-find_package(Boost COMPONENTS)
+find_package(Boost COMPONENTS thread)
 include_directories("${Boost_INCLUDE_DIRS}")
 # open62541 v1.2 must be installed!
 # If in custom path, then use -DCMAKE_PREFIX_PATH=/home/user/installcmake_minimum_required(VERSION 3.2)

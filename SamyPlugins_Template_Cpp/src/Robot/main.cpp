@@ -2,12 +2,16 @@
 #include "plugin.h"
 #include "robot.h"
 
+#include <memory>
 #include <signal.h>
 #include <signals.h>
 #include <boost/signals2.hpp>
+#include <thread>
+#include <chrono>
+
 #include "namespace_crcl_generated.h"
 #include "types_crcl_generated_handling.h"
-#include <memory>
+
 
 UA_Boolean running = true;
 static void stopHandler(int sign) {
@@ -15,11 +19,17 @@ static void stopHandler(int sign) {
     running = false;
 }
 
+void runRobot(std::shared_ptr<Robot> robot, std::string address, Signals* signals){
+    robot = std::shared_ptr<Robot>(new Robot(address, signals));
+    while (running){
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+}
+
 int main(int argc, char** argv)
 {
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
-    printf("C++: Starting Plugin\n");
 
     std::string address; // address of robot
     std::string samyCoreAddress;
@@ -37,29 +47,23 @@ int main(int argc, char** argv)
         return -1;
     }
 
-
-    Signals signals; // Struct of all available signals (all CRCL-commands, signals for skill methods)
-    Plugin plugin(&signals);
+    Signals signals; // Struct of all available signals (all CRCL-commands and signals for skill methods)
+    Plugin plugin(samyCoreAddress, samyCorePort, &signals);
     plugin.running = &running;
 
     // Creating the robot object
-    std::cout << "Conecting to Robot" << std::endl;
+    std::cout << "Connecting to Robot..." << std::endl;
     std::shared_ptr<Robot> robot(new Robot(address, &signals));
+    std::cout << "Connected to Robot" << std::endl;
 
     // Connect methods to signals
     signals.MoveTo.connect(boost::bind(&Robot::ExecuteMoveTo, robot, _1));
 
     // Connect to SAMYCore and start listending for commands.
     UA_StatusCode retval = UA_STATUSCODE_GOOD;
-    retval = plugin.ConnectToCore(samyCoreAddress, samyCorePort);
-    printf("Connected to SAMY Core.\n");
-    plugin.GetRobotNodeId(robotName);
-    printf("Got Robot Node Id.\n");
-    plugin.SubscribeToRobot();
-    printf("Subscribed to NextSkillNodeId.\n");
-    plugin.GetListOfSkills();
+    retval = plugin.InitPlugin(robotName);
     printf("Starting RunClient.\n");
-    plugin.RunClient(1000);
+    retval = plugin.RunClient(1000);
     printf("RunClient has returned.\n");
 
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
