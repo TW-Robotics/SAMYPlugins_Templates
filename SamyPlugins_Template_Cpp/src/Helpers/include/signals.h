@@ -10,7 +10,7 @@ struct Signals{
     boost::signals2::signal<void(UA_InitCanonDataType*)> InitCanon;
     boost::signals2::signal<void(UA_EndCanonDataType*)> EndCanon;
     boost::signals2::signal<void(UA_MessageDataType*)> Message;
-    boost::signals2::signal<void(UA_MoveToParametersSetDataType*)> MoveTo;
+    boost::signals2::signal<int(UA_MoveToParametersSetDataType*)> MoveTo;
     boost::signals2::signal<void(UA_MoveScrewDataType*)> MoveScrew;
     boost::signals2::signal<void(UA_MoveThroughToDataType*)> MoveThroughTo;
     boost::signals2::signal<void(UA_DwellDataType*)> Dwell;
@@ -25,7 +25,7 @@ struct Signals{
     boost::signals2::signal<void(UA_SetEndeffectorParametersDataType*)> SetEndeffectorParameters;
     boost::signals2::signal<void(UA_SetEndeffectorDataType*)> SetEndeffector;
     boost::signals2::signal<void(UA_SetTransAccelDataType*)> SetTransAccel;
-    boost::signals2::signal<void(UA_SetTransSpeedDataType*)> SetTransSpeed;
+    boost::signals2::signal<void(UA_SetTransSpeedParametersSetDataType*)> SetTransSpeed;
     boost::signals2::signal<void(UA_SetRotAccelDataType*)> SetRotAccel;
     boost::signals2::signal<void(UA_SetRotSpeedDataType*)> SetRotSpeed;
     boost::signals2::signal<void(UA_SetAngleUnitsDataType*)> SetAngleUnits;
@@ -44,10 +44,10 @@ struct Signals{
     boost::signals2::signal<void(UA_EnableRobotParameterStatusDataType*)> EnableRobotParameterStatus;
     boost::signals2::signal<void(UA_DisableRobotParameterStatusDataType*)> DisableRobotParameterStatus;
     // Signals for skill methods
-    boost::signals2::signal<void(std::string*)> Reset;
-    boost::signals2::signal<void(std::string*)> Start;
-    boost::signals2::signal<void(std::string*)> Hold;
-    boost::signals2::signal<void(std::string*)> Resume;
+    boost::signals2::signal<void()> Reset;
+    boost::signals2::signal<void()> Start;
+    boost::signals2::signal<void()> Halt;
+    boost::signals2::signal<void()> Resume;
 };
 
 #endif

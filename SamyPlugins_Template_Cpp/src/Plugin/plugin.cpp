@@ -10,7 +10,6 @@ Plugin::Plugin(std::string samyCoreAddress_, std::string samyCorePort_, Signals*
 {
     robot_node_id = UA_NodeId_new();
     robot_controller_node_id = UA_NodeId_new();
-     //signals.Reset.connect(boost::bind(this->ResetSkill, this, _1));
 }
 
 Plugin::~Plugin()
@@ -56,6 +55,7 @@ UA_StatusCode Plugin::InitPlugin(std::string robotName){
         return retval;
     }
     std::cout << "All Skills reseted" << std::endl;
+    ConnectSignals();
     return retval;
 }
 
@@ -71,22 +71,21 @@ bool Plugin::StartReadThread() {
 
 void Plugin::RunService(){
     // Create opcua client in thread
-    UA_Client* client = UA_Client_new();
+    samy_core_client_read = UA_Client_new();
     std::string endpoint = "opc.tcp://"+ samyCoreAddress + ":" + samyCorePort;
     UA_DataTypeArray customDataTypesCRCL{NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
-    UA_ClientConfig *cc = UA_Client_getConfig( client );
+    UA_ClientConfig *cc = UA_Client_getConfig( samy_core_client_read );
 
     UA_ClientConfig_setDefault(cc);
     cc->customDataTypes = &customDataTypesCRCL;
 
-    UA_StatusCode retval = UA_Client_connect( client, endpoint.c_str() );
+    UA_StatusCode retval = UA_Client_connect( samy_core_client_read, endpoint.c_str() );
 
     if(retval != UA_STATUSCODE_GOOD) {
-        UA_Client_delete(client);
+        UA_Client_delete(samy_core_client_read);
         std::cout << "Connectiong to server faild: read client" << std::endl;
     }
-    samy_core_client_read = client;
     m_service.run();
 }
 
@@ -235,6 +234,11 @@ UA_StatusCode Plugin::GetListOfSkills(){
     return UA_STATUSCODE_GOOD;
 }
 
+void Plugin::ConnectSignals(){
+    signals->Halt.connect(boost::bind(&Plugin::HaltCurrentSkill, this));
+    signals->Reset.connect(boost::bind(&Plugin::ResetCurrentSkill, this));
+}
+
 // ################ Methode Handling  ########################
 
 UA_StatusCode Plugin::CallMethod(UA_NodeId* methodNode, UA_NodeId* objectNode){
@@ -246,7 +250,7 @@ UA_StatusCode Plugin::CallMethod(UA_NodeId* methodNode, UA_NodeId* objectNode){
     UA_Variant_setScalarCopy(&input, &argString, &UA_TYPES[UA_TYPES_STRING]);
     size_t outputSize;
     UA_Variant *output;
-    retval = UA_Client_call(samy_core_client, *objectNode,
+    retval = UA_Client_call(samy_core_client_read, *objectNode,
                             *methodNode, 0, NULL, &outputSize, &output);
     if(retval == UA_STATUSCODE_GOOD) {
         printf("Method call was successful, and %lu returned values available.\n",
@@ -267,7 +271,7 @@ UA_StatusCode Plugin::GetSkillMethods(UA_NodeId* skillNode,
     bReq.nodesToBrowseSize = 1;
     bReq.nodesToBrowse[0].nodeId = *skillNode;
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
-    UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client, bReq);
+    UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client_read, bReq);
     for(size_t i = 0; i < bResp.resultsSize; ++i) {
         for(size_t j = 0; j < bResp.results[i].referencesSize; ++j) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
@@ -292,11 +296,27 @@ UA_StatusCode Plugin::ResetSkill(UA_NodeId* skillNode){
     return retval;
 }
 
+UA_StatusCode Plugin::ResetCurrentSkill(){
+    UA_StatusCode retval;
+    std::unordered_map<std::string, UA_NodeId> methods;
+    GetSkillMethods(&currentSkill, &methods);
+    retval = CallMethod(&methods.at("Reset"), &currentSkill);
+    return retval;
+}
+
 UA_StatusCode Plugin::HaltSkill(UA_NodeId* skillNode){
     UA_StatusCode retval;
     std::unordered_map<std::string, UA_NodeId> methods;
     GetSkillMethods(skillNode, &methods);
     retval = CallMethod(&methods.at("Halt"), skillNode);
+    return retval;
+}
+
+UA_StatusCode Plugin::HaltCurrentSkill(){
+    UA_StatusCode retval;
+    std::unordered_map<std::string, UA_NodeId> methods;
+    GetSkillMethods(&currentSkill, &methods);
+    retval = CallMethod(&methods.at("Halt"), &currentSkill);
     return retval;
 }
 
@@ -331,6 +351,7 @@ void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
                             size_t nEventFields, UA_Variant *eventFields) {
     Plugin* plugin;
     plugin = (Plugin*)monContext;
+    std::cout << "Number of EventFields: " << nEventFields << std::endl;
 
     for (size_t i = 0; i < nEventFields; i++){
         if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_LOCALIZEDTEXT])) {
@@ -343,9 +364,10 @@ void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
                 if(text.find(skillList[i].name) != std::string::npos &&
                         text.find("Ready to Running") != std::string::npos){
 
-                    printf("Found Skill with NodeId %d to execute\n", skillList[i].skillNodeId.identifier.numeric);
+                    std::cout << "Found Skill with NodeId " << skillList[i].skillNodeId.identifier.numeric <<
+                                 " to execute" << std::endl;
+                    plugin->currentSkill = skillList[i].skillNodeId;
                     plugin->m_service.post(boost::bind(&Plugin::ExecuteSkill, plugin, &skillList[i].skillNodeId));
-                    //plugin->ExecuteSkill(&skillList[i].skillNodeId);
                 }
             }
         }
@@ -365,10 +387,8 @@ void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
 
 void Plugin::ExecuteSkill(UA_NodeId* skillNode){
 
+    bool error = false;
     std::cout << "\n\n Starting to Execute Skill\n\n" << std::endl;
-    std::unordered_map<std::string, UA_NodeId> methods;
-    //GetSkillMethods(skillNode, &methods);
-
     std::cout << "Get ParameterSet Node" << std::endl;
     UA_NodeId paramter_node_id;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client_read, skillNode,
@@ -386,44 +406,51 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client_read, bReq);
 
-    std::cout << "Skill has "<< bResp.resultsSize << "parameters" << std::endl;
+    std::cout << "Skill has "<< bResp.results[0].referencesSize << " parameters" << std::endl;
 
-    for(size_t i = 0; i < bResp.resultsSize; ++i) {
-        for(size_t j = 0; j < bResp.results[i].referencesSize; ++j) {
+    for(size_t i = 0; i < bResp.resultsSize; i++) {
+        for(size_t j = 0; j < bResp.results[i].referencesSize; j++) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
             if(ref->nodeClass == UA_NODECLASS_VARIABLE) {
-                std::cout << "Skill name:" << (const char*)ref->browseName.name.data << std::endl;
+                std::cout << "Parameter name:" << (const char*)ref->browseName.name.data << std::endl;
                 UA_Variant myVar;
                 UA_Variant_init(&myVar);
-                printf("Read data from core\n");
-                std::cout<<"NODE ID SKILL PARAMETER   " << ref->nodeId.nodeId.identifier.numeric << std::endl;
-
-                std::cout << "Get node data type" << std::endl;
-                UA_NodeId node_data_type;
-                UA_Client_readDataTypeAttribute(samy_core_client_read, ref->nodeId.nodeId, &node_data_type);
-                std::cout << "DataType of parameter node: " << node_data_type.namespaceIndex <<"  "<< node_data_type.identifier.numeric << std::endl;
 
                 UA_Client_readValueAttribute(samy_core_client_read, ref->nodeId.nodeId, &myVar);
                 std::cout << "Got value from server" << std::endl;
                 std::cout << "Type Name:" << myVar.type->typeName << std::endl;
+                std::cout << "Type Kind:" << myVar.type->typeKind << std::endl;
                 std::cout << "Type ID:" << myVar.type->typeId.identifier.numeric << std::endl;
                 std::cout << "UA_TYPE MoveTo Id: " << UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
                 std::cout << "UA_TYPE SetEndeffector Id: " << UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
 
-                if (UA_Variant_hasScalarType(&myVar, &UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE])){
-                    std::cout << "Found SetEndeffector Type" << std::endl;
+                std::string typeName = myVar.type->typeName;
+                if (typeName.compare("MoveToParametersSetDataType") == 0){
+                    std::cout << "Found MoveTo Type" << std::endl;
+                    UA_MoveToParametersSetDataType* moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
+                    if (*signals->MoveTo(moveto) < 0){
+                        std::cout << "Error while executing MoveTo" << std::endl;
+                        error = true;
+                        break;
+                    }
+
+                }
+                else if (UA_Variant_hasScalarType(&myVar, &UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE])){
+                    std::cout << "Found MoveTo with good method" << std::endl;
                     UA_MoveToParametersSetDataType* moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
                     signals->MoveTo(moveto);
                 }
-                else if (UA_Variant_hasScalarType(&myVar, &UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE])){
-                    std::cout << "Found MoveTo Type" << std::endl;
-                    UA_MoveToParametersSetDataType* moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
-                    signals->MoveTo(moveto);
+                else if (typeName.compare("SetTransSpeedParametersSetDataType") == 0){
+                    std::cout << "Found SetTransSpeed Type" << std::endl;
+                    UA_SetTransSpeedParametersSetDataType* setTransSpeed = (UA_SetTransSpeedParametersSetDataType*)&myVar.data;
+                    signals->SetTransSpeed(setTransSpeed);
                 }
 
             }
         }
+        if (error) break;
     }
+    if (!error) ResetSkill(skillNode);
     UA_BrowseRequest_clear(&bReq);
     UA_BrowseResponse_clear(&bResp);
 

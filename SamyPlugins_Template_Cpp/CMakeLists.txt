@@ -5,7 +5,6 @@ endif()
 
 set(CPP_EXTENSIONS "Uses compiler-specific extensions to the CPP standard" OFF)
 
-#add_compile_definitions(USE_CPP)
 set(CPP_STANDARD 11)
 #enable_language(CXX)
 SET(CMAKE_CXX_STANDARD ${CPP_STANDARD})
@@ -20,6 +19,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 project(SAMYPluginLib VERSION 0.1 LANGUAGES CXX C)
 
 find_package(Boost COMPONENTS thread)
+
 include_directories("${Boost_INCLUDE_DIRS}")
 # open62541 v1.2 must be installed!
 # If in custom path, then use -DCMAKE_PREFIX_PATH=/home/user/installcmake_minimum_required(VERSION 3.2)
@@ -74,15 +74,14 @@ add_dependencies(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Boost_LIBRARIES} open62541::open62541)
 
-
-
 # Build the test robot
 include_directories("${PROJECT_SOURCE_DIR}/src/Robot/include")
+include_directories("${PROJECT_SOURCE_DIR}/src/Robot/ThirdParty/include")
 
 #link_directories("${PROJECT_SOURCE_DIR}/build") # Not necessary to do this since later in target_link_libraries we explicitely link against the (previously built) SAMYPluginLib target
 
 # I think due to an ""error"" here it wasn't "tracking" the changes of the robot.cpp file. You had src/Robot/robot.cpp instead of ./src/Robot/robot.cpp, and apparently if you do so it detects it for compilation but it doesn't track the file. Now for me it works well and tracks the changes in the file (before this modification it didn't).
-add_executable(test_robot 
+add_executable(test_robot
                "./src/Robot/robot.cpp"
                "./src/Robot/main.cpp")
 

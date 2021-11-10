@@ -38,6 +38,7 @@ private:
     UA_StatusCode GetRobotNodeId(std::string robotName);
     UA_StatusCode GetSkillNodeId(std::string skillName, UA_NodeId* skillNodeId);
     UA_StatusCode GetListOfSkills();
+    void ConnectSignals();
 // ################ Methode Handling  ########################
     UA_StatusCode CallMethod(UA_NodeId *methodNode, UA_NodeId *objectNode);
     UA_StatusCode GetSkillMethods(UA_NodeId* skillNode, std::unordered_map<std::string, UA_NodeId> *methods);
@@ -58,6 +59,7 @@ private:
     UA_Client* samy_core_client_read;
     UA_NodeId* robot_node_id;
     UA_NodeId* robot_controller_node_id;
+    UA_NodeId currentSkill;
     static std::vector<struct skill> skillList;
     Signals* signals;
 
@@ -72,6 +74,8 @@ public:
     ~Plugin();
     UA_StatusCode InitPlugin(std::string robotName);
     UA_StatusCode RunClient(int timeout);
+    UA_StatusCode HaltCurrentSkill();
+    UA_StatusCode ResetCurrentSkill();
 
     bool *running;
 };

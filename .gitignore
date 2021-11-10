@@ -1,6 +1,8 @@
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
+./SamyPlugins_Template_Cpp/build/*
+
 *~
 *.autosave
 *.a

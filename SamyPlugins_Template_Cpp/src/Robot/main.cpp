@@ -15,7 +15,7 @@
 
 UA_Boolean running = true;
 static void stopHandler(int sign) {
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "received ctrl-c");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "received ctrl-c");
     running = false;
 }
 
@@ -49,6 +49,7 @@ int main(int argc, char** argv)
 
     Signals signals; // Struct of all available signals (all CRCL-commands and signals for skill methods)
     Plugin plugin(samyCoreAddress, samyCorePort, &signals);
+    //std::shared_ptr<Plugin> plugin(new Plugin(samyCoreAddress, samyCorePort, &signals));
     plugin.running = &running;
 
     // Creating the robot object
