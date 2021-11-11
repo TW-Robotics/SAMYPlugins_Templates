@@ -1,0 +1,10 @@
+name: 'run_SAMYTemplate_cpp'
+description: 'Runs the SAMYTemplate in cpp'
+inputs:
+  run-type:  # id of input
+    description: 'Type of the run (regular or for testing purposes)'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ./SAMYTemplate ${{ run-type }}
