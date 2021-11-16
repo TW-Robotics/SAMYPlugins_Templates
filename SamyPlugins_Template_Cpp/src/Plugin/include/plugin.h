@@ -46,8 +46,11 @@ private:
     UA_StatusCode HaltSkill(UA_NodeId* skillNode);
     UA_StatusCode ResetAllSkills();
     UA_StatusCode HaltAllSkills();
+    UA_StatusCode HaltCurrentSkill();
+    UA_StatusCode ResetCurrentSkill();
+    UA_StatusCode ResumeCurrentSkill();
+    UA_StatusCode SuspendCurrentSkill();
 // ################ Methode Handling  ########################
-    void SendCommandIsDone();
     static void HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
                                 UA_UInt32 monId, void *monContext,
                                 size_t nEventFields, UA_Variant *eventFields);
@@ -74,9 +77,6 @@ public:
     ~Plugin();
     UA_StatusCode InitPlugin(std::string robotName);
     UA_StatusCode RunClient(int timeout);
-    UA_StatusCode HaltCurrentSkill();
-    UA_StatusCode ResetCurrentSkill();
-
     bool *running;
 };
 

@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <signals.h>
 #include <boost/signals2.hpp>
+#include <boost/bind.hpp>
 #include <thread>
 #include <chrono>
 
@@ -58,7 +59,15 @@ int main(int argc, char** argv)
     std::cout << "Connected to Robot" << std::endl;
 
     // Connect methods to signals
-    signals.MoveTo.connect(boost::bind(&Robot::ExecuteMoveTo, robot, _1));
+    signals.InitCanon.connect(boost::bind(&Robot::InitCanon, robot, _1));
+    signals.EndCanon.connect(boost::bind(&Robot::EndCanon, robot, _1));
+    signals.Message.connect(boost::bind(&Robot::Message, robot, _1));
+    signals.MoveTo.connect(boost::bind(&Robot::MoveTo, robot, _1));
+    signals.MoveScrew.connect(boost::bind(&Robot::MoveScrew, robot, _1));
+    signals.MoveThroughTo.connect(boost::bind(&Robot::MoveThroughTo, robot, _1));
+    signals.Dwell.connect(boost::bind(&Robot::Dwell, robot, _1));
+    signals.ActuateJoints.connect(boost::bind(&Robot::ActuateJoints, robot, _1));
+    signals.SetEndeffector.connect(boost::bind(&Robot::SetEndeffector, robot, _1));
 
     // Connect to SAMYCore and start listending for commands.
     UA_StatusCode retval = UA_STATUSCODE_GOOD;

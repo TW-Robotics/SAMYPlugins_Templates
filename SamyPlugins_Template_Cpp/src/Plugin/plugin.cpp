@@ -16,8 +16,8 @@ Plugin::~Plugin()
 {
     UA_NodeId_delete(robot_node_id);
     UA_NodeId_delete(robot_controller_node_id);
-    UA_Client_delete(samy_core_client);
-    UA_Client_delete(samy_core_client_read);
+    //UA_Client_delete(samy_core_client);
+    //UA_Client_delete(samy_core_client_read);
 }
 
 UA_StatusCode Plugin::InitPlugin(std::string robotName){
@@ -87,6 +87,7 @@ void Plugin::RunService(){
         std::cout << "Connectiong to server faild: read client" << std::endl;
     }
     m_service.run();
+    UA_Client_delete(samy_core_client_read);
 }
 
 UA_StatusCode Plugin::RunClient(int timeout){
@@ -154,13 +155,12 @@ UA_StatusCode Plugin::SubscribeToRobot(){
     item.requestedParameters.filter.content.decoded.data = &filter;
     item.requestedParameters.filter.content.decoded.type = &UA_TYPES[UA_TYPES_EVENTFILTER];
 
-    UA_UInt32 monId = 0;
+//    UA_UInt32 monId = 0;
     UA_MonitoredItemCreateResult result =
         UA_Client_MonitoredItems_createEvent(samy_core_client, subId,
                                              UA_TIMESTAMPSTORETURN_BOTH, item,
                                              (void*)(this), this->HandlerEvents, NULL);
 
-    std::cout << "\nStatus Code result: " << result.statusCode << std::endl;
     if(result.statusCode != UA_STATUSCODE_GOOD) {
         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
                     "Could not add the MonitoredItem with %s", UA_StatusCode_name(result.statusCode));
@@ -170,7 +170,7 @@ UA_StatusCode Plugin::SubscribeToRobot(){
     }
 
     // TODO Not needed?
-    monId = result.monitoredItemId;
+//    monId = result.monitoredItemId;
 
     return retval;
 }
@@ -237,6 +237,8 @@ UA_StatusCode Plugin::GetListOfSkills(){
 void Plugin::ConnectSignals(){
     signals->Halt.connect(boost::bind(&Plugin::HaltCurrentSkill, this));
     signals->Reset.connect(boost::bind(&Plugin::ResetCurrentSkill, this));
+    signals->Resume.connect(boost::bind(&Plugin::ResumeCurrentSkill, this));
+    signals->Suspend.connect(boost::bind(&Plugin::SuspendCurrentSkill, this));
 }
 
 // ################ Methode Handling  ########################
@@ -253,13 +255,15 @@ UA_StatusCode Plugin::CallMethod(UA_NodeId* methodNode, UA_NodeId* objectNode){
     retval = UA_Client_call(samy_core_client_read, *objectNode,
                             *methodNode, 0, NULL, &outputSize, &output);
     if(retval == UA_STATUSCODE_GOOD) {
-        printf("Method call was successful, and %lu returned values available.\n",
-               (unsigned long)outputSize);
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Method call was successful, and %lu returned values available.",
+                    (unsigned long)outputSize);
         UA_Array_delete(output, outputSize, &UA_TYPES[UA_TYPES_VARIANT]);
     } else {
-        printf("Method call was unsuccessful, and %x returned values available.\n", retval);
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Method call was unsuccessful, and %x returned values available.",
+                    retval);
     }
     UA_Variant_clear(&input);
+    return retval;
 }
 
 UA_StatusCode Plugin::GetSkillMethods(UA_NodeId* skillNode,
@@ -323,7 +327,8 @@ UA_StatusCode Plugin::HaltCurrentSkill(){
 UA_StatusCode Plugin::ResetAllSkills(){
     UA_StatusCode retval;
     for (int i = 0; i < skillList.size(); i++){
-        std::cout << "Reseting Skill with Name " << skillList[i].name << std::endl;
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Reseting skill with name '%.*s'",
+                    (int)skillList[i].name.length(), skillList[i].name.c_str());
         ResetSkill(&skillList[i].skillNodeId);
     }
     return retval;
@@ -332,26 +337,38 @@ UA_StatusCode Plugin::ResetAllSkills(){
 UA_StatusCode Plugin::HaltAllSkills(){
     UA_StatusCode retval;
     for (int i = 0; i < skillList.size(); i++){
-        printf("Skill Name %d: %s\n", i, skillList[i].name.c_str());
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Halting skill with name '%.*s'",
+                    (int)skillList[i].name.length(), skillList[i].name.c_str());
         HaltSkill(&skillList[i].skillNodeId);
     }
+    return retval;
+}
+
+UA_StatusCode Plugin::ResumeCurrentSkill(){
+    UA_StatusCode retval;
+    std::unordered_map<std::string, UA_NodeId> methods;
+    GetSkillMethods(&currentSkill, &methods);
+    retval = CallMethod(&methods.at("Resume"), &currentSkill);
+    return retval;
+}
+
+UA_StatusCode Plugin::SuspendCurrentSkill(){
+    UA_StatusCode retval;
+    std::unordered_map<std::string, UA_NodeId> methods;
+    GetSkillMethods(&currentSkill, &methods);
+    retval = CallMethod(&methods.at("Suspend"), &currentSkill);
     return retval;
 }
 
 // ################ Methode Handling  ########################
 
 
-void Plugin::SendCommandIsDone(){
-    std::cout << "Command is finished" << std::endl;
-    // Call methode finished in opcua server
-}
-
 void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
                             UA_UInt32 monId, void *monContext,
                             size_t nEventFields, UA_Variant *eventFields) {
     Plugin* plugin;
     plugin = (Plugin*)monContext;
-    std::cout << "Number of EventFields: " << nEventFields << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Handler got en Event");
 
     for (size_t i = 0; i < nEventFields; i++){
         if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_LOCALIZEDTEXT])) {
@@ -364,8 +381,8 @@ void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
                 if(text.find(skillList[i].name) != std::string::npos &&
                         text.find("Ready to Running") != std::string::npos){
 
-                    std::cout << "Found Skill with NodeId " << skillList[i].skillNodeId.identifier.numeric <<
-                                 " to execute" << std::endl;
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Skill with NodeId %d to execute",
+                                skillList[i].skillNodeId.identifier.numeric);
                     plugin->currentSkill = skillList[i].skillNodeId;
                     plugin->m_service.post(boost::bind(&Plugin::ExecuteSkill, plugin, &skillList[i].skillNodeId));
                 }
@@ -388,15 +405,14 @@ void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
 void Plugin::ExecuteSkill(UA_NodeId* skillNode){
 
     bool error = false;
-    std::cout << "\n\n Starting to Execute Skill\n\n" << std::endl;
-    std::cout << "Get ParameterSet Node" << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting to Execute Skill");
     UA_NodeId paramter_node_id;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client_read, skillNode,
                                                &paramter_node_id, "ParameterSet");
 
-    std::cout << "ParameterSet Node: " << paramter_node_id.namespaceIndex << "  " << paramter_node_id.identifier.numeric << std::endl;
+    //std::cout << "ParameterSet Node: " << paramter_node_id.namespaceIndex << "  " << paramter_node_id.identifier.numeric << std::endl;
 
-    std::cout << "Browse all parameter value nodes" << std::endl;
+    //std::cout << "Browse all parameter value nodes" << std::endl;
     UA_BrowseRequest bReq;
     UA_BrowseRequest_init(&bReq);
     bReq.requestedMaxReferencesPerNode = 0;
@@ -406,319 +422,367 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client_read, bReq);
 
-    std::cout << "Skill has "<< bResp.results[0].referencesSize << " parameters" << std::endl;
+    //std::cout << "Skill has "<< bResp.results[0].referencesSize << " parameters\n" << std::endl;
 
     for(size_t i = 0; i < bResp.resultsSize; i++) {
         for(size_t j = 0; j < bResp.results[i].referencesSize; j++) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
             if(ref->nodeClass == UA_NODECLASS_VARIABLE) {
-                std::cout << "Parameter name:" << (const char*)ref->browseName.name.data << std::endl;
+//                std::cout << "Parameter name:" << (const char*)ref->browseName.name.data << std::endl;
                 UA_Variant myVar;
                 UA_Variant_init(&myVar);
 
                 UA_Client_readValueAttribute(samy_core_client_read, ref->nodeId.nodeId, &myVar);
-                std::cout << "Got value from server" << std::endl;
-                std::cout << "Type Name:" << myVar.type->typeName << std::endl;
-                std::cout << "Type Kind:" << myVar.type->typeKind << std::endl;
-                std::cout << "Type ID:" << myVar.type->typeId.identifier.numeric << std::endl;
-                std::cout << "UA_TYPE MoveTo Id: " << UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
-                std::cout << "UA_TYPE SetEndeffector Id: " << UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
+//                std::cout << "Got value from server" << std::endl;
+//                std::cout << "Type Name:" << myVar.type->typeName << std::endl;
+//                std::cout << "Type Kind:" << myVar.type->typeKind << std::endl;
+//                std::cout << "Type ID:" << myVar.type->typeId.identifier.numeric << std::endl;
+//                std::cout << "UA_TYPE MoveTo Id: " << UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
+//                std::cout << "UA_TYPE SetEndeffector Id: " << UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
+
 
                 std::string typeName = myVar.type->typeName;
-                if (typeName.compare("MoveToParametersSetDataType") == 0){
-                    std::cout << "Found MoveTo Type" << std::endl;
-                    UA_MoveToParametersSetDataType* moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
-                    if (*signals->MoveTo(moveto) < 0){
-                        std::cout << "Error while executing MoveTo" << std::endl;
+                //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TypeName '%.*s'", (int)typeName.length(), typeName.c_str());
+                if (typeName.compare("InitCanonParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found InitCanon Type");
+                    UA_InitCanonParametersSetDataType* InitCanon = (UA_InitCanonParametersSetDataType*)&myVar.data;
+                    if (*signals->InitCanon(InitCanon) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing InitCanon");
                         error = true;
                         break;
                     }
-
                 }
-                else if (UA_Variant_hasScalarType(&myVar, &UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE])){
-                    std::cout << "Found MoveTo with good method" << std::endl;
-                    UA_MoveToParametersSetDataType* moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
-                    signals->MoveTo(moveto);
+                else if (typeName.compare("EndCanonParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EndCanon Type");
+                    UA_EndCanonParametersSetDataType* EndCanon = (UA_EndCanonParametersSetDataType*)&myVar.data;
+                    if (*signals->EndCanon(EndCanon) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EndCanon");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("MessageParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Message Type");
+                    UA_MessageParametersSetDataType* Message = (UA_MessageParametersSetDataType*)&myVar.data;
+                    if (*signals->Message(Message) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing Message");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("MoveToParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveTo Type");
+                    UA_MoveToParametersSetDataType* Moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
+                    if (*signals->MoveTo(Moveto) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing MoveTo");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("MoveScrewParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveScrew Type");
+                    UA_MoveScrewParametersSetDataType* MoveScrew = (UA_MoveScrewParametersSetDataType*)&myVar.data;
+                    if (*signals->MoveScrew(MoveScrew) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing MoveScrew");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("MoveThroughToParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveThroughTo Type");
+                    UA_MoveThroughToParametersSetDataType* MoveThroughTo = (UA_MoveThroughToParametersSetDataType*)&myVar.data;
+                    if (*signals->MoveThroughTo(MoveThroughTo) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing MoveThroughTo");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("DwellParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Dewll Type");
+                    UA_DwellParametersSetDataType* Dwell = (UA_DwellParametersSetDataType*)&myVar.data;
+                    if (*signals->Dwell(Dwell) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing Dwell");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("ActuateJointsParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ActuateJoints Type");
+                    UA_ActuateJointsParametersSetDataType* ActuateJoints = (UA_ActuateJointsParametersSetDataType*)&myVar.data;
+                    if (*signals->ActuateJoints(ActuateJoints) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing ActuateJoints");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("ConfigureJointReportsParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ConfigureJointReports Type");
+                    UA_ConfigureJointReportsParametersSetDataType* ConfigureJointReports = (UA_ConfigureJointReportsParametersSetDataType*)&myVar.data;
+                    if (*signals->ConfigureJointReports(ConfigureJointReports) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing ConfigureJointReports");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetDefaultJointPositionsTolerancesParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetDefaultJointPositionsTolerances Type");
+                    UA_SetDefaultJointPositionsTolerancesParametersSetDataType* SetDefaultJointPositionsTolerances = (UA_SetDefaultJointPositionsTolerancesParametersSetDataType*)&myVar.data;
+                    if (*signals->SetDefaultJointPositionsTolerances(SetDefaultJointPositionsTolerances) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetDefaultJointPositionsTolerances");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("GetStatusParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found GetStatus Type");
+                    UA_GetStatusParametersSetDataType* GetStatus = (UA_GetStatusParametersSetDataType*)&myVar.data;
+                    if (*signals->GetStatus(GetStatus) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing GetStatus");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("CloseToolChangerParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found CloseToolChanger Type");
+                    UA_CloseToolChangerParametersSetDataType* CloseToolChanger = (UA_CloseToolChangerParametersSetDataType*)&myVar.data;
+                    if (*signals->CloseToolChanger(CloseToolChanger) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing CloseToolChanger");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("OpenToolChangerParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found OpenToolChanger Type");
+                    UA_OpenToolChangerParametersSetDataType* OpenToolChanger = (UA_OpenToolChangerParametersSetDataType*)&myVar.data;
+                    if (*signals->OpenToolChanger(OpenToolChanger) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing OpenToolChanger");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetRobotParametersParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRobotParameters Type");
+                    UA_SetRobotParametersParametersSetDataType* SetRobotParameters = (UA_SetRobotParametersParametersSetDataType*)&myVar.data;
+                    if (*signals->SetRobotParameters(SetRobotParameters) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetRobotParameters");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetEndeffectorParametersParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndeffectorParameters Type");
+                    UA_SetEndeffectorParametersParametersSetDataType* SetEndeffectorParameters = (UA_SetEndeffectorParametersParametersSetDataType*)&myVar.data;
+                    if (*signals->SetEndeffectorParameters(SetEndeffectorParameters) < 0){
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetEndeffectorParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndeffector Type");
+                    UA_SetEndeffectorParametersSetDataType* SetEndeffector = (UA_SetEndeffectorParametersSetDataType*)&myVar.data;
+                    if (*signals->SetEndeffector(SetEndeffector) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetEndeffector");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetTransAccelParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTransAccel Type");
+                    UA_SetTransAccelParametersSetDataType* SetTransAccel = (UA_SetTransAccelParametersSetDataType*)&myVar.data;
+                    if (*signals->SetTransAccel(SetTransAccel) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTransAccel");
+                        error = true;
+                        break;
+                    }
                 }
                 else if (typeName.compare("SetTransSpeedParametersSetDataType") == 0){
-                    std::cout << "Found SetTransSpeed Type" << std::endl;
-                    UA_SetTransSpeedParametersSetDataType* setTransSpeed = (UA_SetTransSpeedParametersSetDataType*)&myVar.data;
-                    signals->SetTransSpeed(setTransSpeed);
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTransSpeed Type");
+                    UA_SetTransSpeedParametersSetDataType* SetTransSpeed = (UA_SetTransSpeedParametersSetDataType*)&myVar.data;
+                    if (*signals->SetTransSpeed(SetTransSpeed) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTransSpeed");
+                        error = true;
+                        break;
+                    }
                 }
+                else if (typeName.compare("SetRotAccelParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRotAccel Type");
+                    UA_SetRotAccelParametersSetDataType* SetRotAccel = (UA_SetRotAccelParametersSetDataType*)&myVar.data;
+                    if (*signals->SetRotAccel(SetRotAccel) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetRotAccel");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetRotSpeedParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRotSpeed Type");
+                    UA_SetRotSpeedParametersSetDataType* SetRotSpeed = (UA_SetRotSpeedParametersSetDataType*)&myVar.data;
+                    if (*signals->SetRotSpeed(SetRotSpeed) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetRotSpeed");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetAngleUnitsParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetAngleUnits Type");
+                    UA_SetAngleUnitsParametersSetDataType* SetAngleUnits = (UA_SetAngleUnitsParametersSetDataType*)&myVar.data;
+                    if (*signals->SetAngleUnits(SetAngleUnits) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetAngleUnits");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetEndPoseToleranceParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndPoseTolerance Type");
+                    UA_SetEndPoseToleranceParametersSetDataType* SetEndPoseTolerance = (UA_SetEndPoseToleranceParametersSetDataType*)&myVar.data;
+                    if (*signals->SetEndPoseTolerance(SetEndPoseTolerance) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetEndPoseTolerance");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetForceUnitsParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetForceUnits Type");
+                    UA_SetForceUnitsParametersSetDataType* SetForceUnits = (UA_SetForceUnitsParametersSetDataType*)&myVar.data;
+                    if (*signals->SetForceUnits(SetForceUnits) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetForceUnits");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetIntermediatePoseToleranceParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetIntermediatePoseTolerance Type");
+                    UA_SetIntermediatePoseToleranceParametersSetDataType* SetIntermediatePoseTolerance = (UA_SetIntermediatePoseToleranceParametersSetDataType*)&myVar.data;
+                    if (*signals->SetIntermediatePoseTolerance(SetIntermediatePoseTolerance) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetIntermediatePoseTolerance");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetLengthUnitsParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetLengthUnits Type");
+                    UA_SetLengthUnitsParametersSetDataType* SetLengthUnits = (UA_SetLengthUnitsParametersSetDataType*)&myVar.data;
+                    if (*signals->SetLengthUnits(SetLengthUnits) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetLengthUnits");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetMotionCoordinationParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetMotionCoordination Type");
+                    UA_SetMotionCoordinationParametersSetDataType* SetMotionCoordination = (UA_SetMotionCoordinationParametersSetDataType*)&myVar.data;
+                    if (*signals->SetMotionCoordination(SetMotionCoordination) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetMotionCoordination");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetMotionCoordinationParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetMotionCoordination Type");
+                    UA_SetMotionCoordinationParametersSetDataType* SetMotionCoordination = (UA_SetMotionCoordinationParametersSetDataType*)&myVar.data;
+                    if (*signals->SetMotionCoordination(SetMotionCoordination) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetMotionCoordination");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("SetTorqueUnitsParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTorqueUnit Type");
+                    UA_SetTorqueUnitsParametersSetDataType* SetTorqueUnit = (UA_SetTorqueUnitsParametersSetDataType*)&myVar.data;
+                    if (*signals->SetTorqueUnit(SetTorqueUnit) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTorqueUnit");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("StopMotionParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found StopMotion Type");
+                    UA_StopMotionParametersSetDataType* StopMotion = (UA_StopMotionParametersSetDataType*)&myVar.data;
+                    if (*signals->StopMotion(StopMotion) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing StopMotion");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("ConfigureStatusReportParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ConfigureStatusReport Type");
+                    UA_ConfigureStatusReportParametersSetDataType* ConfigureStatusReport = (UA_ConfigureStatusReportParametersSetDataType*)&myVar.data;
+                    if (*signals->ConfigureStatusReport(ConfigureStatusReport) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing ConfigureStatusReport");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("EnableSensorParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableSensor Type");
+                    UA_EnableSensorParametersSetDataType* EnableSensor = (UA_EnableSensorParametersSetDataType*)&myVar.data;
+                    if (*signals->EnableSensor(EnableSensor) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EnableSensor");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("DisableSensorParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableSensor Type");
+                    UA_DisableSensorParametersSetDataType* DisableSensor = (UA_DisableSensorParametersSetDataType*)&myVar.data;
+                    if (*signals->DisableSensor(DisableSensor) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing DisableSensor");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("EnableGripperParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableGripper Type");
+                    UA_EnableGripperParametersSetDataType* EnableGripper = (UA_EnableGripperParametersSetDataType*)&myVar.data;
+                    if (*signals->EnableGripper(EnableGripper) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EnableGripper");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("DisableGripperParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableGripper Type");
+                    UA_DisableGripperParametersSetDataType* DisableGripper = (UA_DisableGripperParametersSetDataType*)&myVar.data;
+                    if (*signals->DisableGripper(DisableGripper) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing DisableGripper");
 
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("EnableRobotParameterStatusParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableRobotParameterStatus Type");
+                    UA_EnableRobotParameterStatusParametersSetDataType* EnableRobotParameterStatus = (UA_EnableRobotParameterStatusParametersSetDataType*)&myVar.data;
+                    if (*signals->EnableRobotParameterStatus(EnableRobotParameterStatus) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EnableRobotParameterStatus");
+                        error = true;
+                        break;
+                    }
+                }
+                else if (typeName.compare("DisableRobotParameterStatusParametersSetDataType") == 0){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableRobotParameterStatus Type");
+                    UA_DisableRobotParameterStatusParametersSetDataType* DisableRobotParameterStatus = (UA_DisableRobotParameterStatusParametersSetDataType*)&myVar.data;
+                    if (*signals->DisableRobotParameterStatus(DisableRobotParameterStatus) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing DisableRobotParameterStatus");
+                        error = true;
+                        break;
+                    }
+                }
+                else {
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Unknown command");
+                    error = true;
+                }
             }
         }
         if (error) break;
     }
-    if (!error) ResetSkill(skillNode);
+    if (!error){
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Skill finished without error");
+        ResetSkill(skillNode);
+    }
     UA_BrowseRequest_clear(&bReq);
     UA_BrowseResponse_clear(&bResp);
 
 }
-
-
-
-
-//    for (int i=0; i < skillData.cRCLCommandsSize; i++){
-//    UA_CRCLCommandsUnionDataType* val = &(robot.requested_skill.cRCLCommands[i]);
-//    switch (val->switchField){
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_NONE:
-//          {
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_INITCANONCOMMAND:
-//          {
-//              UA_InitCanonDataType* initCanon = (UA_InitCanonDataType*)&(val->fields);
-//              printf("Got InitCanon command!\n");
-//              signals->InitCanon(initCanon);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENDCANONCOMMAND:
-//          {
-//              UA_EndCanonDataType* endCanon = (UA_EndCanonDataType*)&(val->fields);
-//              printf("Got EndCanon command!\n");
-//              signals->EndCanon(endCanon);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MESSAGECOMMAND:
-//          {
-//              UA_MessageDataType* message = (UA_MessageDataType*)&(val->fields);
-//              printf("Got Message command!\n");
-//              signals->Message(message);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
-//          {
-//              UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(val->fields);
-//              printf("Got MoveTo command and going to send signal.\n");
-//              signals->MoveTo(moveTo);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVESCREWCOMMAND:
-//          {
-//              UA_MoveScrewDataType* moveScrew = (UA_MoveScrewDataType*)&(val->fields);
-//              printf("Got MoveScrew command!\n");
-//              signals->MoveScrew(moveScrew);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETHROUGHTOCOMMAND:
-//          {
-//              UA_MoveThroughToDataType* moveThroughTo = (UA_MoveThroughToDataType*)&(val->fields);
-//              printf("Got MoveThroughTo command!\n");
-//              signals->MoveThroughTo(moveThroughTo);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DWELLCOMMAND:
-//          {
-//              UA_DwellDataType* dwell = (UA_DwellDataType*)&(val->fields);
-//              printf("Got Dwell comand!\n");
-//              signals->Dwell(dwell);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ACTUATEJOINTSCOMMAND:
-//          {
-//              UA_ActuateJointsDataType* actuateJoints = (UA_ActuateJointsDataType*)&(val->fields);
-//              printf("Got actuateJoints command!\n");
-//              signals->ActuateJoints(actuateJoints);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CONFIGUREJOINTREPORTSCOMMAND:
-//          {
-//              UA_ConfigureJointReportsDataType* configureJoints = (UA_ConfigureJointReportsDataType*)&(val->fields);
-//              printf("Got configureJoints command!\n");
-//              signals->ConfigureJointReports(configureJoints);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETDEFAULTJOINTPOSITIONSTOLERANCESCOMMAND:
-//          {
-//              UA_SetDefaultJointPositionsTolerancesDataType* tolernace = (UA_SetDefaultJointPositionsTolerancesDataType*)&(val->fields);
-//              printf("Got SetDefaultJointPositionsTolerances command!\n");
-//              signals->SetDefaultJointPositionsTolerances(tolernace);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_GETSTATUSCOMMAND:
-//          {
-//              UA_GetStatusDataType* getStatus = (UA_GetStatusDataType*)&(val->fields);
-//              printf("Got GetStatus command!\n");
-//              signals->GetStatus(getStatus);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CLOSETOOLCHANGERCOMMAND:
-//          {
-//              UA_CloseToolChangerDataType* closeToolChanger = (UA_CloseToolChangerDataType*)&(val->fields);
-//              printf("Got CloseToolChanger command!\n");
-//              signals->CloseToolChanger(closeToolChanger);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_OPENTOOLCHANGERCOMMAND:
-//          {
-//              UA_OpenToolChangerDataType* openToolChanger = (UA_OpenToolChangerDataType*)&(val->fields);
-//              printf("Got OpenToolChanger command!\n");
-//              signals->OpenToolChanger(openToolChanger);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROBOTPARAMETERSCOMMAND:
-//          {
-//              UA_SetRobotParametersDataType* robotParameters = (UA_SetRobotParametersDataType*)&(val->fields);
-//              printf("Got setRobotParameters command!\n");
-//              signals->SetRobotParameters(robotParameters);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETENDEFFECTORPARAMETERSCOMMAND:
-//          {
-//              UA_SetEndeffectorParametersDataType* parameters = (UA_SetEndeffectorParametersDataType*)&(val->fields);
-//              printf("Got SetEndeffectorParameters command!\n");
-//              signals->SetEndeffectorParameters(parameters);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETENDEFFECTORCOMMAND:
-//          {
-//              UA_SetEndeffectorDataType* setEndeffector = (UA_SetEndeffectorDataType*)&(val->fields);
-//              printf("Got SetEndeffector command!\n");
-//              signals->SetEndeffector(setEndeffector);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSACCELCOMMAND:
-//          {
-//              UA_SetTransAccelDataType* transAccel = (UA_SetTransAccelDataType*)&(val->fields);
-//              printf("Got SetTransAccel command!\n");
-//              signals->SetTransAccel(transAccel);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTRANSSPEEDCOMMAND:
-//          {
-//              UA_SetTransSpeedDataType* transSpeed = (UA_SetTransSpeedDataType*)&(val->fields);
-//              printf("Got SetTransSpeed command!\n");
-//              signals->SetTransSpeed(transSpeed);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROTACCELCOMMAND:
-//          {
-//              UA_SetRotAccelDataType* rotAccel = (UA_SetRotAccelDataType*)&(val->fields);
-//              printf("Got SetRotAccel command!\n");
-//              signals->SetRotAccel(rotAccel);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETROTSPEEDCOMMAND:
-//          {
-//              UA_SetRotSpeedDataType* rotSpeed = (UA_SetRotSpeedDataType*)&(val->fields);
-//              printf("Got SetRotSpeed command!\n");
-//              signals->SetRotSpeed(rotSpeed);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETANGLEUNITSCOMMAND:
-//          {
-//              UA_SetAngleUnitsDataType* angleUnits = (UA_SetAngleUnitsDataType*)&(val->fields);
-//              printf("Got SetAngleUnits command!\n");
-//              signals->SetAngleUnits(angleUnits);
-//              break;
-//        }
-//          //........................................
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETENDPOSETOLERANCECOMMAND:
-//          {
-//              UA_SetEndPoseToleranceDataType* tolernace = (UA_SetEndPoseToleranceDataType*)&(val->fields);
-//              printf("Got SetEndPoseTolerance command!\n");
-//              signals->SetEndPoseTolerance(tolernace);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETFORCEUNITSCOMMAND:
-//          {
-//              UA_SetForceUnitsDataType* forceUnits = (UA_SetForceUnitsDataType*)&(val->fields);
-//              printf("Got SetForceUnits command!\n");
-//              signals->SetForceUnits(forceUnits);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETINTERMEDIATEPOSETOLERANCECOMMAND:
-//          {
-//              UA_SetIntermediatePoseToleranceDataType* tolerance = (UA_SetIntermediatePoseToleranceDataType*)&(val->fields);
-//              printf("Got SetIntermediatePoseTolerance command!\n");
-//              signals->SetIntermediatePoseTolerance(tolerance);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETLENGTHUNITSCOMMAND:
-//          {
-//              UA_SetLengthUnitsDataType* lengthUnits = (UA_SetLengthUnitsDataType*)&(val->fields);
-//              printf("Got SetLengthUnits command!\n");
-//              signals->SetLengthUnits(lengthUnits);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETMOTIONCOORDINATIONCOMMAND:
-//          {
-//              UA_SetMotionCoordinationDataType* motionCoordination = (UA_SetMotionCoordinationDataType*)&(val->fields);
-//              printf("Got SetMotionCoordination command!\n");
-//              signals->SetMotionCoordination(motionCoordination);
-//              break;
-//          }
-
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_SETTORQUEUNITSCOMMAND:
-//          {
-//              UA_SetTorqueUnitsDataType* torqueUnits = (UA_SetTorqueUnitsDataType*)&(val->fields);
-//              printf("Got SetTorqueUnits command!\n");
-//              signals->SetTorqueUnit(torqueUnits);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_STOPMOTIONCOMMAND:
-//          {
-//              UA_StopMotionDataType* stopMotion = (UA_StopMotionDataType*)&(val->fields);
-//              printf("Got topMotionDat command!\n");
-//              signals->StopMotion(stopMotion);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_CONFIGURESTATUSREPORTCOMMAND:
-//          {
-//              UA_ConfigureStatusReportDataType* configStatusReport = (UA_ConfigureStatusReportDataType*)&(val->fields);
-//              printf("Got ConfigureStatusReport command!\n");
-//              signals->ConfigureStatusReport(configStatusReport);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENABLESENSORCOMMAND:
-//          {
-//              UA_EnableSensorDataType* enableSensor = (UA_EnableSensorDataType*)&(val->fields);
-//              printf("Got EnableSensor command!\n");
-//              signals->EnableSensor(enableSensor);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DISABLESENSORCOMMAND:
-//          {
-//              UA_DisableSensorDataType* disableSensor = (UA_DisableSensorDataType*)&(val->fields);
-//              printf("Got DisableSensor command!\n");
-//              signals->DisableSensor(disableSensor);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENABLEGRIPPERCOMMAND:
-//          {
-//              UA_EnableGripperDataType* enableGripper = (UA_EnableGripperDataType*)&(val->fields);
-//              printf("Got EnableGripper command!\n");
-//              signals->EnableGripper(enableGripper);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DISABLEGRIPPERCOMMAND:
-//          {
-//              UA_DisableGripperDataType* disableGripper = (UA_DisableGripperDataType*)&(val->fields);
-//              printf("Got DisableGripper command!\n");
-//              signals->DisableGripper(disableGripper);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_ENABLEROBOTPARAMETERSTATUSCOMMAND:
-//          {
-//              UA_EnableRobotParameterStatusDataType* enableRobotParaStatus = (UA_EnableRobotParameterStatusDataType*)&(val->fields);
-//              printf("Got EnableRobotParameterStatus command!\n");
-//              signals->EnableRobotParameterStatus(enableRobotParaStatus);
-//              break;
-//          }
-//        case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_DISABLEROBOTPARAMETERSTATUSCOMMAND:
-//          {
-//              UA_DisableRobotParameterStatusDataType* disableRobotParaStatus = (UA_DisableRobotParameterStatusDataType*)&(val->fields);
-//              printf("Got DisableRobotParameterStatus command!\n");
-//              signals->DisableRobotParameterStatus(disableRobotParaStatus);
-//              break;
-//          }
-//        default:
-//          {
-//              break;
-//          }
-//    }
-//    }
 
 
 

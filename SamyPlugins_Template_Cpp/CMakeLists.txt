@@ -20,7 +20,7 @@ project(SAMYPluginLib VERSION 0.1 LANGUAGES CXX C)
 
 find_package(Boost COMPONENTS thread)
 
-include_directories("${Boost_INCLUDE_DIRS}")
+#include_directories("${Boost_INCLUDE_DIRS}")
 # open62541 v1.2 must be installed!
 # If in custom path, then use -DCMAKE_PREFIX_PATH=/home/user/installcmake_minimum_required(VERSION 3.2)
 find_package(open62541 REQUIRED COMPONENTS FullNamespace)
@@ -62,7 +62,6 @@ ua_generate_nodeset_and_datatypes(
 add_library(${PROJECT_NAME} STATIC
             ${UA_NODESET_CRCL_SOURCES}
             ${UA_TYPES_CRCL_SOURCES}
-            #"./src/Communication/samy_robot.c"
             "./src/Plugin/plugin.cpp"
             "./src/Helpers/helpers.cpp"
             )
@@ -78,9 +77,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${Boost_LIBRARIES} open62541::open
 include_directories("${PROJECT_SOURCE_DIR}/src/Robot/include")
 include_directories("${PROJECT_SOURCE_DIR}/src/Robot/ThirdParty/include")
 
-#link_directories("${PROJECT_SOURCE_DIR}/build") # Not necessary to do this since later in target_link_libraries we explicitely link against the (previously built) SAMYPluginLib target
-
-# I think due to an ""error"" here it wasn't "tracking" the changes of the robot.cpp file. You had src/Robot/robot.cpp instead of ./src/Robot/robot.cpp, and apparently if you do so it detects it for compilation but it doesn't track the file. Now for me it works well and tracks the changes in the file (before this modification it didn't).
 add_executable(test_robot
                "./src/Robot/robot.cpp"
                "./src/Robot/main.cpp")
@@ -91,4 +87,5 @@ add_dependencies(test_robot
                  )
 
 # Here do not include the .a for the library SAMYPluginLib, since it is built in the same file we refer to the target name (using a variable) and not the generated file (otherwise you would have to use the link_directories directive you used before, but this way I think is better)
-target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} ${Boost_LIBRARIES} open62541::open62541)
+target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} open62541::open62541)
+# ${Boost_LIBRARIES}
