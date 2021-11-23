@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-20.04
     defaults:
       run:
-        working-directory:
+        working-directory: ./
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -17,11 +17,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y -qq libboost-python1.71.0 build-essential cmake libyaml-cpp-dev libboost-all-dev git libspdlog-dev
     - name: "Build open63541"
-      uses: SAMYPlugins_Template/.github/actions/build_linux
+      uses: ./.github/actions/build_linux
       with:
         built_type: build_open62541
     - name: Build
-      uses: SAMYPlugins_Templates/.github/actions/build_linux
+      uses: ./.github/actions/build_linux
       with:
         built_type: build_release
 
