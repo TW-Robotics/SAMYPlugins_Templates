@@ -14,11 +14,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y -qq libboost-python1.71.0 build-essential cmake libyaml-cpp-dev libboost-all-dev git libspdlog-dev
     - name: "Build open63541"
-      uses: actions/build_linux@main
+      uses: SAMYPlugins_Templates/actions/build_linux@main
       with:
         built_type: build_open62541
     - name: Build
-      uses: actions/build_linux@main
+      uses: SAMYPlugins_Templates/actions/build_linux@main
       with:
         built_type: build_release
 
