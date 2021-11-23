@@ -231,7 +231,6 @@ class Plugin():
                 self.logger.info("Reset called for {}".format(skill_node))
             # Subscribe to next_skill_node_id_node
             sub = self.opcua_core_client.create_subscription(100, self)
-            #handle = sub.subscribe_data_change(robot_node)
             handle = sub.subscribe_events(self.robot_node, samy_event)
             embed()
         finally:

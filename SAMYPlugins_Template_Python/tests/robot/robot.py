@@ -27,20 +27,25 @@ class Robot(object):
         pub.subscribe(self.example2, "SetEndeffector")
 
 
-    # Add robot specific methodes here:
+    # Add robot specific methods here:
 
     def example(self, data):
         self.logger.info("\nGot command:")
         self.logger.info(data)
         pub.sendMessage("command_hold")
-        time.sleep(2)
+        #time.sleep(2)
         #try:
         self.logger.info("Running command")
-        Unkommentthislinetotesttheerrorhandler
-        pub.sendMessage("command_reset")
+        #Unkommentthislinetotesttheerrorhandler
+        #pub.sendMessage("command_reset")
         #except:
         #    pub.sendMessage("command_error")
 
     def example2(self, data):
         self.logger.info("Got command SetEndeffector")
+        camera_pose = samyplugin.CRCL_DataTypes.CRCL_PoseDataType()
+        camera_pose.point.x = 100
+        
+        pub.sendMessage("write_information_source", name="GripperOpen", data=True);
+        pub.sendMessage("write_information_source", name="CameraBased_Pose_UR5", data=camera_pose);
         self.logger.info(data)
