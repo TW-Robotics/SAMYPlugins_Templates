@@ -21,12 +21,15 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: catchorg/Catch2
-        path: .
+        path: Catch2
         ref: v2.13.7
+        submodules: true
     - name: "Build Catch2"
       uses: ./.github/actions/build_linux
       with:
         build-type: build_catch2
+    - name: "Go back to this repository"
+      run: cd ${{ &GITHUB_WORKSPACE }} && cd SAMYPlugins_Templates
     - name: "Build Plugin Template"
       uses: ./.github/actions/build_linux
       with:
