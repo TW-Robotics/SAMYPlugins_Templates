@@ -98,6 +98,11 @@ function build_open62541 {
     cd .. && cd .. && cd ..
 }
 
+function build_catch2{
+    cmake -Bbuild -H. -DBUILD_TESTING=OFF
+    sudo cmake --build build/ --target install 
+}
+
 function build_release {
     cd SamyPlugins_Template_Cpp
     mkdir -p build && cd build
@@ -106,13 +111,6 @@ function build_release {
     make ${MAKEOPTS}
 }
 
-function build_catch2{
-    git clone https://github.com/catchorg/Catch2.git
-    cd Catch2
-    cmake -Bbuild -H. -DBUILD_TESTING=OFF
-    sudo cmake --build build/ --target install 
-
-}
 
 ######################
 # Build Amalgamation #
