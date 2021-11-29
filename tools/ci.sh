@@ -95,12 +95,14 @@ function build_open62541 {
       ..
     make ${MAKEOPTS}
     sudo make install
-    cd .. && cd .. && cd ..
 }
 
 function build_catch2{
-    cmake -Bbuild -H. -DBUILD_TESTING=OFF
-    sudo cmake --build build/ --target install 
+    ls
+    mkdir -p build && cd build
+    cmake -DBUILD_TESTING=OFF ..
+    make ${MAKEOPTS}
+    sudo make install
 }
 
 function build_release {
