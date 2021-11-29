@@ -1,11 +1,11 @@
 name: 'build_linux'
 description: 'Builds the SAMYPlugin template with different compilers in Linux (see ci.sh for the options)'
 inputs:
-  build-type:
+  building-type:
     description: 'Type of the build'
     required: true
 runs:
   using: "composite"
   steps:
-    - run: source tools/ci.sh && ${{ build-type }}
+    - run: source tools/ci.sh && ${{ building-type }}
       shell: bash
