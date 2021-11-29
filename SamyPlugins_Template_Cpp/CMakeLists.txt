@@ -19,6 +19,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 project(SAMYPluginLib VERSION 0.1 LANGUAGES CXX C)
 
 find_package(Boost COMPONENTS thread)
+find_package(Catch2 REQUIRED)
 
 #include_directories("${Boost_INCLUDE_DIRS}")
 # open62541 v1.2 must be installed!
@@ -89,3 +90,18 @@ add_dependencies(test_robot
 # Here do not include the .a for the library SAMYPluginLib, since it is built in the same file we refer to the target name (using a variable) and not the generated file (otherwise you would have to use the link_directories directive you used before, but this way I think is better)
 target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} open62541::open62541)
 # ${Boost_LIBRARIES}
+
+
+
+
+# It builds a test client that can be tested against the TestServer that is built along with the SAMYCore. If the tests are passed, the generated information models are correct and OPC UA communication should work without problems
+add_executable(testsClient
+               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
+               )
+
+add_dependencies(testsClient
+                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
+                 )
+
+target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
+

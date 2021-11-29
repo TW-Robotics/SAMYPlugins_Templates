@@ -27,31 +27,31 @@ UA_StatusCode Plugin::InitPlugin(std::string robotName){
     // give the client time to connect
     sleep(1);
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Connecting to SAMY Core faild" << std::endl;
+        std::cout << "Connecting to SAMY Core failed" << std::endl;
         return retval;
     }
     std::cout << "Connected to SAMY Core." << std::endl;
     retval = GetRobotNodeId(robotName);
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Getting Robot Node Id faild" << std::endl;
+        std::cout << "Getting Robot Node Id failed" << std::endl;
         return retval;
     }
     std::cout << "Got Robot Node Id." << std::endl;
     retval = SubscribeToRobot();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Subscribing to Robot faild" << std::endl;
+        std::cout << "Subscribing to Robot failed" << std::endl;
         return retval;
     }
     std::cout << "Subscribed to NextSkillNodeId." << std::endl;
     retval = GetListOfSkills();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Getting Lisft of Skills faild." << std::endl;
+        std::cout << "Getting Lisft of Skills failed." << std::endl;
         return retval;
     }
     std::cout << "Got List of all skills." << std::endl;
     retval = ResetAllSkills();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Resetting all skills faild" << std::endl;
+        std::cout << "Resetting all skills failed" << std::endl;
         return retval;
     }
     std::cout << "All Skills reseted" << std::endl;
@@ -260,7 +260,7 @@ UA_StatusCode Plugin::GetInformationSources(){
         for(size_t j = 0; j < bResp.results[i].referencesSize; ++j) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
             if (ref->nodeClass == UA_NODECLASS_OBJECT){
-                UA_LOG_DEBUG(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found inforamtion Variable Object");
+                UA_LOG_DEBUG(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found information Variable Object");
                 UA_BrowseRequest bReq2;
                 UA_BrowseRequest_init(&bReq2);
                 bReq2.requestedMaxReferencesPerNode = 0;

@@ -45,7 +45,7 @@ int Robot::MoveTo(UA_MoveToParametersSetDataType* moveTo){
     UA_NodeId id = plugin->infoSources.at("CameraBased_Pose_ABB_0");
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Info Node Id : %d", id.identifier.numeric);
     UA_Variant *myVariant = UA_Variant_new();
-    UA_Variant_setScalar(myVariant, &pose, &UA_TYPES[UA_TYPES_CRCL_CRCL_POSEDATATYPE]);
+    UA_Variant_setScalar(myVariant, &pose, &UA_TYPES_CRCL[UA_TYPES_CRCL_CRCL_POSEDATATYPE]);
     retval = UA_Client_writeValueAttribute(plugin->samy_core_client_read, plugin->infoSources.at("CameraBased_Pose_ABB_0"), myVariant);
     UA_Variant_delete(myVariant);
     if (retval == UA_STATUSCODE_GOOD){
