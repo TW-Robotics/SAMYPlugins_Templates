@@ -8,3 +8,4 @@ runs:
   using: "composite"
   steps:
     - run: source tools/ci.sh && ${{ build-type }}
+      shell: bash
