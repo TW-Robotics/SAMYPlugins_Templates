@@ -98,7 +98,6 @@ function build_open62541 {
 }
 
 function build_catch2{
-    ls
     mkdir -p build && cd build
     cmake -DBUILD_TESTING=OFF ..
     make ${MAKEOPTS}
