@@ -17,7 +17,17 @@ jobs:
       uses: ./.github/actions/build_linux
       with:
         build-type: build_open62541
-    - name: Build
+    - name: "Checkout Catch2"
+      uses: actions/checkout@v2
+      with:
+        repository: catchorg/Catch2
+        path: .
+        ref: v2.13.7
+    - name: "Build Catch2"
+      uses: ./.github/actions/build_linux
+      with:
+        build-type: build_catch2
+    - name: "Build Plugin Template"
       uses: ./.github/actions/build_linux
       with:
         build-type: build_release
