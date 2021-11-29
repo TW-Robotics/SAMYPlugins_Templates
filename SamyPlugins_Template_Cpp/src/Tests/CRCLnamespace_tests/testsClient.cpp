@@ -14,11 +14,12 @@
 #include <open62541/client_highlevel.h>
 #include <open62541/client_config_default.h>
 
+#define SAMYCORE_ADDRESS_STRING "opc.tcp://localhost:4567"
 
 TEST_CASE("Test client - Write commands", "[WriteCommands]"){
 
     UA_Client* client = UA_Client_new();
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes{NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
     UA_ClientConfig *cc = UA_Client_getConfig( client );
@@ -1046,7 +1047,7 @@ TEST_CASE("Test client - Read commands", "[ReadCommands]"){
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
   //  UA_DataTypeArray customDataTypes{NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
     UA_DataTypeArray customDataTypes{NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
@@ -1628,7 +1629,7 @@ TEST_CASE("Test client - Write all commands in CRCLCommandsUnion", "[WriteComman
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
@@ -2799,7 +2800,7 @@ TEST_CASE("Test client - Read all commands from CRCLCommandsUnion", "[ReadComman
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
@@ -3470,7 +3471,7 @@ TEST_CASE("Test client - Write CRCLSkill with all the commands", "[WriteCRCLSkil
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
@@ -4486,7 +4487,7 @@ TEST_CASE("Test client - Read CRCLSkill", "[ReadCRCLSkill]"){
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
@@ -4527,7 +4528,7 @@ TEST_CASE("Test client - Read Robot", "[ReadRobot]"){
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
@@ -4561,7 +4562,7 @@ TEST_CASE("Test client - Write commands parameters", "[WriteCommandsParameters]"
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customParametersSetDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
@@ -5454,7 +5455,7 @@ TEST_CASE("Test client - Read commandParameterss parameters", "[ReadcommandParam
 
     UA_Client* client = UA_Client_new();
 
-    std::string address = "opc.tcp://localhost:4567";
+    std::string address = SAMYCORE_ADDRESS_STRING;
     UA_DataTypeArray customDataTypes = {NULL, UA_TYPES_CRCL_COUNT, UA_TYPES_CRCL};
 
 
