@@ -3,6 +3,7 @@
 
 #include <boost/signals2.hpp>
 #include <namespace_crcl_generated.h>
+#include <types_crcl_generated.h>
 #include <types_crcl_generated_handling.h>
 
 struct Signals{
@@ -49,6 +50,8 @@ struct Signals{
     boost::signals2::signal<void()> Halt;
     boost::signals2::signal<void()> Resume;
     boost::signals2::signal<void()> Suspend;
+    // Signal for information source
+    boost::signals2::signal<void(const std::string, const UA_CRCLCommandsUnionDataType*)> WriteInformationSource;
 };
 
 #endif

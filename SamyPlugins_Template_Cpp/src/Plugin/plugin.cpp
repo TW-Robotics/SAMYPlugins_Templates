@@ -55,6 +55,12 @@ UA_StatusCode Plugin::InitPlugin(std::string robotName){
         return retval;
     }
     std::cout << "All Skills reseted" << std::endl;
+    retval = GetInformationSources();
+    if (retval != UA_STATUSCODE_GOOD){
+        std::cout << "Getting the information sources failed" << std::endl;
+        return retval;
+    }
+    std::cout << "Got information sources" << std::endl;
     ConnectSignals();
     return retval;
 }
@@ -234,11 +240,81 @@ UA_StatusCode Plugin::GetListOfSkills(){
     return UA_STATUSCODE_GOOD;
 }
 
+UA_StatusCode Plugin::GetInformationSources(){
+    UA_StatusCode retval = UA_STATUSCODE_GOOD;
+    int cnt = 0;
+    UA_NodeId infoSourcesNode;
+    UA_NodeId object_node_id = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
+    SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, &object_node_id,
+                                               &infoSourcesNode, "InformationSources");
+    //Browse information sources node and generate unordern map with all sources names and node ids
+    UA_BrowseRequest bReq;
+    UA_BrowseRequest_init(&bReq);
+    bReq.requestedMaxReferencesPerNode = 0;
+    bReq.nodesToBrowse = UA_BrowseDescription_new();
+    bReq.nodesToBrowseSize = 1;
+    bReq.nodesToBrowse[0].nodeId = infoSourcesNode;
+    bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
+    UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client_read, bReq);
+    for(size_t i = 0; i < bResp.resultsSize; ++i) {
+        for(size_t j = 0; j < bResp.results[i].referencesSize; ++j) {
+            UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
+            if (ref->nodeClass == UA_NODECLASS_OBJECT){
+                UA_LOG_DEBUG(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found inforamtion Variable Object");
+                UA_BrowseRequest bReq2;
+                UA_BrowseRequest_init(&bReq2);
+                bReq2.requestedMaxReferencesPerNode = 0;
+                bReq2.nodesToBrowse = UA_BrowseDescription_new();
+                bReq2.nodesToBrowseSize = 1;
+                bReq2.nodesToBrowse[0].nodeId = ref->nodeId.nodeId;
+                bReq2.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
+                UA_BrowseResponse bResp2 = UA_Client_Service_browse(samy_core_client_read, bReq2);
+                for(size_t i = 0; i < bResp2.resultsSize; ++i) {
+                    for(size_t j = 0; j < bResp2.results[i].referencesSize; ++j) {
+                        UA_ReferenceDescription *ref = &(bResp2.results[i].references[j]);
+                        if (ref->nodeClass == UA_NODECLASS_VARIABLE){
+                            UA_LOG_DEBUG(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found information Variable Node");
+                            std::pair<std::string, UA_NodeId> infoSource ((const char*)ref->browseName.name.data,
+                                                                      ref->nodeId.nodeId);
+                            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "InfoSource Name '%.*s'",
+                                                  (int)ref->browseName.name.length, (const char*)ref->browseName.name.data);
+                            infoSources.insert(infoSource);
+                            cnt++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found %d information sources", cnt);
+    UA_NodeId id = infoSources.at("CameraBased_Pose_ABB_0");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Node id: %d", id.identifier.numeric);
+    return retval;
+}
+
+// Idea: Using unions
+
+//void Plugin::WriteInformationSource(const std::string name, const UA_CRCLCommandsUnionDataType* data){
+//    switch (data->switchField) {
+//    case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
+//      {
+//          UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(data->fields);
+//          UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Writing information source '%.*s'",
+//                      (int)name.length(), name.c_str());
+//          // write to informationsource with right name
+//          break;
+//      }
+//    default:
+//        break;
+//    }
+//}
+
 void Plugin::ConnectSignals(){
     signals->Halt.connect(boost::bind(&Plugin::HaltCurrentSkill, this));
     signals->Reset.connect(boost::bind(&Plugin::ResetCurrentSkill, this));
     signals->Resume.connect(boost::bind(&Plugin::ResumeCurrentSkill, this));
     signals->Suspend.connect(boost::bind(&Plugin::SuspendCurrentSkill, this));
+    //signals->WriteInformationSource.connect(boost::bind(&Plugin::WriteInformationSource, this));
 }
 
 // ################ Methode Handling  ########################
@@ -433,12 +509,12 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                 UA_Variant_init(&myVar);
 
                 UA_Client_readValueAttribute(samy_core_client_read, ref->nodeId.nodeId, &myVar);
-//                std::cout << "Got value from server" << std::endl;
-//                std::cout << "Type Name:" << myVar.type->typeName << std::endl;
-//                std::cout << "Type Kind:" << myVar.type->typeKind << std::endl;
-//                std::cout << "Type ID:" << myVar.type->typeId.identifier.numeric << std::endl;
-//                std::cout << "UA_TYPE MoveTo Id: " << UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
-//                std::cout << "UA_TYPE SetEndeffector Id: " << UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
+                std::cout << "Got value from server" << std::endl;
+                std::cout << "Type Name:" << myVar.type->typeName << std::endl;
+                std::cout << "Type Kind:" << myVar.type->typeKind << std::endl;
+                std::cout << "Type ID:" << myVar.type->typeId.identifier.numeric << std::endl;
+                std::cout << "UA_TYPE MoveTo Id: " << UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
+                std::cout << "UA_TYPE SetEndeffector Id: " << UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
 
 
                 std::string typeName = myVar.type->typeName;

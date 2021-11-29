@@ -38,6 +38,9 @@ private:
     UA_StatusCode GetRobotNodeId(std::string robotName);
     UA_StatusCode GetSkillNodeId(std::string skillName, UA_NodeId* skillNodeId);
     UA_StatusCode GetListOfSkills();
+    UA_StatusCode GetInformationSources();
+    static void WriteInformationSource(const std::string name, const UA_CRCLCommandsUnionDataType* data);
+    UA_StatusCode CreateSignalsForInformationSources();
     void ConnectSignals();
 // ################ Methode Handling  ########################
     UA_StatusCode CallMethod(UA_NodeId *methodNode, UA_NodeId *objectNode);
@@ -58,8 +61,6 @@ private:
 
     std::string samyCoreAddress;
     std::string samyCorePort;
-    UA_Client* samy_core_client;
-    UA_Client* samy_core_client_read;
     UA_NodeId* robot_node_id;
     UA_NodeId* robot_controller_node_id;
     UA_NodeId currentSkill;
@@ -78,6 +79,9 @@ public:
     UA_StatusCode InitPlugin(std::string robotName);
     UA_StatusCode RunClient(int timeout);
     bool *running;
+    std::unordered_map<std::string, UA_NodeId> infoSources;
+    UA_Client* samy_core_client_read;
+    UA_Client* samy_core_client;
 };
 
 #endif // PLUGIN_H

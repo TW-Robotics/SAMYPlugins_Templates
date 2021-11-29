@@ -20,13 +20,6 @@ static void stopHandler(int sign) {
     running = false;
 }
 
-void runRobot(std::shared_ptr<Robot> robot, std::string address, Signals* signals){
-    robot = std::shared_ptr<Robot>(new Robot(address, signals));
-    while (running){
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    }
-}
-
 int main(int argc, char** argv)
 {
     signal(SIGINT, stopHandler);
@@ -50,12 +43,11 @@ int main(int argc, char** argv)
 
     Signals signals; // Struct of all available signals (all CRCL-commands and signals for skill methods)
     Plugin plugin(samyCoreAddress, samyCorePort, &signals);
-    //std::shared_ptr<Plugin> plugin(new Plugin(samyCoreAddress, samyCorePort, &signals));
     plugin.running = &running;
 
     // Creating the robot object
     std::cout << "Connecting to Robot..." << std::endl;
-    std::shared_ptr<Robot> robot(new Robot(address, &signals));
+    std::shared_ptr<Robot> robot(new Robot(address, &signals, &plugin));
     std::cout << "Connected to Robot" << std::endl;
 
     // Connect methods to signals
