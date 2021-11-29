@@ -18,7 +18,7 @@ jobs:
       with:
         build-type: build_open62541
     - name: Build
-      uses: ./.github/actions/build_linux.yaml
+      uses: ./.github/actions/build_linux
       with:
         build-type: build_release
 
