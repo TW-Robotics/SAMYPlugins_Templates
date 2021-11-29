@@ -74,7 +74,7 @@ function build_open62541 {
     tree -L 2 
     mkdir SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build;
     cd SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build
-    rm -r *
+    rm -rf *
     cmake -DUA_NAMESPACE_ZERO=FULL \
       -DUA_ENABLE_SUBSCRIPTIONS=ON \
       -DUA_ENABLE_SUBSCRIPTIONS_EVENTS=ON \
