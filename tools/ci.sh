@@ -71,7 +71,6 @@ function build_tpm_tool {
 #########################
 
 function build_open62541 {
-    tree -L 2 
     mkdir SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build;
     cd SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build
     rm -rf *
@@ -96,12 +95,13 @@ function build_open62541 {
       ..
     make ${MAKEOPTS}
     sudo make install
+    cd .. && cd .. && cd ..
 }
 
 function build_release {
-
     cd SamyPlugins_Template_Cpp
-    mkdir -p build; cd build; rm -rf *
+    mkdir -p build && cd build
+    rm -rf *
     cmake ..
     make ${MAKEOPTS}
 }
