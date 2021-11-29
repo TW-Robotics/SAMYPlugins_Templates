@@ -71,9 +71,11 @@ function build_tpm_tool {
 #########################
 
 function build_open62541 {
-    tree
-    mkdir -p SamyPlugins_Template_Cpp/open62541_v1.2_uninons_fixed/build;
-    cd SamyPlugins_Template_Cpp/open62541_v1.2_uninons_fixed/build; rm -rf *
+    tree -L 2 
+    mkdir SamyPlugins_Template_Cpp/open62541_v1.2_uninons_fixed/build;
+    cd SamyPlugins_Template_Cpp/open62541_v1.2_uninons_fixed/build
+    ls
+    rm -r *
     cmake -DUA_NAMESPACE_ZERO=FULL \
       -DUA_ENABLE_SUBSCRIPTIONS=ON \
       -DUA_ENABLE_SUBSCRIPTIONS_EVENTS=ON \
