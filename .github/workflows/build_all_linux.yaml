@@ -16,11 +16,11 @@ jobs:
     - name: "Build open63541"
       uses: ./.github/actions/build_linux
       with:
-        build-type: build_open62541
+        building-type: build_open62541
     - name: Build
       uses: ./.github/actions/build_linux.yaml
       with:
-        build-type: build_release
+        building-type: build_release
 
 
 # name: Linux Build
