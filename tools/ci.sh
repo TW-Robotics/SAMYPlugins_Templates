@@ -99,8 +99,11 @@ function build_open62541 {
 
 function build_catch2 {
     cd Catch2
-    cmake -Bbuild -H. -DBUILD_TESTING=OFF
-    sudo cmake --build build/ --target install}
+    mkdir -p build && cd build
+    rm -rf *
+    cmake ..
+    make ${MAKEOPTS}
+    sudo make install
 }
 
 function build_release {
