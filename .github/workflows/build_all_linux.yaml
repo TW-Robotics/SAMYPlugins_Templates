@@ -37,7 +37,7 @@ jobs:
         build-type: build_release
     - uses: actions/checkout@v2-beta
       with:
-        repository: TW-Robotics/SAMYCore
+        repository: TW-Robotics/FHTW_Github_Actions
         token: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
         path: .github/actions
     - name: "Run the private Build_SAMYCore action"
