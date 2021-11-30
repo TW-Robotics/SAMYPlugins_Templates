@@ -41,6 +41,9 @@ jobs:
         ref: main
         token: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
         path: .github/actions
+    - run: |
+        pwd
+        tree
     - name: "Run the private Build_SAMYCore action"
       uses: ./.github/actions/build_SAMYCore_Linux
       with:
