@@ -5,12 +5,6 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-    - name: Set env
-        run: echo ::set-env name=workspace::$GITHUB_WORKSPACE
-    - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(env) }}
-        run: echo "$GITHUB_CONTEXT"
     - name: Check out repository
       uses: actions/checkout@v2
       with:
@@ -35,7 +29,7 @@ jobs:
       with:
         build-type: build_catch2
     - name: "Go back to this repository"
-      run: cd ${{ env.workspace }} && cd SAMYPlugins_Templates
+      run: cd ${{ github.workspace }} && cd SAMYPlugins_Templates
     - name: "Build Plugin Template"
       uses: ./.github/actions/build_linux
       with:
