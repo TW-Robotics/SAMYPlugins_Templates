@@ -36,8 +36,8 @@ jobs:
       with:
         build-type: build_release
     - run: |
-        pwd
-        tree -a -L 4
+        mkdir -p ./.github/actions_temp
+        cp -R ./.github/actions/* ./.github/actions_temp
     - uses: actions/checkout@v2-beta
       with:
         repository: TW-Robotics/FHTW_Github_Actions
@@ -45,7 +45,7 @@ jobs:
         token: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
         path: .github/actions
     - run: |
-        pwd
+        cp -R ./.github/actions_temp/* ./.github/actions
         tree -a -L 4
     - name: "Run the private Build_SAMYCore action"
       uses: ./.github/actions/build_SAMYCore_Linux
