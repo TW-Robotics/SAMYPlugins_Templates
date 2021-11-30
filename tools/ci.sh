@@ -97,7 +97,7 @@ function build_open62541 {
     sudo make install
 }
 
-function build_catch2{
+function build_catch2 {
     mkdir -p build && cd build
     cmake -DBUILD_TESTING=OFF ..
     make ${MAKEOPTS}
