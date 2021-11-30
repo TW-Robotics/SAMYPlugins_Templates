@@ -99,11 +99,8 @@ function build_open62541 {
 
 function build_catch2 {
     cd Catch2
-    mkdir -p build && cd build
-    cmake -DBUILD_TESTING=OFF ..
-    make ${MAKEOPTS}
-    sudo make install
-}
+    cmake -Bbuild -H. -DBUILD_TESTING=OFF
+    sudo cmake --build build/ --target install}
 
 function build_release {
     cd SamyPlugins_Template_Cpp
