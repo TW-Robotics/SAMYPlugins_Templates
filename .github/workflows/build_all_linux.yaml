@@ -35,6 +35,9 @@ jobs:
       uses: ./.github/actions/build_linux
       with:
         build-type: build_release
+    - run: |
+        pwd
+        tree -a -L 4
     - uses: actions/checkout@v2-beta
       with:
         repository: TW-Robotics/FHTW_Github_Actions
