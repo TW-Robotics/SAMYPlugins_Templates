@@ -43,7 +43,7 @@ jobs:
         path: .github/actions
     - run: |
         pwd
-        tree -L 2
+        tree -a -L 2
     - name: "Run the private Build_SAMYCore action"
       uses: ./.github/actions/build_SAMYCore_Linux
       with:
