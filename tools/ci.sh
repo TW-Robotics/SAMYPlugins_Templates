@@ -101,6 +101,7 @@ function build_catch2 {
     cd Catch2
     cmake -Bbuild -H. -DBUILD_TESTING=OFF
     sudo cmake --build build/ --target install}
+}
 
 function build_release {
     cd SamyPlugins_Template_Cpp
