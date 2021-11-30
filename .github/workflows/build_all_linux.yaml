@@ -22,7 +22,7 @@ jobs:
       with:
         repository: catchorg/Catch2
         path: Catch2
-        ref: v2.13.7
+        ref: v2.13.4
         submodules: true
     - name: "Build Catch2"
       uses: ./.github/actions/build_linux
