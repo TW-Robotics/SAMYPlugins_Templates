@@ -78,35 +78,35 @@ jobs:
       needs: [build]
       steps:
       - run: |
-             mkdir -p binaries && cd binaries
+             mkdir -p binaries
       - name: "Download the SAMYCore binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYCore
-            path: .
+            path: binaries
       - name: "Download the SAMYCore-testsServer binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYCore-testsServer
-            path: .
+            path: binaries
       - name: "Download the SAMYPlugin-CPP-test binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYPlugin-CPP-test
-            path: .
+            path: binaries
       - name: "Download the testsClient binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYPlugin-testsClient
-            path: .
+            path: binaries
       - run: |
              pwd
              ls
              tree -L 2
       - run: |
-             sudo ./testsServer [ServerTest] &
+             sudo binaries/testsServer [ServerTest] &
       - run: |
-             sudo ./testsClient
+             sudo binaries/testsClient
 
 
 
