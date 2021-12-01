@@ -100,6 +100,10 @@ jobs:
             name: SAMYPlugin-testsClient
             path: binaries/SAMYPlugin-testsClient
       - run: |
+             pwd
+             ls
+             tree -L 2
+      - run: |
              sudo ./SAMYCore-testsServer [ServerTest] &
       - run: |
              sudo ./SAMYPlugin-testsClient
