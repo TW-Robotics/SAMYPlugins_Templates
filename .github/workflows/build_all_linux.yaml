@@ -83,22 +83,22 @@ jobs:
         uses: actions/download-artifact@master
         with:
             name: SAMYCore
-            path: binaries/SAMYCore
+            path: SAMYCore
       - name: "Download the SAMYCore-testsServer binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYCore-testsServer
-            path: binaries/SAMYCore-testsServer
+            path: SAMYCore-testsServer
       - name: "Download the SAMYPlugin-CPP-test binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYPlugin-CPP-test
-            path: binaries/SAMYPlugin-CPP-test
+            path: SAMYPlugin-CPP-test
       - name: "Download the testsClient binary"
         uses: actions/download-artifact@master
         with:
             name: SAMYPlugin-testsClient
-            path: binaries/SAMYPlugin-testsClient
+            path: SAMYPlugin-testsClient
       - run: |
              pwd
              ls
