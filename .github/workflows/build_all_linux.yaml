@@ -53,6 +53,13 @@ jobs:
         catch2-exists: true
         open62541-exists: true
         secret-private-download: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
+    - run: |
+        pwd
+        tree -a -L 3
+        cd ${{ github.workspace }}
+        pwd
+        tree -a -L 3
+
 
 
 # name: Linux Build
