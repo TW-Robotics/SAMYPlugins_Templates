@@ -104,9 +104,9 @@ jobs:
              ls
              tree -L 2
       - run: |
-             sudo binaries/testsServer [ServerTest] &
+             sudo ./binaries/testsServer [ServerTest] &
       - run: |
-             sudo binaries/testsClient
+             sudo ./binaries/testsClient
 
 
 
