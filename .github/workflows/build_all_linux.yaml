@@ -53,12 +53,60 @@ jobs:
         catch2-exists: true
         open62541-exists: true
         secret-private-download: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
-    - run: |
-        pwd
-        tree -a -L 3
-        cd ${{ github.workspace }}
-        pwd
-        tree -a -L 3
+    - name: "Upload the SAMYCore binary"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYCore
+           path: SAMYCore/build/SAMYCore
+    - name: "Upload the SAMYCore testsServer binary"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYCore-testsServer
+           path: SAMYCore/build/testsServer
+    - name: "Upload the cpp plugin test"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYPlugin-CPP-test
+           path: SamyPlugins_Template_Cpp/build/test_robot
+    - name: "Upload the testsClient binary"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYPlugin-testsClient
+           path: SamyPlugins_Template_Cpp/build/testsClient
+  test:
+      runs-on: ubuntu-20.04
+      needs: [build]
+      steps:
+      - run: |
+             mkdir -p binaries && cd binaries
+      - name: "Download the SAMYCore binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYCore
+            path: binaries/SAMYCore
+      - name: "Download the SAMYCore-testsServer binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYCore-testsServer
+            path: binaries/SAMYCore-testsServer
+      - name: "Download the SAMYPlugin-CPP-test binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYPlugin-CPP-test
+            path: binaries/SAMYPlugin-CPP-test
+      - name: "Download the testsClient binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYPlugin-testsClient
+            path: binaries/SAMYPlugin-testsClient
+      - run: |
+             sudo ./SAMYCore-testsServer [ServerTest] &
+      - run: |
+             sudo ./SAMYPlugin-testsClient
+
+
+
+
 
 
 
