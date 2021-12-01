@@ -52,6 +52,7 @@ jobs:
       with:
         catch2-exists: true
         open62541-exists: true
+        secret-private-download: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
 
 
 # name: Linux Build
