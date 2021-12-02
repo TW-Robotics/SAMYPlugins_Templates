@@ -92,13 +92,13 @@ target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} open62541::open62541)
 
 
 # It builds a test client that can be tested against the TestServer that is built along with the SAMYCore. If the tests are passed, the generated information models are correct and OPC UA communication should work without problems
-#add_executable(testsClient
-#               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
-#               )
+add_executable(testsClient
+               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
+               )
 
-#add_dependencies(testsClient
-#                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
-#                 )
+add_dependencies(testsClient
+                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
+                 )
 
-#target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
+target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
 
