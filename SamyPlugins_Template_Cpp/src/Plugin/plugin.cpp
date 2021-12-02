@@ -23,44 +23,48 @@ Plugin::~Plugin()
 UA_StatusCode Plugin::InitPlugin(std::string robotName){
 
     UA_StatusCode retval;
+
     retval = ConnectToCore();
-    // give the client time to connect
-    sleep(1);
+    sleep(1);     // give the client time to connect
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Connecting to SAMY Core failed" << std::endl;
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connecting to SAMY Core failed");
         return retval;
     }
-    std::cout << "Connected to SAMY Core." << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connected to SAMY Core.");
+
     retval = GetRobotNodeId(robotName);
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Getting Robot Node Id failed" << std::endl;
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Getting Robot Node Id failed" );
         return retval;
     }
-    std::cout << "Got Robot Node Id." << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Got Robot Node Id.");
+
     retval = SubscribeToRobot();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Subscribing to Robot failed" << std::endl;
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Subscribing to Robot failed" );
         return retval;
     }
-    std::cout << "Subscribed to NextSkillNodeId." << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Subscribed to NextSkillNodeId.");
+
     retval = GetListOfSkills();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Getting Lisft of Skills failed." << std::endl;
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Getting List of Skills failed." );
         return retval;
     }
-    std::cout << "Got List of all skills." << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Got List of all skills.");
+
     retval = ResetAllSkills();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Resetting all skills failed" << std::endl;
-        return retval;
-    }
-    std::cout << "All Skills reseted" << std::endl;
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Resetting all skills failed" );
+    } else UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "All Skills reseted");
+
     retval = GetInformationSources();
     if (retval != UA_STATUSCODE_GOOD){
-        std::cout << "Getting the information sources failed" << std::endl;
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Getting the information sources failed" );
         return retval;
     }
-    std::cout << "Got information sources" << std::endl;
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Got information sources");
+
     ConnectSignals();
     return retval;
 }
@@ -120,7 +124,7 @@ UA_StatusCode Plugin::ConnectToCore(){
 
     if(retval != UA_STATUSCODE_GOOD) {
         UA_Client_delete(samy_core_client);
-        std::cout << "Connecting to server faild: event client" << std::endl;
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connecting to server faild");
         return retval;
     }
     StartReadThread();
@@ -148,7 +152,7 @@ UA_StatusCode Plugin::SubscribeToRobot(){
     // Add a MonitoredItem
     UA_MonitoredItemCreateRequest item;
     UA_MonitoredItemCreateRequest_init(&item);
-    item.itemToMonitor.nodeId = *robot_node_id;//  UA_NODEID_NUMERIC(8, 15001);
+    item.itemToMonitor.nodeId = *robot_node_id;
     item.itemToMonitor.attributeId = UA_ATTRIBUTEID_EVENTNOTIFIER;
     item.monitoringMode = UA_MONITORINGMODE_REPORTING;
 
@@ -178,7 +182,7 @@ UA_StatusCode Plugin::SubscribeToRobot(){
     // TODO Not needed?
 //    monId = result.monitoredItemId;
 
-    return retval;
+    return result.statusCode;
 }
 
 UA_StatusCode Plugin::GetRobotNodeId(std::string robotName){
@@ -234,9 +238,9 @@ UA_StatusCode Plugin::GetListOfSkills(){
     // Remove Mandatory Node
     skillList.erase(skillList.begin());
 
-    for (int i = 0; i < skillList.size(); i++){
-        printf("Skill Name %d: %s\n", i, skillList[i].name.c_str());
-    }
+//    for (int i = 0; i < skillList.size(); i++){
+//        printf("Skill Name %d: %s\n", i, skillList[i].name.c_str());
+//    }
     return UA_STATUSCODE_GOOD;
 }
 
@@ -247,7 +251,7 @@ UA_StatusCode Plugin::GetInformationSources(){
     UA_NodeId object_node_id = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client, &object_node_id,
                                                &infoSourcesNode, "InformationSources");
-    //Browse information sources node and generate unordern map with all sources names and node ids
+    //Browse information sources node and generate unorderd map with all sources names and node ids
     UA_BrowseRequest bReq;
     UA_BrowseRequest_init(&bReq);
     bReq.requestedMaxReferencesPerNode = 0;
@@ -287,37 +291,28 @@ UA_StatusCode Plugin::GetInformationSources(){
         }
     }
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found %d information sources", cnt);
-    UA_NodeId id = infoSources.at("CameraBased_Pose_ABB_0");
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Node id: %d", id.identifier.numeric);
     return retval;
 }
 
-// Idea: Using unions
-
-//void Plugin::WriteInformationSource(const std::string name, const UA_CRCLCommandsUnionDataType* data){
-//    switch (data->switchField) {
-//    case UA_CRCLCOMMANDSUNIONDATATYPESWITCH_MOVETOCOMMAND:
-//      {
-//          UA_MoveToDataType* moveTo = (UA_MoveToDataType*)&(data->fields);
-//          UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Writing information source '%.*s'",
-//                      (int)name.length(), name.c_str());
-//          // write to informationsource with right name
-//          break;
-//      }
-//    default:
-//        break;
-//    }
-//}
+UA_NodeId Plugin::GetInformationSourceNodeId(const std::string name){
+    UA_NodeId id;
+    try {
+        id = infoSources.at(name);
+    } catch (const std::out_of_range){
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "No InformationSource with name %s", name.c_str());
+        return UA_NODEID_NULL;
+    }
+    return id;
+}
 
 void Plugin::ConnectSignals(){
     signals->Halt.connect(boost::bind(&Plugin::HaltCurrentSkill, this));
     signals->Reset.connect(boost::bind(&Plugin::ResetCurrentSkill, this));
     signals->Resume.connect(boost::bind(&Plugin::ResumeCurrentSkill, this));
     signals->Suspend.connect(boost::bind(&Plugin::SuspendCurrentSkill, this));
-    //signals->WriteInformationSource.connect(boost::bind(&Plugin::WriteInformationSource, this));
 }
 
-// ################ Methode Handling  ########################
+// ################ Methode Handling START ########################
 
 UA_StatusCode Plugin::CallMethod(UA_NodeId* methodNode, UA_NodeId* objectNode){
  /* Call a remote method */
@@ -405,7 +400,7 @@ UA_StatusCode Plugin::ResetAllSkills(){
     for (int i = 0; i < skillList.size(); i++){
         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Reseting skill with name '%.*s'",
                     (int)skillList[i].name.length(), skillList[i].name.c_str());
-        ResetSkill(&skillList[i].skillNodeId);
+        retval = ResetSkill(&skillList[i].skillNodeId);
     }
     return retval;
 }
@@ -436,7 +431,7 @@ UA_StatusCode Plugin::SuspendCurrentSkill(){
     return retval;
 }
 
-// ################ Methode Handling  ########################
+// ################ Methode Handling END ########################
 
 
 void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
@@ -486,9 +481,6 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client_read, skillNode,
                                                &paramter_node_id, "ParameterSet");
 
-    //std::cout << "ParameterSet Node: " << paramter_node_id.namespaceIndex << "  " << paramter_node_id.identifier.numeric << std::endl;
-
-    //std::cout << "Browse all parameter value nodes" << std::endl;
     UA_BrowseRequest bReq;
     UA_BrowseRequest_init(&bReq);
     bReq.requestedMaxReferencesPerNode = 0;
@@ -498,28 +490,16 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client_read, bReq);
 
-    //std::cout << "Skill has "<< bResp.results[0].referencesSize << " parameters\n" << std::endl;
-
     for(size_t i = 0; i < bResp.resultsSize; i++) {
         for(size_t j = 0; j < bResp.results[i].referencesSize; j++) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
             if(ref->nodeClass == UA_NODECLASS_VARIABLE) {
-//                std::cout << "Parameter name:" << (const char*)ref->browseName.name.data << std::endl;
                 UA_Variant myVar;
                 UA_Variant_init(&myVar);
 
                 UA_Client_readValueAttribute(samy_core_client_read, ref->nodeId.nodeId, &myVar);
-                std::cout << "Got value from server" << std::endl;
-                std::cout << "Type Name:" << myVar.type->typeName << std::endl;
-                std::cout << "Type Kind:" << myVar.type->typeKind << std::endl;
-                std::cout << "Type ID:" << myVar.type->typeId.identifier.numeric << std::endl;
-                std::cout << "UA_TYPE MoveTo Id: " << UA_TYPES[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
-                std::cout << "UA_TYPE SetEndeffector Id: " << UA_TYPES[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric << std::endl;
 
-
-                std::string typeName = myVar.type->typeName;
-                //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TypeName '%.*s'", (int)typeName.length(), typeName.c_str());
-                if (typeName.compare("InitCanonParametersSetDataType") == 0){
+                if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_INITCANONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found InitCanon Type");
                     UA_InitCanonParametersSetDataType* InitCanon = (UA_InitCanonParametersSetDataType*)&myVar.data;
                     if (*signals->InitCanon(InitCanon) < 0){
@@ -528,7 +508,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("EndCanonParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENDCANONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EndCanon Type");
                     UA_EndCanonParametersSetDataType* EndCanon = (UA_EndCanonParametersSetDataType*)&myVar.data;
                     if (*signals->EndCanon(EndCanon) < 0){
@@ -537,7 +517,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("MessageParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MESSAGEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Message Type");
                     UA_MessageParametersSetDataType* Message = (UA_MessageParametersSetDataType*)&myVar.data;
                     if (*signals->Message(Message) < 0){
@@ -546,7 +526,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("MoveToParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveTo Type");
                     UA_MoveToParametersSetDataType* Moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
                     if (*signals->MoveTo(Moveto) < 0){
@@ -555,7 +535,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("MoveScrewParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVESCREWPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveScrew Type");
                     UA_MoveScrewParametersSetDataType* MoveScrew = (UA_MoveScrewParametersSetDataType*)&myVar.data;
                     if (*signals->MoveScrew(MoveScrew) < 0){
@@ -564,7 +544,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("MoveThroughToParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETHROUGHTOPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveThroughTo Type");
                     UA_MoveThroughToParametersSetDataType* MoveThroughTo = (UA_MoveThroughToParametersSetDataType*)&myVar.data;
                     if (*signals->MoveThroughTo(MoveThroughTo) < 0){
@@ -573,7 +553,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("DwellParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DWELLPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Dewll Type");
                     UA_DwellParametersSetDataType* Dwell = (UA_DwellParametersSetDataType*)&myVar.data;
                     if (*signals->Dwell(Dwell) < 0){
@@ -582,7 +562,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("ActuateJointsParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ACTUATEJOINTSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ActuateJoints Type");
                     UA_ActuateJointsParametersSetDataType* ActuateJoints = (UA_ActuateJointsParametersSetDataType*)&myVar.data;
                     if (*signals->ActuateJoints(ActuateJoints) < 0){
@@ -591,7 +571,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("ConfigureJointReportsParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CONFIGUREJOINTREPORTSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ConfigureJointReports Type");
                     UA_ConfigureJointReportsParametersSetDataType* ConfigureJointReports = (UA_ConfigureJointReportsParametersSetDataType*)&myVar.data;
                     if (*signals->ConfigureJointReports(ConfigureJointReports) < 0){
@@ -600,7 +580,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetDefaultJointPositionsTolerancesParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETDEFAULTJOINTPOSITIONSTOLERANCESPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetDefaultJointPositionsTolerances Type");
                     UA_SetDefaultJointPositionsTolerancesParametersSetDataType* SetDefaultJointPositionsTolerances = (UA_SetDefaultJointPositionsTolerancesParametersSetDataType*)&myVar.data;
                     if (*signals->SetDefaultJointPositionsTolerances(SetDefaultJointPositionsTolerances) < 0){
@@ -609,7 +589,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("GetStatusParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_GETSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found GetStatus Type");
                     UA_GetStatusParametersSetDataType* GetStatus = (UA_GetStatusParametersSetDataType*)&myVar.data;
                     if (*signals->GetStatus(GetStatus) < 0){
@@ -618,7 +598,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("CloseToolChangerParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CLOSETOOLCHANGERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found CloseToolChanger Type");
                     UA_CloseToolChangerParametersSetDataType* CloseToolChanger = (UA_CloseToolChangerParametersSetDataType*)&myVar.data;
                     if (*signals->CloseToolChanger(CloseToolChanger) < 0){
@@ -627,7 +607,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("OpenToolChangerParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_OPENTOOLCHANGERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found OpenToolChanger Type");
                     UA_OpenToolChangerParametersSetDataType* OpenToolChanger = (UA_OpenToolChangerParametersSetDataType*)&myVar.data;
                     if (*signals->OpenToolChanger(OpenToolChanger) < 0){
@@ -636,7 +616,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetRobotParametersParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROBOTPARAMETERSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRobotParameters Type");
                     UA_SetRobotParametersParametersSetDataType* SetRobotParameters = (UA_SetRobotParametersParametersSetDataType*)&myVar.data;
                     if (*signals->SetRobotParameters(SetRobotParameters) < 0){
@@ -645,7 +625,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetEndeffectorParametersParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndeffectorParameters Type");
                     UA_SetEndeffectorParametersParametersSetDataType* SetEndeffectorParameters = (UA_SetEndeffectorParametersParametersSetDataType*)&myVar.data;
                     if (*signals->SetEndeffectorParameters(SetEndeffectorParameters) < 0){
@@ -653,7 +633,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetEndeffectorParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndeffector Type");
                     UA_SetEndeffectorParametersSetDataType* SetEndeffector = (UA_SetEndeffectorParametersSetDataType*)&myVar.data;
                     if (*signals->SetEndeffector(SetEndeffector) < 0){
@@ -662,7 +642,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetTransAccelParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTRANSACCELPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTransAccel Type");
                     UA_SetTransAccelParametersSetDataType* SetTransAccel = (UA_SetTransAccelParametersSetDataType*)&myVar.data;
                     if (*signals->SetTransAccel(SetTransAccel) < 0){
@@ -671,7 +651,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetTransSpeedParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTRANSSPEEDPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTransSpeed Type");
                     UA_SetTransSpeedParametersSetDataType* SetTransSpeed = (UA_SetTransSpeedParametersSetDataType*)&myVar.data;
                     if (*signals->SetTransSpeed(SetTransSpeed) < 0){
@@ -680,7 +660,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetRotAccelParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROTACCELPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRotAccel Type");
                     UA_SetRotAccelParametersSetDataType* SetRotAccel = (UA_SetRotAccelParametersSetDataType*)&myVar.data;
                     if (*signals->SetRotAccel(SetRotAccel) < 0){
@@ -689,7 +669,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetRotSpeedParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROTSPEEDPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRotSpeed Type");
                     UA_SetRotSpeedParametersSetDataType* SetRotSpeed = (UA_SetRotSpeedParametersSetDataType*)&myVar.data;
                     if (*signals->SetRotSpeed(SetRotSpeed) < 0){
@@ -698,7 +678,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetAngleUnitsParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETANGLEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetAngleUnits Type");
                     UA_SetAngleUnitsParametersSetDataType* SetAngleUnits = (UA_SetAngleUnitsParametersSetDataType*)&myVar.data;
                     if (*signals->SetAngleUnits(SetAngleUnits) < 0){
@@ -707,7 +687,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetEndPoseToleranceParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDPOSETOLERANCEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndPoseTolerance Type");
                     UA_SetEndPoseToleranceParametersSetDataType* SetEndPoseTolerance = (UA_SetEndPoseToleranceParametersSetDataType*)&myVar.data;
                     if (*signals->SetEndPoseTolerance(SetEndPoseTolerance) < 0){
@@ -716,7 +696,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetForceUnitsParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETFORCEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetForceUnits Type");
                     UA_SetForceUnitsParametersSetDataType* SetForceUnits = (UA_SetForceUnitsParametersSetDataType*)&myVar.data;
                     if (*signals->SetForceUnits(SetForceUnits) < 0){
@@ -725,7 +705,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetIntermediatePoseToleranceParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETINTERMEDIATEPOSETOLERANCEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetIntermediatePoseTolerance Type");
                     UA_SetIntermediatePoseToleranceParametersSetDataType* SetIntermediatePoseTolerance = (UA_SetIntermediatePoseToleranceParametersSetDataType*)&myVar.data;
                     if (*signals->SetIntermediatePoseTolerance(SetIntermediatePoseTolerance) < 0){
@@ -734,7 +714,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetLengthUnitsParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETLENGTHUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetLengthUnits Type");
                     UA_SetLengthUnitsParametersSetDataType* SetLengthUnits = (UA_SetLengthUnitsParametersSetDataType*)&myVar.data;
                     if (*signals->SetLengthUnits(SetLengthUnits) < 0){
@@ -743,7 +723,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetMotionCoordinationParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETMOTIONCOORDINATIONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetMotionCoordination Type");
                     UA_SetMotionCoordinationParametersSetDataType* SetMotionCoordination = (UA_SetMotionCoordinationParametersSetDataType*)&myVar.data;
                     if (*signals->SetMotionCoordination(SetMotionCoordination) < 0){
@@ -752,25 +732,16 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("SetMotionCoordinationParametersSetDataType") == 0){
-                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetMotionCoordination Type");
-                    UA_SetMotionCoordinationParametersSetDataType* SetMotionCoordination = (UA_SetMotionCoordinationParametersSetDataType*)&myVar.data;
-                    if (*signals->SetMotionCoordination(SetMotionCoordination) < 0){
-                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetMotionCoordination");
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTORQUEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTorqueUnits Type");
+                    UA_SetTorqueUnitsParametersSetDataType* SetTorqueUnits = (UA_SetTorqueUnitsParametersSetDataType*)&myVar.data;
+                    if (*signals->SetTorqueUnits(SetTorqueUnits) < 0){
+                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTorqueUnits");
                         error = true;
                         break;
                     }
                 }
-                else if (typeName.compare("SetTorqueUnitsParametersSetDataType") == 0){
-                    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTorqueUnit Type");
-                    UA_SetTorqueUnitsParametersSetDataType* SetTorqueUnit = (UA_SetTorqueUnitsParametersSetDataType*)&myVar.data;
-                    if (*signals->SetTorqueUnit(SetTorqueUnit) < 0){
-                        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTorqueUnit");
-                        error = true;
-                        break;
-                    }
-                }
-                else if (typeName.compare("StopMotionParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_STOPMOTIONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found StopMotion Type");
                     UA_StopMotionParametersSetDataType* StopMotion = (UA_StopMotionParametersSetDataType*)&myVar.data;
                     if (*signals->StopMotion(StopMotion) < 0){
@@ -779,7 +750,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("ConfigureStatusReportParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CONFIGURESTATUSREPORTPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ConfigureStatusReport Type");
                     UA_ConfigureStatusReportParametersSetDataType* ConfigureStatusReport = (UA_ConfigureStatusReportParametersSetDataType*)&myVar.data;
                     if (*signals->ConfigureStatusReport(ConfigureStatusReport) < 0){
@@ -788,7 +759,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("EnableSensorParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLESENSORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableSensor Type");
                     UA_EnableSensorParametersSetDataType* EnableSensor = (UA_EnableSensorParametersSetDataType*)&myVar.data;
                     if (*signals->EnableSensor(EnableSensor) < 0){
@@ -797,7 +768,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("DisableSensorParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLESENSORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableSensor Type");
                     UA_DisableSensorParametersSetDataType* DisableSensor = (UA_DisableSensorParametersSetDataType*)&myVar.data;
                     if (*signals->DisableSensor(DisableSensor) < 0){
@@ -806,7 +777,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("EnableGripperParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLEGRIPPERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableGripper Type");
                     UA_EnableGripperParametersSetDataType* EnableGripper = (UA_EnableGripperParametersSetDataType*)&myVar.data;
                     if (*signals->EnableGripper(EnableGripper) < 0){
@@ -815,7 +786,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("DisableGripperParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLEGRIPPERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableGripper Type");
                     UA_DisableGripperParametersSetDataType* DisableGripper = (UA_DisableGripperParametersSetDataType*)&myVar.data;
                     if (*signals->DisableGripper(DisableGripper) < 0){
@@ -825,7 +796,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("EnableRobotParameterStatusParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableRobotParameterStatus Type");
                     UA_EnableRobotParameterStatusParametersSetDataType* EnableRobotParameterStatus = (UA_EnableRobotParameterStatusParametersSetDataType*)&myVar.data;
                     if (*signals->EnableRobotParameterStatus(EnableRobotParameterStatus) < 0){
@@ -834,7 +805,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (typeName.compare("DisableRobotParameterStatusParametersSetDataType") == 0){
+                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableRobotParameterStatus Type");
                     UA_DisableRobotParameterStatusParametersSetDataType* DisableRobotParameterStatus = (UA_DisableRobotParameterStatusParametersSetDataType*)&myVar.data;
                     if (*signals->DisableRobotParameterStatus(DisableRobotParameterStatus) < 0){
@@ -851,16 +822,14 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
         }
         if (error) break;
     }
+
     if (!error){
         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Skill finished without error");
         ResetSkill(skillNode);
     }
     UA_BrowseRequest_clear(&bReq);
     UA_BrowseResponse_clear(&bResp);
-
 }
-
-
 
 
 

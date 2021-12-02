@@ -9,8 +9,6 @@ set(CPP_STANDARD 11)
 #enable_language(CXX)
 SET(CMAKE_CXX_STANDARD ${CPP_STANDARD})
 SET(CMAKE_CXX_FLAGS "-Wno-write-strings")
-#FILE(GLOB_RECURSE CFILES "${CMAKE_SOURCE_DIR}/*.c") # Without these flags for me compiles well and the refreshing of files works (see later a explanation I found)
-#SET_SOURCE_FILES_PROPERTIES(${CFILES} PROPERTIES LANGUAGE CXX )   # Without these flags for me compiles well and the refreshing of files works (see later a explanation I found)
 set(CMAKE_CXX_EXTENSIONS OFF)
 #if(CPP_EXTENSIONS)
 #        set(CMAKE_CXX_EXTENSIONS ON)
@@ -21,7 +19,6 @@ project(SAMYPluginLib VERSION 0.1 LANGUAGES CXX C)
 find_package(Boost COMPONENTS thread)
 find_package(Catch2 REQUIRED)
 
-#include_directories("${Boost_INCLUDE_DIRS}")
 # open62541 v1.2 must be installed!
 # If in custom path, then use -DCMAKE_PREFIX_PATH=/home/user/installcmake_minimum_required(VERSION 3.2)
 find_package(open62541 REQUIRED COMPONENTS FullNamespace)
@@ -38,6 +35,7 @@ include_directories("${PROJECT_SOURCE_DIR}"
                     "${PROJECT_SOURCE_DIR}/src/OPCUA_CRCL/include"
                     "${PROJECT_SOURCE_DIR}/src/OPCUA_CRCL/include/open62541/plugin"
                     "${PROJECT_SOURCE_DIR}/src/OPCUA_CRCL/plugins/"
+                    "${PROJECT_SOURCE_DIR}/src/spdlog/include"
                     "${PROJECT_SOURCE_DIR}/src/Communication/include"
                     "${PROJECT_SOURCE_DIR}/src/Helpers/include"
                     "${PROJECT_SOURCE_DIR}/src/Plugin/include")
@@ -56,7 +54,7 @@ ua_generate_nodeset_and_datatypes(
         FILE_CSV "${CMAKE_CURRENT_LIST_DIR}/src/OPCUA_CRCL/model/Published/CRCL.csv"
         FILE_BSD "${CMAKE_CURRENT_LIST_DIR}/src/OPCUA_CRCL/model/Published/CRCL.Types.bsd"
         OUTPUT_DIR "${GENERATE_OUTPUT_DIR}"
-    # This namespace index must match the order in which you are adding the nodeset in the source code
+        # This namespace index must match the order in which you are adding the nodeset in the source code
         NAMESPACE_MAP 2:https://crcl.org
 )
 
@@ -82,12 +80,11 @@ add_executable(test_robot
                "./src/Robot/robot.cpp"
                "./src/Robot/main.cpp")
 
- # I had to add this, otherwise it tried to compile this before the namespaces were compiled, producing a weird behaviour. Essentially you couldn't compile it at the first attempt. Moreove it could happen that you modified the namespaces, generated new files, and nevertheless rebuilt this target with the older version while the rest would be built with the new generated version. Now the compilation order is right.
+ # Is needed, otherwise it tried to compile this before the namespaces were compiled, producing a weird behaviour. Essentially you couldn't compile it at the first attempt. Moreove it could happen that you modified the namespaces, generated new files, and nevertheless rebuilt this target with the older version while the rest would be built with the new generated version. Now the compilation order is right.
 add_dependencies(test_robot
                  ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
                  )
 
-# Here do not include the .a for the library SAMYPluginLib, since it is built in the same file we refer to the target name (using a variable) and not the generated file (otherwise you would have to use the link_directories directive you used before, but this way I think is better)
 target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} open62541::open62541)
 # ${Boost_LIBRARIES}
 
@@ -95,13 +92,13 @@ target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} open62541::open62541)
 
 
 # It builds a test client that can be tested against the TestServer that is built along with the SAMYCore. If the tests are passed, the generated information models are correct and OPC UA communication should work without problems
-add_executable(testsClient
-               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
-               )
+#add_executable(testsClient
+#               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
+#               )
 
-add_dependencies(testsClient
-                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
-                 )
+#add_dependencies(testsClient
+#                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
+#                 )
 
-target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
+#target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
 

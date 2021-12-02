@@ -35,7 +35,7 @@ struct Signals{
     boost::signals2::signal<int(UA_SetIntermediatePoseToleranceParametersSetDataType*)> SetIntermediatePoseTolerance;
     boost::signals2::signal<int(UA_SetLengthUnitsParametersSetDataType*)> SetLengthUnits;
     boost::signals2::signal<int(UA_SetMotionCoordinationParametersSetDataType*)> SetMotionCoordination;
-    boost::signals2::signal<int(UA_SetTorqueUnitsParametersSetDataType*)> SetTorqueUnit;
+    boost::signals2::signal<int(UA_SetTorqueUnitsParametersSetDataType*)> SetTorqueUnits;
     boost::signals2::signal<int(UA_StopMotionParametersSetDataType*)> StopMotion;
     boost::signals2::signal<int(UA_ConfigureStatusReportParametersSetDataType*)> ConfigureStatusReport;
     boost::signals2::signal<int(UA_EnableSensorParametersSetDataType*)> EnableSensor;
@@ -50,8 +50,6 @@ struct Signals{
     boost::signals2::signal<void()> Halt;
     boost::signals2::signal<void()> Resume;
     boost::signals2::signal<void()> Suspend;
-    // Signal for information source
-    boost::signals2::signal<void(const std::string, const UA_CRCLCommandsUnionDataType*)> WriteInformationSource;
 };
 
 #endif

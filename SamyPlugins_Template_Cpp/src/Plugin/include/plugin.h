@@ -6,16 +6,14 @@
 #include <open62541/client_subscriptions.h>
 #include <open62541/plugin/log_stdout.h>
 #include <namespace_crcl_generated.h>
-#include <namespace_crcl_generated.h>
 #include <types_crcl_generated_handling.h>
-
-#include "samy_robot.h"
 #include <helpers.h>
 
 #include <boost/thread.hpp>
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/executor_work_guard.hpp>
 #include <boost/signals2.hpp>
+#include <boost/exception/all.hpp>
 #include <functional>
 #include <signals.h>
 #include <vector>
@@ -28,8 +26,20 @@ struct skill
     std::string name;
 };
 
+const int COMMAND_ERROR = -1;
+const int COMMAND_SUCCESS = 1;
+
 class Plugin
 {
+public:
+    Plugin(std::string samyCoreAddress_, std::string samyCorePort_, Signals* signals_);
+    ~Plugin();
+    UA_StatusCode InitPlugin(std::string robotName);
+    UA_StatusCode RunClient(int timeout);
+    UA_NodeId GetInformationSourceNodeId(const std::string name);
+    bool *running;
+    UA_Client* samy_core_client_read;
+
 private:
     bool StartReadThread();
     void RunService();
@@ -39,7 +49,6 @@ private:
     UA_StatusCode GetSkillNodeId(std::string skillName, UA_NodeId* skillNodeId);
     UA_StatusCode GetListOfSkills();
     UA_StatusCode GetInformationSources();
-    static void WriteInformationSource(const std::string name, const UA_CRCLCommandsUnionDataType* data);
     UA_StatusCode CreateSignalsForInformationSources();
     void ConnectSignals();
 // ################ Methode Handling  ########################
@@ -61,27 +70,36 @@ private:
 
     std::string samyCoreAddress;
     std::string samyCorePort;
+    UA_Client* samy_core_client;
     UA_NodeId* robot_node_id;
     UA_NodeId* robot_controller_node_id;
     UA_NodeId currentSkill;
     static std::vector<struct skill> skillList;
     Signals* signals;
+    std::unordered_map<std::string, UA_NodeId> infoSources;
 
     // Variables for reading values from server in seperate thread
     bool m_started = false;
     boost::asio::io_service m_service;
     boost::asio::executor_work_guard<boost::asio::io_context::executor_type> m_worker;
     boost::thread m_thread;
-
-public:
-    Plugin(std::string samyCoreAddress_, std::string samyCorePort_, Signals* signals_);
-    ~Plugin();
-    UA_StatusCode InitPlugin(std::string robotName);
-    UA_StatusCode RunClient(int timeout);
-    bool *running;
-    std::unordered_map<std::string, UA_NodeId> infoSources;
-    UA_Client* samy_core_client_read;
-    UA_Client* samy_core_client;
 };
+
+template <typename T>
+bool WriteInfoSource(T* data, const UA_DataType* type, UA_NodeId id, UA_Client* client){
+    UA_StatusCode retval;
+    UA_Variant myVariant;
+    UA_Variant_init(&myVariant);
+    UA_Variant_setScalar(&myVariant, data, type);
+    retval = UA_Client_writeValueAttribute(client, id, &myVariant);
+    if (retval == UA_STATUSCODE_GOOD){
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Writing to Node %d was succesfull", id.identifier.numeric);
+        return true;
+    } else {
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
+                    "Writing to Node %d was UNsuccesfull | Error: %s",id.identifier.numeric, UA_StatusCode_name(retval));
+        return false;
+    }
+}
 
 #endif // PLUGIN_H
