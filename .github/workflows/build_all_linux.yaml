@@ -30,13 +30,88 @@ jobs:
         build-type: build_catch2
     - name: "Go back to this repository"
       run: |
-        tree -L 2
-        ls
         cd ${{ github.workspace }}
     - name: "Build Plugin Template"
       uses: ./.github/actions/build_linux
       with:
         build-type: build_release
+    - run: |
+        mkdir -p ./.github/actions_temp
+        cp -R ./.github/actions/* ./.github/actions_temp
+    - uses: actions/checkout@v2-beta
+      with:
+        repository: TW-Robotics/FHTW_Github_Actions
+        ref: main
+        token: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
+        path: .github/actions
+    - run: |
+        cp -R ./.github/actions_temp/* ./.github/actions
+        tree -a -L 4
+    - name: "Run the private Build_SAMYCore action"
+      uses: ./.github/actions/build_SAMYCore_Linux
+      with:
+        catch2-exists: true
+        open62541-exists: true
+        secret-private-download: ${{ secrets.SECRET_PAT_PRIVATE_DOWNLOAD }}
+    - name: "Upload the SAMYCore binary"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYCore
+           path: SAMYCore/build/SAMYCore
+    - name: "Upload the SAMYCore testsServer binary"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYCore-testsServer
+           path: SAMYCore/build/testsServer
+    - name: "Upload the cpp plugin test"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYPlugin-CPP-test
+           path: SamyPlugins_Template_Cpp/build/test_robot
+    - name: "Upload the testsClient binary"
+      uses: actions/upload-artifact@master
+      with:
+           name: SAMYPlugin-testsClient
+           path: SamyPlugins_Template_Cpp/build/testsClient
+  test:
+      runs-on: ubuntu-20.04
+      needs: [build]
+      steps:
+      - run: |
+             mkdir -p binaries
+      - name: "Download the SAMYCore binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYCore
+            path: binaries
+      - name: "Download the SAMYCore-testsServer binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYCore-testsServer
+            path: binaries
+      - name: "Download the SAMYPlugin-CPP-test binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYPlugin-CPP-test
+            path: binaries
+      - name: "Download the testsClient binary"
+        uses: actions/download-artifact@master
+        with:
+            name: SAMYPlugin-testsClient
+            path: binaries
+      - run: |
+             pwd
+             ls
+             tree -L 2
+      - run: |
+             sudo ./binaries/testsServer [ServerTest] &
+      - run: |
+             sudo ./binaries/testsClient
+
+
+
+
+
 
 
 # name: Linux Build

@@ -71,7 +71,7 @@ function build_tpm_tool {
 #########################
 
 function build_open62541 {
-    mkdir SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build;
+    mkdir -p SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build;
     cd SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build
     rm -rf *
     cmake -DUA_NAMESPACE_ZERO=FULL \
@@ -99,8 +99,11 @@ function build_open62541 {
 
 function build_catch2 {
     cd Catch2
-    cmake -Bbuild -H. -DBUILD_TESTING=OFF
-    sudo cmake --build build/ --target install}
+    mkdir -p build && cd build
+    rm -rf *
+    cmake ..
+    make ${MAKEOPTS}
+    sudo make install
 }
 
 function build_release {
