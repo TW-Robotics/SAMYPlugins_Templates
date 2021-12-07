@@ -107,6 +107,7 @@ jobs:
              cd binaries
              pwd
              ls
+             tree -L 3 /lib
              sudo chmod +x testsServer
              sudo chmod +x testsClient
              ./testsServer [ServerTest] &
