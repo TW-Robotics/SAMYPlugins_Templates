@@ -104,10 +104,12 @@ jobs:
              ls
              tree -L 2
       - run: |
-             sudo ./binaries/testsServer [ServerTest] &
-      - run: |
-             sudo ./binaries/testsClient
-
+             cd binaries
+             pwd
+             ls
+             sudo ./testsServer [ServerTest] &
+             sudo ./testsClient
+             cd ..
 
 
 
