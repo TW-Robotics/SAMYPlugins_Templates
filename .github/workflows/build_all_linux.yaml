@@ -100,14 +100,7 @@ jobs:
             name: SAMYPlugin-testsClient
             path: binaries
       - run: |
-             pwd
-             ls
-             tree -L 2
-      - run: |
              cd binaries
-             pwd
-             ls
-             tree -L 3 /lib
              sudo chmod +x testsServer
              sudo chmod +x testsClient
              ./testsServer [ServerTest] &
