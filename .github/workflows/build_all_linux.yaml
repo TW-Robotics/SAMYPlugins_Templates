@@ -106,8 +106,7 @@ jobs:
              cd binaries
              sudo chmod +x testsServer
              sudo chmod +x testsClient
-             ./testsServer [ServerTest] &
-             ./testsClient
+             ./testsServer [ServerTest]
              cd ..
 
 
