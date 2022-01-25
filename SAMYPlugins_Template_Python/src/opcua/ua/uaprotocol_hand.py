@@ -15,8 +15,8 @@ class Hello(uatypes.FrozenClass):
 
     def __init__(self):
         self.ProtocolVersion = 0
-        self.ReceiveBufferSize = 65536
-        self.SendBufferSize = 65536
+        self.ReceiveBufferSize = 2**31 - 1
+        self.SendBufferSize = 2**31 - 1
         self.MaxMessageSize = 0 # No limits
         self.MaxChunkCount = 0 # No limits
         self.EndpointUrl = ""
@@ -268,6 +268,14 @@ class SecurityPolicyFactory(object):
 class Message(object):
     def __init__(self, chunks):
         self._chunks = chunks
+
+    def __str__(self):
+        return 'Message(' + str(self._chunks) + ')'
+
+    __repr__ = __str__
+
+    def message_type(self):
+        return self._chunks[0].MessageHeader.MessageType
 
     def request_id(self):
         return self._chunks[0].SequenceHeader.RequestId

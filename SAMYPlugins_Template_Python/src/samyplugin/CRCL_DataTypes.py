@@ -994,7 +994,7 @@ class ActuateJointsDataType(object):
         self.RealTimeParameterNode = ua.NodeId()
         self.Guard = []
         self.ActuateJoint = []
-        self.JointTolerances = ua.CRCL_JointPositionsTolerancesDataType()
+        self.JointTolerances = CRCL_JointPositionsTolerancesDataType()
 
 
 class MoveToDataType(object):

@@ -31,7 +31,6 @@ use_crypto = True
 try:
     from opcua.crypto import uacrypto
 except ImportError:
-    logging.getLogger(__name__).warning("cryptography is not installed, use of crypto disabled")
     use_crypto = False
 
 
@@ -75,6 +74,9 @@ class Server(object):
 
     """
 
+    if use_crypto is False:
+        logging.getLogger(__name__).warning("cryptography is not installed, use of crypto disabled")
+
     def __init__(self, shelffile=None, iserver=None):
         self.logger = logging.getLogger(__name__)
         self.endpoint = urlparse("opc.tcp://0.0.0.0:4840/freeopcua/server/")
@@ -87,7 +89,7 @@ class Server(object):
         if iserver is not None:
             self.iserver = iserver
         else:
-            self.iserver = InternalServer(shelffile = shelffile, parent = self)
+            self.iserver = InternalServer(shelffile = shelffile)
         self.bserver = None
         self._policies = []
         self.nodes = Shortcuts(self.iserver.isession)
@@ -116,6 +118,14 @@ class Server(object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.stop()
+
+    @property
+    def user_manager(self):
+        return self.iserver.user_manager
+
+    @user_manager.setter
+    def user_manager(self, user_manager):
+        self.iserver.user_manager = user_manager
 
     @property
     def local_discovery_service(self):
@@ -213,7 +223,7 @@ class Server(object):
 
             E.g. to limit the number of IDs and disable anonymous clients:
 
-                set_security_policy(["Basic256Sha256"])
+                set_security_IDs(["Basic256Sha256"])
 
             (Implementation for ID check is currently not finalized...)
 
@@ -367,7 +377,7 @@ class Server(object):
         """
         Get Server node of server. Returns a Node object.
         """
-        return self.get_node(ua.TwoByteNodeId(ua.ObjectIds.Server))
+        return self.get_node(ua.FourByteNodeId(ua.ObjectIds.Server))
 
     def get_node(self, nodeid):
         """

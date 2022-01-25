@@ -4,7 +4,11 @@ high level interface to subscriptions
 import time
 import logging
 from threading import Lock
-import collections
+import sys
+if sys.version_info.major == 3 and sys.version_info.minor >= 6:
+    from collections.abc import Iterable
+else:
+    from collections import Iterable
 
 from opcua import ua
 from opcua.common import events
@@ -85,6 +89,7 @@ class Subscription(object):
         self._monitoreditems_map = {}
         self._lock = Lock()
         self.subscription_id = None
+        self.has_unknown_handlers = False
         response = self.server.create_subscription(
             params, self.publish_callback, ready_callback=self.ready_callback)
         # Set it here to keep the old behavof as well, but this may not run if
@@ -139,6 +144,7 @@ class Subscription(object):
             with self._lock:
                 if item.ClientHandle not in self._monitoreditems_map:
                     self.logger.warning("Received a notification for unknown handle: %s", item.ClientHandle)
+                    self.has_unknown_handlers = True
                     continue
                 data = self._monitoreditems_map[item.ClientHandle]
             if hasattr(self._handler, "datachange_notification"):
@@ -211,7 +217,7 @@ class Subscription(object):
 
     def _subscribe(self, nodes, attr, mfilter=None, queuesize=0):
         is_list = True
-        if isinstance(nodes, collections.Iterable):
+        if isinstance(nodes, Iterable):
             nodes = list(nodes)
         else:
             nodes = [nodes]
@@ -289,9 +295,12 @@ class Subscription(object):
         unsubscribe to datachange or events using the handle returned while subscribing
         if you delete subscription, you do not need to unsubscribe
         """
+        handles = [handle] if type(handle) is int else handle
+        if not handles:
+            return
         params = ua.DeleteMonitoredItemsParameters()
         params.SubscriptionId = self.subscription_id
-        params.MonitoredItemIds = [handle]
+        params.MonitoredItemIds = handles
         results = self.server.delete_monitored_items(params)
         results[0].check()
         with self._lock:
@@ -357,3 +366,26 @@ class Subscription(object):
         deadband_filter.DeadbandType = deadbandtype
         deadband_filter.DeadbandValue = deadband_val  # absolute float value or from 0 to 100 for percentage deadband
         return self._subscribe(var, attr, deadband_filter, queuesize)
+
+    def reconciliate(self, monitored_items):
+        """
+        Reconciliate client monitored_items with its server counterpart.
+        :param monitored_items_srv: monitored items handles from server
+        :return: Number of mi added and deleted to the client subscription
+        """
+        mi_client_handlers = set(monitored_items[1])
+        monitored_map = set(self._monitoreditems_map.keys())
+        # find MI still present on the server-side
+        client_handler_to_del = mi_client_handlers - monitored_map
+        server_handler_to_del = []
+        for idx, item in enumerate(monitored_items[1]):
+            if item in client_handler_to_del:
+                server_handler_to_del.append(monitored_items[0][idx])
+        for item in server_handler_to_del:
+            try:
+                self.unsubscribe(item)
+            # fail silenty if the MI has already been removed
+            except ua.uaerrors.BadMonitoredItemIdInvalid:
+                pass
+        self.has_unknown_handlers = False
+        return len(client_handler_to_del)

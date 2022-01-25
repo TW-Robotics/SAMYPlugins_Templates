@@ -51,8 +51,11 @@ class UaProcessor(object):
     def open_secure_channel(self, algohdr, seqhdr, body):
         request = struct_from_binary(ua.OpenSecureChannelRequest, body)
 
-        self._connection.select_policy(
-            algohdr.SecurityPolicyURI, algohdr.SenderCertificate, request.Parameters.SecurityMode)
+        if not self._connection.is_open():
+            # Only call select_policy if the channel isn't open. Otherwise
+            # it will break the Secure channel renewal.
+            self._connection.select_policy(
+                algohdr.SecurityPolicyURI, algohdr.SenderCertificate, request.Parameters.SecurityMode)
 
         channel = self._connection.open(request.Parameters, self.iserver)
         # send response
@@ -125,7 +128,7 @@ class UaProcessor(object):
             params = struct_from_binary(ua.CreateSessionParameters, body)
 
             # create the session on server
-            self.session = self.iserver.create_session(self.name, external=True)
+            self.session = self.iserver.create_session(self.name)
             # get a session creation result to send back
             sessiondata = self.session.create_session(params, sockname=self.sockname)
 

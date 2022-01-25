@@ -24,7 +24,6 @@ src/opcua/common/subscription.py
 src/opcua/common/type_dictionary_buider.py
 src/opcua/common/ua_utils.py
 src/opcua/common/utils.py
-src/opcua/common/utils_orig.py
 src/opcua/common/xmlexporter.py
 src/opcua/common/xmlimporter.py
 src/opcua/common/xmlparser.py
@@ -49,7 +48,11 @@ src/opcua/server/standard_address_space/__init__.py
 src/opcua/server/standard_address_space/standard_address_space.py
 src/opcua/server/standard_address_space/standard_address_space_part10.py
 src/opcua/server/standard_address_space/standard_address_space_part11.py
+src/opcua/server/standard_address_space/standard_address_space_part12.py
 src/opcua/server/standard_address_space/standard_address_space_part13.py
+src/opcua/server/standard_address_space/standard_address_space_part14.py
+src/opcua/server/standard_address_space/standard_address_space_part17.py
+src/opcua/server/standard_address_space/standard_address_space_part19.py
 src/opcua/server/standard_address_space/standard_address_space_part3.py
 src/opcua/server/standard_address_space/standard_address_space_part4.py
 src/opcua/server/standard_address_space/standard_address_space_part5.py
@@ -57,11 +60,9 @@ src/opcua/server/standard_address_space/standard_address_space_part8.py
 src/opcua/server/standard_address_space/standard_address_space_part9.py
 src/opcua/ua/__init__.py
 src/opcua/ua/attribute_ids.py
-src/opcua/ua/extension_objects.py
 src/opcua/ua/object_ids.py
 src/opcua/ua/status_codes.py
 src/opcua/ua/ua_binary.py
-src/opcua/ua/ua_binary_orig.py
 src/opcua/ua/uaprotocol_auto.py
 src/opcua/ua/uaprotocol_hand.py
 src/opcua/ua/uatypes.py
@@ -77,3 +78,4 @@ src/samyplugin.egg-info/dependency_links.txt
 src/samyplugin.egg-info/top_level.txt
 src/transform/__init__.py
 src/transform/transform.py
+src/transform/transform_old.py

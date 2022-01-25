@@ -49,28 +49,15 @@ class Plugin():
         self.information_source_nodes = None
         self.information_source_nodes_dict = {}
         self.skill_error = False
+        self.transform = Transform()
         pub.setListenerExcHandler(ErrorHandler())
         self.log_all_messages()
         self.create_subscribers()
-        #self.get_list_of_datatypes()
-
 
 ######################### OPCUA CLIENT SECTION #################################
 
     def datachange_notification(self, node, val, data):
-        # Start a thread for each skill that gets executed
-        # self.logger.info("\n\n Subscription Info \n")
         self.logger.info("Got datachange_notification", data)
-        # self.logger.info(data.monitored_item.Value.SourceTimestamp)
-        # self.logger.info(data.monitored_item.Value.ServerTimestamp)
-        # self.logger.info(data.monitored_item.Value.Value)
-        # self.logger.info(data.monitored_item.Value.StatusCode)
-        # TODO Check if node id is not 0. Ignore datachange if that is the case
-
-        # Get node of the skill
-        # self.my_skill_node = self.opcua_core_client.get_node(val)
-        # self.thread = threading.Thread(target=self.command_thread, args=())
-        # self.thread.start()
 
     def event_notification(self, event):
         self.logger.debug("\n\n\n")
@@ -125,7 +112,8 @@ class Plugin():
             parameter_nodes[parameter_node.get_browse_name().Name] = parameter_node
 
         parameter_nodes_sorted = sorted(parameter_nodes.items(), key=self.sort_by_number)
-        #pprint(parameter_nodes_sorted)
+        pprint(parameter_nodes)
+        pprint(parameter_nodes_sorted)
         # Reset skill error
         self.skill_error = False
         for i in range(len(parameter_nodes_sorted)):
@@ -213,14 +201,19 @@ class Plugin():
             skillTransitionEventBrowsePath = str(nsFortissDI) + ':SkillTransitionEventType'
             samy_event = root.get_child(["0:Types","0:EventTypes","0:BaseEventType","0:TransitionEventType","0:ProgramTransitionEventType", skillTransitionEventBrowsePath])
             self.logger.debug("SamyEvent: ", samy_event)
+            found_robot = False
             for object in nodes.get_children():
                 if object.get_browse_name().Name == robot_name_:
+                    found_robot = True
                     ns = object.nodeid.NamespaceIndex
                     self.robot_node = object
                     self.robot_state_node = self.robot_node.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:CurrentState".format(ns)])
                     #next_skill_node_id_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:NextSkillNodeId".format(ns)])
                     skills_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "5:Skills"])
             # Get all skill node ids and reset them
+            if not found_robot:
+                self.logger.error("No robot with name: " + robot_name_ + " in SAMYCore found")
+                exit()
             self.skill_list = skills_node.get_children()
             self.logger.debug("\n\n\n\n")
             self.logger.debug("robot_node = ", self.robot_node)

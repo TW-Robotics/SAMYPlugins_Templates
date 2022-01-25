@@ -8,7 +8,6 @@ import os
 import importlib
 import re
 import logging
-import copy
 # The next two imports are for generated code
 from datetime import datetime
 import uuid
@@ -45,28 +44,10 @@ def get_default_value(uatype, enums):
     else:
         return "ua.{}()".format(uatype)
 
-def check_array_contains_all_elements_in_range(nums, x, y) :
-   temp_range = y - x
-   for i in range(0, len(nums)):
-      if abs(nums[i]) >= x and abs(nums[i]) <= y:
-         z = abs(nums[i]) - x
-         if (nums[z] > 0) :
-            nums[z] = nums[z] * -1
-   cnt = 0
-   for i in range(0, temp_range + 1):
-      if i >= len(nums):
-         break
-      if nums[i] > 0:
-         return False
-      else:
-         cnt += 1
-   if cnt != temp_range + 1:
-      return False
-   return True
 
 class EnumType(object):
     def __init__(self, name):
-        self.name = name
+        self.name = _clean_name(name)
         self.fields = []
         self.typeid = None
 
@@ -82,7 +63,7 @@ class {0}(IntEnum):
 """.format(self.name)
 
         for EnumeratedValue in self.fields:
-            name = EnumeratedValue.Name
+            name = _clean_name(EnumeratedValue.Name)
             value = EnumeratedValue.Value
             code += "    {} = {}\n".format(name, value)
 
@@ -100,13 +81,12 @@ class EnumeratedValue(object):
 
 class Struct(object):
     def __init__(self, name):
-        self.name = name
+        self.name = _clean_name(name)
         self.fields = []
         self.typeid = None
-        self.isUnion = False # if the Struct is union, in the fields array the first field (fields[0]) is the switchField, the rest are the fields n fields of the union (fields[1] to fields[n])
 
     def __str__(self):
-        return "Struct(name={}, fields={}, isUnion={})".format(self.name, self.fields, self.isUnion)
+        return "Struct(name={}, fields={}".format(self.name, self.fields)
     __repr__ = __str__
 
     def get_code(self):
@@ -128,8 +108,7 @@ class {0}(object):
                 uatype = "String"
             code += "        ('{}', '{}'),\n".format(field.name, uatype)
 
-        code += "    ]" # After this modified!
-
+        code += "    ]"
         code += """
     def __str__(self):
         vals = [name + ": " + str(val) for name, val in self.__dict__.items()]
@@ -139,29 +118,22 @@ class {0}(object):
 
     def __init__(self):
 """
-
         if not self.fields:
             code += "      pass"
-
-        if self.isUnion: # If it is a union, we use the switchfield + ua_types array to know how to decode the union value
-            code += "        self.isUnion = True\n"
-            code += "        self.switchField = 0\n"
-            code += "        self.unionValue = None\n"
-        else:
-            for field in self.fields:
-                  code += "        self.{} = {}\n".format(field.name, field.value)
+        for field in self.fields:
+            code += "        self.{} = {}\n".format(field.name, field.value)
         return code
 
 
 class Field(object):
-    def __init__(self, name=''):
+    def __init__(self, name):
         self.name = name
         self.uatype = None
         self.value = None
         self.array = False
 
     def __str__(self):
-            return "Field(name={}, uatype={})".format(self.name, self.uatype)
+        return "Field(name={}, uatype={}".format(self.name, self.uatype)
     __repr__ = __str__
 
 
@@ -189,72 +161,30 @@ class StructGenerator(object):
                 intenum.fields.append(enumvalue)
                 enums[child.get("Name")] = value
             self.model.append(intenum)
-        for child in root.iter("{*}StructuredType"): 
+
+        for child in root.iter("{*}StructuredType"):
             struct = Struct(child.get("Name"))
-            baseType = child.get("BaseType")
-            if ":" in baseType:
-                 baseType = baseType.split(":")[1]
             array = False
-            structuredTypeIsUnion = False
-            unionSwitchFieldValues = []
-            unionSwitchFieldName = ''
-            unionFields = []
-            if baseType == "Union":
-               switchField_counter = 0
-               for xmlfield in child.iter("{*}Field"):
-                   if 'SwitchField' and 'SwitchValue' in xmlfield.attrib:
-                           unionSwitchFieldValues.append( int(xmlfield.get("SwitchValue")) )
-                           unionSwitchFieldAux = xmlfield.get("SwitchField")
-                           if unionSwitchFieldName == '':
-                               unionSwitchFieldName = unionSwitchFieldAux
-                           elif unionSwitchFieldName != unionSwitchFieldAux:
-                               structuredTypeIsUnion = False
-                               break
-                           structuredTypeIsUnion = True
-                   else:
-                           uatype = xmlfield.get("TypeName")
-                           if ":" in uatype:
-                                uatype = uatype.split(":")[1]
-                           if uatype != "UInt32" and uatype != "Bit": # The SwitchField must be an UInt32 according to the specification
-                                structuredTypeIsUnion = False
-                                break
-                           unionSwitchFieldValues.append(0)
-               auxArray =copy.deepcopy(unionSwitchFieldValues)
-               if not check_array_contains_all_elements_in_range(auxArray, 0, len(auxArray)-1 ):
-                  structuredTypeIsUnion = False
             for xmlfield in child.iter("{*}Field"):
-                   name = xmlfield.get("Name")
-                   if name.startswith("NoOf"):
-                       array = True
-                       continue
-                   field = Field(_clean_name(name))
-                   field.uatype = xmlfield.get("TypeName")
-                   if ":" in field.uatype:
-                       field.uatype = field.uatype.split(":")[1]
-                   field.uatype = _clean_name(field.uatype)
-                   field.value = get_default_value(field.uatype, enums)
-                   if array:
-                       field.array = True
-                       field.value = []
-                       array = False
-                   if not structuredTypeIsUnion:
-                       struct.isUnion = False
-                       struct.fields.append(field)
-                   else:
-                       struct.isUnion = True
-                       unionFields.append(field)
-            if structuredTypeIsUnion:
-                   unionFieldsArrayAux = []
-                   for i in range(0, len(unionSwitchFieldValues) ):
-                       unionFieldsArrayAux.append( Field() )
-                   for i in range (0, len(unionSwitchFieldValues) ):
-                       unionFieldsArrayAux[unionSwitchFieldValues[i]] = unionFields[i]
-                   struct.fields = unionFieldsArrayAux
-         #   print(struct)
+                name = xmlfield.get("Name")
+                if name.startswith("NoOf"):
+                    array = True
+                    continue
+                field = Field(_clean_name(name))
+                field.uatype = xmlfield.get("TypeName")
+                if ":" in field.uatype:
+                    field.uatype = field.uatype.split(":")[1]
+                field.uatype = _clean_name(field.uatype)
+                field.value = get_default_value(field.uatype, enums)
+                if array:
+                    field.array = True
+                    field.value = []
+                    array = False
+                struct.fields.append(field)
             self.model.append(struct)
 
     def save_to_file(self, path, register=False):
-        _file = open(path, "wt")
+        _file = open(path, "w+")
         self._make_header(_file)
         for struct in self.model:
             _file.write(struct.get_code())
@@ -328,7 +258,6 @@ def load_type_definitions(server, nodes=None):
     generators = []
     for node in nodes:
         xml = node.get_value()
-        xml = xml.decode("utf-8")
         generator = StructGenerator()
         generators.append(generator)
         generator.make_model_from_string(xml)
@@ -357,7 +286,7 @@ def load_type_definitions(server, nodes=None):
                 generator.set_typeid(name, nodeid.to_string())
 
         for key, val in structs_dict.items():
-            if isinstance(val, EnumMeta) and key is not "IntEnum":
+            if isinstance(val, EnumMeta) and key != "IntEnum":
                 setattr(ua, key, val)
 
     return generators, structs_dict
@@ -369,6 +298,8 @@ def _clean_name(name):
     but cannot be part of of Python class names
     """
     name = re.sub(r'\W+', '_', name)
+    name = re.sub(r'\.', '_', name)
+    name = re.sub(r'"', '_', name)
     name = re.sub(r'^[0-9]+', r'_\g<0>', name)
 
     return name
