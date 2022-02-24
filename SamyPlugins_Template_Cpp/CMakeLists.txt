@@ -16,8 +16,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(SAMYPluginLib VERSION 0.1 LANGUAGES CXX C)
 
-find_package(Boost COMPONENTS thread)
-find_package(Catch2 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS thread)
+#find_package(Catch2 REQUIRED)
 
 # open62541 v1.2 must be installed!
 # If in custom path, then use -DCMAKE_PREFIX_PATH=/home/user/installcmake_minimum_required(VERSION 3.2)
@@ -35,7 +35,7 @@ include_directories("${PROJECT_SOURCE_DIR}"
                     "${PROJECT_SOURCE_DIR}/src/OPCUA_CRCL/include"
                     "${PROJECT_SOURCE_DIR}/src/OPCUA_CRCL/include/open62541/plugin"
                     "${PROJECT_SOURCE_DIR}/src/OPCUA_CRCL/plugins/"
-                    "${PROJECT_SOURCE_DIR}/src/spdlog/include"
+                    "${PROJECT_SOURCE_DIR}/src/"
                     "${PROJECT_SOURCE_DIR}/src/Communication/include"
                     "${PROJECT_SOURCE_DIR}/src/Helpers/include"
                     "${PROJECT_SOURCE_DIR}/src/Plugin/include")
@@ -92,13 +92,13 @@ target_link_libraries(test_robot PRIVATE ${PROJECT_NAME} open62541::open62541)
 
 
 # It builds a test client that can be tested against the TestServer that is built along with the SAMYCore. If the tests are passed, the generated information models are correct and OPC UA communication should work without problems
-add_executable(testsClient
-               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
-               )
+#add_executable(testsClient
+#               "./src/Tests/CRCLnamespace_tests/testsClient.cpp"
+#               )
 
-add_dependencies(testsClient
-                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
-                 )
+#add_dependencies(testsClient
+#                 ${NAMESPACE_PREFIX}-ns-${NAMESPACE_NAME_CRCL}
+#                 )
 
-target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
+#target_link_libraries(testsClient PRIVATE Catch2::Catch2 Catch2::Catch2WithMain ${PROJECT_NAME} )
 

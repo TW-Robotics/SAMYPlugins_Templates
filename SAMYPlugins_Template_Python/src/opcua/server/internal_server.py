@@ -39,9 +39,10 @@ class SessionState(Enum):
 
 class InternalServer(object):
 
-    def __init__(self, shelffile=None, user_manager=None, session_cls=None):
+    def __init__(self, shelffile=None, parent=None, session_cls=None):
         self.logger = logging.getLogger(__name__)
 
+        self._parent = parent
         self.server_callback_dispatcher = CallbackDispatcher()
 
         self.endpoints = []
@@ -62,17 +63,19 @@ class InternalServer(object):
         self.subscription_service = SubscriptionService(self.aspace)
 
         self.history_manager = HistoryManager(self)
-        self.user_manager = user_manager
 
         # create a session to use on server side
         self.session_cls = session_cls or InternalSession
         self.isession = self.session_cls(self, self.aspace, \
           self.subscription_service, "Internal", user=UserManager.User.Admin)
 
-        self.server_status_node = Node(self.isession, ua.NodeId(ua.ObjectIds.Server_ServerStatus))
         self.current_time_node = Node(self.isession, ua.NodeId(ua.ObjectIds.Server_ServerStatus_CurrentTime))
         self._address_space_fixes()
         self.setup_nodes()
+
+    @property
+    def user_manager(self):
+        return self._parent.user_manager
 
     @property
     def thread_loop(self):
@@ -173,8 +176,7 @@ class InternalServer(object):
         self.loop = utils.ThreadLoop()
         self.loop.start()
         self.subscription_service.set_loop(self.loop)
-        serverState = Node(self.isession, ua.NodeId(ua.ObjectIds.Server_ServerStatus_State))
-        serverState.set_value(ua.uaprotocol_auto.ServerState.Running, ua.VariantType.Int32)
+        Node(self.isession, ua.NodeId(ua.ObjectIds.Server_ServerStatus_State)).set_value(0, ua.VariantType.Int32)
         Node(self.isession, ua.NodeId(ua.ObjectIds.Server_ServerStatus_StartTime)).set_value(datetime.utcnow())
         if not self.disabled_clock:
             self._set_current_time()
@@ -196,9 +198,6 @@ class InternalServer(object):
 
     def _set_current_time(self):
         self.current_time_node.set_value(datetime.utcnow())
-        ssdata = self.server_status_node.get_value()
-        ssdata.CurrentTime = datetime.utcnow()
-        self.server_status_node.set_value(ssdata)
         self.loop.call_later(1, self._set_current_time)
 
     def get_new_channel_id(self):
@@ -222,8 +221,8 @@ class InternalServer(object):
             return edps
         return self.endpoints[:]
 
-    def create_session(self, name, user=UserManager.User.Anonymous):
-        return self.session_cls(self, self.aspace, self.subscription_service, name, user=user)
+    def create_session(self, name, user=UserManager.User.Anonymous, external=False):
+        return self.session_cls(self, self.aspace, self.subscription_service, name, user=user, external=external)
 
     def enable_history_data_change(self, node, period=timedelta(days=7), count=0):
         """
@@ -288,9 +287,10 @@ class InternalSession(object):
     _counter = 10
     _auth_counter = 1000
 
-    def __init__(self, internal_server, aspace, submgr, name, user=UserManager.User.Anonymous):
+    def __init__(self, internal_server, aspace, submgr, name, user=UserManager.User.Anonymous, external=False):
         self.logger = logging.getLogger(__name__)
         self.iserver = internal_server
+        self.external = external  # define if session is external, we need to copy some objects if it is internal
         self.aspace = aspace
         self.subscription_service = submgr
         self.name = name

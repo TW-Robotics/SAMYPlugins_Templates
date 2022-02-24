@@ -5,7 +5,6 @@ implement ua datatypes
 import logging
 from enum import Enum, IntEnum
 from calendar import timegm
-import pytz
 import sys
 import os
 import uuid
@@ -30,12 +29,26 @@ HUNDREDS_OF_NANOSECONDS = 10000000
 FILETIME_EPOCH_AS_DATETIME = datetime(1601, 1, 1)
 
 
+class UTC(tzinfo):
+    """
+    UTC
+    """
+
+    def utcoffset(self, dt):
+        return timedelta(0)
+
+    def tzname(self, dt):
+        return "UTC"
+
+    def dst(self, dt):
+        return timedelta(0)
+
+
+
 # method copied from David Buxton <david@gasmark6.com> sample code
 def datetime_to_win_epoch(dt):
     if (dt.tzinfo is None) or (dt.tzinfo.utcoffset(dt) is None):
-        dt = dt.replace(tzinfo=pytz.utc)
-    else:
-        dt = dt.astimezone(tz=pytz.utc)
+        dt = dt.replace(tzinfo=UTC())
     ft = EPOCH_AS_FILETIME + (timegm(dt.timetuple()) * HUNDREDS_OF_NANOSECONDS)
     return ft + (dt.microsecond * 10)
 
@@ -288,10 +301,7 @@ class NodeId(object):
         self._freeze = True
         if self.Identifier is None:
             self.Identifier = 0
-            if namespaceidx == 0:
-                self.NodeIdType = NodeIdType.TwoByte
-            else:  # TwoByte NodeId does not encode namespace.
-                self.NodeIdType = NodeIdType.Numeric
+            self.NodeIdType = NodeIdType.TwoByte
             return
         if self.NodeIdType is None:
             if isinstance(self.Identifier, int):
@@ -327,7 +337,7 @@ class NodeId(object):
     def has_null_identifier(self):
         if not self.Identifier:
             return True
-        if self.NodeIdType == NodeIdType.Guid and re.match(b'\x00+', self.Identifier.bytes):
+        if self.NodeIdType == NodeIdType.Guid and re.match(b'0.', self.Identifier):
             return True
         return False
 
@@ -362,7 +372,7 @@ class NodeId(object):
                 identifier = v
             elif k == "g":
                 ntype = NodeIdType.Guid
-                identifier = uuid.UUID("urn:uuid:{0}".format(v))
+                identifier = v
             elif k == "b":
                 ntype = NodeIdType.ByteString
                 identifier = v
@@ -509,64 +519,35 @@ class LocalizedText(FrozenClass):
     }
 
     ua_types = (
-            ('Encoding', 'Byte'),
-            ('Locale', 'String'),
+            ('Encoding', 'Byte'), 
+            ('Locale', 'String'), 
             ('Text', 'String'), )
 
-    def __init__(self, text=None, locale=None):
+    def __init__(self, text=None):
         self.Encoding = 0
         self._text = None
-        self._locale = None
         if text:
             self.Text = text
-        if locale:
-            self.Locale = locale
+        self.Locale = None
         self._freeze = True
 
     @property
     def Text(self):
         return self._text
-    
-    @property
-    def Locale(self):
-        return self._locale
 
     @Text.setter
     def Text(self, text):
-        if isinstance(text, str):
-            pass
-        elif isinstance(text, bytes):
-            text = text.decode()
-        else:
+        if not isinstance(text, str):
             raise ValueError("A LocalizedText object takes a string as argument, not a {}, {}".format(type(text), text))
         self._text = text
         if self._text:
             self.Encoding |= (1 << 1)
-            
-    @Locale.setter
-    def Locale(self, locale):
-        if not isinstance(locale, str):
-            raise ValueError("A LocalizedText object takes a string as argument, not a {}, {}".format({type(locale)}, {locale}))
-        self._locale = locale
-        if self._locale:
-            self.Encoding |= (1)
 
     def to_string(self):
+        # FIXME: use local
         if self.Text is None:
             return ""
-        if self.Locale is None:
-            return self.Text
-        return self.__str__()
-    
-    @staticmethod
-    def from_string(string):
-        m = re.match(r"^LocalizedText\(Encoding:(.*), Locale:(.*), Text:(.*)\)$", string)
-        if m:
-            text = m.group(3) if m.group(3) != str(None) else None
-            locale = m.group(2) if m.group(2) != str(None) else None
-            return LocalizedText(text=text, locale=locale)
-        else:
-            return LocalizedText(string)
+        return self.Text
 
     def __str__(self):
         return 'LocalizedText(' + 'Encoding:' + str(self.Encoding) + ', ' + \
@@ -598,9 +579,9 @@ class ExtensionObject(FrozenClass):
     }
 
     ua_types = (
-            ("TypeId", "NodeId"),
-            ("Encoding", "Byte"),
-            ("Body", "ByteString"),
+            ("TypeId", "NodeId"), 
+            ("Encoding", "Byte"), 
+            ("Body", "ByteString"), 
             )
 
     def __init__(self):
@@ -908,16 +889,16 @@ class DataValue(FrozenClass):
     }
 
     ua_types = (
-            ('Encoding', 'Byte'),
-            ('Value', 'Variant'),
-            ('StatusCode', 'StatusCode'),
+            ('Encoding', 'Byte'), 
+            ('Value', 'Variant'), 
+            ('StatusCode', 'StatusCode'), 
             ('SourceTimestamp', 'DateTime'),
-            ('SourcePicoseconds', 'UInt16'),
-            ('ServerTimestamp', 'DateTime'),
-            ('ServerPicoseconds', 'UInt16'),
+            ('SourcePicoseconds', 'UInt16'), 
+            ('ServerTimestamp', 'DateTime'), 
+            ('ServerPicoseconds', 'UInt16'), 
             )
-    
-    def __init__(self, variant=None, status=None, sourceTimestamp=None, sourcePicoseconds=None, serverTimestamp=None, serverPicoseconds=None):
+
+    def __init__(self, variant=None, status=None):
         self.Encoding = 0
         if not isinstance(variant, Variant):
             variant = Variant(variant)
@@ -926,10 +907,10 @@ class DataValue(FrozenClass):
             self.StatusCode = StatusCode()
         else:
             self.StatusCode = status
-        self.SourceTimestamp = sourceTimestamp
-        self.SourcePicoseconds = sourcePicoseconds
-        self.ServerTimestamp = serverTimestamp
-        self.ServerPicoseconds = serverPicoseconds
+        self.SourceTimestamp = None  # DateTime()
+        self.SourcePicoseconds = None
+        self.ServerTimestamp = None  # DateTime()
+        self.ServerPicoseconds = None
         self._freeze = True
 
     def __str__(self):
@@ -1042,7 +1023,7 @@ def get_extensionobject_class_type(typeid):
 class SecurityPolicyType(Enum):
     """
     The supported types of SecurityPolicy.
-
+    
     "None"
     "Basic128Rsa15_Sign"
     "Basic128Rsa15_SignAndEncrypt"

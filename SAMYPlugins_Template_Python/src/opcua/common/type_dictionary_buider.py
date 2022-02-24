@@ -1,7 +1,6 @@
 from opcua import ua
 from enum import Enum
 import logging
-from .structures import _clean_name
 
 import xml.etree.ElementTree as Et
 import re
@@ -283,4 +282,4 @@ class StructNode:
 
 def get_ua_class(ua_class_name):
     #return getattr(ua, _to_camel_case(ua_class_name))
-    return getattr(ua, _clean_name(ua_class_name))
+    return getattr(ua, ua_class_name)

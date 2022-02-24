@@ -131,12 +131,12 @@ class ViewService(object):
                     res += self._get_sub_ref(ref.NodeId)
         return res
 
-    def _suitable_direction(self, direction, isforward):
-        if direction == ua.BrowseDirection.Both:
+    def _suitable_direction(self, desc, isforward):
+        if desc == ua.BrowseDirection.Both:
             return True
-        if direction == ua.BrowseDirection.Forward and isforward:
+        if desc == ua.BrowseDirection.Forward and isforward:
             return True
-        if direction == ua.BrowseDirection.Inverse and not isforward:
+        if desc == ua.BrowseDirection.Inverse and not isforward:
             return True
         return False
 
@@ -150,11 +150,6 @@ class ViewService(object):
     def _translate_browsepath_to_nodeid(self, path):
         self.logger.debug("looking at path: %s", path)
         res = ua.BrowsePathResult()
-        if not path.RelativePath.Elements[-1].TargetName:
-            # OPC UA Part 4: Services, 5.8.4 TranslateBrowsePathsToNodeIds
-            # it's unclear if this the check should also handle empty strings
-            res.StatusCode = ua.StatusCode(ua.StatusCodes.BadBrowseNameInvalid)
-            return res
         if path.StartingNode not in self._aspace:
             res.StatusCode = ua.StatusCode(ua.StatusCodes.BadNodeIdInvalid)
             return res
@@ -174,16 +169,9 @@ class ViewService(object):
     def _find_element_in_node(self, el, nodeid):
         nodedata = self._aspace[nodeid]
         for ref in nodedata.references:
-            if ref.BrowseName != el.TargetName:
-                continue
-            if ref.IsForward == el.IsInverse:
-                continue
-            if not el.IncludeSubtypes and ref.ReferenceTypeId != el.ReferenceTypeId:
-                continue
-            elif el.IncludeSubtypes and ref.ReferenceTypeId != el.ReferenceTypeId:
-                if ref.ReferenceTypeId not in self._get_sub_ref(el.ReferenceTypeId):
-                    continue
-            return ref.NodeId
+            # FIXME: here we should check other arguments!!
+            if ref.BrowseName == el.TargetName:
+                return ref.NodeId
         self.logger.info("element %s was not found in node %s", el, nodeid)
         return None
 
@@ -330,7 +318,7 @@ class NodeManagementService(object):
 
         if item.DeleteTargetReferences:
             for elem in self._aspace.keys():
-                for rdesc in self._aspace[elem].references[:]:
+                for rdesc in self._aspace[elem].references:
                     if rdesc.NodeId == item.NodeId:
                         self._aspace[elem].references.remove(rdesc)
 
@@ -650,7 +638,6 @@ class AddressSpace(object):
                 return dv
             node = self._nodes[nodeid]
             if attr not in node.attributes:
-                self.logger.warning("Tried to read attribute '%s' in %s, but the attribute is missing", attr, nodeid)
                 dv = ua.DataValue()
                 dv.StatusCode = ua.StatusCode(ua.StatusCodes.BadAttributeIdInvalid)
                 return dv
@@ -667,7 +654,6 @@ class AddressSpace(object):
                 return ua.StatusCode(ua.StatusCodes.BadNodeIdUnknown)
             attval = node.attributes.get(attr, None)
             if attval is None:
-                self.logger.warning("Tried to write attribute '%s' in %s, but the attribute is missing", attr, nodeid)
                 return ua.StatusCode(ua.StatusCodes.BadAttributeIdInvalid)
 
             old = attval.value

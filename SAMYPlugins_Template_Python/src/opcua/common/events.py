@@ -81,7 +81,6 @@ class Event(object):
         """
         return a field list using a select clause and the object properties
         """
-        none_field = ua.Variant(None, ua.VariantType.Null)
         fields = []
         for sattr in select_clauses:
             if not sattr.BrowsePath:
@@ -91,7 +90,7 @@ class Event(object):
             try:
                 val = getattr(self, name)
             except AttributeError:
-                field = none_field
+                field = ua.Variant(None)
             else:
                 field = ua.Variant(copy.deepcopy(val), self.data_types[name])
             fields.append(field)
@@ -162,7 +161,7 @@ def where_clause_from_evtype(evtypes):
         el.FilterOperands.append(op)
 
     el.FilterOperator = ua.FilterOperator.InList
-    cf.Elements.append(el)
+    #cf.Elements.append(el)
 
     return cf
 
@@ -228,4 +227,3 @@ def _find_parent_eventtype(node):
         return parents[0].nodeid.Identifier, opcua.common.event_objects.IMPLEMENTED_EVENTS[parents[0].nodeid.Identifier]
     else:
         return _find_parent_eventtype(parents[0])
-

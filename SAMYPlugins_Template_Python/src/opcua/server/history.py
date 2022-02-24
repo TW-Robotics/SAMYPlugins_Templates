@@ -4,7 +4,7 @@ from datetime import datetime
 
 from opcua import Subscription
 from opcua import ua
-from opcua.common import utils, subscription
+from opcua.common import utils
 
 
 class UaNodeAlreadyHistorizedError(ua.UaError):
@@ -172,7 +172,7 @@ class HistoryDict(HistoryStorageInterface):
         pass
 
 
-class SubHandler(subscription.SubHandler):
+class SubHandler(object):
     def __init__(self, storage):
         self.storage = storage
 
@@ -340,6 +340,20 @@ class HistoryManager(object):
         if cont:
             cont = ua.ua_binary.Primitives.DateTime.pack(cont)
         return results, cont
+
+    def update_history(self, params):
+        """
+        Update history for a node
+        This is the part AttributeService, but implemented as its own service
+        since it requires more logic than other attribute service methods
+        """
+        results = []
+        for _ in params.HistoryUpdateDetails:
+            result = ua.HistoryUpdateResult()
+            # we do not accept to rewrite history
+            result.StatusCode = ua.StatusCode(ua.StatusCodes.BadNotWritable)
+            results.append(results)
+        return results
 
     def stop(self):
         """

@@ -18,7 +18,7 @@ from opcua.ua.uaerrors import UaError
 class XmlExporter(object):
 
     ''' If it is required that for _extobj_to_etree members to the value should be written in a certain
-        order it can be added to the dictionary below.
+        order it can be added to the dictionary below.    
     '''
     extobj_ordered_elements = {
         ua.NodeId(ua.ObjectIds.Argument) : ['Name',
@@ -240,7 +240,7 @@ class XmlExporter(object):
             dtype_name = o_ids.ObjectIdNames[dtype.Identifier]
             self.aliases[dtype] = dtype_name
         else:
-            dtype_name = self._node_to_string(dtype)
+            dtype_name = dtype.to_string()
         rank = node.get_value_rank()
         if rank != -1:
             el.attrib["ValueRank"] = str(int(rank))
@@ -330,7 +330,7 @@ class XmlExporter(object):
         for nodeid in ordered_keys:
             name = self.aliases[nodeid]
             ref_el = Et.SubElement(aliases_el, 'Alias', Alias=name)
-            ref_el.text = self._node_to_string(nodeid)
+            ref_el.text = nodeid.to_string()
 
         # insert behind the namespace element
         self.etree.getroot().insert(1, aliases_el)
@@ -340,11 +340,10 @@ class XmlExporter(object):
         refs_el = Et.SubElement(parent_el, 'References')
 
         for ref in refs:
-            if ref.ReferenceTypeId.NamespaceIndex == 0 and ref.ReferenceTypeId.Identifier in o_ids.ObjectIdNames:
+            if ref.ReferenceTypeId.Identifier in o_ids.ObjectIdNames:
                 ref_name = o_ids.ObjectIdNames[ref.ReferenceTypeId.Identifier]
             else:
-                ref_name = self.server.get_node(ref.ReferenceTypeId).get_browse_name().Name
-
+                ref_name = ref.ReferenceTypeId.to_string()
             ref_el = Et.SubElement(refs_el, 'Reference')
             ref_el.attrib['ReferenceType'] = ref_name
             if not ref.IsForward:
@@ -377,8 +376,6 @@ class XmlExporter(object):
                 val = b""
             data = base64.b64encode(val)
             el.text = data.decode("utf-8")
-        elif dtype == ua.NodeId(ua.ObjectIds.DateTime):
-            el.text = val.isoformat()
         elif not hasattr(val, "ua_types"):
             if isinstance(val, bytes):
                 # FIXME: should we also encode this (localized text I guess) using base64??
@@ -446,7 +443,7 @@ class XmlExporter(object):
 
     def _get_member_order(self, dtype, val):
         '''
-        If an dtype has an entry in XmlExporter.extobj_ordered_elements return the export order of the elements
+        If an dtype has an entry in XmlExporter.extobj_ordered_elements return the export order of the elements 
         else return the unordered members.
         '''
         if dtype not in XmlExporter.extobj_ordered_elements.keys():

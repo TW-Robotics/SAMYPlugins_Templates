@@ -33,7 +33,8 @@ int Robot::Message(UA_MessageParametersSetDataType* message){
 
 int Robot::MoveTo(UA_MoveToParametersSetDataType* moveTo){
     spdlog::info("Robot: Execute MoveTo command");
-    spdlog::info("MoveTo Name: {}", moveTo->name.data);
+    spdlog::info("MoveStraight {}", (bool) moveTo->moveStraight);
+    spdlog::info("MoveTo Name: {}", (char*) moveTo->name.data);
     //Test write infoSource
     UA_CRCL_PoseDataType pose1;
     pose1.id = 743;
@@ -63,7 +64,6 @@ int Robot::MoveTo(UA_MoveToParametersSetDataType* moveTo){
                          // state of the skill to halted.
         return COMMAND_ERROR;
     }
-
 }
 
 int Robot::MoveScrew(UA_MoveScrewParametersSetDataType* moveScrew){

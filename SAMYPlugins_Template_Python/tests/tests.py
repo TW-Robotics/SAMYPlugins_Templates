@@ -49,13 +49,13 @@ class TestCommunication(unittest.TestCase):
         print(node_id)
         return node_id
 
-
+##################################### Tests ################################################
 
     def test_init_canon(self):
         """
         Test if the InitCanon command is send and recived
         """
-        data = samyplugin.CRCL_DataTypes.InitCanonParametersSetDataType()
+        data = ua.InitCanonParametersSetDataType()
         test_client = TestClient()
         data.Name = "TestInitCanon"
         # Send command to Plugin
@@ -188,7 +188,7 @@ class TestCommunication(unittest.TestCase):
         """
         Test if the ActuateJoints command is send and recived
         """
-        data = samyplugin.CRCL_DataTypes.ActuateJointsParametersSetDataType()
+        data = ua.ActuateJointsParametersSetDataType()
         test_client = TestClient()
         data.Name = "ActuateJoints"
         # Send command to Plugin
@@ -416,11 +416,11 @@ class TestCommunication(unittest.TestCase):
         """
         Test if the SetRotAccel command is send and recived
         """
-        data = samyplugin.CRCL_DataTypes.SetRotAccelParametersSetDataType()
+        data = ua.SetRotAccelParametersSetDataType()
         test_client = TestClient()
         data.Name = "SetRotAccel"
-        data.RotAccel.SwitchField = "RotAccelAbsoluteDataType"
-        data.RotAccel.RotAccelAbsoluteDataType.name = "Absolute"
+        data.RotAccel.SwitchField = "CRCL_RotAccelAbsoluteDataType"
+        #data.RotAccel.RotAccelAbsoluteDataType.name = "Absolute"
         # Send command to Plugin
         test_client.write_crcl_command(self.get_skill_parameter_node_id(test_client, "SetRotAccel"), data)
         test_client.call_start_method(skill_id=self.get_skill_id(test_client, "SetRotAccel"), method_id = ua.NodeId(15095, 5))

@@ -140,9 +140,6 @@ class _Primitive1(object):
     def pack_array(self, data):
         if data is None:
             return Primitives.Int32.pack(-1)
-        if not isinstance(data, list):
-            logger.warning('ua_binary.py > _Primitive1 > pack_array > data: {0} is not a instance of "list"!'.format(data))
-            return Primitives.Int32.pack(-1) #to prevent crashing while runtime
         sizedata = Primitives.Int32.pack(len(data))
         return sizedata + struct.pack(self._fmt.format(len(data)), *data)
 
@@ -242,6 +239,9 @@ def unpack_uatype_array(vtype, data):
 def struct_to_binary(obj):
     packet = []
     has_switch = hasattr(obj, "ua_switches")
+    is_union = False
+    if hasattr(obj, "isUnion"):
+       is_union = obj.isUnion
     if has_switch:
         for name, switch in obj.ua_switches.items():
             member = getattr(obj, name)
@@ -250,15 +250,22 @@ def struct_to_binary(obj):
                 container_val = getattr(obj, container_name)
                 container_val = container_val | 1 << idx
                 setattr(obj, container_name, container_val)
-    for name, uatype in obj.ua_types:
-        val = getattr(obj, name)
-        if uatype.startswith("ListOf"):
-            packet.append(list_to_binary(uatype[6:], val))
-        else:
-            if has_switch and val is None and name in obj.ua_switches:
-                pass
-            else:
-                packet.append(to_binary(uatype, val))
+    if is_union:
+       if obj.switchField > 0 and obj.switchField < len(obj.ua_types):
+           val = getattr(obj, "switchField")
+           packet.append(to_binary(obj.ua_types[0][1], val)) # Adds the switchfield UInt32
+           val = getattr(obj, "unionValue")
+           packet.append(to_binary(obj.ua_types[obj.switchField][1], val)) # Adds the active field type
+    else:
+       for name, uatype in obj.ua_types:
+           val = getattr(obj, name)
+           if uatype.startswith("ListOf"):
+               packet.append(list_to_binary(uatype[6:], val))
+           else:
+               if has_switch and val is None and name in obj.ua_switches:
+                   pass
+               else:
+                   packet.append(to_binary(uatype, val))
     return b''.join(packet)
 
 
@@ -495,15 +502,22 @@ def struct_from_binary(objtype, data):
     if issubclass(objtype, Enum):
         return objtype(Primitives.UInt32.unpack(data))
     obj = objtype()
-    for name, uatype in obj.ua_types:
-        # if our member has a swtich and it is not set we skip it
-        if hasattr(obj, "ua_switches") and name in obj.ua_switches:
-            container_name, idx = obj.ua_switches[name]
-            val = getattr(obj, container_name)
-            if not test_bit(val, idx):
-                continue
-        val = from_binary(uatype, data)
-        setattr(obj, name, val)
+    if hasattr(obj, "isUnion"): # If the data type is a union
+            switchValue = from_binary(obj.ua_types[0][1], data) # obj.ua_types[0][1] refers to the first element of the ua_types array, second element of the pair (name, ua_type)
+            setattr(obj, "switchField", switchValue)
+            if obj.switchField > 0 and obj.switchField < len(obj.ua_types):
+                val = from_binary(obj.ua_types[obj.switchField][1], data)
+                setattr(obj, "unionValue", val)
+    else:
+       for name, uatype in obj.ua_types:
+           # if our member has a switch and it is not set we skip it
+            if hasattr(obj, "ua_switches") and name in obj.ua_switches:
+               container_name, idx = obj.ua_switches[name]
+               val = getattr(obj, container_name)
+               if not test_bit(val, idx):
+                   continue
+            val = from_binary(uatype, data)
+            setattr(obj, name, val)
     return obj
 
 

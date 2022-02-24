@@ -81,7 +81,6 @@ def _instantiate_node(server,
         addnode.NodeAttributes.DisplayName = dname
 
     res = server.add_nodes([addnode])[0]
-    res.StatusCode.check()
     added_nodes = [res.AddedNodeId]
 
     if recursive:
@@ -100,7 +99,7 @@ def _instantiate_node(server,
                         logger.info("Instantiate: Skip node without modelling rule %s as part of %s", c_rdesc.BrowseName, addnode.BrowseName)
                         continue
                         # exclude nodes with optional ModellingRule if requested
-                    if not instantiate_optional and refs[0].nodeid in (ua.NodeId(ua.ObjectIds.ModellingRule_Optional), ua.NodeId(ua.ObjectIds.ModellingRule_OptionalPlaceholder)):
+                    if not instantiate_optional and refs[0].nodeid == ua.NodeId(ua.ObjectIds.ModellingRule_Optional):
                         logger.info("Instantiate: Skip optional node %s as part of %s", c_rdesc.BrowseName, addnode.BrowseName)
                         continue
 
@@ -113,8 +112,7 @@ def _instantiate_node(server,
                             res.AddedNodeId,
                             c_rdesc,
                             nodeid=ua.NodeId(identifier=inst_nodeid, namespaceidx=res.AddedNodeId.NamespaceIndex),
-                            bname=c_rdesc.BrowseName,
-                            instantiate_optional=instantiate_optional)
+                            bname=c_rdesc.BrowseName)
                     else:
                         nodeids = _instantiate_node(
                             server,
@@ -122,8 +120,7 @@ def _instantiate_node(server,
                             res.AddedNodeId,
                             c_rdesc,
                             nodeid=ua.NodeId(namespaceidx=res.AddedNodeId.NamespaceIndex),
-                            bname=c_rdesc.BrowseName,
-                            instantiate_optional=instantiate_optional)
+                            bname=c_rdesc.BrowseName)
                     added_nodes.extend(nodeids)
 
     return added_nodes

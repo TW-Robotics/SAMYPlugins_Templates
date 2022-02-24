@@ -94,7 +94,7 @@ void Plugin::RunService(){
 
     if(retval != UA_STATUSCODE_GOOD) {
         UA_Client_delete(samy_core_client_read);
-        std::cout << "Connectiong to server faild: read client" << std::endl;
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connectiong to server faild: read client");
     }
     m_service.run();
     UA_Client_delete(samy_core_client_read);
@@ -476,6 +476,7 @@ void Plugin::HandlerEvents(UA_Client *client, UA_UInt32 subId, void *subContext,
 void Plugin::ExecuteSkill(UA_NodeId* skillNode){
 
     bool error = false;
+    UA_StatusCode retval;
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting to Execute Skill");
     UA_NodeId paramter_node_id;
     SAMY::HelperFunctions::getNodeByBrowseName(samy_core_client_read, skillNode,
@@ -486,7 +487,7 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
     bReq.requestedMaxReferencesPerNode = 0;
     bReq.nodesToBrowse = UA_BrowseDescription_new();
     bReq.nodesToBrowseSize = 1;
-    bReq.nodesToBrowse[0].nodeId = paramter_node_id; /* browse objects folder */
+    bReq.nodesToBrowse[0].nodeId = paramter_node_id;
     bReq.nodesToBrowse[0].resultMask = UA_BROWSERESULTMASK_ALL; /* return everything */
     UA_BrowseResponse bResp = UA_Client_Service_browse(samy_core_client_read, bReq);
 
@@ -494,301 +495,303 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
         for(size_t j = 0; j < bResp.results[i].referencesSize; j++) {
             UA_ReferenceDescription *ref = &(bResp.results[i].references[j]);
             if(ref->nodeClass == UA_NODECLASS_VARIABLE) {
-                UA_Variant myVar;
-                UA_Variant_init(&myVar);
+                UA_Variant value;
+                UA_Variant_init(&value);
 
-                UA_Client_readValueAttribute(samy_core_client_read, ref->nodeId.nodeId, &myVar);
+                retval = UA_Client_readValueAttribute(samy_core_client_read, ref->nodeId.nodeId, &value);
 
-                if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_INITCANONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Response reding Attribute %s", UA_StatusCode_name(retval));
+
+                if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_INITCANONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found InitCanon Type");
-                    UA_InitCanonParametersSetDataType* InitCanon = (UA_InitCanonParametersSetDataType*)&myVar.data;
+                    UA_InitCanonParametersSetDataType* InitCanon = (UA_InitCanonParametersSetDataType*) value.data;
                     if (*signals->InitCanon(InitCanon) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing InitCanon");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENDCANONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENDCANONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EndCanon Type");
-                    UA_EndCanonParametersSetDataType* EndCanon = (UA_EndCanonParametersSetDataType*)&myVar.data;
+                    UA_EndCanonParametersSetDataType* EndCanon = (UA_EndCanonParametersSetDataType*) value.data;
                     if (*signals->EndCanon(EndCanon) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EndCanon");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MESSAGEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MESSAGEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Message Type");
-                    UA_MessageParametersSetDataType* Message = (UA_MessageParametersSetDataType*)&myVar.data;
+                    UA_MessageParametersSetDataType* Message = (UA_MessageParametersSetDataType*) value.data;
                     if (*signals->Message(Message) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing Message");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETOPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveTo Type");
-                    UA_MoveToParametersSetDataType* Moveto = (UA_MoveToParametersSetDataType*)&myVar.data;
-                    if (*signals->MoveTo(Moveto) < 0){
+                    UA_MoveToParametersSetDataType* moveto = (UA_MoveToParametersSetDataType*) value.data;
+                    if (*signals->MoveTo(moveto) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing MoveTo");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVESCREWPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVESCREWPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveScrew Type");
-                    UA_MoveScrewParametersSetDataType* MoveScrew = (UA_MoveScrewParametersSetDataType*)&myVar.data;
+                    UA_MoveScrewParametersSetDataType* MoveScrew = (UA_MoveScrewParametersSetDataType*) value.data;
                     if (*signals->MoveScrew(MoveScrew) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing MoveScrew");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETHROUGHTOPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_MOVETHROUGHTOPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found MoveThroughTo Type");
-                    UA_MoveThroughToParametersSetDataType* MoveThroughTo = (UA_MoveThroughToParametersSetDataType*)&myVar.data;
+                    UA_MoveThroughToParametersSetDataType* MoveThroughTo = (UA_MoveThroughToParametersSetDataType*) value.data;
                     if (*signals->MoveThroughTo(MoveThroughTo) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing MoveThroughTo");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DWELLPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DWELLPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found Dewll Type");
-                    UA_DwellParametersSetDataType* Dwell = (UA_DwellParametersSetDataType*)&myVar.data;
+                    UA_DwellParametersSetDataType* Dwell = (UA_DwellParametersSetDataType*) value.data;
                     if (*signals->Dwell(Dwell) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing Dwell");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ACTUATEJOINTSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ACTUATEJOINTSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ActuateJoints Type");
-                    UA_ActuateJointsParametersSetDataType* ActuateJoints = (UA_ActuateJointsParametersSetDataType*)&myVar.data;
+                    UA_ActuateJointsParametersSetDataType* ActuateJoints = (UA_ActuateJointsParametersSetDataType*) value.data;
                     if (*signals->ActuateJoints(ActuateJoints) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing ActuateJoints");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CONFIGUREJOINTREPORTSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CONFIGUREJOINTREPORTSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ConfigureJointReports Type");
-                    UA_ConfigureJointReportsParametersSetDataType* ConfigureJointReports = (UA_ConfigureJointReportsParametersSetDataType*)&myVar.data;
+                    UA_ConfigureJointReportsParametersSetDataType* ConfigureJointReports = (UA_ConfigureJointReportsParametersSetDataType*) value.data;
                     if (*signals->ConfigureJointReports(ConfigureJointReports) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing ConfigureJointReports");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETDEFAULTJOINTPOSITIONSTOLERANCESPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETDEFAULTJOINTPOSITIONSTOLERANCESPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetDefaultJointPositionsTolerances Type");
-                    UA_SetDefaultJointPositionsTolerancesParametersSetDataType* SetDefaultJointPositionsTolerances = (UA_SetDefaultJointPositionsTolerancesParametersSetDataType*)&myVar.data;
+                    UA_SetDefaultJointPositionsTolerancesParametersSetDataType* SetDefaultJointPositionsTolerances = (UA_SetDefaultJointPositionsTolerancesParametersSetDataType*) value.data;
                     if (*signals->SetDefaultJointPositionsTolerances(SetDefaultJointPositionsTolerances) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetDefaultJointPositionsTolerances");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_GETSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_GETSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found GetStatus Type");
-                    UA_GetStatusParametersSetDataType* GetStatus = (UA_GetStatusParametersSetDataType*)&myVar.data;
+                    UA_GetStatusParametersSetDataType* GetStatus = (UA_GetStatusParametersSetDataType*) value.data;
                     if (*signals->GetStatus(GetStatus) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing GetStatus");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CLOSETOOLCHANGERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CLOSETOOLCHANGERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found CloseToolChanger Type");
-                    UA_CloseToolChangerParametersSetDataType* CloseToolChanger = (UA_CloseToolChangerParametersSetDataType*)&myVar.data;
+                    UA_CloseToolChangerParametersSetDataType* CloseToolChanger = (UA_CloseToolChangerParametersSetDataType*) value.data;
                     if (*signals->CloseToolChanger(CloseToolChanger) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing CloseToolChanger");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_OPENTOOLCHANGERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_OPENTOOLCHANGERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found OpenToolChanger Type");
-                    UA_OpenToolChangerParametersSetDataType* OpenToolChanger = (UA_OpenToolChangerParametersSetDataType*)&myVar.data;
+                    UA_OpenToolChangerParametersSetDataType* OpenToolChanger = (UA_OpenToolChangerParametersSetDataType*) value.data;
                     if (*signals->OpenToolChanger(OpenToolChanger) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing OpenToolChanger");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROBOTPARAMETERSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROBOTPARAMETERSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRobotParameters Type");
-                    UA_SetRobotParametersParametersSetDataType* SetRobotParameters = (UA_SetRobotParametersParametersSetDataType*)&myVar.data;
+                    UA_SetRobotParametersParametersSetDataType* SetRobotParameters = (UA_SetRobotParametersParametersSetDataType*) value.data;
                     if (*signals->SetRobotParameters(SetRobotParameters) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetRobotParameters");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndeffectorParameters Type");
-                    UA_SetEndeffectorParametersParametersSetDataType* SetEndeffectorParameters = (UA_SetEndeffectorParametersParametersSetDataType*)&myVar.data;
+                    UA_SetEndeffectorParametersParametersSetDataType* SetEndeffectorParameters = (UA_SetEndeffectorParametersParametersSetDataType*) value.data;
                     if (*signals->SetEndeffectorParameters(SetEndeffectorParameters) < 0){
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDEFFECTORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndeffector Type");
-                    UA_SetEndeffectorParametersSetDataType* SetEndeffector = (UA_SetEndeffectorParametersSetDataType*)&myVar.data;
+                    UA_SetEndeffectorParametersSetDataType* SetEndeffector = (UA_SetEndeffectorParametersSetDataType*) value.data;
                     if (*signals->SetEndeffector(SetEndeffector) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetEndeffector");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTRANSACCELPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTRANSACCELPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTransAccel Type");
-                    UA_SetTransAccelParametersSetDataType* SetTransAccel = (UA_SetTransAccelParametersSetDataType*)&myVar.data;
+                    UA_SetTransAccelParametersSetDataType* SetTransAccel = (UA_SetTransAccelParametersSetDataType*) value.data;
                     if (*signals->SetTransAccel(SetTransAccel) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTransAccel");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTRANSSPEEDPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTRANSSPEEDPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTransSpeed Type");
-                    UA_SetTransSpeedParametersSetDataType* SetTransSpeed = (UA_SetTransSpeedParametersSetDataType*)&myVar.data;
+                    UA_SetTransSpeedParametersSetDataType* SetTransSpeed = (UA_SetTransSpeedParametersSetDataType*) value.data;
                     if (*signals->SetTransSpeed(SetTransSpeed) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTransSpeed");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROTACCELPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROTACCELPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRotAccel Type");
-                    UA_SetRotAccelParametersSetDataType* SetRotAccel = (UA_SetRotAccelParametersSetDataType*)&myVar.data;
+                    UA_SetRotAccelParametersSetDataType* SetRotAccel = (UA_SetRotAccelParametersSetDataType*) value.data;
                     if (*signals->SetRotAccel(SetRotAccel) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetRotAccel");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROTSPEEDPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETROTSPEEDPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetRotSpeed Type");
-                    UA_SetRotSpeedParametersSetDataType* SetRotSpeed = (UA_SetRotSpeedParametersSetDataType*)&myVar.data;
+                    UA_SetRotSpeedParametersSetDataType* SetRotSpeed = (UA_SetRotSpeedParametersSetDataType*) value.data;
                     if (*signals->SetRotSpeed(SetRotSpeed) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetRotSpeed");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETANGLEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETANGLEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetAngleUnits Type");
-                    UA_SetAngleUnitsParametersSetDataType* SetAngleUnits = (UA_SetAngleUnitsParametersSetDataType*)&myVar.data;
+                    UA_SetAngleUnitsParametersSetDataType* SetAngleUnits = (UA_SetAngleUnitsParametersSetDataType*) value.data;
                     if (*signals->SetAngleUnits(SetAngleUnits) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetAngleUnits");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDPOSETOLERANCEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETENDPOSETOLERANCEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetEndPoseTolerance Type");
-                    UA_SetEndPoseToleranceParametersSetDataType* SetEndPoseTolerance = (UA_SetEndPoseToleranceParametersSetDataType*)&myVar.data;
+                    UA_SetEndPoseToleranceParametersSetDataType* SetEndPoseTolerance = (UA_SetEndPoseToleranceParametersSetDataType*) value.data;
                     if (*signals->SetEndPoseTolerance(SetEndPoseTolerance) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetEndPoseTolerance");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETFORCEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETFORCEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetForceUnits Type");
-                    UA_SetForceUnitsParametersSetDataType* SetForceUnits = (UA_SetForceUnitsParametersSetDataType*)&myVar.data;
+                    UA_SetForceUnitsParametersSetDataType* SetForceUnits = (UA_SetForceUnitsParametersSetDataType*) value.data;
                     if (*signals->SetForceUnits(SetForceUnits) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetForceUnits");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETINTERMEDIATEPOSETOLERANCEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETINTERMEDIATEPOSETOLERANCEPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetIntermediatePoseTolerance Type");
-                    UA_SetIntermediatePoseToleranceParametersSetDataType* SetIntermediatePoseTolerance = (UA_SetIntermediatePoseToleranceParametersSetDataType*)&myVar.data;
+                    UA_SetIntermediatePoseToleranceParametersSetDataType* SetIntermediatePoseTolerance = (UA_SetIntermediatePoseToleranceParametersSetDataType*) value.data;
                     if (*signals->SetIntermediatePoseTolerance(SetIntermediatePoseTolerance) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetIntermediatePoseTolerance");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETLENGTHUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETLENGTHUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetLengthUnits Type");
-                    UA_SetLengthUnitsParametersSetDataType* SetLengthUnits = (UA_SetLengthUnitsParametersSetDataType*)&myVar.data;
+                    UA_SetLengthUnitsParametersSetDataType* SetLengthUnits = (UA_SetLengthUnitsParametersSetDataType*) value.data;
                     if (*signals->SetLengthUnits(SetLengthUnits) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetLengthUnits");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETMOTIONCOORDINATIONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETMOTIONCOORDINATIONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetMotionCoordination Type");
-                    UA_SetMotionCoordinationParametersSetDataType* SetMotionCoordination = (UA_SetMotionCoordinationParametersSetDataType*)&myVar.data;
+                    UA_SetMotionCoordinationParametersSetDataType* SetMotionCoordination = (UA_SetMotionCoordinationParametersSetDataType*) value.data;
                     if (*signals->SetMotionCoordination(SetMotionCoordination) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetMotionCoordination");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTORQUEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_SETTORQUEUNITSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found SetTorqueUnits Type");
-                    UA_SetTorqueUnitsParametersSetDataType* SetTorqueUnits = (UA_SetTorqueUnitsParametersSetDataType*)&myVar.data;
+                    UA_SetTorqueUnitsParametersSetDataType* SetTorqueUnits = (UA_SetTorqueUnitsParametersSetDataType*) value.data;
                     if (*signals->SetTorqueUnits(SetTorqueUnits) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing SetTorqueUnits");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_STOPMOTIONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_STOPMOTIONPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found StopMotion Type");
-                    UA_StopMotionParametersSetDataType* StopMotion = (UA_StopMotionParametersSetDataType*)&myVar.data;
+                    UA_StopMotionParametersSetDataType* StopMotion = (UA_StopMotionParametersSetDataType*) value.data;
                     if (*signals->StopMotion(StopMotion) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing StopMotion");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CONFIGURESTATUSREPORTPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_CONFIGURESTATUSREPORTPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found ConfigureStatusReport Type");
-                    UA_ConfigureStatusReportParametersSetDataType* ConfigureStatusReport = (UA_ConfigureStatusReportParametersSetDataType*)&myVar.data;
+                    UA_ConfigureStatusReportParametersSetDataType* ConfigureStatusReport = (UA_ConfigureStatusReportParametersSetDataType*) value.data;
                     if (*signals->ConfigureStatusReport(ConfigureStatusReport) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing ConfigureStatusReport");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLESENSORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLESENSORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableSensor Type");
-                    UA_EnableSensorParametersSetDataType* EnableSensor = (UA_EnableSensorParametersSetDataType*)&myVar.data;
+                    UA_EnableSensorParametersSetDataType* EnableSensor = (UA_EnableSensorParametersSetDataType*) value.data;
                     if (*signals->EnableSensor(EnableSensor) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EnableSensor");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLESENSORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLESENSORPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableSensor Type");
-                    UA_DisableSensorParametersSetDataType* DisableSensor = (UA_DisableSensorParametersSetDataType*)&myVar.data;
+                    UA_DisableSensorParametersSetDataType* DisableSensor = (UA_DisableSensorParametersSetDataType*) value.data;
                     if (*signals->DisableSensor(DisableSensor) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing DisableSensor");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLEGRIPPERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLEGRIPPERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableGripper Type");
-                    UA_EnableGripperParametersSetDataType* EnableGripper = (UA_EnableGripperParametersSetDataType*)&myVar.data;
+                    UA_EnableGripperParametersSetDataType* EnableGripper = (UA_EnableGripperParametersSetDataType*) value.data;
                     if (*signals->EnableGripper(EnableGripper) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EnableGripper");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLEGRIPPERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLEGRIPPERPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableGripper Type");
-                    UA_DisableGripperParametersSetDataType* DisableGripper = (UA_DisableGripperParametersSetDataType*)&myVar.data;
+                    UA_DisableGripperParametersSetDataType* DisableGripper = (UA_DisableGripperParametersSetDataType*) value.data;
                     if (*signals->DisableGripper(DisableGripper) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing DisableGripper");
 
@@ -796,18 +799,18 @@ void Plugin::ExecuteSkill(UA_NodeId* skillNode){
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_ENABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found EnableRobotParameterStatus Type");
-                    UA_EnableRobotParameterStatusParametersSetDataType* EnableRobotParameterStatus = (UA_EnableRobotParameterStatusParametersSetDataType*)&myVar.data;
+                    UA_EnableRobotParameterStatusParametersSetDataType* EnableRobotParameterStatus = (UA_EnableRobotParameterStatusParametersSetDataType*) value.data;
                     if (*signals->EnableRobotParameterStatus(EnableRobotParameterStatus) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing EnableRobotParameterStatus");
                         error = true;
                         break;
                     }
                 }
-                else if (myVar.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
+                else if (value.type->typeId.identifier.numeric == UA_TYPES_CRCL[UA_TYPES_CRCL_DISABLEROBOTPARAMETERSTATUSPARAMETERSSETDATATYPE].typeId.identifier.numeric){
                     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Found DisableRobotParameterStatus Type");
-                    UA_DisableRobotParameterStatusParametersSetDataType* DisableRobotParameterStatus = (UA_DisableRobotParameterStatusParametersSetDataType*)&myVar.data;
+                    UA_DisableRobotParameterStatusParametersSetDataType* DisableRobotParameterStatus = (UA_DisableRobotParameterStatusParametersSetDataType*) value.data;
                     if (*signals->DisableRobotParameterStatus(DisableRobotParameterStatus) < 0){
                         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Error while executing DisableRobotParameterStatus");
                         error = true;

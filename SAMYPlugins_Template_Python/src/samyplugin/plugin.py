@@ -5,6 +5,7 @@ import threading
 import logging
 
 from samyplugin.CRCL_DataTypes import *
+from samyplugin.settings import Settings
 
 from opcua.common.xmlexporter import XmlExporter
 from opcua.common.type_dictionary_buider import DataTypeDictionaryBuilder, get_ua_class
@@ -32,14 +33,12 @@ class Plugin():
         log_handler.setFormatter(logging.Formatter("%(levelname)s %(filename)s - %(message)s"))
         self.logger.addHandler(log_handler)
 
-        self.idx = None
         self.robot_node = None
-        self.robot_state_node = None
         self.thread = None
         self.opcua_core_client = None
-        self.next_skill_node_id = None
         self.my_skill_node = None
-        self.start_method_id = None # ToDo create a dict
+        self.control_methodes = {}
+        self.start_method_id = None # TODO create a dict
         self.resume_method_id = None
         self.suspend_method_id = None
         self.halt_method_id = None
@@ -49,7 +48,8 @@ class Plugin():
         self.information_source_nodes = None
         self.information_source_nodes_dict = {}
         self.skill_error = False
-        self.transform = Transform()
+        self.Settings = Settings()
+        #self.transform = Transform()
         pub.setListenerExcHandler(ErrorHandler())
         self.log_all_messages()
         self.create_subscribers()
@@ -60,11 +60,8 @@ class Plugin():
         self.logger.info("Got datachange_notification", data)
 
     def event_notification(self, event):
-        self.logger.debug("\n\n\n")
-        self.logger.debug("Python: New event {}".format(event))
-        self.logger.debug("\n\n", event.SourceNode)
+        self.logger.debug("Python: New event {} {}".format(event, event.SourceNode))
         text = event.Message.Text
-        self.logger.info(text)
         words = text.split(" ")
         if words[len(words)-1] == "Running":
             self.my_skill_node = self.opcua_core_client.get_node(event.SourceNode)
@@ -83,11 +80,9 @@ class Plugin():
         self.logger.info("Command Thread started\n")
         # Get the node id for each method of the skill
         my_skill_method_node_ids = self.my_skill_node.get_methods()
-        #self.logger.info(my_skill_method_node_ids)
         # Connect methodes of skill to the signals of the plugin
         for i, node_id in enumerate(my_skill_method_node_ids):
             browse_name = node_id.get_browse_name()
-            #self.logger.info(browse_name)
             if browse_name.Name == "Halt":
                 self.halt_method_id = node_id
             elif browse_name.Name == "Reset":
@@ -112,8 +107,6 @@ class Plugin():
             parameter_nodes[parameter_node.get_browse_name().Name] = parameter_node
 
         parameter_nodes_sorted = sorted(parameter_nodes.items(), key=self.sort_by_number)
-        pprint(parameter_nodes)
-        pprint(parameter_nodes_sorted)
         # Reset skill error
         self.skill_error = False
         for i in range(len(parameter_nodes_sorted)):
@@ -140,7 +133,7 @@ class Plugin():
                 break
             except:
                 self.logger.info("Connection with SAMYCore failed!!!!!\n Retry in 3 seconds....")
-                time.sleep(3)
+                time.sleep(2)
         # Get information about all nodes of SAMYCore opcua server
         self.opcua_core_client.load_type_definitions()
         self.crcl_command_dict = {
@@ -188,9 +181,8 @@ class Plugin():
             skill_node.call_method("0:Halt")
             self.logger.info("Halt called for {}".format(skill_node))
         self.opcua_core_client.disconnect()
-        time.sleep(1)
 
-    def subscribe_to_core(self, robot_name_):
+    def subscribe_to_core(self, robot_name):
         try:
             # Getting the root node is not stricly neccessary but recomended
             root = self.opcua_core_client.get_root_node()
@@ -200,35 +192,34 @@ class Plugin():
             nsFortissDI = namespaces["https://fortiss.org/UA/DI/"]
             skillTransitionEventBrowsePath = str(nsFortissDI) + ':SkillTransitionEventType'
             samy_event = root.get_child(["0:Types","0:EventTypes","0:BaseEventType","0:TransitionEventType","0:ProgramTransitionEventType", skillTransitionEventBrowsePath])
-            self.logger.debug("SamyEvent: ", samy_event)
             found_robot = False
             for object in nodes.get_children():
-                if object.get_browse_name().Name == robot_name_:
-                    found_robot = True
+                if object.get_browse_name().Name == robot_name:
                     ns = object.nodeid.NamespaceIndex
-                    self.robot_node = object
-                    self.robot_state_node = self.robot_node.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:CurrentState".format(ns)])
-                    #next_skill_node_id_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "{}:NextSkillNodeId".format(ns)])
-                    skills_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name_), "5:Skills"])
-            # Get all skill node ids and reset them
+                    robot_node = object
+                    skills_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name), "5:Skills"])
+                    found_robot = True
             if not found_robot:
-                self.logger.error("No robot with name: " + robot_name_ + " in SAMYCore found")
+                self.logger.error("No robot with name: " + robot_name + " in SAMYCore found")
                 exit()
+            # Get all skill node ids and reset them
             self.skill_list = skills_node.get_children()
             self.logger.debug("\n\n\n\n")
-            self.logger.debug("robot_node = ", self.robot_node)
+            self.logger.debug("robot_node = ", robot_node)
             self.logger.debug("skills_node = {}".format(skills_node))
             self.logger.debug("skill_list= {}".format(self.skill_list))
             for skill_node in self.skill_list:
                 skill_node.call_method("0:Reset")
-                self.logger.info("Reset called for {}".format(skill_node))
-            # Subscribe to next_skill_node_id_node
+                self.logger.info("Reset called for skill {} {}".format(skill_node.get_browse_name().Name, skill_node))
+            # Subscribe to robot node
             sub = self.opcua_core_client.create_subscription(100, self)
-            handle = sub.subscribe_events(self.robot_node, samy_event)
+            handle = sub.subscribe_events(robot_node, samy_event)
+            self.logger.info("Subscription started")
             embed()
+        except Exception as e:
+            self.logger.error(e)
         finally:
             self.logger.info("Subscription closed")
-            #self.opcua_core_client.disconnect()
 
     def get_namespaces(self, client):
         namespaces = {}
@@ -239,6 +230,9 @@ class Plugin():
         for i, namespace in enumerate(namespacesValue):
             namespaces[namespace] = i
         return namespaces
+
+    def init_settings(self):
+        self.Settings
 
     def send_command_reset(self):
         self.logger.info("Command is finished")
@@ -255,10 +249,10 @@ class Plugin():
         #self.thread.exit()
         self.my_skill_node.call_method(self.halt_method_id)
         time.sleep(0.2)
-        val = self.robot_state_node.get_value()
-        val.Text = "Ready"
-        self.logger.info("Writing to RobotState Node: {}".format(self.robot_state_node))
-        self.robot_state_node.set_value(val)
+        #val = self.robot_state_node.get_value()
+        #val.Text = "Ready"
+        #self.logger.info("Writing to RobotState Node: {}".format(self.robot_state_node))
+        #self.robot_state_node.set_value(val)
 
     def send_command_error(self):
         self.logger.error("Command faild to execute")
@@ -281,7 +275,7 @@ class Plugin():
         self.information_source_nodes = information_source_node.get_children()
         for node in self.information_source_nodes:
             self.information_source_nodes_dict[node.get_browse_name().Name] = node.get_child(["{}:{}_0".format(ns_id, node.get_browse_name().Name)])
-        self.logger.info("Dict: {}".format(self.information_source_nodes_dict))
+        self.logger.debug("Dict: {}".format(self.information_source_nodes_dict))
 
     def write_information_source(self, name, data):
         self.logger.info("Writing Iformation source")
@@ -298,3 +292,9 @@ class Plugin():
         pub.subscribe(self.send_command_error, "command_error")
         pub.subscribe(self.send_command_suspend, "command_suspend")
         pub.subscribe(self.write_information_source, "write_information_source")
+
+    def get_robot_settings(self, robot_name):
+        return self.Settings.load_robot_settings(robot_name)
+
+    def set_settings_path(self, path):
+        self.Settings.set_settings_path(path)

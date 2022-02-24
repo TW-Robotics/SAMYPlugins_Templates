@@ -47,6 +47,8 @@ class Buffer(object):
         if size == -1:
             size = len(data) - start_pos
         self._size = size
+        #print(data)#DELETE
+        #print(self._size) #DELETE
 
     def __str__(self):
         return "Buffer(size:{0}, data:{1})".format(

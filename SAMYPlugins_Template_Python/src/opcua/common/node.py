@@ -62,10 +62,8 @@ class Node(object):
         return not self.__eq__(other)
 
     def __str__(self):
-        return self.nodeid.to_string()
-    
-    def __repr__(self):
         return "Node({0})".format(self.nodeid)
+    __repr__ = __str__
 
     def __hash__(self):
         return self.nodeid.__hash__()
@@ -508,7 +506,6 @@ class Node(object):
         details.NumValuesPerNode = numvalues
         details.ReturnBounds = True
         result = self.history_read(details)
-        result.StatusCode.check()
         return result.HistoryData.DataValues
 
     def history_read(self, details):
@@ -556,7 +553,6 @@ class Node(object):
         details.Filter = evfilter
 
         result = self.history_read_events(details)
-        result.StatusCode.check()
         event_res = []
         for res in result.HistoryData.Events:
             event_res.append(events.Event.from_event_fields(evfilter.SelectClauses, res.EventFields))
@@ -655,7 +651,7 @@ class Node(object):
             self.add_reference(rule, ua.ObjectIds.HasModellingRule, True, False)
 
     def add_folder(self, nodeid, bname):
-        return opcua.common.manage_nodes.create_folder(self, nodeid, bname)
+        return  opcua.common.manage_nodes.create_folder(self, nodeid, bname)
 
     def add_object(self, nodeid, bname, objecttype=None):
         return opcua.common.manage_nodes.create_object(self, nodeid, bname, objecttype)

@@ -115,7 +115,7 @@ def plot_crcl_pose(ax, pose: CRCL_PoseDataType):
     rotations.plot_basis(ax=ax, R=rot,p=offset, s=1.0)
 
 
-# Testing
+Testing
 if __name__ == "__main__":
 
     # Connect to SAMYCore to get CRCL DataTypes

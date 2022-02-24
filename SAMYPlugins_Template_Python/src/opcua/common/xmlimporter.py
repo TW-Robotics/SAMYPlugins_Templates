@@ -54,8 +54,7 @@ class XmlImporter(object):
         self.parser = xmlparser.XMLParser(xmlpath, xmlstring)
 
         self.namespaces = self._map_namespaces(self.parser.get_used_namespaces())
-        self._unmapped_aliases = self.parser.get_aliases()
-        self.aliases = self._map_aliases(self._unmapped_aliases)
+        self.aliases = self._map_aliases(self.parser.get_aliases())
         self.refs = []
 
         dnodes = self.parser.get_node_datas()
@@ -164,7 +163,7 @@ class XmlImporter(object):
             return ua.NodeId(getattr(ua.ObjectIds, nodeid))
         else:
             if nodeid in self.aliases:
-                return self._to_nodeid(self._unmapped_aliases[nodeid])
+                return self.aliases[nodeid]
             else:
                 return ua.NodeId(getattr(ua.ObjectIds, nodeid))
 
@@ -367,7 +366,7 @@ class XmlImporter(object):
         if obj.desc:
             attrs.Description = ua.LocalizedText(obj.desc)
         attrs.DisplayName = ua.LocalizedText(obj.displayname)
-        if obj.inversename:
+        if obj. inversename:
             attrs.InverseName = ua.LocalizedText(obj.inversename)
         if obj.abstract:
             attrs.IsAbstract = obj.abstract
