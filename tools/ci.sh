@@ -71,27 +71,15 @@ function build_tpm_tool {
 #########################
 
 function build_open62541 {
-    mkdir -p SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build;
-    cd SamyPlugins_Template_Cpp/open62541_v1.2_unions_fixed/build
+    cd open62541
+    mkdir -p build && cd build
     rm -rf *
     cmake -DUA_NAMESPACE_ZERO=FULL \
       -DUA_ENABLE_SUBSCRIPTIONS=ON \
       -DUA_ENABLE_SUBSCRIPTIONS_EVENTS=ON \
-      -DUA_ENABLE_DISCOVERY=ON \
-      -DUA_ENABLE_DISCOVERY_MULTICAST=ON \
       -DUA_ENABLE_DA=ON \
       -DUA_ENABLE_METHODCALLS=ON \
       -DUA_ENABLE_NODEMANAGEMENT=ON \
-      -DUA_ENABLE_MICRO_EMB_DEV_PROFILE=OFF \
-      -DUA_ENABLE_PUBSUB=ON \
-      -DUA_ENABLE_PUBSUB_ETH_UADP=ON \
-      -DUA_ENABLE_PUBSUB_ETH_UADP_ETF=ON \
-      -DUA_ENABLE_PUBSUB_FILE_CONFIG=ON \
-      -DUA_ENABLE_PUBSUB_INFORMATIONMODEL=ON \
-      -DUA_ENABLE_PUBSUB_INFORMATIONMODEL_METHODS=ON \
-      -DUA_ENABLE_PUBSUB_MONITORING=ON \
-      -DUA_ENABLE_PUBSUB_MQTT=ON \
-      -DUA_ENABLE_JSON_ENCODING=ON \
       ..
     make ${MAKEOPTS}
     sudo make install
