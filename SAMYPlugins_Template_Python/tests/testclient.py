@@ -18,11 +18,14 @@ class TestClient:
         skill_node.call_method(method_id)
 
     def check_state(self):
-        node = self.client.get_node(ua.NodeId(55770, 8))
+        root = self.client.get_root_node()
+        browse_path = ["0:Objects", "3:DeviceSet", "8:TestRobot", "4:Controllers", "8:TestRobot", "8:CurrentState"]
+        node = root.get_child(browse_path)
+        #node = self.client.get_node(ua.NodeId(55599 , 8))
         val = node.get_value()
-        while val.Text != "Running to Ready":
+        while val.Text != "Ready":
             val = node.get_value()
-            #print(val.Text)
+            print(val.Text)
 
     def read_info_source(self, id: ua.NodeId):
         node = self.client.get_node(id)

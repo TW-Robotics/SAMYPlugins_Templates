@@ -1,0 +1,18 @@
+SAMYCoreConfig:
+     AppURI: "AppURItest"
+     AppName: "AppNameTest"
+     Server:
+        Port: 4840
+        Encryption: false
+        Anonymous: true
+        CertificatesPath: ""
+     Logging:
+        Level:
+           App: "error"
+           OPCUA: "error"
+        Path: "logs"
+     ConfigFiles:
+        SkillsFile: "/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SAMYPlugins_Template_Python/tests/testConfig/Skills.yaml"
+        RobotsFile: "/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SAMYPlugins_Template_Python/tests/testConfig/RobotsConfiguration.yaml"
+        InformationSourcesFile: "/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SAMYPlugins_Template_Python/tests/testConfig/InformationSources.yaml"
+        DataBaseFile: "/home/felix/Desktop/SAMY/Git/SAMYPlugins_Templates/SAMYPlugins_Template_Python/tests/testConfig/DataBaseFile.yaml"

@@ -1,0 +1,43 @@
+Robots:
+  - Robot:
+      Name: TestRobot
+      ID: 1
+      Address: "opc.tcp://localhost:4840"
+      OPCUARoboticsFile: RobotUR5.xml
+      Skills:
+        - InitCanonSkill
+        - EndCanonSkill
+        - MessageSkill
+        - MoveToSkill
+        - MoveScrewSkill
+        - MoveThroughToSkill
+        - DwellSkill
+        - ActuateJointsSkill
+        - ConfigureJointReportsSkill
+      #  - ConfigureJointReportSkill
+        - SetDefaultJointPositionsTolerancesSkill
+        - GetStatusSkill
+        - CloseToolChangerSkill
+        - OpenToolChangerSkill
+        - SetRobotParametersSkill
+        - SetEndeffectorParametersSkill
+        - SetEndeffectorSkill
+        - SetTransAccelSkill
+        - SetTransSpeedSkill
+        - SetRotAccelSkill
+        - SetRotSpeedSkill
+        - SetAngleUnitsSkill
+        - SetEndPoseToleranceSkill
+        - SetForceUnitsSkill
+        - SetIntermediatePoseToleranceSkill
+        - SetLengthUnitsSkill
+        - SetMotionCoordinationSkill
+        - SetTorqueUnitsSkill
+        - StopMotionSkill
+        - ConfigureStatusReportSkill
+        - EnableSensorSkill
+        - EnableGripperSkill
+        - DisableGripperSkill
+        - EnableRobotParameterStatusSkill
+        - DisableSensorSkill
+        - DisableRobotParameterStatusSkill

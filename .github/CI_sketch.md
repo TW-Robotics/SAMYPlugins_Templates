@@ -41,11 +41,17 @@ Generic: https://github.com/cirrus-actions/rebase -> executes the jobs on postin
 - Action for running the dummy test plugin in Python
 
 ## Workflow (jobs):
-- codeAnalysis -> run a tool for code analysis
-- build -> build the component with different compilers on Linux (we could also include windows???)
-- tests -> tests the component: needs build
-- dockerization -> creates docker image of the component: needs build and tests
-- debian packaging???
+- job1:
+  - codeAnalysis -> run a tool for code analysis
+- job2: (needs to run in the same job otherwise it will be a new runner)
+  - build and install open62541
+  - build -> build the component with different compilers on Linux (we could also include windows???)
+  - tests -> tests the component: needs build
+  - debian packaging???
+- job3:
+  - dockerization -> creates docker image of the component: needs build and tests
+
+
 
 # SAMYPlugins
 
@@ -60,4 +66,3 @@ Generic: https://github.com/cirrus-actions/rebase -> executes the jobs on postin
 - tests -> tests the component: needs build
 - dockerization -> creates docker image of the component: needs build and tests
 - debian packaging???
-
