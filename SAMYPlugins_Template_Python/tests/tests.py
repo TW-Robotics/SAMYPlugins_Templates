@@ -188,7 +188,7 @@ class TestCommunication(unittest.TestCase):
         """
         Test if the ActuateJoints command is send and recived
         """
-        data = ua.ActuateJointsParametersSetDataType()
+        data = samyplugin.CRCL_DataTypes.ActuateJointsParametersSetDataType()
         test_client = TestClient()
         data.Name = "ActuateJoints"
         # Send command to Plugin
@@ -378,9 +378,11 @@ class TestCommunication(unittest.TestCase):
         """
         Test if the SetTransAccel command is send and recived
         """
-        data = samyplugin.CRCL_DataTypes.SetTransAccelParametersSetDataType()
+        data = ua.SetTransAccelParametersSetDataType()
         test_client = TestClient()
         data.Name = "SetTransAccel"
+        data.TransAccel.switchField = 1
+        data.TransAccel.unionValue = samyplugin.CRCL_DataTypes.CRCL_TransAccelAbsoluteDataType()
         # Send command to Plugin
         test_client.write_crcl_command(self.get_skill_parameter_node_id(test_client, "SetTransAccel"), data)
         test_client.call_start_method(skill_id=self.get_skill_id(test_client, "SetTransAccel"), method_id = ua.NodeId(15095, 5))
@@ -400,6 +402,8 @@ class TestCommunication(unittest.TestCase):
         data = samyplugin.CRCL_DataTypes.SetTransSpeedParametersSetDataType()
         test_client = TestClient()
         data.Name = "SetTransSpeed"
+        data.TransSpeed.switchField = 1
+        data.TransSpeed.unionValue = samyplugin.CRCL_DataTypes.CRCL_TransSpeedAbsoluteDataType()
         # Send command to Plugin
         test_client.write_crcl_command(self.get_skill_parameter_node_id(test_client, "SetTransSpeed"), data)
         test_client.call_start_method(skill_id=self.get_skill_id(test_client, "SetTransSpeed"), method_id = ua.NodeId(15095, 5))
@@ -419,7 +423,8 @@ class TestCommunication(unittest.TestCase):
         data = ua.SetRotAccelParametersSetDataType()
         test_client = TestClient()
         data.Name = "SetRotAccel"
-        data.RotAccel.SwitchField = "CRCL_RotAccelAbsoluteDataType"
+        data.RotAccel.switchField = 1
+        data.RotAccel.unionValue = samyplugin.CRCL_DataTypes.CRCL_RotAccelAbsoluteDataType()
         #data.RotAccel.RotAccelAbsoluteDataType.name = "Absolute"
         # Send command to Plugin
         test_client.write_crcl_command(self.get_skill_parameter_node_id(test_client, "SetRotAccel"), data)
@@ -440,6 +445,8 @@ class TestCommunication(unittest.TestCase):
         data = samyplugin.CRCL_DataTypes.SetRotSpeedParametersSetDataType()
         test_client = TestClient()
         data.Name = "SetRotSpeed"
+        data.RotSpeed.switchField = 1
+        data.RotSpeed.unionValue = samyplugin.CRCL_DataTypes.CRCL_RotSpeedAbsoluteDataType()
         # Send command to Plugin
         test_client.write_crcl_command(self.get_skill_parameter_node_id(test_client, "SetRotSpeed"), data)
         test_client.call_start_method(skill_id=self.get_skill_id(test_client, "SetRotSpeed"), method_id = ua.NodeId(15095, 5))

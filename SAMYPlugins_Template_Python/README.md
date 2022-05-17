@@ -1,5 +1,5 @@
-# Example Package
+# SAMYPlugin package
 
-This is a simple example package. You can use
-[Github-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
-to write your content.
+## Install
+To use subscriptions you have to install the modified version of the python opcua package.
+`pip3 install opcua/.`
