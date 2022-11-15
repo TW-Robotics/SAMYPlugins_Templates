@@ -4,7 +4,7 @@ import time
 
 class TestClient:
     def __init__(self):
-        address = ("opc.tcp://{}:{}").format("localhost", "4840")
+        address = ("opc.tcp://{}:{}").format("10.0.0.32", "4840")
         self.client = Client(address)
         self.client.connect()
         self.client.load_type_definitions()
@@ -33,3 +33,9 @@ class TestClient:
 
     def disconnect(self):
         self.client.disconnect()
+
+if __name__ == "__main__":
+    client = TestClient()
+    print(ua.MoveToParamsSetDataType)
+    client.disconnect()
+

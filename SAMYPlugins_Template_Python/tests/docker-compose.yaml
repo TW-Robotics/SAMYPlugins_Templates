@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+  core:
+    image: core
+    command: /usr/src/samy/configFiles/start.sh
+    ports:
+      - 4840:4840
+    volumes:
+      - ./testConfig:/usr/src/samy/configFiles
+  ur5:
+    image: ur5-plugin
+    command: python3 main.py core UR5Plugin
+    tty: true
+    volumes:
+      - ./testConfig:/usr/src/samy/configFiles

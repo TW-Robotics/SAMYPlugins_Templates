@@ -5,39 +5,21 @@ Robots:
       Address: "opc.tcp://localhost:4840"
       OPCUARoboticsFile: RobotUR5.xml
       Skills:
-        - InitCanonSkill
-        - EndCanonSkill
-        - MessageSkill
-        - MoveToSkill
-        - MoveScrewSkill
-        - MoveThroughToSkill
-        - DwellSkill
-        - ActuateJointsSkill
-        - ConfigureJointReportsSkill
-      #  - ConfigureJointReportSkill
-        - SetDefaultJointPositionsTolerancesSkill
-        - GetStatusSkill
-        - CloseToolChangerSkill
-        - OpenToolChangerSkill
-        - SetRobotParametersSkill
-        - SetEndeffectorParametersSkill
-        - SetEndeffectorSkill
-        - SetTransAccelSkill
-        - SetTransSpeedSkill
-        - SetRotAccelSkill
-        - SetRotSpeedSkill
-        - SetAngleUnitsSkill
-        - SetEndPoseToleranceSkill
-        - SetForceUnitsSkill
-        - SetIntermediatePoseToleranceSkill
-        - SetLengthUnitsSkill
-        - SetMotionCoordinationSkill
-        - SetTorqueUnitsSkill
-        - StopMotionSkill
-        - ConfigureStatusReportSkill
-        - EnableSensorSkill
-        - EnableGripperSkill
-        - DisableGripperSkill
-        - EnableRobotParameterStatusSkill
-        - DisableSensorSkill
-        - DisableRobotParameterStatusSkill
+          - MoveToSkill
+          - PickAndPlaceSkill
+          - Whatever
+  - Robot:
+      Name: UR5Plugin
+      ID: 2
+      Address: "10.0.0.27"
+      OPCUARoboticsFile: Ur5.xml
+      Skills:
+          - MoveToSkill
+          - PickAndPlaceSkill
+      Workobject:
+        - -0.764
+        - 0.144
+        - 0.015
+        - 0.0
+        - 0.0
+        - -1.5707
