@@ -211,7 +211,7 @@ class Subscription(object):
 
     def _subscribe(self, nodes, attr, mfilter=None, queuesize=0):
         is_list = True
-        if isinstance(nodes, collections.Iterable):
+        if isinstance(nodes, collections.abc.Iterable):
             nodes = list(nodes)
         else:
             nodes = [nodes]

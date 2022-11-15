@@ -1,0 +1,12 @@
+SAMYSkillConfig:
+   SkillName: "PickAndPlaceSkill"
+   Language: "C++"
+   EntryFile: "PickAndPlace.cpp"
+   EntryFunction: "pickAndPlaceSkill"
+   Parameters:
+      - Name: "pickPose"
+        DataType: UA_CRCL_PoseDataType
+      - Name: "placePose"
+        DataType: UA_CRCL_PoseDataType
+      - Name: "offset"
+        DataType: Double

@@ -115,6 +115,7 @@ class TestCommunication(unittest.TestCase):
         data = samyplugin.CRCL_DataTypes.MoveToParametersSetDataType()
         test_client = TestClient()
         data.Name = "MoveTo"
+        data.EndPosition.xAxis.i = 10
         # Send command to Plugin
         test_client.write_crcl_command(self.get_skill_parameter_node_id(test_client, "MoveTo"), data)
         test_client.call_start_method(skill_id=self.get_skill_id(test_client, "MoveTo"), method_id = ua.NodeId(15095, 5))

@@ -1,0 +1,10 @@
+SAMYSkillConfig:
+   SkillName: "Whatever"
+   Language: "C++"
+   EntryFile: "Skill_1.cpp"
+   EntryFunction: "testFunction2"
+   Parameters: 
+      - Name: "param1"
+        DataType: UInt32
+      - Name: "param2"
+        DataType: UInt32

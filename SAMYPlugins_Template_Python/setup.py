@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="samyplugin",
-    version = "0.2",
+    version = "0.3",
     author = "Felix Leber",
     author_email = "leber@technikum-wien.at",
     description = "Samy plugin package.",

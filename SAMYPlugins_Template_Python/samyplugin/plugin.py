@@ -33,6 +33,8 @@ class Plugin():
         self.thread = None
         self.opcua_core_client = None
         self.my_skill_node = None
+        self.commands_buffer_node = None
+        self.commands_buffer_state_node = None
         self.control_methodes = {}
         self.start_method_id = None # TODO create a dict
         self.resume_method_id = None
@@ -47,6 +49,7 @@ class Plugin():
         self.Settings = Settings()
         #self.transform = Transform()
         pub.setListenerExcHandler(ErrorHandler())
+
         self.log_all_messages()
         self.create_subscribers()
 
@@ -74,6 +77,7 @@ class Plugin():
 
     def command_thread(self):
         self.logger.info("Command Thread started\n")
+        self.commands_buffer_state_node.set_value(1, ua.VariantType.Int32)
         # Get the node id for each method of the skill
         my_skill_method_node_ids = self.my_skill_node.get_methods()
         # Connect methodes of skill to the signals of the plugin
@@ -93,28 +97,20 @@ class Plugin():
         ns = self.my_skill_node.nodeid.NamespaceIndex
         self.logger.debug("my_skill_node = {}".format(self.my_skill_node))
         self.logger.debug("Robot NamespaceIndex = {}".format(ns))
-        parameter_set_node = self.my_skill_node.get_child("3:ParameterSet") #3
-        self.logger.debug("parameter_set_node = {}".format(parameter_set_node))
-        parameter_set_variable_node_ids = parameter_set_node.get_variables()
-        parameter_nodes = {}
-
-        for parameter_node_id in parameter_set_variable_node_ids:
-            parameter_node = self.opcua_core_client.get_node(parameter_node_id)
-            parameter_nodes[parameter_node.get_browse_name().Name] = parameter_node
-
-        parameter_nodes_sorted = sorted(parameter_nodes.items(), key=self.sort_by_number)
-        # Reset skill error
+        
+        self.logger.debug(f"CommandsBuffer ID: {self.commands_buffer_node}")
+        
+        #print(self.commands_buffer_node.get_value())
         self.skill_error = False
-        for i in range(len(parameter_nodes_sorted)):
-            if not self.skill_error:
-                val = parameter_nodes_sorted[i][1].get_value()
-                topic = self.crcl_command_dict[type(val)]
-                self.logger.debug(topic)
-                pub.sendMessage(topic, data=val)
-            else:
-                break
-        if not self.skill_error:
-            pub.sendMessage("command_reset")
+        for command in self.commands_buffer_node.get_value().crclCommandsParamsSets:
+            topic = self.crcl_command_dict[type(command.unionValue)]
+            self.logger.debug(f"Topic of command is: {topic}")
+            pub.sendMessage(topic, data=command.unionValue)
+
+        self.commands_buffer_state_node.set_value(3, ua.VariantType.Int32)
+        pub.sendMessage("command_reset")
+        self.logger.info("Command Thread finished\n")
+
 
     def connect_to_core(self, address_, port_):
         # Connect to SAMYCore opcua server
@@ -128,48 +124,48 @@ class Plugin():
                 self.logger.info("Connected to SAMYCore")
                 break
             except:
-                self.logger.info("Connection with SAMYCore failed!!!!!\n Retry in 3 seconds....")
+                self.logger.info("Connection with SAMYCore failed!!!!!\n Retry in 2 seconds....")
                 time.sleep(2)
         # Get information about all nodes of SAMYCore opcua server
         self.opcua_core_client.load_type_definitions()
         self.logger.debug("Type definitions loaded")
         self.crcl_command_dict = {
-            ua.InitCanonParametersSetDataType: "InitCanon",
-            ua.EndCanonParametersSetDataType: "EndCanon",
-            ua.MessageParametersSetDataType: "Message",
-            ua.MoveToParametersSetDataType: "MoveTo",
-            ua.MoveScrewParametersSetDataType: "MoveScrew",
-            ua.MoveThroughToParametersSetDataType: "MoveThroughTo",
-            ua.DwellParametersSetDataType: "Dwell",
-            ua.ActuateJointsParametersSetDataType: "ActuateJoints",
-            ua.ConfigureJointReportsParametersSetDataType: "ConfigureJointReports",
-            #ua.ConfigureJointReportParametersSetDataType: "ConfigureJointReport",
-            ua.SetDefaultJointPositionsTolerancesParametersSetDataType: "SetDefaultJointPositionsTolerances",
-            ua.GetStatusParametersSetDataType: "GetStatus",
-            ua.CloseToolChangerParametersSetDataType: "CloseToolChanger",
-            ua.OpenToolChangerParametersSetDataType: "OpenToolChanger",
-            ua.SetRobotParametersParametersSetDataType: "SetRobotParameters",
-            ua.SetEndeffectorParametersParametersSetDataType: "SetEndeffectorParameters",
-            ua.SetEndeffectorParametersSetDataType: "SetEndeffector",
-            ua.SetTransAccelParametersSetDataType: "SetTransAccel",
-            ua.SetTransSpeedParametersSetDataType: "SetTransSpeed",
-            ua.SetRotAccelParametersSetDataType: "SetRotAccel",
-            ua.SetRotSpeedParametersSetDataType: "SetRotSpeed",
-            ua.SetAngleUnitsParametersSetDataType: "SetAngleUnits",
-            ua.SetEndPoseToleranceParametersSetDataType: "SetEndPoseTolerance",
-            ua.SetForceUnitsParametersSetDataType: "SetForceUnits",
-            ua.SetIntermediatePoseToleranceParametersSetDataType: "SetIntermediatePoseTolerance",
-            ua.SetLengthUnitsParametersSetDataType: "SetLengthUnits",
-            ua.SetMotionCoordinationParametersSetDataType: "SetMotionCoordination",
-            ua.SetTorqueUnitsParametersSetDataType: "SetTorqueUnits",
-            ua.StopMotionParametersSetDataType: "StopMotion",
-            ua.ConfigureStatusReportParametersSetDataType: "ConfigureStatusReport",
-            ua.EnableSensorParametersSetDataType: "EnableSensor",
-            ua.DisableSensorParametersSetDataType: "DisableSensor",
-            ua.EnableGripperParametersSetDataType: "EnableGripper",
-            ua.DisableGripperParametersSetDataType: "DisableGripper",
-            ua.EnableRobotParameterStatusParametersSetDataType: "EnableRobotParameterStatus",
-            ua.DisableRobotParameterStatusParametersSetDataType: "DisableRobotParameterStatus"
+            ua.InitCanonParamsSetDataType: "InitCanon",
+            ua.EndCanonParamsSetDataType: "EndCanon",
+            ua.MessageParamsSetDataType: "Message",
+            ua.MoveToParamsSetDataType: "MoveTo",
+            ua.MoveScrewParamsSetDataType: "MoveScrew",
+            ua.MoveThroughToParamsSetDataType: "MoveThroughTo",
+            ua.DwellParamsSetDataType: "Dwell",
+            ua.ActuateJointsParamsSetDataType: "ActuateJoints",
+            ua.ConfigureJointReportsParamsSetDataType: "ConfigureJointReports",
+            #ua.ConfigureJointReportParamsSetDataType: "ConfigureJointReport",
+            ua.SetDefaultJointPositionsTolerancesParamsSetDataType: "SetDefaultJointPositionsTolerances",
+            ua.GetStatusParamsSetDataType: "GetStatus",
+            ua.CloseToolChangerParamsSetDataType: "CloseToolChanger",
+            ua.OpenToolChangerParamsSetDataType: "OpenToolChanger",
+            ua.SetRobotParametersParamsSetDataType: "SetRobotParameters",
+            ua.SetEndeffectorParametersParamsSetDataType: "SetEndeffectorParameters",
+            ua.SetEndeffectorParamsSetDataType: "SetEndeffector",
+            ua.SetTransAccelParamsSetDataType: "SetTransAccel",
+            ua.SetTransSpeedParamsSetDataType: "SetTransSpeed",
+            ua.SetRotAccelParamsSetDataType: "SetRotAccel",
+            ua.SetRotSpeedParamsSetDataType: "SetRotSpeed",
+            ua.SetAngleUnitsParamsSetDataType: "SetAngleUnits",
+            ua.SetEndPoseToleranceParamsSetDataType: "SetEndPoseTolerance",
+            ua.SetForceUnitsParamsSetDataType: "SetForceUnits",
+            ua.SetIntermediatePoseToleranceParamsSetDataType: "SetIntermediatePoseTolerance",
+            ua.SetLengthUnitsParamsSetDataType: "SetLengthUnits",
+            ua.SetMotionCoordinationParamsSetDataType: "SetMotionCoordination",
+            ua.SetTorqueUnitsParamsSetDataType: "SetTorqueUnits",
+            ua.StopMotionParamsSetDataType: "StopMotion",
+            ua.ConfigureStatusReportParamsSetDataType: "ConfigureStatusReport",
+            ua.EnableSensorParamsSetDataType: "EnableSensor",
+            ua.DisableSensorParamsSetDataType: "DisableSensor",
+            ua.EnableGripperParamsSetDataType: "EnableGripper",
+            ua.DisableGripperParamsSetDataType: "DisableGripper",
+            ua.EnableRobotParameterStatusParamsSetDataType: "EnableRobotParameterStatus",
+            ua.DisableRobotParameterStatusParamsSetDataType: "DisableRobotParameterStatus"
         }
 
     def disconnect_core(self):
@@ -179,8 +175,13 @@ class Plugin():
             self.logger.info("Halt called for {}".format(skill_node))
         self.opcua_core_client.disconnect()
 
+    def get_commands_buffer_node(self):
+        self.robot_node.get_child([])
+        ns = self.robot_node.nodeid.NamespaceIndex
+        get_child(["4:Controllers", "{}:{}".format(ns, robot_name), "5:Skills"])
+
     def subscribe_to_core(self, robot_name):
-        try:
+        #try:
             # Getting the root node is not stricly neccessary but recomended
             root = self.opcua_core_client.get_root_node()
             objects = self.opcua_core_client.get_objects_node()
@@ -193,8 +194,10 @@ class Plugin():
             for object in nodes.get_children():
                 if object.get_browse_name().Name == robot_name:
                     ns = object.nodeid.NamespaceIndex
-                    robot_node = object
-                    skills_node = object.get_child(["4:Controllers", "{}:{}".format(ns, robot_name), "5:Skills"])
+                    self.robot_node = object
+                    skills_node = object.get_child(["4:Controllers", f"{ns}:{robot_name}", "5:Skills"])
+                    self.commands_buffer_node = object.get_child(["4:Controllers", f"{ns}:{robot_name}", f"{ns}:CommandsBuffer"])
+                    self.commands_buffer_state_node = object.get_child(["4:Controllers", f"{ns}:{robot_name}", f"{ns}:CommandsBufferState"])
                     found_robot = True
             if not found_robot:
                 self.logger.error("No robot with name: " + robot_name + " in SAMYCore found")
@@ -202,7 +205,7 @@ class Plugin():
             # Get all skill node ids and reset them
             self.skill_list = skills_node.get_children()
             self.logger.debug("\n\n")
-            self.logger.debug("robot_node = {}".format(robot_node))
+            self.logger.debug("robot_node = {}".format(self.robot_node))
             self.logger.debug("skills_node = {}".format(skills_node))
             self.logger.debug("skill_list= {}".format(self.skill_list))
             self.logger.debug("samy_event = {}".format(samy_event))
@@ -211,15 +214,16 @@ class Plugin():
                 skill_node.call_method("0:Reset")
                 self.logger.info("Reset called for skill {} {}".format(skill_node.get_browse_name().Name, skill_node))
             # Subscribe to robot node
+            self.logger.debug("Creating subscription")
             sub = self.opcua_core_client.create_subscription(100, self)
-            #handle = sub.subscribe_events()
-            handle = sub.subscribe_events(sourcenode=robot_node, evtypes=samy_event)
+            self.logger.debug("Subscribe to samy_event")
+            handle = sub.subscribe_events(sourcenode=self.robot_node, evtypes=samy_event)
             self.logger.info("Subscription started")
             embed()
-        except Exception as e:
-            self.logger.error(e)
-        finally:
-            self.logger.info("Subscription closed")
+        #except Exception as e:
+        #    self.logger.error(e)
+        #finally:
+        #    self.logger.info("Subscription closed")
 
     def get_namespaces(self, client):
         namespaces = {}
@@ -230,9 +234,6 @@ class Plugin():
         for i, namespace in enumerate(namespacesValue):
             namespaces[namespace] = i
         return namespaces
-
-    # def init_settings(self):
-    #     self.Settings
 
     def send_command_reset(self):
         self.logger.info("Command is finished")
@@ -274,14 +275,41 @@ class Plugin():
         information_source_node = objects.get_child(["{}:InformationSources".format(ns_id)])
         self.information_source_nodes = information_source_node.get_children()
         for node in self.information_source_nodes:
-            self.information_source_nodes_dict[node.get_browse_name().Name] = node.get_child(["{}:{}_0".format(ns_id, node.get_browse_name().Name)])
+            # check if information source has more then one variable
+            # if more then one variable add them as list to the dict
+            children = node.get_children()
+            if len(children) == 1:
+                self.information_source_nodes_dict[node.get_browse_name().Name] = node.get_child(["{}:{}_0".format(ns_id, node.get_browse_name().Name)])
+            else:
+                nodes = []
+                i = 0
+                for child in children:
+                    nodes.append(node.get_child(["{}:{}_{}".format(ns_id, node.get_browse_name().Name, i)]))
+                    i = i + 1
+                self.information_source_nodes_dict[node.get_browse_name().Name] = nodes
+            
+            #self.information_source_nodes_dict[node.get_browse_name().Name] = node.get_child(["{}:{}_0".format(ns_id, node.get_browse_name().Name)])
         self.logger.debug("Dict: {}".format(self.information_source_nodes_dict))
 
     def write_information_source(self, name, data):
-        self.logger.info("Writing Iformation source")
+        self.logger.info("Writing Information source")
         self.logger.info("Information Source info : Name: {}  Data: {}".format(name, data))
-        self.information_source_nodes_dict[name].set_value(data)
+        if type(data) == list:
+            i = 0
+            for var in data:
+                self.logger.info("Node in list: {}".format(self.information_source_nodes_dict[name][i]))
+                # TODO find error
+                self.information_source_nodes_dict[name][i].set_value(var)
+                i = i + 1
+        else:
+            self.information_source_nodes_dict[name].set_value(data)
         self.logger.info("Information Source {} set to {}".format(name, data))
+
+    # def read_information_source(self, name):
+    #     self.logger.info("Reading Information source")
+    #     self.logger.info("Information Source info : Name: {}".format(name))
+    #     data = self.information_source_nodes_dict[name].get_value()
+    #     self.logger.info("Information Source {} value is {}".format(name, data))
 
     def log_all_messages(self):
         useNotifyByWriteFile(self.log_file)
